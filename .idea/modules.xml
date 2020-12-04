@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/google_ml_kit.iml" filepath="$PROJECT_DIR$/google_ml_kit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/google_ml_kit_android.iml" filepath="$PROJECT_DIR$/android/google_ml_kit_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/android/google_ml_kit_example_android.iml" filepath="$PROJECT_DIR$/example/android/google_ml_kit_example_android.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,45 @@
+group 'com.b.biradar.google_ml_kit'
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 16
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    dependencies {
+        implementation 'com.google.mlkit:barcode-scanning:16.0.3'
+        implementation 'com.google.mlkit:object-detection:16.2.1'
+        implementation 'com.google.mlkit:image-labeling:17.0.0'
+        implementation 'com.google.mlkit:image-labeling-custom:16.2.1'
+        implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
+        implementation 'com.google.mlkit:pose-detection:17.0.0'
+        implementation 'com.google.mlkit:pose-detection-accurate:17.0.0'
+    }
+}
