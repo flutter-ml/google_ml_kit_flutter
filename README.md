@@ -47,6 +47,7 @@ To know more about [formats of image](https://developer.android.com/reference/an
 ## Create an instance of detector
 ## Call `processImage()` to obtain the result
 
+#### [An  example covering all the api's usage](example/lib) 
 ## Pose Detection
 
 -**In you app-level build.gradle. For latest version check [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)**
