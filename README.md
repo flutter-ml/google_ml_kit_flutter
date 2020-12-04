@@ -96,7 +96,7 @@ It returns
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
-Use the map to extract data. See this [example]("example/lib/DetectorViews/pose_detector_view.dart") to get better idea.
+Use the map to extract data. See this [example](example/lib/DetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
 **In you app-level build.gradle. For latest version check [Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/)**
@@ -138,7 +138,7 @@ It returns List<[ImageLabel]()>
 ```
 final labels = await imageLabeler.processImage(inputImage);
 ```
-**To know more see this [example]("example/lib/DetectorViews/label_detector_view.dart.dart")**
+**To know more see this [example](example/lib/DetectorViews/label_detector_view.dart.dart)**
 
 ## Barcode Scanner
 **In you app-level build.gradle. For latest version check [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)**
@@ -171,7 +171,7 @@ It returns List<[Barcode]()>
 ```
 final result = await barcodeScanner.processImage(inputImage);
 ```
-To know more see this [example]("example/lib/DetectorViews/barcode_scanner_view.dart")
+To know more see this [example](example/lib/DetectorViews/barcode_scanner_view.dart)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
