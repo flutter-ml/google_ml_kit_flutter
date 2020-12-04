@@ -3,7 +3,8 @@
 ![Pub Version](https://img.shields.io/pub/v/google_ml_kit)
 
 Flutter plugin to use [google's standalone ml kit](https://developers.google.com/ml-kit) for Android .
-<img src="screenshots/pose.png" > <img src="screenshots/imagelabeling.png"> <img src="screenchots/barcode.png">
+
+<img src="screenshots/pose.png" height=400 > <img src="screenshots/imagelabeling.png" height=400> <img src="screenshots/barcode.png" height=400>
 
 ## Currently supported api's
 * [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
