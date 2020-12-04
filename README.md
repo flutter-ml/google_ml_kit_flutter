@@ -4,7 +4,7 @@
 
 Flutter plugin to use [google's standalone ml kit](https://developers.google.com/ml-kit) for Android .
 
-<img src="screenshots/pose.png" height=400 > <img src="screenshots/imagelabeling.png" height=400> <img src="screenshots/barcode.png" height=400>
+<img src="screenshots/pose.png" height=500 > <img src="screenshots/imagelabeling.png" height=500> <img src="screenshots/barcode.png" height=500>
 
 ## Currently supported api's
 * [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
