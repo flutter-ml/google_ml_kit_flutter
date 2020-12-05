@@ -4,23 +4,22 @@ class BarcodeScanner {
   final List<int> barcodeFormat;
 
   BarcodeScanner({List<int> formats})
-  : barcodeFormat =
-  formats == null ? const [Barcode.FORMAT_Default] : formats;
+      : barcodeFormat = formats ?? const [Barcode.FORMAT_Default];
 
   bool _isOpened = false;
   bool _isClosed = false;
 
   Future<dynamic> processImage(InputImage inputImage) async {
-    assert(inputImage!=null);
+    assert(inputImage != null);
     _isOpened = true;
-    List<dynamic> result =
-    await GoogleMlKit.channel.invokeMethod("startBarcodeScanner",<String,dynamic>{
-      "formats" : barcodeFormat,
-      "imageData": inputImage._getImageData()
+    final result = await GoogleMlKit.channel.invokeMethod(
+        'startBarcodeScanner', <String, dynamic>{
+      'formats': barcodeFormat,
+      'imageData': inputImage._getImageData()
     });
 
-    List<Barcode> barcodesList = <Barcode>[];
-    for(dynamic item in result){
+    final barcodesList = <Barcode>[];
+    for (dynamic item in result) {
       barcodesList.add(Barcode._fromMap(item));
     }
 
@@ -29,15 +28,13 @@ class BarcodeScanner {
     return barcodesList;
   }
 
-  Future<void> close() async{
+  Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod("closeBarcodeScanner");
+      await GoogleMlKit.channel.invokeMethod('closeBarcodeScanner');
       _isClosed = true;
       _isOpened = false;
     }
   }
-
-
 }
 
 class BarcodeType {
@@ -57,45 +54,69 @@ class BarcodeType {
 }
 
 class Barcode {
-  Barcode._(
-    {this.barcodeType,this.barcodeUnknown,this.barcodeWifi,
-      this.barcodeUrl,
-      this.barcodeEmail,
-      this.barcodePhone,
-      this.barcodeSMS,
-      this.barcodeGeo,
-      this.barcodeDriverLicense,
-      this.barcodeContactInfo,
-      this.barcodeCalenderEvent,
-      });
+  Barcode._({
+    this.barcodeType,
+    this.barcodeUnknown,
+    this.barcodeWifi,
+    this.barcodeUrl,
+    this.barcodeEmail,
+    this.barcodePhone,
+    this.barcodeSMS,
+    this.barcodeGeo,
+    this.barcodeDriverLicense,
+    this.barcodeContactInfo,
+    this.barcodeCalenderEvent,
+  });
 
-  factory Barcode._fromMap(Map<dynamic,dynamic> barcodeData){
-    switch(barcodeData["type"]){
+  factory Barcode._fromMap(Map<dynamic, dynamic> barcodeData) {
+    switch (barcodeData['type']) {
       case BarcodeType.TYPE_UNKNOWN:
       case BarcodeType.TYPE_ISBN:
       case BarcodeType.TYPE_TEXT:
       case BarcodeType.TYPE_PRODUCT:
-      return Barcode._(barcodeUnknown:BarcodeRawOnly._fromMap(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeUnknown: BarcodeRawOnly._fromMap(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_WIFI:
-      return Barcode._(barcodeWifi: BarcodeWifi._(barcodeData),barcodeType: barcodeData["type"]);
-      case BarcodeType.TYPE_URL :
-      return Barcode._(barcodeUrl:BarcodeUrl._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeWifi: BarcodeWifi._(barcodeData),
+            barcodeType: barcodeData['type']);
+      case BarcodeType.TYPE_URL:
+        return Barcode._(
+            barcodeUrl: BarcodeUrl._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_EMAIL:
-      return Barcode._(barcodeEmail:BarcodeEmail._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeEmail: BarcodeEmail._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_PHONE:
-      return Barcode._(barcodePhone:BarcodePhone._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodePhone: BarcodePhone._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_SMS:
-      return Barcode._(barcodeSMS:BarcodeSMS._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeSMS: BarcodeSMS._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_GEO:
-      return Barcode._(barcodeGeo:BarcodeGeo._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeGeo: BarcodeGeo._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_DRIVER_LICENSE:
-      return Barcode._(barcodeDriverLicense:BarcodeDriverLicense._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeDriverLicense: BarcodeDriverLicense._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_CONTACT_INFO:
-      return Barcode._(barcodeContactInfo:BarcodeContactInfo._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeContactInfo: BarcodeContactInfo._(barcodeData),
+            barcodeType: barcodeData['type']);
       case BarcodeType.TYPE_CALENDAR_EVENT:
-      return Barcode._(barcodeCalenderEvent:BarcodeCalenderEvent._(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeCalenderEvent: BarcodeCalenderEvent._(barcodeData),
+            barcodeType: barcodeData['type']);
       default:
-      return Barcode._(barcodeUnknown:BarcodeRawOnly._fromMap(barcodeData),barcodeType: barcodeData["type"]);
+        return Barcode._(
+            barcodeUnknown: BarcodeRawOnly._fromMap(barcodeData),
+            barcodeType: barcodeData['type']);
     }
   }
 
@@ -146,9 +167,9 @@ class BarcodeRawOnly {
   final String displayValue;
 
   BarcodeRawOnly._fromMap(Map<dynamic, dynamic> barcodeData)
-  : type = barcodeData["type"],
-  rawValue = barcodeData["rawValue"],
-  displayValue = barcodeData["displayValue"];
+      : type = barcodeData['type'],
+        rawValue = barcodeData['rawValue'],
+        displayValue = barcodeData['displayValue'];
 }
 
 class BarcodeWifi extends BarcodeRawOnly {
@@ -157,10 +178,10 @@ class BarcodeWifi extends BarcodeRawOnly {
   final int encryptionType;
 
   BarcodeWifi._(Map<dynamic, dynamic> barcodeData)
-  : ssid = barcodeData["ssid"],
-  password = barcodeData["password"],
-  encryptionType = barcodeData["encryption"],
-  super._fromMap(barcodeData);
+      : ssid = barcodeData['ssid'],
+        password = barcodeData['password'],
+        encryptionType = barcodeData['encryption'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeUrl extends BarcodeRawOnly {
@@ -168,33 +189,33 @@ class BarcodeUrl extends BarcodeRawOnly {
   final String title;
 
   BarcodeUrl._(Map<dynamic, dynamic> barcodeData)
-  : url = barcodeData["url"],
-  title = barcodeData["title"],
-  super._fromMap(barcodeData);
+      : url = barcodeData['url'],
+        title = barcodeData['title'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeEmail extends BarcodeRawOnly {
-  final int type;
+  final int emailType;
   final String address;
   final String body;
   final String subject;
 
   BarcodeEmail._(Map<dynamic, dynamic> barcodeData)
-  : type = barcodeData["emailType"],
-  address = barcodeData["address"],
-  body = barcodeData["address"],
-  subject = barcodeData["subject"],
-  super._fromMap(barcodeData);
+      : emailType = barcodeData['emailType'],
+        address = barcodeData['address'],
+        body = barcodeData['address'],
+        subject = barcodeData['subject'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodePhone extends BarcodeRawOnly {
-  final int type;
+  final int phoneType;
   final String number;
 
   BarcodePhone._(Map<dynamic, dynamic> barcodeData)
-  : type = barcodeData["phoneType"],
-  number = barcodeData["number"],
-  super._fromMap(barcodeData);
+      : phoneType = barcodeData['phoneType'],
+        number = barcodeData['number'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeSMS extends BarcodeRawOnly {
@@ -202,9 +223,9 @@ class BarcodeSMS extends BarcodeRawOnly {
   final String phoneNumber;
 
   BarcodeSMS._(Map<dynamic, dynamic> barcodeData)
-  : message = barcodeData["message"],
-  phoneNumber = barcodeData["number"],
-  super._fromMap(barcodeData);
+      : message = barcodeData['message'],
+        phoneNumber = barcodeData['number'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeGeo extends BarcodeRawOnly {
@@ -212,9 +233,9 @@ class BarcodeGeo extends BarcodeRawOnly {
   final double longitude;
 
   BarcodeGeo._(Map<dynamic, dynamic> barcodeData)
-  : latitude = barcodeData["latitude"],
-  longitude = barcodeData["longitude"],
-  super._fromMap(barcodeData);
+      : latitude = barcodeData['latitude'],
+        longitude = barcodeData['longitude'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeDriverLicense extends BarcodeRawOnly {
@@ -232,19 +253,19 @@ class BarcodeDriverLicense extends BarcodeRawOnly {
   final String country;
 
   BarcodeDriverLicense._(Map<dynamic, dynamic> barcodeData)
-  : addressCity = barcodeData["addressCity"],
-  addressState = barcodeData["addressState"],
-  addressZip = barcodeData["addressZip"],
-  addressStreet = barcodeData["addressStreet"],
-  issueDate = barcodeData["issueDate"],
-  birthDate = barcodeData["birthDate"],
-  expiryDate = barcodeData["expiryDate"],
-  gender = barcodeData["gender"],
-  licenseNumber = barcodeData["licenseNumber"],
-  firstName = barcodeData["firstName"],
-  lastName = barcodeData["lastName"],
-  country = barcodeData["country"],
-  super._fromMap(barcodeData);
+      : addressCity = barcodeData['addressCity'],
+        addressState = barcodeData['addressState'],
+        addressZip = barcodeData['addressZip'],
+        addressStreet = barcodeData['addressStreet'],
+        issueDate = barcodeData['issueDate'],
+        birthDate = barcodeData['birthDate'],
+        expiryDate = barcodeData['expiryDate'],
+        gender = barcodeData['gender'],
+        licenseNumber = barcodeData['licenseNumber'],
+        firstName = barcodeData['firstName'],
+        lastName = barcodeData['lastName'],
+        country = barcodeData['country'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeContactInfo extends BarcodeRawOnly {
@@ -258,19 +279,19 @@ class BarcodeContactInfo extends BarcodeRawOnly {
   final List<String> urls;
 
   BarcodeContactInfo._(Map<dynamic, dynamic> barcodeData)
-  : barcodeAddresses = barcodeData["addresses"] = barcodeData["addresses"]
-  .map<BarcodeAddress>((address) => BarcodeAddress._fromMap(address)),
-  emails = barcodeData["emails"] = barcodeData["emails"]
-  .map<BarcodeEmail>((email) => BarcodeEmail._(email)),
-  phoneNumbers = barcodeData["contactNumbers"] =
-  barcodeData["contactNumbers"]
-  .map<BarcodePhone>((number) => BarcodePhone),
-  firstName = barcodeData["firstName"],
-  lastName = barcodeData["lastName"],
-  formattedName = barcodeData["formattedName"],
-  organisationName = barcodeData["organisation"],
-  urls = barcodeData["urls"] as List<String>,
-  super._fromMap(barcodeData);
+      : barcodeAddresses = barcodeData['addresses'] = barcodeData['addresses']
+            .map<BarcodeAddress>((address) => BarcodeAddress._fromMap(address)),
+        emails = barcodeData['emails'] = barcodeData['emails']
+            .map<BarcodeEmail>((email) => BarcodeEmail._(email)),
+        phoneNumbers = barcodeData['contactNumbers'] =
+            barcodeData['contactNumbers']
+                .map<BarcodePhone>((number) => BarcodePhone),
+        firstName = barcodeData['firstName'],
+        lastName = barcodeData['lastName'],
+        formattedName = barcodeData['formattedName'],
+        organisationName = barcodeData['organisation'],
+        urls = barcodeData['urls'] as List<String>,
+        super._fromMap(barcodeData);
 }
 
 class BarcodeCalenderEvent extends BarcodeRawOnly {
@@ -287,18 +308,18 @@ class BarcodeCalenderEvent extends BarcodeRawOnly {
   final int endHour;
 
   BarcodeCalenderEvent._(Map<dynamic, dynamic> barcodeData)
-  : description = barcodeData["description"],
-  location = barcodeData["location"],
-  status = barcodeData["status"],
-  summary = barcodeData["summary"],
-  organiser = barcodeData["organiser"],
-  startRawValue = barcodeData["startRawValue"],
-  startDate = barcodeData["startDate"],
-  startHour = barcodeData["startHour"],
-  endRawValue = barcodeData["endRawValue"],
-  endDate = barcodeData["endDate"],
-  endHour = barcodeData["endHour"],
-  super._fromMap(barcodeData);
+      : description = barcodeData['description'],
+        location = barcodeData['location'],
+        status = barcodeData['status'],
+        summary = barcodeData['summary'],
+        organiser = barcodeData['organiser'],
+        startRawValue = barcodeData['startRawValue'],
+        startDate = barcodeData['startDate'],
+        startHour = barcodeData['startHour'],
+        endRawValue = barcodeData['endRawValue'],
+        endDate = barcodeData['endDate'],
+        endHour = barcodeData['endHour'],
+        super._fromMap(barcodeData);
 }
 
 class BarcodeAddress {
@@ -309,19 +330,19 @@ class BarcodeAddress {
 
   factory BarcodeAddress._fromMap(Map<dynamic, dynamic> address) {
     String addressType;
-    switch (address["addressType"]) {
+    switch (address['addressType']) {
       case 0:
-      addressType = "Unknown";
-      break;
+        addressType = 'Unknown';
+        break;
       case 1:
-      addressType = "Home";
-      break;
+        addressType = 'Home';
+        break;
       case 2:
-      addressType = "Work";
-      break;
+        addressType = 'Work';
+        break;
       default:
-      addressType = "Unknown";
+        addressType = 'Unknown';
     }
-    return BarcodeAddress._(address["addressLines"], addressType);
+    return BarcodeAddress._(address['addressLines'], addressType);
   }
 }

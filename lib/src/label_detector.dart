@@ -11,19 +11,14 @@ class ImageLabeler {
   bool _isClosed = false;
 
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
-    assert(inputImage!=null);
+    assert(inputImage != null);
     _isOpened = true;
-    final map = <String, dynamic>{
-      "options": _labelerOptions._labelerOption(),
-      "imageData": inputImage._getImageData()
-    };
-    print(map);
     final result = await GoogleMlKit.channel
         .invokeMethod('startImageLabelDetector', <String, dynamic>{
-      "options": _labelerOptions._labelerOption(),
-      "imageData": inputImage._getImageData()
+      'options': _getImageOptions(_labelerOptions),
+      'imageData': inputImage._getImageData()
     });
-    List<ImageLabel> imageLabels = <ImageLabel>[];
+    var imageLabels = <ImageLabel>[];
     for (dynamic data in result) {
       imageLabels.add(ImageLabel(data));
     }
@@ -33,7 +28,7 @@ class ImageLabeler {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod("closeImageLabelDetector");
+      await GoogleMlKit.channel.invokeMethod('closeImageLabelDetector');
       _isClosed = true;
       _isOpened = false;
     }
@@ -45,11 +40,6 @@ class ImageLabelerOptions {
   final String labelerType = 'default';
 
   ImageLabelerOptions({this.confidenceThreshold = 0.5});
-
-  Map<String, dynamic> _labelerOption() => <String, dynamic>{
-        "labelerType": labelerType,
-        "confidenceThreshold": confidenceThreshold
-      };
 }
 
 class CustomImageLabelerOptions {
@@ -64,14 +54,6 @@ class CustomImageLabelerOptions {
       @required this.customModelPath})
       : assert(customModelPath != null),
         assert(customModel != null);
-
-  Map<String, dynamic> _labelerOption() => <String, dynamic>{
-        "labelerType": labelerType,
-        "confidenceThreshold": confidenceThreshold,
-        "customModel":
-            customModel == CustomTrainedModel.asset ? "asset" : "file",
-        "path": customModelPath
-      };
 }
 
 class AutoMlImageLabelerOptions extends CustomImageLabelerOptions {
@@ -84,15 +66,31 @@ class AutoMlImageLabelerOptions extends CustomImageLabelerOptions {
             customModel: customTrainedModel, customModelPath: customModelPath);
 }
 
-
-
 class ImageLabel {
   ImageLabel(dynamic data)
-      : confidence = data["confidence"] != null ? data["confidence"] : null,
-        label = data["text"],
-        index = data["index"];
+      : confidence = data['confidence'],
+        label = data['text'],
+        index = data['index'];
 
   final double confidence;
   final String label;
   final int index;
+}
+
+Map<String, dynamic> _getImageOptions(dynamic _labelerOptions) {
+  if (_labelerOptions.runtimeType == ImageLabelerOptions) {
+    return <String, dynamic>{
+      'labelerType': _labelerOptions.labelerType,
+      'confidenceThreshold': _labelerOptions.confidenceThreshold
+    };
+  } else {
+    return <String, dynamic>{
+      'labelerType': _labelerOptions.labelerType,
+      'confidenceThreshold': _labelerOptions.confidenceThreshold,
+      'customModel': _labelerOptions.customModel == CustomTrainedModel.asset
+          ? 'asset'
+          : 'file',
+      'path': _labelerOptions.customModelPath
+    };
+  }
 }

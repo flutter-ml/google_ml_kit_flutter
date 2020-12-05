@@ -16,28 +16,27 @@ class PoseDetector {
     _isOpened = true;
 
     List<dynamic> result = await GoogleMlKit.channel
-        .invokeMethod("startPoseDetector", <String, dynamic>{
-      "options": poseDetectorOptions._detectorOption(),
-      "imageData": inputImage._getImageData()
+        .invokeMethod('startPoseDetector', <String, dynamic>{
+      'options': poseDetectorOptions._detectorOption(),
+      'imageData': inputImage._getImageData()
     });
 
     List<PoseLandmark> poseLandmarks = <PoseLandmark>[];
     if (result != null) {
       poseLandmarks.addAll(result
-          .map((item) => PoseLandmark(item["type"], item["x"], item["y"])));
+          .map((item) => PoseLandmark(item['type'], item['x'], item['y'])));
     }
 
     Map<int, PoseLandmark> map = Map.fromIterable(result,
-        key: (item) => item["position"],
-        value: (item) => PoseLandmark(item["type"], item["x"], item["y"]));
-    print(map);
+        key: (item) => item['position'],
+        value: (item) => PoseLandmark(item['type'], item['x'], item['y']));
 
     return map;
   }
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod("closePoseDetector");
+      await GoogleMlKit.channel.invokeMethod('closePoseDetector');
       _isClosed = true;
       _isOpened = false;
     }
@@ -52,26 +51,25 @@ class PoseDetectorOptions {
 
   PoseDetectorOptions(
       {this.poseDetectionModel = PoseDetectionModel.BasePoseDetector,
-        this.poseDetectionMode = PoseDetectionMode.StaticImage,
-        this.selectionType = LandmarkSelectionType.all,
-        this.poseLandmarks}) {
+      this.poseDetectionMode = PoseDetectionMode.StaticImage,
+      this.selectionType = LandmarkSelectionType.all,
+      this.poseLandmarks}) {
     if (selectionType == LandmarkSelectionType.specific) {
       assert(poseLandmarks != null);
     }
   }
 
-  Map<String, dynamic> _detectorOption() =>
-      <String, dynamic>{
-        "detectorType":
-        poseDetectionModel == PoseDetectionModel.BasePoseDetector
-            ? 'base'
-            : 'accurate',
-        "detectorMode":
-        poseDetectionMode == PoseDetectionMode.StaticImage ? 2 : 1,
-        "selections": selectionType == LandmarkSelectionType.specific
+  Map<String, dynamic> _detectorOption() => <String, dynamic>{
+        'detectorType':
+            poseDetectionModel == PoseDetectionModel.BasePoseDetector
+                ? 'base'
+                : 'accurate',
+        'detectorMode':
+            poseDetectionMode == PoseDetectionMode.StaticImage ? 2 : 1,
+        'selections': selectionType == LandmarkSelectionType.specific
             ? 'specific'
             : 'all',
-        "landmarksList": poseLandmarks
+        'landmarksList': poseLandmarks
       };
 }
 
@@ -112,9 +110,7 @@ class PoseLandmark {
 
   PoseLandmark(this.landmarkLocation, this.x, this.y);
 
-
   final int landmarkLocation;
   final double x;
   final double y;
-
 }

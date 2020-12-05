@@ -12,8 +12,13 @@ part 'barcode_scanner.dart';
 
 part 'pose_detector.dart';
 
+// To indicate the format of image while creating input image from bytes
 enum InputImageFormat { NV21, YV21, YUV_420_888 }
+
+//To specify whether tflite models are stored in asset directory or file stored in device
 enum CustomTrainedModel { asset, file }
+
+//The camera rotation angle to be specified
 enum InputImageRotation {
   Rotation_0deg,
   Rotation_90deg,
@@ -21,56 +26,76 @@ enum InputImageRotation {
   Rotation_270deg
 }
 
+///Get instance of the individual api's using instance of [GoogleMlKit]
+///For example
+///To get an instance of [ImageLabeler]
+///ImageLabeler imageLabeler = GoogleMlKit.instance.imageLabeler();
+
 class GoogleMlKit {
   GoogleMlKit._();
 
-  static const MethodChannel channel = const MethodChannel('google_ml_kit');
+  static const MethodChannel channel = MethodChannel('google_ml_kit');
 
+  //Creates an instance of [GoogleMlKit] by calling the private constructor
   static final GoogleMlKit instance = GoogleMlKit._();
 
+  ///Get an instance of [ImageLabeler] by calling this function
+  /// [imageLabelerOptions]  if not provided it creates [ImageLabeler] with [ImageLabelerOptions]
+  /// You can provide either [CustomImageLabelerOptions] to use a custom tflite model
+  /// Or [AutoMLImageLabelerOptions] to use auto ml vision model trained by you
   ImageLabeler imageLabeler([dynamic imageLabelerOptions]) {
     return ImageLabeler._(imageLabelerOptions ?? ImageLabelerOptions());
   }
 
+  ///Returns instance of [BarcodeScanner].By default it searches the input image for all [BarcodeFormat]
+  ///To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as arguement
+  ///All the supported formats have been declared as static constants in [Barcode] class
   BarcodeScanner barcodeScanner([List<int> formatList]) {
     return BarcodeScanner(formats: formatList);
   }
 
+  ///Returns instance of [PoseDetector].By default it returns all [PoseLandmark] available in image
+  ///To limit the result to specific [PoseLandmark] pass list of [PoseLandmark]'s a
+  ///All the 33 positions have been declared as static constants in [PoseLandmark] class
   PoseDetector poseDetector({PoseDetectorOptions poseDetectorOptions}) {
-    return PoseDetector(poseDetectorOptions == null
-        ? PoseDetectorOptions()
-        : poseDetectorOptions);
+    return PoseDetector(poseDetectorOptions ?? PoseDetectorOptions());
   }
 }
 
+///[InputImage] is the format Google' Ml kit takes to process the image
 class InputImage {
   InputImage._(
       {String filePath,
       Uint8List bytes,
       @required String imageType,
       InputImageData inputImageData})
-      : this.filePath = filePath,
-        this.bytes = bytes,
-        this.imageType = imageType,
-        this.inputImageData = inputImageData;
+      : filePath = filePath,
+        bytes = bytes,
+        imageType = imageType,
+        inputImageData = inputImageData;
 
+  //Create InputImage from path of image stored in device
   factory InputImage.fromFilePath(String path) {
     assert(path != null);
-    return InputImage._(filePath: path, imageType: "file");
+    return InputImage._(filePath: path, imageType: 'file');
   }
 
+  //Create InputImage by passing a file
   factory InputImage.fromFile(File file) {
     assert(file != null);
-    return InputImage._(filePath: file.path, imageType: "file");
+    return InputImage._(filePath: file.path, imageType: 'file');
   }
 
+  //Create InputImage using bytes
   factory InputImage.fromBytes(
-      {Uint8List bytes, InputImageData inputImageData, String path}) {
+      {@required Uint8List bytes,
+      @required InputImageData inputImageData,
+      String path}) {
     assert(bytes != null);
     assert(inputImageData != null);
     return InputImage._(
         bytes: bytes,
-        imageType: "bytes",
+        imageType: 'bytes',
         inputImageData: inputImageData,
         filePath: path);
   }
@@ -82,18 +107,23 @@ class InputImage {
 
   Map<String, dynamic> _getImageData() {
     var map = <String, dynamic>{
-      "bytes": bytes,
-      "type": imageType,
-      "path": filePath ?? null,
-      "metadata": inputImageData == null ? "none" : inputImageData.getMetaData()
+      'bytes': bytes,
+      'type': imageType,
+      'path': filePath,
+      'metadata': inputImageData == null ? 'none' : inputImageData.getMetaData()
     };
     return map;
   }
 }
 
+//Data of image required when creating image from bytes
 class InputImageData {
+  //Size of image
   final Size size;
+
+  //Image rotation degree
   final InputImageRotation imageRotation;
+
   final InputImageFormat inputImageFormat;
 
   InputImageData(

@@ -25,9 +25,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     final uiImage = await decodeImageFromList(imageData);
 
     final inputImage = InputImage.fromFilePath(pickedFile.path);
-    final options = PoseDetectorOptions(
-        poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
-        poseDetectionMode: PoseDetectionMode.StaticImage);
+    // final options = PoseDetectorOptions(
+    //     poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
+    //     poseDetectionMode: PoseDetectionMode.StaticImage);
     poseDetector = GoogleMlKit.instance.poseDetector();
     var landMarksMap = await poseDetector.processImage(inputImage);
     setState(() {
@@ -110,17 +110,18 @@ class PosePainter extends CustomPainter {
       PoseLandmark rightKnee = _landmarksMap[PoseLandmark.RIGHT_KNEE];
       PoseLandmark leftAnkle = _landmarksMap[PoseLandmark.LEFT_ANKLE];
       PoseLandmark rightAnkle = _landmarksMap[PoseLandmark.RIGHT_ANKLE];
-
-      PoseLandmark leftPinky = _landmarksMap[PoseLandmark.LEFT_PINKY];
-      PoseLandmark rightPinky = _landmarksMap[PoseLandmark.RIGHT_PINKY];
-      PoseLandmark leftIndex = _landmarksMap[PoseLandmark.LEFT_INDEX];
-      PoseLandmark rightIndex = _landmarksMap[PoseLandmark.RIGHT_INDEX];
-      PoseLandmark leftThumb = _landmarksMap[PoseLandmark.LEFT_THUMB];
-      PoseLandmark rightThumb = _landmarksMap[PoseLandmark.RIGHT_THUMB];
       PoseLandmark leftHeel = _landmarksMap[PoseLandmark.LEFT_HEEL];
       PoseLandmark rightHeel = _landmarksMap[PoseLandmark.RIGHT_HEEL];
       PoseLandmark leftFootIndex = _landmarksMap[PoseLandmark.LEFT_FOOT_INDEX];
       PoseLandmark rightFootIndex = _landmarksMap[PoseLandmark.RIGHT_FOOT_INDEX];
+
+      //Similarly get other landmarks as well
+      // PoseLandmark leftPinky = _landmarksMap[PoseLandmark.LEFT_PINKY];
+      // PoseLandmark rightPinky = _landmarksMap[PoseLandmark.RIGHT_PINKY];
+      // PoseLandmark leftIndex = _landmarksMap[PoseLandmark.LEFT_INDEX];
+      // PoseLandmark rightIndex = _landmarksMap[PoseLandmark.RIGHT_INDEX];
+      // PoseLandmark leftThumb = _landmarksMap[PoseLandmark.LEFT_THUMB];
+      // PoseLandmark rightThumb = _landmarksMap[PoseLandmark.RIGHT_THUMB];
 
       //Draw arms
       canvas.drawLine(Offset(leftElbow.x,leftElbow.y), Offset(leftWrist.x,leftWrist.y), leftPaint);
