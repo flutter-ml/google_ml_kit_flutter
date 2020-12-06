@@ -17,7 +17,7 @@ Support for other api's will be shortly added
 Add this plugin as dependency in your pubspec.yaml.
 
 - In your project-level build.gradle file, make sure to include Google's Maven repository in both your buildscript and allprojects sections(for all api's).
-- The plugin has been written using bundled api models, this implies models will be bundled along with plugin and there is no need to implement any dependencies on your part.
+- The plugin has been written using bundled api models, this implies models will be bundled along with plugin and there is no need to implement any dependencies on your part and should work out of the box.
 - If you wish to  reduce the apk size you may replace bundled model dependencies with model's provided within Google Play Service, to know more about this see the below links
   1. [Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/android)
   2. [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning/android)
@@ -52,28 +52,7 @@ To know more about [formats of image](https://developer.android.com/reference/an
 #### [An  example covering all the api's usage](example/lib) 
 ## Pose Detection
 
--**In you app-level build.gradle. For latest version check [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)**
-```
-dependencies {
-  // If you want to use the base sdk
-  implementation 'com.google.mlkit:pose-detection:latest version'
-  // If you want to use the accurate sdk
-  implementation 'com.google.mlkit:pose-detection-accurate:latest version'
-}
-```
-If you choose google service way.In **app level buil.gradle add**
-
-```
-<application ...>
-        ...
-      <meta-data
-          android:name="com.google.mlkit.vision.DEPENDENCIES"
-          android:value="ica" />
-      <!-- To use multiple models: android:value="ica,model2,model3" -->
-      </application>
-```
-**The same implies for all other models as well**
-
+-*Googgle Play service model is not available for this api' so no extra implementation**
 
 -**Create [`PoseDetectorOptions`]()**
 ```
@@ -106,12 +85,23 @@ Use the map to extract data. See this [example](example/lib/DetectorViews/pose_d
 ```
 dependencies {
        // ...
-// Use this dependency to bundle the model with your app
-      implementation 'com.google.mlkit:image-labeling:17.0.0'
 // Use this dependency to use dynamically downloaded model in Google Play Service
       implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.0'
     }
 ```
+If you choose google service way.In **app level buil.gradle add**
+
+```
+<application ...>
+        ...
+      <meta-data
+          android:name="com.google.mlkit.vision.DEPENDENCIES"
+          android:value="ica" />
+      <!-- To use multiple models: android:value="ica,model2,model3" -->
+      </application>
+```
+**The same implies for all other models as well**
+
 **Create `ImageLabelerOptions`**. This uses [google's base model](https://developers.google.com/ml-kit/vision/image-labeling/label-map)
 ```
 final options =ImageLabelerOptions( confidenceThreshold = confidenceThreshold);
@@ -129,7 +119,8 @@ CustomImageLabelerOptions options = CustomImageLabelerOptions(
 To use **autoMl vision models** models
 ```
 final options = AutoMlImageLabelerOptions(
-      customTrainedModel:, 
+      customTrainedModel: CustomTrainedModel.asset 
+       (or CustomTrainedModel.file), 
       customModelPath:);
 ```
 **Obtain [`ImageLabeler`]() instance.**
@@ -148,8 +139,6 @@ final labels = await imageLabeler.processImage(inputImage);
 ```
 dependencies {
       // ...
-// Use this dependency to bundle the model with your app
-      implementation 'com.google.mlkit:barcode-scanning:16.0.3'
 // Use this dependency to use the dynamically downloaded model in Google Play Services
       implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.2'
     }
