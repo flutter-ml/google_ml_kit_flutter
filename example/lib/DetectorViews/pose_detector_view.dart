@@ -44,24 +44,26 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       appBar: AppBar(
         title: const Text("Pose Detector"),
       ),
-      body: Column(
-        children: [
-          showImage
-              ? FittedBox(
-                  child: SizedBox(
-                    height: image.height.toDouble(),
-                    width: image.width.toDouble(),
-                    child: CustomPaint(
-                      painter: PosePainter(image, poseLandmarks),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            showImage
+                ? FittedBox(
+                    child: SizedBox(
+                      height: image.height.toDouble(),
+                      width: image.width.toDouble(),
+                      child: CustomPaint(
+                        painter: PosePainter(image, poseLandmarks),
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
-          RaisedButton(
-            onPressed: getImage,
-            child: Text('Select Image'),
-          )
-        ],
+                  )
+                : Container(),
+            RaisedButton(
+              onPressed: getImage,
+              child: Text('Select Image'),
+            )
+          ],
+        ),
       ),
     );
   }

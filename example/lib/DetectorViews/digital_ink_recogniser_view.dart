@@ -28,7 +28,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Future<void> _downloadModel() async {
     final downloadResult =
         await _languageModelManager.downloadModel('en-US');
-    print('And the... result is ${verificationResult.toString()}');
+    print('And the... result is ${downloadResult.toString()}');
   }
 
   Future<void> recogniseText() async {

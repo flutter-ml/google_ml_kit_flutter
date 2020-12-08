@@ -74,7 +74,7 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
         }
         InputImage inputImage;
         try {
-            inputImage = getInputImage((Map<String, Object>) call.argument("modelTag"), result);
+            inputImage = getInputImage((Map<String, Object>) call.argument("imageData"), result);
         } catch (Exception e) {
             Log.e("ImageError", "Getting Image failed");
             e.printStackTrace();

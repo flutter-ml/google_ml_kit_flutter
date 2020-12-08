@@ -13,6 +13,7 @@ class ImageLabeler {
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
     assert(inputImage != null);
     _isOpened = true;
+    print(_getImageOptions(_labelerOptions));
     final result = await GoogleMlKit.channel
         .invokeMethod('startImageLabelDetector', <String, dynamic>{
       'options': _getImageOptions(_labelerOptions),
