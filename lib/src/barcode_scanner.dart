@@ -1,5 +1,6 @@
 part of 'google_ml_kit.dart';
 
+//Class
 class BarcodeScanner {
   final List<int> barcodeFormat;
 

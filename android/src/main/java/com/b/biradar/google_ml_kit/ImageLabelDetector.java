@@ -22,7 +22,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public class ImageLabelDetector implements Detector {
+public class ImageLabelDetector implements ApiDetectorInterface {
     private final ImageLabeler imageLabeler;
 
 

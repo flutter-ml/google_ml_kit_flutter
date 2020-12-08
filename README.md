@@ -8,6 +8,7 @@ Flutter plugin to use [google's standalone ml kit](https://developers.google.com
 
 ## Currently supported api's
 * [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
+* [Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
 * [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
 * [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
 
@@ -48,8 +49,12 @@ To know more about [formats of image](https://developer.android.com/reference/an
 
 ## Create an instance of detector
 ## Call `processImage()` to obtain the result
+## Call `close()`
 
-#### [An  example covering all the api's usage](example/lib) 
+#### [An  example covering all the api's usage](example/lib)
+
+## Digital Ink reognition
+**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)
 ## Pose Detection
 
 -*Googgle Play service model is not available for this api' so no extra implementation**
@@ -132,6 +137,7 @@ It returns List<[ImageLabel]()>
 ```
 final labels = await imageLabeler.processImage(inputImage);
 ```
+
 **To know more see this [example](example/lib/DetectorViews/label_detector_view.dart.dart)**
 
 ## Barcode Scanner

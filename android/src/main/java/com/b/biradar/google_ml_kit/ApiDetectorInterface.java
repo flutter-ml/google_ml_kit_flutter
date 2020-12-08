@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public interface Detector {
+public interface ApiDetectorInterface {
     void handleDetection(InputImage inputImage, MethodChannel.Result result);
 
     void closeDetector() throws IOException;

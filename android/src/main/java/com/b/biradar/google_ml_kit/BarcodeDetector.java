@@ -1,7 +1,5 @@
 package com.b.biradar.google_ml_kit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.mlkit.vision.barcode.Barcode;
@@ -14,7 +12,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public class BarcodeDetector implements Detector {
+public class BarcodeDetector implements ApiDetectorInterface {
     private final BarcodeScanner barcodeScanner;
 
     public BarcodeDetector(List<Integer> formatList) {

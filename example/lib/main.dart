@@ -1,3 +1,5 @@
+import 'package:google_ml_kit_example/DetectorViews/digital_ink_recogniser_view.dart';
+
 import 'DetectorViews/detector_views.dart';
 
 import 'package:flutter/material.dart';
@@ -28,9 +30,10 @@ class Home extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomCard("Image Label Detector", ImageLabelView()),
-          CustomCard("Barcode Scanner", BarcodeScannerView()),
-          CustomCard("Pose Detector view", PoseDetectorView())
+          CustomCard('Image Label Detector', ImageLabelView()),
+          CustomCard('Barcode Scanner', BarcodeScannerView()),
+          CustomCard('Pose Detector view', PoseDetectorView()),
+          CustomCard('Digital Ink Recogniser', DigitalInkView())
         ],
       ),
     );

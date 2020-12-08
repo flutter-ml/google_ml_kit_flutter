@@ -5,3 +5,7 @@
 ## 0.0.1+1
 
 * TODO: Update readme.md
+
+## 0.0.2
+
+* TODO: Support for digital ink recognition api added

@@ -35,11 +35,14 @@ android {
 
     dependencies {
         implementation 'com.google.mlkit:barcode-scanning:16.0.3'
-        implementation 'com.google.mlkit:object-detection:16.2.1'
+
         implementation 'com.google.mlkit:image-labeling:17.0.0'
         implementation 'com.google.mlkit:image-labeling-custom:16.2.1'
         implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
+
         implementation 'com.google.mlkit:pose-detection:17.0.0'
         implementation 'com.google.mlkit:pose-detection-accurate:17.0.0'
+
+        implementation 'com.google.mlkit:digital-ink-recognition:16.1.0'
     }
 }

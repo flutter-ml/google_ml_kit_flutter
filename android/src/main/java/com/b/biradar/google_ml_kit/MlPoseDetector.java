@@ -1,7 +1,5 @@
 package com.b.biradar.google_ml_kit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +21,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
-public class MlPoseDetector implements Detector {
+public class MlPoseDetector implements ApiDetectorInterface {
     final private PoseDetector poseDetector;
     private String selectionType;
     private List<Integer> poseLandMarksList;

@@ -5,12 +5,15 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 
 part 'label_detector.dart';
 
 part 'barcode_scanner.dart';
 
 part 'pose_detector.dart';
+
+part 'digital_ink_recognizer.dart';
 
 // To indicate the format of image while creating input image from bytes
 enum InputImageFormat { NV21, YV21, YUV_420_888 }
@@ -59,6 +62,16 @@ class GoogleMlKit {
   ///All the 33 positions have been declared as static constants in [PoseLandmark] class
   PoseDetector poseDetector({PoseDetectorOptions poseDetectorOptions}) {
     return PoseDetector(poseDetectorOptions ?? PoseDetectorOptions());
+  }
+
+  ///Creates on instance of [LanguageModelManager].
+  LanguageModelManager languageModelManager() {
+    return LanguageModelManager._();
+  }
+
+  ///Returns an instance of [DigitalInkRecogniser]
+  DigitalInkRecogniser digitalInkRecogniser() {
+    return DigitalInkRecogniser._();
   }
 }
 
@@ -131,6 +144,7 @@ class InputImageData {
       this.imageRotation,
       this.inputImageFormat = InputImageFormat.NV21});
 
+  //Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {
     var map = <String, dynamic>{
       'width': size.width,
@@ -154,6 +168,8 @@ int _imageFormatToInt(InputImageFormat inputImageFormat) {
       return 17;
   }
 }
+
+//Function to convert enum [InputImageRotation] to integer value
 
 int _imageRotationToInt(InputImageRotation inputImageRotation) {
   switch (inputImageRotation) {
