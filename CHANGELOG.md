@@ -9,3 +9,7 @@
 ## 0.0.2
 
 * TODO: Support for digital ink recognition api added
+
+## 0.0.2+1
+
+* Added Documentataion
