@@ -4,7 +4,7 @@
 
 Flutter plugin to use [google's standalone ml kit](https://developers.google.com/ml-kit) for Android .
 
-<img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/pose.png?raw=true" height=500 > <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/imagelabeling.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/0.0.2/screenshots/giff.gif" height=500><img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/barcode.png?raw=true" height=500>
+<img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/pose.png?raw=true" height=500 > <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/imagelabeling.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/giff.gif" height=500><img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/barcode.png?raw=true" height=500>
 
 ## Currently supported api's
 * [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
