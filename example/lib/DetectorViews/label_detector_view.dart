@@ -82,5 +82,3 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     );
   }
 }
-
-

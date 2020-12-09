@@ -26,8 +26,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   }
 
   Future<void> _downloadModel() async {
-    final downloadResult =
-        await _languageModelManager.downloadModel('en-US');
+    final downloadResult = await _languageModelManager.downloadModel('en-US');
     print('And the... result is ${downloadResult.toString()}');
   }
 
@@ -38,10 +37,10 @@ class _DigitalInkViewState extends State<DigitalInkView> {
               title: Text('Recognising'),
             ),
         barrierDismissible: true);
-    final text = await _digitalInkRecogniser.readText(_points,'en-US');
+    final text = await _digitalInkRecogniser.readText(_points, 'en-US');
     Navigator.pop(context);
     setState(() {
-      _recognisedText =  text;
+      _recognisedText = text;
     });
   }
 
@@ -49,14 +48,13 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Text("Clear Pad"),
-        onPressed: (){
-          setState(() {
-            _points.clear();
-            _recognisedText='';
-          });
-        }
-      ),
+          child: Text("Clear Pad"),
+          onPressed: () {
+            setState(() {
+              _points.clear();
+              _recognisedText = '';
+            });
+          }),
       body: Container(
         child: Stack(
           children: [
@@ -99,7 +97,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                     children: [
                       RaisedButton(
                         child: Text('Read Text'),
-                        onPressed: () async{
+                        onPressed: () async {
                           await recogniseText();
                         },
                       ),
@@ -132,7 +130,6 @@ class _DigitalInkViewState extends State<DigitalInkView> {
           ],
         ),
       ),
-
     );
   }
 }

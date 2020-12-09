@@ -40,9 +40,10 @@ class PoseDetector {
           .map((item) => PoseLandmark(item['type'], item['x'], item['y'])));
     }
 
-    Map<int, PoseLandmark> map = Map.fromIterable(result,
-        key: (item) => item['position'],
-        value: (item) => PoseLandmark(item['type'], item['x'], item['y']));
+    Map<int, PoseLandmark> map = {
+      for (var item in result)
+        item['position']: PoseLandmark(item['type'], item['x'], item['y'])
+    };
 
     return map;
   }
@@ -59,7 +60,6 @@ class PoseDetector {
 ///[PoseDetectorOptions] determines the parameters on which [PoseDetector] works
 
 class PoseDetectorOptions {
-
   //enum PoseDetectionModel default is set to Base Pose Detector Model
   final PoseDetectionModel poseDetectionModel;
 
@@ -73,22 +73,21 @@ class PoseDetectorOptions {
 
   PoseDetectorOptions(
       {this.poseDetectionModel = PoseDetectionModel.BasePoseDetector,
-        this.poseDetectionMode = PoseDetectionMode.StaticImage,
-        this.selectionType = LandmarkSelectionType.all,
-        this.poseLandmarks}) {
+      this.poseDetectionMode = PoseDetectionMode.StaticImage,
+      this.selectionType = LandmarkSelectionType.all,
+      this.poseLandmarks}) {
     if (selectionType == LandmarkSelectionType.specific) {
       assert(poseLandmarks != null);
     }
   }
 
-  Map<String, dynamic> _detectorOption() =>
-      <String, dynamic>{
+  Map<String, dynamic> _detectorOption() => <String, dynamic>{
         'detectorType':
-        poseDetectionModel == PoseDetectionModel.BasePoseDetector
-            ? 'base'
-            : 'accurate',
+            poseDetectionModel == PoseDetectionModel.BasePoseDetector
+                ? 'base'
+                : 'accurate',
         'detectorMode':
-        poseDetectionMode == PoseDetectionMode.StaticImage ? 2 : 1,
+            poseDetectionMode == PoseDetectionMode.StaticImage ? 2 : 1,
         'selections': selectionType == LandmarkSelectionType.specific
             ? 'specific'
             : 'all',
@@ -98,7 +97,6 @@ class PoseDetectorOptions {
 
 ///This gives the [Offset] information as to where pose landmarks are locates in image
 class PoseLandmark {
-
   //An integer notation to identify NOSE part of body
   static const int NOSE = 0;
 

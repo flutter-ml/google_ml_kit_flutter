@@ -12,20 +12,20 @@ class DigitalInkRecogniser {
   ///Note that modelTag should follow [BCP 47] guidelines of identifying
   ///language visit this site [https://tools.ietf.org/html/bcp47] to know
   ///It takes [List<Offset>] which refers to the points being written on screen.
-  Future<String> readText(List<Offset> points,String modelTag) async {
+  Future<String> readText(List<Offset> points, String modelTag) async {
     assert(points != null);
     _isOpened = true;
     List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
-    for (Offset point in points) {
-      if(point!=null){
+    for (var point in points) {
+      if (point != null) {
         pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
       }
     }
-    String result = await GoogleMlKit.channel.invokeMethod(
+    final result = await GoogleMlKit.channel.invokeMethod(
         'startMlDigitalInkRecognizer',
         <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
     _isClosed = false;
-    return result;
+    return result.toString();
   }
 
   //Call this method to close

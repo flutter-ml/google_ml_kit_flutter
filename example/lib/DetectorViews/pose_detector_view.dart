@@ -115,7 +115,8 @@ class PosePainter extends CustomPainter {
       PoseLandmark leftHeel = _landmarksMap[PoseLandmark.LEFT_HEEL];
       PoseLandmark rightHeel = _landmarksMap[PoseLandmark.RIGHT_HEEL];
       PoseLandmark leftFootIndex = _landmarksMap[PoseLandmark.LEFT_FOOT_INDEX];
-      PoseLandmark rightFootIndex = _landmarksMap[PoseLandmark.RIGHT_FOOT_INDEX];
+      PoseLandmark rightFootIndex =
+          _landmarksMap[PoseLandmark.RIGHT_FOOT_INDEX];
 
       //Similarly get other landmarks as well
       // PoseLandmark leftPinky = _landmarksMap[PoseLandmark.LEFT_PINKY];
@@ -126,28 +127,41 @@ class PosePainter extends CustomPainter {
       // PoseLandmark rightThumb = _landmarksMap[PoseLandmark.RIGHT_THUMB];
 
       //Draw arms
-      canvas.drawLine(Offset(leftElbow.x,leftElbow.y), Offset(leftWrist.x,leftWrist.y), leftPaint);
-      canvas.drawLine(Offset(leftElbow.x,leftElbow.y), Offset(leftShoulder.x,leftShoulder.y), leftPaint);
+      canvas.drawLine(Offset(leftElbow.x, leftElbow.y),
+          Offset(leftWrist.x, leftWrist.y), leftPaint);
+      canvas.drawLine(Offset(leftElbow.x, leftElbow.y),
+          Offset(leftShoulder.x, leftShoulder.y), leftPaint);
 
-      canvas.drawLine(Offset(rightElbow.x,rightElbow.y), Offset(rightWrist.x,rightWrist.y), rightPaint);
-      canvas.drawLine(Offset(rightElbow.x,rightElbow.y), Offset(rightShoulder.x,rightShoulder.y), rightPaint);
+      canvas.drawLine(Offset(rightElbow.x, rightElbow.y),
+          Offset(rightWrist.x, rightWrist.y), rightPaint);
+      canvas.drawLine(Offset(rightElbow.x, rightElbow.y),
+          Offset(rightShoulder.x, rightShoulder.y), rightPaint);
 
       //Draw legs
-      canvas.drawLine(Offset(leftHip.x,leftHip.y), Offset(leftKnee.x,leftKnee.y), leftPaint);
-      canvas.drawLine(Offset(leftKnee.x,leftKnee.y), Offset(leftAnkle.x,leftAnkle.y), leftPaint);
-      canvas.drawLine(Offset(leftAnkle.x,leftAnkle.y), Offset(leftHeel.x,leftHeel.y), leftPaint);
-      canvas.drawLine(Offset(leftHeel.x,leftHeel.y), Offset(leftFootIndex.x,leftFootIndex.y), leftPaint);
+      canvas.drawLine(Offset(leftHip.x, leftHip.y),
+          Offset(leftKnee.x, leftKnee.y), leftPaint);
+      canvas.drawLine(Offset(leftKnee.x, leftKnee.y),
+          Offset(leftAnkle.x, leftAnkle.y), leftPaint);
+      canvas.drawLine(Offset(leftAnkle.x, leftAnkle.y),
+          Offset(leftHeel.x, leftHeel.y), leftPaint);
+      canvas.drawLine(Offset(leftHeel.x, leftHeel.y),
+          Offset(leftFootIndex.x, leftFootIndex.y), leftPaint);
 
-      canvas.drawLine(Offset(rightHip.x,rightHip.y), Offset(rightKnee.x,rightKnee.y), rightPaint);
-      canvas.drawLine(Offset(rightKnee.x,rightKnee.y), Offset(rightAnkle.x,rightAnkle.y), rightPaint);
-      canvas.drawLine(Offset(rightAnkle.x,rightAnkle.y), Offset(rightHeel.x,rightHeel.y), rightPaint);
-      canvas.drawLine(Offset(rightHeel.x,rightHeel.y), Offset(rightFootIndex.x,rightFootIndex.y), rightPaint);
+      canvas.drawLine(Offset(rightHip.x, rightHip.y),
+          Offset(rightKnee.x, rightKnee.y), rightPaint);
+      canvas.drawLine(Offset(rightKnee.x, rightKnee.y),
+          Offset(rightAnkle.x, rightAnkle.y), rightPaint);
+      canvas.drawLine(Offset(rightAnkle.x, rightAnkle.y),
+          Offset(rightHeel.x, rightHeel.y), rightPaint);
+      canvas.drawLine(Offset(rightHeel.x, rightHeel.y),
+          Offset(rightFootIndex.x, rightFootIndex.y), rightPaint);
 
       //Draw body
-      canvas.drawLine(Offset(leftHip.x,leftHip.y), Offset(leftShoulder.x,leftShoulder.y), leftPaint);
+      canvas.drawLine(Offset(leftHip.x, leftHip.y),
+          Offset(leftShoulder.x, leftShoulder.y), leftPaint);
 
-      canvas.drawLine(Offset(rightHip.x,rightHip.y), Offset(rightShoulder.x,rightShoulder.y), rightPaint);
-
+      canvas.drawLine(Offset(rightHip.x, rightHip.y),
+          Offset(rightShoulder.x, rightShoulder.y), rightPaint);
     }
   }
 

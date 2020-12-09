@@ -54,7 +54,7 @@ To know more about [formats of image](https://developer.android.com/reference/an
 #### [An  example covering all the api's usage](example/lib)
 
 ## Digital Ink reognition
-**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)
+**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)**
 ## Pose Detection
 
 -*Googgle Play service model is not available for this api' so no extra implementation**
@@ -86,7 +86,7 @@ final landMarksMap = await poseDetector.processImage(inputImage);
 Use the map to extract data. See this [example](example/lib/DetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
-**In you app-level build.gradle. For latest version check [Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/)**
+**In plugin's build.gradle. For latest version check [Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/)**
 ```
 dependencies {
        // ...
@@ -172,7 +172,7 @@ final result = await barcodeScanner.processImage(inputImage);
 To know more see this [example](example/lib/DetectorViews/barcode_scanner_view.dart)
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Incase of any errors open an issue.
 
 Please make sure to update tests as appropriate.
 

@@ -38,25 +38,28 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
             imagePath == null
                 ? Container()
                 : Container(
-              height: 400,
-              width: 400,
-              child: Image.file(File(imagePath)),
-            ),
+                    height: 400,
+                    width: 400,
+                    child: Image.file(File(imagePath)),
+                  ),
             RaisedButton(
               onPressed: readBarcode,
               child: const Text("Read Barcode"),
             ),
-            SizedBox(height: 20,),
-            barcodes == null ? Container() :
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: barcodes.length,
-                itemBuilder: (context, index) {
-                  return Card(child: Text("Type ${barcodes[index].barcodeUnknown
-                      .type} \n reads ${barcodes[index].barcodeUnknown
-                      .displayValue} \n rawData ${barcodes[index].barcodeUnknown
-                      .rawValue}"),);
-                })
+            SizedBox(
+              height: 20,
+            ),
+            barcodes == null
+                ? Container()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: barcodes.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Text(
+                            "Type ${barcodes[index].barcodeUnknown.type} \n reads ${barcodes[index].barcodeUnknown.displayValue} \n rawData ${barcodes[index].barcodeUnknown.rawValue}"),
+                      );
+                    })
           ],
         ),
       ),

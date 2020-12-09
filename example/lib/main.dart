@@ -44,20 +44,19 @@ class CustomCard extends StatelessWidget {
   final String _label;
   final Widget _viewPage;
 
-  const CustomCard(this._label, this._viewPage) ;
+  const CustomCard(this._label, this._viewPage);
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
       margin: EdgeInsets.only(bottom: 10),
       child: ListTile(
-        title:Text(_label),
+        title: Text(_label),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => _viewPage));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => _viewPage));
         },
       ),
     );
   }
 }
-
