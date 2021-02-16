@@ -1,7 +1,11 @@
 part of 'google_ml_kit.dart';
 
-//Class
+///Class to scan the barcode in [InputImage]
+///Creating an instance of [BarcodeScanner]
+///
+/// BarcodeScanner barcodeScanner = GoogleMlKit.instance.barcodeScanner([List of Barcode formats (optional)]);
 class BarcodeScanner {
+  //List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
   final List<int> barcodeFormat;
 
   BarcodeScanner({List<int> formats})
@@ -10,6 +14,7 @@ class BarcodeScanner {
   bool _isOpened = false;
   bool _isClosed = false;
 
+  ///Function to process the [InputImage] and returns a list of [Barcode]
   Future<dynamic> processImage(InputImage inputImage) async {
     assert(inputImage != null);
     _isOpened = true;
@@ -24,11 +29,10 @@ class BarcodeScanner {
       barcodesList.add(Barcode._fromMap(item));
     }
 
-    print(barcodesList);
-
     return barcodesList;
   }
 
+  //To close the instance of barcodeScanner
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
       await GoogleMlKit.channel.invokeMethod('closeBarcodeScanner');
@@ -38,6 +42,7 @@ class BarcodeScanner {
   }
 }
 
+//All supported Barcode Types
 class BarcodeType {
   static const int TYPE_UNKNOWN = 0;
   static const int TYPE_CONTACT_INFO = 1;
@@ -54,6 +59,7 @@ class BarcodeType {
   static const int TYPE_DRIVER_LICENSE = 12;
 }
 
+///Class to represent the contents of barcode.
 class Barcode {
   Barcode._({
     this.barcodeType,
@@ -121,6 +127,7 @@ class Barcode {
     }
   }
 
+  //Barcode formats
   static const int FORMAT_Default = 0;
 
   static const int FORMAT_Code_128 = 1;
@@ -162,6 +169,8 @@ class Barcode {
   final BarcodeRawOnly barcodeUnknown;
 }
 
+///Base for storing barcode data
+///Any [BarcodeType] has these three values
 class BarcodeRawOnly {
   final int type;
   final String rawValue;
@@ -173,6 +182,7 @@ class BarcodeRawOnly {
         displayValue = barcodeData['displayValue'];
 }
 
+//Barcode model for wifi
 class BarcodeWifi extends BarcodeRawOnly {
   final String ssid;
   final String password;
@@ -185,6 +195,7 @@ class BarcodeWifi extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for Url
 class BarcodeUrl extends BarcodeRawOnly {
   final String url;
   final String title;
@@ -195,6 +206,7 @@ class BarcodeUrl extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for email
 class BarcodeEmail extends BarcodeRawOnly {
   final int emailType;
   final String address;
@@ -209,6 +221,7 @@ class BarcodeEmail extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for phone number
 class BarcodePhone extends BarcodeRawOnly {
   final int phoneType;
   final String number;
@@ -219,6 +232,7 @@ class BarcodePhone extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for SMS
 class BarcodeSMS extends BarcodeRawOnly {
   final String message;
   final String phoneNumber;
@@ -229,6 +243,7 @@ class BarcodeSMS extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for geolocation
 class BarcodeGeo extends BarcodeRawOnly {
   final double latitude;
   final double longitude;
@@ -239,6 +254,7 @@ class BarcodeGeo extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for driver license
 class BarcodeDriverLicense extends BarcodeRawOnly {
   final String addressCity;
   final String addressState;
@@ -269,6 +285,7 @@ class BarcodeDriverLicense extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for a contact
 class BarcodeContactInfo extends BarcodeRawOnly {
   final List<BarcodeAddress> barcodeAddresses;
   final List<BarcodeEmail> emails;
@@ -295,6 +312,7 @@ class BarcodeContactInfo extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for a calender event
 class BarcodeCalenderEvent extends BarcodeRawOnly {
   final String description;
   final String location;
@@ -323,6 +341,7 @@ class BarcodeCalenderEvent extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
+//Barcode model for address
 class BarcodeAddress {
   final String addressLines;
   final String type;
