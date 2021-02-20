@@ -30,9 +30,8 @@ class _TextDetectorViewState extends State<TextDetectorView> {
 
   @override
   void dispose() async {
-    // TODO: implement dispose
-    await _textDetector.close();
     super.dispose();
+    await _textDetector.close();
   }
 
   @override

@@ -1,11 +1,18 @@
 part of 'google_ml_kit.dart';
 
+///Detector to detect text present in the [InputImage] provided.
+///It returns [RecognisedText] which contains the info present in the image.
+///
+/// Creating an instance of [TextDetector].
+/// TextDetector textDetector = GoogleMlKit.instance.textDetector();
+/// Call the [processImage()] to process the image.
 class TextDetector {
   TextDetector._();
 
   bool _isOpened = false;
   bool _isClosed = false;
 
+  /// Function that takes [InputImage] processes it and returns a [RecognisedText] object.
   Future<RecognisedText> processImage(InputImage inputImage) async {
     assert(inputImage != null);
 
@@ -27,6 +34,11 @@ class TextDetector {
   }
 }
 
+///Class that gives the detected text.
+///Recognised text hierarchy.
+///Recognised Text ---> List<TextBlock> (Blocks of text identified in the image).
+///TextBlock ---> List<TextLine> (Lines of text present in a certain identified block).
+///TextLine ---> List<TextElement> (Fundamental part of a block i.e usually a word or sentence)
 class RecognisedText {
   RecognisedText._(this.text, this.textBlocks);
 
@@ -40,10 +52,13 @@ class RecognisedText {
     return RecognisedText._(resText, textBlocks);
   }
 
+  //String containing all the text identified in a image.
   final String text;
+  //All the blocks of text present in image.
   final List<TextBlock> textBlocks;
 }
 
+//Class that has a block or group of words present in part of image.
 class TextBlock {
   TextBlock._(this.textLines, this.blockText, this.blockPoints, this.blockRect);
 
@@ -59,12 +74,17 @@ class TextBlock {
     return TextBlock._(textLines, blockText, offsetList, rect);
   }
 
+  //Rect outlining boundary of block.
   final Rect blockRect;
+  //List of corner points of the rect.
   final List<Offset> blockPoints;
+  //Text in the block.
   final String blockText;
+  //List of sentences.
   final List<TextLine> textLines;
 }
 
+//Class that represents sentence present in a certain block.
 class TextLine {
   TextLine._(this.lineRect, this.linePoints, this.lineText, this.textElements);
 
@@ -86,18 +106,27 @@ class TextLine {
     return TextLine._(rect, offsetList, lineText, textElements);
   }
 
+  //Rect outlining the the text line.
   final Rect lineRect;
+  //Corner points of the text line.
   final List<Offset> linePoints;
+  //Sentence of a block.
   final String lineText;
+  //List of text element.
   final List<TextElement> textElements;
 }
 
+///Fundamental part of text detected.
 class TextElement {
   TextElement(this.rect, this.points, this._text, this._textLanguage);
 
+  //Rect outlining the boundary of element.
   final Rect rect;
+  //Language of the text detected.
   final String _textLanguage;
+  //List of corner points of the element.
   final List<Offset> points;
+  //Word or a sentence.
   final String _text;
 
   String get getText => _text;
@@ -105,6 +134,7 @@ class TextElement {
   String get getLanguage => _textLanguage;
 }
 
+///Convert map to Rect.
 Rect _mapToRect(Map<dynamic, dynamic> rect) {
   var rec = Rect.fromLTRB(
       (rect["left"] as int).toDouble(),
@@ -114,6 +144,7 @@ Rect _mapToRect(Map<dynamic, dynamic> rect) {
   return rec;
 }
 
+//Convert List of map to list of offset.
 List<Offset> _mapToOffsetList(List<dynamic> points) {
   var p = <Offset>[];
   for (var point in points) {

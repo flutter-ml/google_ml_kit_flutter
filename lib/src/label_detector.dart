@@ -1,6 +1,6 @@
 part of 'google_ml_kit.dart';
 
-///Detector that detects the [InputImage] provided
+///Detector that detects the labels present in the [InputImage] provided
 ///Labels implies the objects,places,people etc.. that were recognised on the image
 ///For every entity detected it returns an [ImageLabel] that contains the confidence level
 ///of the entity and the index of the label.

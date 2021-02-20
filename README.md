@@ -11,6 +11,7 @@ Flutter plugin to use [google's standalone ml kit](https://developers.google.com
 * [Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
 * [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
 * [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
+* [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
 
 Support for other api's will be shortly added
 
@@ -172,9 +173,22 @@ final result = await barcodeScanner.processImage(inputImage);
 To know more see this [example](example/lib/DetectorViews/barcode_scanner_view.dart)
 
 ## Contributing
-Incase of any errors open an issue.
+In case of any errors open an issue.
 
-Please make sure to update tests as appropriate.
+## Text Recognition
+**In plugin's build.gradle. For latest version check [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition/)**
+
+**Obtain [`TextDetector`]() instance.**
+```
+TextDetector textDetector = GoogleMlKit.instance.textDetector();
+```
+**call `processImage()`**
+It returns [RecognisedText]() object
+```
+final text = await textDetector.processImage(inputImage);
+```
+
+**To know more see this [example](example/lib/DetectorViews/text_detector_view.dart)**
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
