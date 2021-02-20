@@ -22,12 +22,7 @@ import java.util.Map;
 import io.flutter.plugin.common.MethodChannel;
 
 public class TextDetector implements ApiDetectorInterface {
-    private  final TextRecognizer textRecognizer;
-
-    public TextDetector() {
-        this.textRecognizer = TextRecognition.getClient();
-    }
-
+    private  final TextRecognizer textRecognizer = TextRecognition.getClient();
     @Override
     public void handleDetection(InputImage inputImage, final MethodChannel.Result result) {
         if(inputImage==null) {result.error("Input Image error",null,null); return;}
@@ -36,9 +31,10 @@ public class TextDetector implements ApiDetectorInterface {
             @Override
             public void onSuccess(Text text) {
                 Map<String,Object> textResult = new HashMap<>();
+                List<Map<String,Object>> textBlocks = new ArrayList<>(text.getTextBlocks().size());
+
                 textResult.put("result",text.getText());
 
-                List<Map<String,Object>> textBlocks = new ArrayList<>(text.getTextBlocks().size());
                 for (Text.TextBlock block : text.getTextBlocks()) {
                     Map<String, Object> blockData = new HashMap<>();
                     List<Map<String,Integer>> points = new ArrayList<>();
@@ -47,10 +43,10 @@ public class TextDetector implements ApiDetectorInterface {
                     if(block.getCornerPoints()!=null){
                         addPoints(block.getCornerPoints(),points);
                     }
-                    blockData.put("points",points);
+                    blockData.put("blockPoints",points);
 
                     if(block.getBoundingBox()!=null)
-                        blockData.put("rect",getBoundingPoints(block.getBoundingBox()));
+                        blockData.put("blockRect",getBoundingPoints(block.getBoundingBox()));
 
 
                     List<Map<String,Object>> textLines = new ArrayList<>();
@@ -61,15 +57,16 @@ public class TextDetector implements ApiDetectorInterface {
 
                         if(line.getCornerPoints()!=null) addPoints(line.getCornerPoints(),linePoints);
                         if(line.getBoundingBox()!=null){
-                            textLine.put("rect",getBoundingPoints(line.getBoundingBox()));
+                            textLine.put("lineRect",getBoundingPoints(line.getBoundingBox()));
                         }
+                        textLine.put("linePoints",linePoints);
 
                         for (Text.Element element : line.getElements()) {
                             Map<String,Object> temp = new HashMap<>();
                             List<Map<String,Integer>> elementPoints = new ArrayList<>();
                             if(element.getCornerPoints()!=null) addPoints(element.getCornerPoints(),elementPoints);
-                            if(element.getBoundingBox()!=null) temp.put("elementFrame",getBoundingPoints(element.getBoundingBox()));
-
+                            if(element.getBoundingBox()!=null) temp.put("elementRect",getBoundingPoints(element.getBoundingBox()));
+                            temp.put("elementLang",element.getRecognizedLanguage());
                             temp.put("elementText",element.getText());
                             temp.put("elementPoints",elementPoints);
                             textElements.add(temp);
@@ -81,7 +78,7 @@ public class TextDetector implements ApiDetectorInterface {
                     blockData.put("textLines",textLines);
                     textBlocks.add(blockData);
             }
-                textResult.put("block",textBlocks);
+                textResult.put("blocks",textBlocks);
                 result.success(textResult);
         }}).addOnFailureListener(new OnFailureListener() {
             @Override

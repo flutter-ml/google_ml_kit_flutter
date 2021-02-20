@@ -70,6 +70,10 @@ class GoogleMlKit {
   DigitalInkRecogniser digitalInkRecogniser() {
     return DigitalInkRecogniser._();
   }
+
+  TextDetector textDetector(){
+    return TextDetector._();
+  }
 }
 
 ///[InputImage] is the format Google' Ml kit takes to process the image

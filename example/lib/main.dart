@@ -1,4 +1,5 @@
 import 'package:google_ml_kit_example/DetectorViews/digital_ink_recogniser_view.dart';
+import 'package:google_ml_kit_example/DetectorViews/text_detector_view.dart';
 
 import 'DetectorViews/detector_views.dart';
 
@@ -33,7 +34,8 @@ class Home extends StatelessWidget {
           CustomCard('Image Label Detector', ImageLabelView()),
           CustomCard('Barcode Scanner', BarcodeScannerView()),
           CustomCard('Pose Detector view', PoseDetectorView()),
-          CustomCard('Digital Ink Recogniser', DigitalInkView())
+          CustomCard('Digital Ink Recogniser', DigitalInkView()),
+          CustomCard('Text Detector', TextDetectorView()),
         ],
       ),
     );
