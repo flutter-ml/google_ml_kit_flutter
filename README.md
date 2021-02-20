@@ -1,6 +1,6 @@
 # Google Ml kit Plugin
 
-![Pub Version](https://img.shields.io/pub/v/google_ml_kit)
+[![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
 Flutter plugin to use [google's standalone ml kit](https://developers.google.com/ml-kit) for Android .
 
