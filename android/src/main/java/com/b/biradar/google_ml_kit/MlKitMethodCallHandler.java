@@ -21,12 +21,15 @@ import java.util.concurrent.FutureTask;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
+//Class to handle the method calls
+public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     private final Context applicationContext;
+    //To store detector instances that receive [InputImage] as input.
     Map<String, ApiDetectorInterface> detectorMap = new HashMap<String, ApiDetectorInterface>();
+    //To store detector instances that receive inputn
     Map<String, Object> exceptionDetectors = new HashMap<String, Object>();
 
-    public MlKitCallHandler(Context applicationContext) {
+    public MlKitMethodCallHandler(Context applicationContext) {
         this.applicationContext = applicationContext;
     }
 
@@ -53,16 +56,21 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
         }
     }
 
-
+    //Function to deal with method calls requesting to process an image or other information
+    //Checks the method call request and then directs to perform the specific task and returns the result through method channel.
+    //Throws an error if failed to create an instance of detector or to complete the detection task.
     private void handleDetection(MethodCall call, MethodChannel.Result result) {
+       //Get the parameters passed along with method call.
         Map<String, Object> options = call.argument("options");
 
         if (call.method.equals("manageInkModels")) {
             manageLanguageModel(call, result);
             return;
         } else if (call.method.equals("startMlDigitalInkRecognizer")) {
+            //Retrieve the instance if already created.
             MlDigitalInkRecogniser recogniser = (MlDigitalInkRecogniser) exceptionDetectors.get(call.method.substring(5));
             if (recogniser == null) {
+                //Create an instance if not present in the hashMap.
                 recogniser = MlDigitalInkRecogniser.Instance((String) call.argument("modelTag"), result);
             }
             if (recogniser != null) {
@@ -109,6 +117,7 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
 
     }
 
+    //Closes the detector instances if already present else throws error.
     private void closeDetector(MethodCall call, MethodChannel.Result result) {
         final ApiDetectorInterface detector = detectorMap.get(call.method.substring(5));
         String error = String.format(call.method.substring(5), "Has been closed or not been created yet");
@@ -141,7 +150,9 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
         }
     }
 
+    //Returns an [InputImage] from the image data received
     private InputImage getInputImage(Map<String, Object> imageData, MethodChannel.Result result) {
+        //Differentiates whether the image data is a path for a image file or contains image data in form of bytes
         String model = (String) imageData.get("type");
         InputImage inputImage;
         if (model.equals("file")) {
@@ -169,6 +180,8 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
         }
     }
 
+    //Function to download and delete language models required for digital ink recognition api
+    //Also checks if a model is already downloaded or not.
     private void manageLanguageModel(MethodCall call, MethodChannel.Result result) {
         String task = call.argument("task");
         ModelDownloadManager modelDownloadManager = ModelDownloadManager.Instance((String) call.argument("modelTag"), result);

@@ -92,6 +92,6 @@ public class MlPoseDetector implements ApiDetectorInterface {
 
     @Override
     public void closeDetector() throws IOException {
-
+        poseDetector.close();
     }
 }

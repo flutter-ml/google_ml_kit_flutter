@@ -37,6 +37,8 @@ import io.flutter.plugin.common.MethodChannel;
 
 import static com.google.android.gms.tasks.Tasks.await;
 
+//Detector to recognise the text written on screen.
+//Creates an abstraction over DigitalInkRecognizer api provided by ml tool kit.
 public class MlDigitalInkRecogniser  {
 
     private DigitalInkRecognizer recognizer;
@@ -48,6 +50,7 @@ public class MlDigitalInkRecogniser  {
         this.modelDownloadManager = modelDownloadManager;
     }
 
+    //Static method to create an instance of MlDigitalInkRecogniser. Throws an error if failed to create instance.
     public static MlDigitalInkRecogniser Instance(String modelTag, MethodChannel.Result result) {
         assert (modelTag != null);
         DigitalInkRecognitionModelIdentifier modelIdentifier;
@@ -63,6 +66,7 @@ public class MlDigitalInkRecogniser  {
             return null;
         }
 
+        //Check if model is model is downloaded then create else throw error.
         ModelDownloadManager modelDownloadManager = ModelDownloadManager.Instance(modelTag, result);
         if (modelDownloadManager.isModelDownloaded()) {
             DigitalInkRecognizer recognizer = DigitalInkRecognition.getClient(
@@ -77,6 +81,7 @@ public class MlDigitalInkRecogniser  {
     }
 
 
+    //Detects the text written on screen and returns the result through MethodChannel.
     public void handleDetection(final MethodChannel.Result result, List<Map<String, Object>> points) {
         Ink.Builder inkBuilder = Ink.builder();
         Ink.Stroke.Builder strokeBuilder;
@@ -118,6 +123,7 @@ public class MlDigitalInkRecogniser  {
         });
     }
 
+    //Closes instance of DigitalInkRecognizer.
     public void closeDetector() throws IOException {
         recognizer.close();
     }
@@ -125,11 +131,13 @@ public class MlDigitalInkRecogniser  {
 
 }
 
+//Class to manage the language models required by DigitalInkRecognizer to perform recognition task.
 class ModelDownloadManager {
     RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
     final DigitalInkRecognitionModel model;
     final String modelTag;
 
+    //To avoid downloading models in the main thread as they are around 20MB and may crash the app.
     ExecutorService executorService = Executors.newCachedThreadPool();
 
     ModelDownloadManager(DigitalInkRecognitionModel model, String modelTag) {
@@ -156,6 +164,7 @@ class ModelDownloadManager {
         return new ModelDownloadManager(model, modelTag);
     }
 
+    //To check if a model is already present
     public Boolean isModelDownloaded() {
         IsModelDownloaded myCallable = new IsModelDownloaded(remoteModelManager.isModelDownloaded(model));
         Future<Boolean> taskResult = executorService.submit(myCallable);
@@ -170,6 +179,7 @@ class ModelDownloadManager {
         return false;
     }
 
+    //Downloads a model only if it's not previously downloaded.Throws an error on failing to download
     public String downloadModel() {
 
         if (isModelDownloaded()) {
@@ -202,6 +212,7 @@ class ModelDownloadManager {
 
     }
 
+    //Deletes a model if it is previously downloaded else returns the result as not exist.Throws an error if failed to delete the model.
     public String deleteModel() {
         if (!isModelDownloaded()) {
             return "not exist";
@@ -233,6 +244,7 @@ class ModelDownloadManager {
     }
 }
 
+//Callable to run the task that checks whether a model is present.
 class IsModelDownloaded implements Callable<Boolean> {
     final Task<Boolean> booleanTask;
 
