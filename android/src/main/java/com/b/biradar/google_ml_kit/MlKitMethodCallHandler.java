@@ -63,21 +63,12 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
        //Get the parameters passed along with method call.
         Map<String, Object> options = call.argument("options");
 
+        //If method call is to manage the language models.
         if (call.method.equals("manageInkModels")) {
             manageLanguageModel(call, result);
             return;
         } else if (call.method.equals("startMlDigitalInkRecognizer")) {
-            //Retrieve the instance if already created.
-            MlDigitalInkRecogniser recogniser = (MlDigitalInkRecogniser) exceptionDetectors.get(call.method.substring(5));
-            if (recogniser == null) {
-                //Create an instance if not present in the hashMap.
-                recogniser = MlDigitalInkRecogniser.Instance((String) call.argument("modelTag"), result);
-            }
-            if (recogniser != null) {
-                recogniser.handleDetection(result, (List<Map<String, Object>>) call.argument("points"));
-            } else {
-                result.error("Failed to create model identifier", null, null);
-            }
+            startDigitalInkRecogniser(call,result);
             return;
         }
         InputImage inputImage;
@@ -219,6 +210,20 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                     }
                     break;
             }
+        }
+    }
+
+    private  void startDigitalInkRecogniser(MethodCall call,MethodChannel.Result result){
+        //Retrieve the instance if already created.
+        MlDigitalInkRecogniser recogniser = (MlDigitalInkRecogniser) exceptionDetectors.get(call.method.substring(5));
+        if (recogniser == null) {
+            //Create an instance if not present in the hashMap.
+            recogniser = MlDigitalInkRecogniser.Instance((String) call.argument("modelTag"), result);
+        }
+        if (recogniser != null) {
+            recogniser.handleDetection(result, (List<Map<String, Object>>) call.argument("points"));
+        } else {
+            result.error("Failed to create model identifier", null, null);
         }
     }
 }
