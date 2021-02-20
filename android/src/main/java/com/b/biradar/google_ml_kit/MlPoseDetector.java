@@ -21,11 +21,16 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
+//Detector to the pose landmarks present in a image.
+//Creates an abstraction over PoseDetector provided by ml kit.
 public class MlPoseDetector implements ApiDetectorInterface {
     final private PoseDetector poseDetector;
     private String selectionType;
     private List<Integer> poseLandMarksList;
 
+    //Constructor to create to instance of the detector.
+    //Options define whether to use pose-detection model or pose-detection-accurate model.
+    //To know the differences between these models visit [https://developers.google.com/ml-kit/vision/pose-detection/android#before_you_begin]
     MlPoseDetector(Map<String, Object> detectorOptions) {
         String detectorModel = (String) detectorOptions.get("detectorType");
         int detectorMode = (int) detectorOptions.get("detectorMode");
@@ -40,6 +45,7 @@ public class MlPoseDetector implements ApiDetectorInterface {
         }
     }
 
+    //Process the image and return a list containing the info about the pose landmarks.
     @Override
     public void handleDetection(InputImage inputImage, final MethodChannel.Result result) {
         if (inputImage != null) {

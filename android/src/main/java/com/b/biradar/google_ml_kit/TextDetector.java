@@ -21,8 +21,12 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
+//Detector to identify the text  present in an image.
+//It's an abstraction over TextRecognition provided by ml tool kit.
 public class TextDetector implements ApiDetectorInterface {
     private  final TextRecognizer textRecognizer = TextRecognition.getClient();
+
+    //Process the image and return the text.
     @Override
     public void handleDetection(InputImage inputImage, final MethodChannel.Result result) {
         if(inputImage==null) {result.error("Input Image error",null,null); return;}
@@ -89,11 +93,6 @@ public class TextDetector implements ApiDetectorInterface {
         });
     }
 
-    @Override
-    public void closeDetector() throws IOException {
-        textRecognizer.close();
-    }
-
     private  void addPoints(Point[] pointList,List<Map<String,Integer>> points){
         for(Point point : pointList){
             Map<String, Integer> p = new HashMap<>();
@@ -110,5 +109,10 @@ public class TextDetector implements ApiDetectorInterface {
         frame.put("top",rect.top);
         frame.put("bottom",rect.bottom);
         return  frame;
+    }
+
+    @Override
+    public void closeDetector() {
+        textRecognizer.close();
     }
 }

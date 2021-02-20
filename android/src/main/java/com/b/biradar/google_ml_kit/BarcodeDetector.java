@@ -19,26 +19,30 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 
+//Detector to scan the barcode's present in image.
+//It's an abstraction over BarcodeScanner provided by ml tool kit.
 public class BarcodeDetector implements ApiDetectorInterface {
     private final BarcodeScanner barcodeScanner;
 
+    //Constructor for BarcodeDetector.
+    //formatsList determines the barcode formats that the detector must scan from the image.
     public BarcodeDetector(List<Integer> formatList) {
-        List<Integer> formats = formatList;
         BarcodeScannerOptions barcodeScannerOptions;
 
-        if (formats.size() > 1) {
-            int[] array = new int[formats.size() - 1];
-            for (int i = 0; i <= formats.size(); i++) {
-                array[i] = formats.get(i);
+        if (formatList.size() > 1) {
+            int[] array = new int[formatList.size() - 1];
+            for (int i = 0; i <= formatList.size(); i++) {
+                array[i] = formatList.get(i);
             }
-            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formats.get(0), array).build();
+            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();
         } else {
-            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formats.get(0)).build();
+            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0)).build();
         }
 
         barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
     }
 
+    //Process the image and return the barcode information.
     @Override
     public void handleDetection(InputImage inputImage, final MethodChannel.Result result) {
         if (inputImage != null) {
