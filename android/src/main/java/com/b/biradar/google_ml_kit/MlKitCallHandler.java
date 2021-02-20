@@ -96,6 +96,8 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
                     detector = new ImageLabelDetector(options);
                     break;
                 case "startTextDetector":
+                    detector = new TextDetector();
+                    break;
             }
 
             detectorMap.put(call.method.substring(5), detector);
@@ -162,7 +164,7 @@ public class MlKitCallHandler implements MethodChannel.MethodCallHandler {
             return inputImage;
 
         } else {
-            new IOException("Error occurred");
+            result.error("Invalid Input Image",null,null);
             return null;
         }
     }

@@ -7,12 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 part 'label_detector.dart';
-
 part 'barcode_scanner.dart';
-
 part 'pose_detector.dart';
-
 part 'digital_ink_recognizer.dart';
+part 'text_detector.dart';
 
 // To indicate the format of image while creating input image from bytes
 enum InputImageFormat { NV21, YV21, YUV_420_888 }
