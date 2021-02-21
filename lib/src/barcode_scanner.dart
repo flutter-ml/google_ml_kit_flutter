@@ -254,12 +254,17 @@ class BarcodeGeo extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for driver license
+///Class extending over [BarcodeRawOnly] that models a driver's licence cars.
 class BarcodeDriverLicense extends BarcodeRawOnly {
+  ///City of holder's address.
   final String addressCity;
+  ///State of the holder's address.
   final String addressState;
+  ///Zip code code of the holder's address.
   final String addressZip;
+  ///Street of the holder's address.
   final String addressStreet;
+  ///Date on which the license was issued.
   final String issueDate;
   final String birthDate;
   final String expiryDate;
@@ -285,15 +290,23 @@ class BarcodeDriverLicense extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for a contact
+///Class extending over [BarcodeRawOnly] that models a contact info.
 class BarcodeContactInfo extends BarcodeRawOnly {
+  ///Contact person's addresses.
   final List<BarcodeAddress> barcodeAddresses;
+  ///Email addresses of the contact person.
   final List<BarcodeEmail> emails;
+  ///Phone numbers of the contact person.
   final List<BarcodePhone> phoneNumbers;
+  ///First name of the contact person.
   final String firstName;
+  ///Last name of the peron.
   final String lastName;
+  ///Properly formatted name of the person.
   final String formattedName;
+  ///Organisation of the contact person.
   final String organisationName;
+  ///Url's of contact person.
   final List<String> urls;
 
   BarcodeContactInfo._(Map<dynamic, dynamic> barcodeData)
@@ -312,18 +325,29 @@ class BarcodeContactInfo extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for a calender event
+///Class extending over [BarcodeRawOnly] that models a calender event.
 class BarcodeCalenderEvent extends BarcodeRawOnly {
+  ///Description of the event.
   final String description;
+  ///Location of the event.
   final String location;
+  ///Status of the event -> whether the event is completed or not.
   final String status;
+  ///A short summary of the event.
   final String summary;
+  ///A person or the organisation who is organising the event.
   final String organiser;
+  ///String representing the raw value of the start time as encoded in the barcode.
   final String startRawValue;
+  ///Day of the month on which the event takes place.
   final int startDate;
+  ///Start hour of the calender event.
   final int startHour;
+  ///String representing the raw value of the end time of event as encoded in the barcode.
   final String endRawValue;
+  ///End day of the calender event.
   final int endDate;
+  ///Ending hour of the event.
   final int endHour;
 
   BarcodeCalenderEvent._(Map<dynamic, dynamic> barcodeData)
@@ -341,9 +365,11 @@ class BarcodeCalenderEvent extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for address
+///Class to store the information of address type barcode detected in a [InputImage].
 class BarcodeAddress {
+  ///Formatted address, can be more than one line.
   final String addressLines;
+  ///Denoted the address type -> Home, Work or Unknown.
   final String type;
 
   BarcodeAddress._(this.addressLines, this.type);
