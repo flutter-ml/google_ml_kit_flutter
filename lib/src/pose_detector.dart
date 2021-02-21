@@ -24,6 +24,7 @@ class PoseDetector {
 
   PoseDetector(this.poseDetectorOptions);
 
+  ///Process the image and returns a map where key denotes [PoseLandmark] i.e location. Value contains the info of the PoseLandmark i.e
   Future<Map<int, PoseLandmark>> processImage(InputImage inputImage) async {
     assert(inputImage != null);
     _isOpened = true;
@@ -60,14 +61,14 @@ class PoseDetector {
 ///[PoseDetectorOptions] determines the parameters on which [PoseDetector] works
 
 class PoseDetectorOptions {
-  //enum PoseDetectionModel default is set to Base Pose Detector Model
+  ///enum PoseDetectionModel default is set to Base Pose Detector Model
   final PoseDetectionModel poseDetectionModel;
 
-  //enum PoseDetectionMode, currently only static supported
+  ///enum PoseDetectionMode, currently only static supported
   final PoseDetectionMode poseDetectionMode;
 
-  //List of poseLandmarks you want to obtain from the image
-  //By default it returns all available available [PoseLandmarks]
+  ///List of poseLandmarks you want to obtain from the image
+  ///By default it returns all available available [PoseLandmarks]
   final List<int> poseLandmarks;
   final LandmarkSelectionType selectionType;
 
@@ -97,112 +98,112 @@ class PoseDetectorOptions {
 
 ///This gives the [Offset] information as to where pose landmarks are locates in image
 class PoseLandmark {
-  //An integer notation to identify NOSE part of body
+  ///An integer notation to identify NOSE part of body.
   static const int NOSE = 0;
 
-  //An integer notation to identify LEFT_EYE_INNER part of body
+  ///An integer notation to identify LEFT_EYE_INNER part of body.
   static const int LEFT_EYE_INNER = 1;
 
-  //An integer notation to identify LEFT_EYE part of body
+  ///An integer notation to identify LEFT_EYE part of body.
   static const int LEFT_EYE = 2;
 
-  //An integer notation to identify LEFT_EYE_OUTER part of body
+  ///An integer notation to identify LEFT_EYE_OUTER part of body.
   static const int LEFT_EYE_OUTER = 3;
 
-  //An integer notation to identify RIGHT_EYE_INNER part of body
+  ///An integer notation to identify RIGHT_EYE_INNER part of body.
   static const int RIGHT_EYE_INNER = 4;
 
-  //An integer notation to identify RIGHT_EYE part of body
+  ///An integer notation to identify RIGHT_EYE part of body.
   static const int RIGHT_EYE = 5;
 
-  //An integer notation to identify RIGHT_EYE_OUTER part of body
+  ///An integer notation to identify RIGHT_EYE_OUTER part of body.
   static const int RIGHT_EYE_OUTER = 6;
 
-  //An integer notation to identify LEFT_EAR part of body
+  ///An integer notation to identify LEFT_EAR part of body.
   static const int LEFT_EAR = 7;
 
-  //An integer notation to identify RIGHT_EAR part of body
+  ///An integer notation to identify RIGHT_EAR part of body.
   static const int RIGHT_EAR = 8;
 
-  //An integer notation to identify LEFT_MOUTH part of body
+  ///An integer notation to identify LEFT_MOUTH part of body.
   static const int LEFT_MOUTH = 9;
 
-  //An integer notation to identify RIGHT_MOUTH part of body
+  ///An integer notation to identify RIGHT_MOUTH part of body.
   static const int RIGHT_MOUTH = 10;
 
-  //An integer notation to identify LEFT_SHOULDER part of body
+  ///An integer notation to identify LEFT_SHOULDER part of body.
   static const int LEFT_SHOULDER = 11;
 
-  //An integer notation to identify RIGHT_SHOULDER part of body
+  ///An integer notation to identify RIGHT_SHOULDER part of body.
   static const int RIGHT_SHOULDER = 12;
 
-  //An integer notation to identify LEFT_ELBOW part of body
+  ///An integer notation to identify LEFT_ELBOW part of body.
   static const int LEFT_ELBOW = 13;
 
-  //An integer notation to identify RIGHT_ELBOW part of body
+  ///An integer notation to identify RIGHT_ELBOW part of body.
   static const int RIGHT_ELBOW = 14;
 
-  //An integer notation to identify LEFT_WRIST part of body
+  ///An integer notation to identify LEFT_WRIST part of body.
   static const int LEFT_WRIST = 15;
 
-  //An integer notation to identify RIGHT_WRIST part of body
+  ///An integer notation to identify RIGHT_WRIST part of body.
   static const int RIGHT_WRIST = 16;
 
-  //An integer notation to identify LEFT_PINKY part of body
+  ///An integer notation to identify LEFT_PINKY part of body.
   static const int LEFT_PINKY = 17;
 
-  //An integer notation to identify RIGHT_PINKY part of body
+  ///An integer notation to identify RIGHT_PINKY part of body.
   static const int RIGHT_PINKY = 18;
 
-  //An integer notation to identify LEFT_INDEX part of body
+  ///An integer notation to identify LEFT_INDEX part of body.
   static const int LEFT_INDEX = 19;
 
-  //An integer notation to identify RIGHT_INDEX part of body
+  ///An integer notation to identify RIGHT_INDEX part of body.
   static const int RIGHT_INDEX = 20;
 
-  //An integer notation to identify LEFT_THUMB part of body
+  ///An integer notation to identify LEFT_THUMB part of body.
   static const int LEFT_THUMB = 21;
 
-  //An integer notation to identify RIGHT_THUMB part of body
+  ///An integer notation to identify RIGHT_THUMB part of body.
   static const int RIGHT_THUMB = 22;
 
-  //An integer notation to identify LEFT_HIP part of body
+  ///An integer notation to identify LEFT_HIP part of body.
   static const int LEFT_HIP = 23;
 
-  //An integer notation to identify RIGHT_HIP part of body
+  ///An integer notation to identify RIGHT_HIP part of body.
   static const int RIGHT_HIP = 24;
 
-  //An integer notation to identify LEFT_KNEE part of body
+  ///An integer notation to identify LEFT_KNEE part of body.
   static const int LEFT_KNEE = 25;
 
-  //An integer notation to identify RIGHT_KNEE part of body
+  ///An integer notation to identify RIGHT_KNEE part of body.
   static const int RIGHT_KNEE = 26;
 
-  //An integer notation to identify LEFT_ANKLE part of body
+  ///An integer notation to identify LEFT_ANKLE part of body.
   static const int LEFT_ANKLE = 27;
 
-  //An integer notation to identify RIGHT_ANKLE part of body
+  ///An integer notation to identify RIGHT_ANKLE part of body.
   static const int RIGHT_ANKLE = 28;
 
-  //An integer notation to identify LEFT_HEEL part of body
+  ///An integer notation to identify LEFT_HEEL part of body.
   static const int LEFT_HEEL = 29;
 
-  //An integer notation to identify RIGHT_HEEL part of body
+  ///An integer notation to identify RIGHT_HEEL part of body.
   static const int RIGHT_HEEL = 30;
 
-  //An integer notation to identify LEFT_FOOT_INDEX part of body
+  ///An integer notation to identify LEFT_FOOT_INDEX part of body.
   static const int LEFT_FOOT_INDEX = 31;
 
-  //An integer notation to identify RIGHT_FOOT_INDEX part of body
+  ///An integer notation to identify RIGHT_FOOT_INDEX part of body.
   static const int RIGHT_FOOT_INDEX = 32;
 
   PoseLandmark(this.landmarkLocation, this.x, this.y);
 
   final int landmarkLocation;
 
-  //Gives x position of landmark in image
+  ///Gives x position of landmark in image.
   final double x;
 
-  //Gives y position of landmark in image
+  ///Gives y position of landmark in image.
   final double y;
 }

@@ -76,7 +76,7 @@ class _TextDetectorViewState extends State<TextDetectorView> {
 
 List<Widget> _textBlockWidget(List<TextLine> textLines) {
   var widgets = <Widget>[];
-  int i=1;
+  int i = 1;
   for (var line in textLines) {
     // print(line.lineRect.top);
     // print(line.linePoints[0].dx);
@@ -84,7 +84,7 @@ List<Widget> _textBlockWidget(List<TextLine> textLines) {
       title: Text("Line $i \nLine Text : ${line.lineText}"),
       children: _textLineWidget(line.textElements),
     ));
-    i+=1;
+    i += 1;
   }
   return widgets;
 }

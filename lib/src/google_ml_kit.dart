@@ -71,7 +71,8 @@ class GoogleMlKit {
     return DigitalInkRecogniser._();
   }
 
-  TextDetector textDetector(){
+  ///Return an instance of [TextDetector].
+  TextDetector textDetector() {
     return TextDetector._();
   }
 }
@@ -88,19 +89,19 @@ class InputImage {
         imageType = imageType,
         inputImageData = inputImageData;
 
-  //Create InputImage from path of image stored in device
+  ///Create InputImage from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
     assert(path != null);
     return InputImage._(filePath: path, imageType: 'file');
   }
 
-  //Create InputImage by passing a file
+  ///Create InputImage by passing a file.
   factory InputImage.fromFile(File file) {
     assert(file != null);
     return InputImage._(filePath: file.path, imageType: 'file');
   }
 
-  //Create InputImage using bytes
+  ///Create InputImage using bytes.
   factory InputImage.fromBytes(
       {@required Uint8List bytes,
       @required InputImageData inputImageData,
@@ -130,14 +131,15 @@ class InputImage {
   }
 }
 
-//Data of image required when creating image from bytes
+///Data of image required when creating image from bytes.
 class InputImageData {
-  //Size of image
+  ///Size of image.
   final Size size;
 
-  //Image rotation degree
+  ///Image rotation degree.
   final InputImageRotation imageRotation;
 
+  ///Format of the input image.
   final InputImageFormat inputImageFormat;
 
   InputImageData(
@@ -145,7 +147,7 @@ class InputImageData {
       this.imageRotation,
       this.inputImageFormat = InputImageFormat.NV21});
 
-  //Function to get the metadata of image processing purposes
+  ///Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {
     var map = <String, dynamic>{
       'width': size.width,
@@ -170,8 +172,7 @@ int _imageFormatToInt(InputImageFormat inputImageFormat) {
   }
 }
 
-//Function to convert enum [InputImageRotation] to integer value
-
+///Function to convert enum [InputImageRotation] to integer value.
 int _imageRotationToInt(InputImageRotation inputImageRotation) {
   switch (inputImageRotation) {
     case InputImageRotation.Rotation_0deg:

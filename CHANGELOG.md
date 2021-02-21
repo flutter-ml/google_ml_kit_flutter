@@ -17,3 +17,7 @@
 ## 0.0.3
 
 * New : Text Recognition api support
+
+## 0.0.3+1
+
+* Update documentation.

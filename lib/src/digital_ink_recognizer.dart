@@ -1,16 +1,16 @@
 part of 'google_ml_kit.dart';
 
-//Class to process the text that is being written on screen
+///Detector to process the text that is being written on screen.
 class DigitalInkRecogniser {
   DigitalInkRecogniser._();
 
   bool _isOpened = false;
   bool _isClosed = false;
 
-  ///Function that invokes the method to read the text written on screen
-  ///It takes modelTag that refers to language that is being processed
+  ///Function that invokes the method to read the text written on screen.
+  ///It takes modelTag that refers to language that is being processed.
   ///Note that modelTag should follow [BCP 47] guidelines of identifying
-  ///language visit this site [https://tools.ietf.org/html/bcp47] to know
+  ///language visit this site [https://tools.ietf.org/html/bcp47] to know more.
   ///It takes [List<Offset>] which refers to the points being written on screen.
   Future<String> readText(List<Offset> points, String modelTag) async {
     assert(points != null);
@@ -28,7 +28,7 @@ class DigitalInkRecogniser {
     return result.toString();
   }
 
-  //Call this method to close
+  ///Close the instance of detector.
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
       await GoogleMlKit.channel.invokeMethod('closeMlDigitalInkRecognizer');
@@ -38,9 +38,14 @@ class DigitalInkRecogniser {
   }
 }
 
+///Class that manages the language models that are required to process the image.
+///Creating an instance of LanguageModelManager.
+///
+///  LanguageModelManager _languageModelManager = GoogleMlKit.instance.languageModelManager();
 class LanguageModelManager {
   LanguageModelManager._();
 
+  ///Check if a particular model is downloaded.Takes the language tag as input.The language should be according to the BCP-47 guidelines.
   Future<String> isModelDownloaded(String modelTag) async {
     assert(modelTag != null);
     final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
@@ -49,6 +54,8 @@ class LanguageModelManager {
     return result.toString();
   }
 
+  ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.
+  ///Else returns success or failure depending on whether the download completes or not.
   Future<String> downloadModel(String modelTag) async {
     assert(modelTag != null);
 
@@ -58,6 +65,8 @@ class LanguageModelManager {
     return result.toString();
   }
 
+  ///Delete the model of the language specified in the argument. If model has not been previously downloaded it returns 'not exists'.
+  ///Else returns success or failure depending on whether the deletion completes or not.
   Future<String> deleteModel(String modelTag) async {
     assert(modelTag != null);
 

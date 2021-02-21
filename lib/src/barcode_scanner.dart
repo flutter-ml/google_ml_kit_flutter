@@ -32,7 +32,7 @@ class BarcodeScanner {
     return barcodesList;
   }
 
-  //To close the instance of barcodeScanner
+  ///To close the instance of barcodeScanner.
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
       await GoogleMlKit.channel.invokeMethod('closeBarcodeScanner');
@@ -42,7 +42,7 @@ class BarcodeScanner {
   }
 }
 
-//All supported Barcode Types
+///All supported Barcode Types.
 class BarcodeType {
   static const int TYPE_UNKNOWN = 0;
   static const int TYPE_CONTACT_INFO = 1;
@@ -127,7 +127,7 @@ class Barcode {
     }
   }
 
-  //Barcode formats
+  ///Barcode formats supported by the barcode scanner.
   static const int FORMAT_Default = 0;
 
   static const int FORMAT_Code_128 = 1;
@@ -156,6 +156,7 @@ class Barcode {
 
   static const int FORMAT_Data_Matrix = 16;
 
+  ///Type([BarcodeType]) of the barcode detected.
   final int barcodeType;
   final BarcodeWifi barcodeWifi;
   final BarcodeUrl barcodeUrl;
@@ -169,8 +170,8 @@ class Barcode {
   final BarcodeRawOnly barcodeUnknown;
 }
 
-///Base for storing barcode data
-///Any [BarcodeType] has these three values
+///Base for storing barcode data.
+///Any type of barcode has at least these three parameters.
 class BarcodeRawOnly {
   final int type;
   final String rawValue;
@@ -182,10 +183,15 @@ class BarcodeRawOnly {
         displayValue = barcodeData['displayValue'];
 }
 
-//Barcode model for wifi
+///Class to store wifi info obtained from a barcode.
 class BarcodeWifi extends BarcodeRawOnly {
+  ///SSID of the wifi.
   final String ssid;
+
+  ///Password of the wifi.
   final String password;
+
+  ///Encryption type of wifi.
   final int encryptionType;
 
   BarcodeWifi._(Map<dynamic, dynamic> barcodeData)
@@ -195,9 +201,12 @@ class BarcodeWifi extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for Url
+///Class to store url info of the bookmark obtained from a barcode.
 class BarcodeUrl extends BarcodeRawOnly {
+  ///String having the url address of bookmark.
   final String url;
+
+  ///Title of the bookmark.
   final String title;
 
   BarcodeUrl._(Map<dynamic, dynamic> barcodeData)
@@ -206,11 +215,21 @@ class BarcodeUrl extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for email
+///A email message.
 class BarcodeEmail extends BarcodeRawOnly {
+  ///Type of the email sent.
+  ///0 = Unknown
+  ///1 = Work
+  ///2 = Home
   final int emailType;
+
+  ///Email address of sender.
   final String address;
+
+  ///Body of the email.
   final String body;
+
+  ///Subject of email.
   final String subject;
 
   BarcodeEmail._(Map<dynamic, dynamic> barcodeData)
@@ -221,9 +240,15 @@ class BarcodeEmail extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for phone number
+///A phone number.
 class BarcodePhone extends BarcodeRawOnly {
+  ///Type of the phone number.
+  ///0 = Unknown
+  ///1 = Work
+  ///2 = Home
   final int phoneType;
+
+  ///Phone numer.
   final String number;
 
   BarcodePhone._(Map<dynamic, dynamic> barcodeData)
@@ -232,9 +257,12 @@ class BarcodePhone extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for SMS
+///Class extending over [BarcodeRawOnly] to store a SMS.
 class BarcodeSMS extends BarcodeRawOnly {
+  ///Message present in the SMS.
   final String message;
+
+  ///Phone number of the sender.
   final String phoneNumber;
 
   BarcodeSMS._(Map<dynamic, dynamic> barcodeData)
@@ -243,9 +271,11 @@ class BarcodeSMS extends BarcodeRawOnly {
         super._fromMap(barcodeData);
 }
 
-//Barcode model for geolocation
+///Class extending over [BarcodeRawOnly] that represents a geolocation.
 class BarcodeGeo extends BarcodeRawOnly {
+  ///Latitude co-ordinates of the location.
   final double latitude;
+  ////Longitude co-ordinates of the location.
   final double longitude;
 
   BarcodeGeo._(Map<dynamic, dynamic> barcodeData)
@@ -258,20 +288,37 @@ class BarcodeGeo extends BarcodeRawOnly {
 class BarcodeDriverLicense extends BarcodeRawOnly {
   ///City of holder's address.
   final String addressCity;
+
   ///State of the holder's address.
   final String addressState;
+
   ///Zip code code of the holder's address.
   final String addressZip;
+
   ///Street of the holder's address.
   final String addressStreet;
+
   ///Date on which the license was issued.
   final String issueDate;
+
+  ///Birth date of the card holder.
   final String birthDate;
+
+  ///Expiry date of the license.
   final String expiryDate;
+
+  ///Gender of the holder.
   final String gender;
+
+  ///Driver license ID.
   final String licenseNumber;
+  ////First name of the holder.
   final String firstName;
+
+  ///Last name of the holder.
   final String lastName;
+
+  ///Country of the holder.
   final String country;
 
   BarcodeDriverLicense._(Map<dynamic, dynamic> barcodeData)
@@ -294,18 +341,25 @@ class BarcodeDriverLicense extends BarcodeRawOnly {
 class BarcodeContactInfo extends BarcodeRawOnly {
   ///Contact person's addresses.
   final List<BarcodeAddress> barcodeAddresses;
+
   ///Email addresses of the contact person.
   final List<BarcodeEmail> emails;
+
   ///Phone numbers of the contact person.
   final List<BarcodePhone> phoneNumbers;
+
   ///First name of the contact person.
   final String firstName;
+
   ///Last name of the peron.
   final String lastName;
+
   ///Properly formatted name of the person.
   final String formattedName;
+
   ///Organisation of the contact person.
   final String organisationName;
+
   ///Url's of contact person.
   final List<String> urls;
 
@@ -329,24 +383,34 @@ class BarcodeContactInfo extends BarcodeRawOnly {
 class BarcodeCalenderEvent extends BarcodeRawOnly {
   ///Description of the event.
   final String description;
+
   ///Location of the event.
   final String location;
+
   ///Status of the event -> whether the event is completed or not.
   final String status;
+
   ///A short summary of the event.
   final String summary;
+
   ///A person or the organisation who is organising the event.
   final String organiser;
+
   ///String representing the raw value of the start time as encoded in the barcode.
   final String startRawValue;
+
   ///Day of the month on which the event takes place.
   final int startDate;
+
   ///Start hour of the calender event.
   final int startHour;
+
   ///String representing the raw value of the end time of event as encoded in the barcode.
   final String endRawValue;
+
   ///End day of the calender event.
   final int endDate;
+
   ///Ending hour of the event.
   final int endHour;
 
@@ -369,6 +433,7 @@ class BarcodeCalenderEvent extends BarcodeRawOnly {
 class BarcodeAddress {
   ///Formatted address, can be more than one line.
   final String addressLines;
+
   ///Denoted the address type -> Home, Work or Unknown.
   final String type;
 

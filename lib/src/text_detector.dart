@@ -52,13 +52,14 @@ class RecognisedText {
     return RecognisedText._(resText, textBlocks);
   }
 
-  //String containing all the text identified in a image.
+  ///String containing all the text identified in a image.
   final String text;
-  //All the blocks of text present in image.
+
+  ///All the blocks of text present in image.
   final List<TextBlock> textBlocks;
 }
 
-//Class that has a block or group of words present in part of image.
+///Class that has a block or group of words present in part of image.
 class TextBlock {
   TextBlock._(this.textLines, this.blockText, this.blockPoints, this.blockRect);
 
@@ -74,17 +75,20 @@ class TextBlock {
     return TextBlock._(textLines, blockText, offsetList, rect);
   }
 
-  //Rect outlining boundary of block.
+  ///Rect outlining boundary of block.
   final Rect blockRect;
-  //List of corner points of the rect.
+
+  ///List of corner points of the rect.
   final List<Offset> blockPoints;
-  //Text in the block.
+
+  ///Text in the block.
   final String blockText;
-  //List of sentences.
+
+  ///List of sentences.
   final List<TextLine> textLines;
 }
 
-//Class that represents sentence present in a certain block.
+///Class that represents sentence present in a certain block.
 class TextLine {
   TextLine._(this.lineRect, this.linePoints, this.lineText, this.textElements);
 
@@ -106,13 +110,16 @@ class TextLine {
     return TextLine._(rect, offsetList, lineText, textElements);
   }
 
-  //Rect outlining the the text line.
+  ///Rect outlining the the text line.
   final Rect lineRect;
-  //Corner points of the text line.
+
+  ///Corner points of the text line.
   final List<Offset> linePoints;
-  //Sentence of a block.
+
+  ///Sentence of a block.
   final String lineText;
-  //List of text element.
+
+  ///List of text element.
   final List<TextElement> textElements;
 }
 
@@ -120,17 +127,22 @@ class TextLine {
 class TextElement {
   TextElement(this.rect, this.points, this._text, this._textLanguage);
 
-  //Rect outlining the boundary of element.
+  ///Rect outlining the boundary of element.
   final Rect rect;
-  //Language of the text detected.
+
+  ///Language of the text detected.
   final String _textLanguage;
-  //List of corner points of the element.
+
+  ///List of corner points of the element.
   final List<Offset> points;
-  //Word or a sentence.
+
+  ///Word in a line.
   final String _text;
 
+  ///Getter for the word.
   String get getText => _text;
 
+  ///Getter for identified language.
   String get getLanguage => _textLanguage;
 }
 
@@ -144,7 +156,7 @@ Rect _mapToRect(Map<dynamic, dynamic> rect) {
   return rec;
 }
 
-//Convert List of map to list of offset.
+///Convert List of map to list of offset.
 List<Offset> _mapToOffsetList(List<dynamic> points) {
   var p = <Offset>[];
   for (var point in points) {

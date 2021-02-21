@@ -13,7 +13,7 @@ part of 'google_ml_kit.dart';
 /// ImageLabeler imageLabeler = GoogleMlKit.instance.imageLabeler([options]);
 /// The parameter options is optional,it maybe [ImageLabelerOptions],[CustomImageLabelerOptions],[AutoMlImageLabelerOptions
 class ImageLabeler {
-  //private constructor to create instance of image labeler
+  ///private constructor to create instance of image labeler
   ImageLabeler._(dynamic options)
       : assert(options != null),
         _labelerOptions = options;
@@ -54,11 +54,11 @@ class ImageLabeler {
 
 ///To create [ImageLabeler] that process image considering google's base model
 class ImageLabelerOptions {
-  //The minimum confidence(probability) a label should have to been returned in the result
-  //Default value is set 0.5
+  ///The minimum confidence(probability) a label should have to been returned in the result
+  ///Default value is set 0.5
   final double confidenceThreshold;
 
-  //Indicates that it uses google's base model
+  ///Indicates that it uses google's base model to process images.
   final String labelerType = 'default';
 
   ///Constructor to create instance of [ImageLabelerOptions]
@@ -67,17 +67,17 @@ class ImageLabelerOptions {
 
 ///To create [ImageLabeler] that processes image based on the custom tflite model provided by user.
 class CustomImageLabelerOptions {
-  //The minimum confidence(probability) a label should have to been returned in the result
-  //Default value is set 0.5
+  ///The minimum confidence(probability) a label should have to been returned in the result.
+  ///Default value is set 0.5
   final double confidenceThreshold;
 
-  //Indicates the location of custom model.[CustomTrainedModel.asset] implies the model is stored in assets folder of android module
+  ///Indicates the location of custom model.[CustomTrainedModel.asset] implies the model is stored in assets folder of android module.
   final CustomTrainedModel customModel;
 
-  //Path where your custom model is stores
+  ///Path where your custom model is stores.
   final String customModelPath;
 
-  //Indicates that it uses custom tflite model
+  ///Indicates that it uses custom tflite model.
   final String labelerType = 'custom';
 
   ///Constructor to create an instance of [CustomImageLabelerOptions]
@@ -103,20 +103,20 @@ class AutoMlImageLabelerOptions extends CustomImageLabelerOptions {
             customModel: customTrainedModel, customModelPath: customModelPath);
 }
 
-///This represents something that was labeled in image
+///This represents a label detected in image.
 class ImageLabel {
   ImageLabel(dynamic data)
       : confidence = data['confidence'],
         label = data['text'],
         index = data['index'];
 
-  //The confidence(probability) given to label that was identified in image
+  ///The confidence(probability) given to label that was identified in image
   final double confidence;
 
-  //Label or title given for detected entity in image
+  ///Label or title given for detected entity in image
   final String label;
 
-  //Index of label according to google's label map [https://developers.google.com/ml-kit/vision/image-labeling/label-map]
+  ///Index of label according to google's label map [https://developers.google.com/ml-kit/vision/image-labeling/label-map]
   final int index;
 }
 
