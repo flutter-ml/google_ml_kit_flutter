@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /**
  * GoogleMlKitPlugin
@@ -16,11 +15,6 @@ public class GoogleMlKitPlugin implements FlutterPlugin {
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     private static String channelName = "google_ml_kit";
-
-    public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(),channelName );
-        channel.setMethodCallHandler(new MlKitMethodCallHandler(registrar.context()));
-    }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
