@@ -7,7 +7,7 @@ class DigitalInkView extends StatefulWidget {
 }
 
 class _DigitalInkViewState extends State<DigitalInkView> {
-  List<Offset> _points = <Offset>[];
+  List<Offset?> _points = <Offset>[];
   LanguageModelManager _languageModelManager =
       GoogleMlKit.instance.languageModelManager();
   DigitalInkRecogniser _digitalInkRecogniser =
@@ -61,9 +61,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
             GestureDetector(
               onPanUpdate: (DragUpdateDetails details) {
                 setState(() {
-                  RenderBox object = context.findRenderObject();
-                  Offset _localPosition =
-                      object.globalToLocal(details.globalPosition);
+                  RenderObject? object = context.findRenderObject();
+                  final _localPosition = (object as RenderBox?)
+                      ?.globalToLocal(details.globalPosition);
                   _points = List.from(_points)..add(_localPosition);
                 });
               },
@@ -95,7 +95,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text('Read Text'),
                         onPressed: () async {
                           await recogniseText();
@@ -104,19 +104,19 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          RaisedButton(
+                          ElevatedButton(
                             child: Text('Check Download'),
                             onPressed: () async {
                               await _isModelDownloaded();
                             },
                           ),
-                          RaisedButton(
+                          ElevatedButton(
                             child: Text('Download'),
                             onPressed: () async {
                               await _downloadModel();
                             },
                           ),
-                          RaisedButton(
+                          ElevatedButton(
                             child: Text('Delete'),
                             onPressed: () async {
                               await _deleteModel();
@@ -135,9 +135,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
 }
 
 class Signature extends CustomPainter {
-  List<Offset> points;
+  List<Offset?> points;
 
-  Signature({this.points});
+  Signature({this.points = const []});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -147,8 +147,10 @@ class Signature extends CustomPainter {
       ..strokeWidth = 10.0;
 
     for (int i = 0; i < points.length - 1; i++) {
-      if (points[i] != null && points[i + 1] != null) {
-        canvas.drawLine(points[i], points[i + 1], paint);
+      final p1 = points[i];
+      final p2 = points[i + 1];
+      if (p1 != null && p2 != null) {
+        canvas.drawLine(p1, p2, paint);
       }
     }
   }

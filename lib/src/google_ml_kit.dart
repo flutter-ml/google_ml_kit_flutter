@@ -6,10 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-part 'label_detector.dart';
 part 'barcode_scanner.dart';
-part 'pose_detector.dart';
+
 part 'digital_ink_recognizer.dart';
+
+part 'label_detector.dart';
+
+part 'pose_detector.dart';
+
 part 'text_detector.dart';
 
 // To indicate the format of image while creating input image from bytes
@@ -50,14 +54,14 @@ class GoogleMlKit {
   ///Returns instance of [BarcodeScanner].By default it searches the input image for all [BarcodeFormat]
   ///To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as arguement
   ///All the supported formats have been declared as static constants in [Barcode] class
-  BarcodeScanner barcodeScanner([List<int> formatList]) {
+  BarcodeScanner barcodeScanner([List<int>? formatList]) {
     return BarcodeScanner(formats: formatList);
   }
 
   ///Returns instance of [PoseDetector].By default it returns all [PoseLandmark] available in image
   ///To limit the result to specific [PoseLandmark] pass list of [PoseLandmark]'s a
   ///All the 33 positions have been declared as static constants in [PoseLandmark] class
-  PoseDetector poseDetector({PoseDetectorOptions poseDetectorOptions}) {
+  PoseDetector poseDetector({PoseDetectorOptions? poseDetectorOptions}) {
     return PoseDetector(poseDetectorOptions ?? PoseDetectorOptions());
   }
 
@@ -80,10 +84,10 @@ class GoogleMlKit {
 ///[InputImage] is the format Google' Ml kit takes to process the image
 class InputImage {
   InputImage._(
-      {String filePath,
-      Uint8List bytes,
-      @required String imageType,
-      InputImageData inputImageData})
+      {String? filePath,
+      Uint8List? bytes,
+      required String imageType,
+      InputImageData? inputImageData})
       : filePath = filePath,
         bytes = bytes,
         imageType = imageType,
@@ -91,23 +95,19 @@ class InputImage {
 
   ///Create InputImage from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
-    assert(path != null);
     return InputImage._(filePath: path, imageType: 'file');
   }
 
   ///Create InputImage by passing a file.
   factory InputImage.fromFile(File file) {
-    assert(file != null);
     return InputImage._(filePath: file.path, imageType: 'file');
   }
 
   ///Create InputImage using bytes.
   factory InputImage.fromBytes(
-      {@required Uint8List bytes,
-      @required InputImageData inputImageData,
-      String path}) {
-    assert(bytes != null);
-    assert(inputImageData != null);
+      {required Uint8List bytes,
+      required InputImageData inputImageData,
+      String? path}) {
     return InputImage._(
         bytes: bytes,
         imageType: 'bytes',
@@ -115,17 +115,18 @@ class InputImage {
         filePath: path);
   }
 
-  final String filePath;
-  final Uint8List bytes;
+  final String? filePath;
+  final Uint8List? bytes;
   final String imageType;
-  final InputImageData inputImageData;
+  final InputImageData? inputImageData;
 
   Map<String, dynamic> _getImageData() {
     var map = <String, dynamic>{
       'bytes': bytes,
       'type': imageType,
       'path': filePath,
-      'metadata': inputImageData == null ? 'none' : inputImageData.getMetaData()
+      'metadata':
+          inputImageData == null ? 'none' : inputImageData!.getMetaData()
     };
     return map;
   }
@@ -134,10 +135,10 @@ class InputImage {
 ///Data of image required when creating image from bytes.
 class InputImageData {
   ///Size of image.
-  final Size size;
+  final Size? size;
 
   ///Image rotation degree.
-  final InputImageRotation imageRotation;
+  final InputImageRotation? imageRotation;
 
   ///Format of the input image.
   final InputImageFormat inputImageFormat;
@@ -150,8 +151,8 @@ class InputImageData {
   ///Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {
     var map = <String, dynamic>{
-      'width': size.width,
-      'height': size.height,
+      'width': size?.width,
+      'height': size?.height,
       'rotation': _imageRotationToInt(imageRotation),
       'imageFormat': _imageFormatToInt(inputImageFormat)
     };
@@ -173,20 +174,16 @@ int _imageFormatToInt(InputImageFormat inputImageFormat) {
 }
 
 ///Function to convert enum [InputImageRotation] to integer value.
-int _imageRotationToInt(InputImageRotation inputImageRotation) {
+int _imageRotationToInt(InputImageRotation? inputImageRotation) {
   switch (inputImageRotation) {
     case InputImageRotation.Rotation_0deg:
       return 0;
-      break;
     case InputImageRotation.Rotation_90deg:
       return 90;
-      break;
     case InputImageRotation.Rotation_180deg:
       return 180;
-      break;
     case InputImageRotation.Rotation_270deg:
       return 270;
-      break;
     default:
       return 0;
   }

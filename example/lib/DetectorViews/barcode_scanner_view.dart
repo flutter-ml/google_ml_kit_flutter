@@ -10,19 +10,21 @@ class BarcodeScannerView extends StatefulWidget {
 }
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
-  String imagePath;
-  BarcodeScanner barcodeScanner;
-  List<Barcode> barcodes;
+  String? imagePath;
+  BarcodeScanner? barcodeScanner;
+  List<Barcode>? barcodes;
 
   Future<void> readBarcode() async {
     var pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-    final inputImage = InputImage.fromFilePath(pickedFile.path);
-    barcodeScanner = GoogleMlKit.instance.barcodeScanner();
-    final result = await barcodeScanner.processImage(inputImage);
-    setState(() {
-      imagePath = pickedFile.path;
-      barcodes = result;
-    });
+    if (pickedFile != null) {
+      final inputImage = InputImage.fromFilePath(pickedFile.path);
+      barcodeScanner = GoogleMlKit.instance.barcodeScanner();
+      final result = await barcodeScanner?.processImage(inputImage);
+      setState(() {
+        imagePath = pickedFile.path;
+        barcodes = result;
+      });
+    }
   }
 
   @override
@@ -40,9 +42,9 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
                 : Container(
                     height: 400,
                     width: 400,
-                    child: Image.file(File(imagePath)),
+                    child: Image.file(File(imagePath!)),
                   ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: readBarcode,
               child: const Text("Read Barcode"),
             ),
@@ -53,11 +55,11 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
                 ? Container()
                 : ListView.builder(
                     shrinkWrap: true,
-                    itemCount: barcodes.length,
+                    itemCount: barcodes?.length,
                     itemBuilder: (context, index) {
                       return Card(
                         child: Text(
-                            "Type ${barcodes[index].barcodeUnknown.type} \n reads ${barcodes[index].barcodeUnknown.displayValue} \n rawData ${barcodes[index].barcodeUnknown.rawValue}"),
+                            "Type ${barcodes?[index].barcodeUnknown?.type} \n reads ${barcodes?[index].barcodeUnknown?.displayValue} \n rawData ${barcodes?[index].barcodeUnknown?.rawValue}"),
                       );
                     })
           ],
@@ -68,7 +70,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
 
   @override
   void dispose() {
-    barcodeScanner.close();
+    barcodeScanner?.close();
     super.dispose();
   }
 }

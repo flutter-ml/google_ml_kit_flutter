@@ -8,7 +8,7 @@ class BarcodeScanner {
   //List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
   final List<int> barcodeFormat;
 
-  BarcodeScanner({List<int> formats})
+  BarcodeScanner({List<int>? formats})
       : barcodeFormat = formats ?? const [Barcode.FORMAT_Default];
 
   bool _isOpened = false;
@@ -16,7 +16,6 @@ class BarcodeScanner {
 
   ///Function to process the [InputImage] and returns a list of [Barcode]
   Future<dynamic> processImage(InputImage inputImage) async {
-    assert(inputImage != null);
     _isOpened = true;
     final result = await GoogleMlKit.channel.invokeMethod(
         'startBarcodeScanner', <String, dynamic>{
@@ -157,17 +156,17 @@ class Barcode {
   static const int FORMAT_Data_Matrix = 16;
 
   ///Type([BarcodeType]) of the barcode detected.
-  final int barcodeType;
-  final BarcodeWifi barcodeWifi;
-  final BarcodeUrl barcodeUrl;
-  final BarcodeEmail barcodeEmail;
-  final BarcodePhone barcodePhone;
-  final BarcodeSMS barcodeSMS;
-  final BarcodeGeo barcodeGeo;
-  final BarcodeDriverLicense barcodeDriverLicense;
-  final BarcodeContactInfo barcodeContactInfo;
-  final BarcodeCalenderEvent barcodeCalenderEvent;
-  final BarcodeRawOnly barcodeUnknown;
+  final int? barcodeType;
+  final BarcodeWifi? barcodeWifi;
+  final BarcodeUrl? barcodeUrl;
+  final BarcodeEmail? barcodeEmail;
+  final BarcodePhone? barcodePhone;
+  final BarcodeSMS? barcodeSMS;
+  final BarcodeGeo? barcodeGeo;
+  final BarcodeDriverLicense? barcodeDriverLicense;
+  final BarcodeContactInfo? barcodeContactInfo;
+  final BarcodeCalenderEvent? barcodeCalenderEvent;
+  final BarcodeRawOnly? barcodeUnknown;
 }
 
 ///Base for storing barcode data.
@@ -275,6 +274,7 @@ class BarcodeSMS extends BarcodeRawOnly {
 class BarcodeGeo extends BarcodeRawOnly {
   ///Latitude co-ordinates of the location.
   final double latitude;
+
   ////Longitude co-ordinates of the location.
   final double longitude;
 
@@ -312,6 +312,7 @@ class BarcodeDriverLicense extends BarcodeRawOnly {
 
   ///Driver license ID.
   final String licenseNumber;
+
   ////First name of the holder.
   final String firstName;
 
