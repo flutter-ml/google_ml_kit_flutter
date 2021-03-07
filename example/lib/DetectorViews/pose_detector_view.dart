@@ -13,29 +13,30 @@ class PoseDetectorView extends StatefulWidget {
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool showImage = false;
-  ui.Image image;
-  PoseDetector poseDetector;
+  ui.Image? image;
 
-  Map<int, PoseLandmark> poseLandmarks;
+  Map<int, PoseLandmark>? poseLandmarks;
 
   Future<void> getImage() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    final imageData = File(pickedFile.path).readAsBytesSync();
-    final uiImage = await decodeImageFromList(imageData);
+    if (pickedFile != null) {
+      final imageData = File(pickedFile.path).readAsBytesSync();
+      final uiImage = await decodeImageFromList(imageData);
 
-    final inputImage = InputImage.fromFilePath(pickedFile.path);
-    // final options = PoseDetectorOptions(
-    //     poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
-    //     poseDetectionMode: PoseDetectionMode.StaticImage);
-    poseDetector = GoogleMlKit.instance.poseDetector();
-    var landMarksMap = await poseDetector.processImage(inputImage);
-    setState(() {
-      poseLandmarks = landMarksMap;
-      image = uiImage;
-      showImage = true;
-    });
-    await poseDetector.close();
+      final inputImage = InputImage.fromFilePath(pickedFile.path);
+      // final options = PoseDetectorOptions(
+      //     poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
+      //     poseDetectionMode: PoseDetectionMode.StaticImage);
+      final poseDetector = GoogleMlKit.instance.poseDetector();
+      var landMarksMap = await poseDetector.processImage(inputImage);
+      setState(() {
+        poseLandmarks = landMarksMap;
+        image = uiImage;
+        showImage = true;
+      });
+      await poseDetector.close();
+    }
   }
 
   @override
@@ -50,15 +51,15 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             showImage
                 ? FittedBox(
                     child: SizedBox(
-                      height: image.height.toDouble(),
-                      width: image.width.toDouble(),
+                      height: image?.height.toDouble(),
+                      width: image?.width.toDouble(),
                       child: CustomPaint(
-                        painter: PosePainter(image, poseLandmarks),
+                        painter: PosePainter(image!, poseLandmarks!),
                       ),
                     ),
                   )
                 : Container(),
-            RaisedButton(
+            ElevatedButton(
               onPressed: getImage,
               child: Text('Select Image'),
             )
@@ -100,23 +101,23 @@ class PosePainter extends CustomPainter {
         canvas.drawCircle(Offset(value.x, value.y), 1, paint);
       });
 
-      PoseLandmark leftShoulder = _landmarksMap[PoseLandmark.LEFT_SHOULDER];
-      PoseLandmark rightShoulder = _landmarksMap[PoseLandmark.RIGHT_SHOULDER];
-      PoseLandmark leftElbow = _landmarksMap[PoseLandmark.LEFT_ELBOW];
-      PoseLandmark rightElbow = _landmarksMap[PoseLandmark.RIGHT_ELBOW];
-      PoseLandmark leftWrist = _landmarksMap[PoseLandmark.LEFT_WRIST];
-      PoseLandmark rightWrist = _landmarksMap[PoseLandmark.RIGHT_WRIST];
-      PoseLandmark leftHip = _landmarksMap[PoseLandmark.LEFT_HIP];
-      PoseLandmark rightHip = _landmarksMap[PoseLandmark.RIGHT_HIP];
-      PoseLandmark leftKnee = _landmarksMap[PoseLandmark.LEFT_KNEE];
-      PoseLandmark rightKnee = _landmarksMap[PoseLandmark.RIGHT_KNEE];
-      PoseLandmark leftAnkle = _landmarksMap[PoseLandmark.LEFT_ANKLE];
-      PoseLandmark rightAnkle = _landmarksMap[PoseLandmark.RIGHT_ANKLE];
-      PoseLandmark leftHeel = _landmarksMap[PoseLandmark.LEFT_HEEL];
-      PoseLandmark rightHeel = _landmarksMap[PoseLandmark.RIGHT_HEEL];
-      PoseLandmark leftFootIndex = _landmarksMap[PoseLandmark.LEFT_FOOT_INDEX];
+      PoseLandmark leftShoulder = _landmarksMap[PoseLandmark.LEFT_SHOULDER]!;
+      PoseLandmark rightShoulder = _landmarksMap[PoseLandmark.RIGHT_SHOULDER]!;
+      PoseLandmark leftElbow = _landmarksMap[PoseLandmark.LEFT_ELBOW]!;
+      PoseLandmark rightElbow = _landmarksMap[PoseLandmark.RIGHT_ELBOW]!;
+      PoseLandmark leftWrist = _landmarksMap[PoseLandmark.LEFT_WRIST]!;
+      PoseLandmark rightWrist = _landmarksMap[PoseLandmark.RIGHT_WRIST]!;
+      PoseLandmark leftHip = _landmarksMap[PoseLandmark.LEFT_HIP]!;
+      PoseLandmark rightHip = _landmarksMap[PoseLandmark.RIGHT_HIP]!;
+      PoseLandmark leftKnee = _landmarksMap[PoseLandmark.LEFT_KNEE]!;
+      PoseLandmark rightKnee = _landmarksMap[PoseLandmark.RIGHT_KNEE]!;
+      PoseLandmark leftAnkle = _landmarksMap[PoseLandmark.LEFT_ANKLE]!;
+      PoseLandmark rightAnkle = _landmarksMap[PoseLandmark.RIGHT_ANKLE]!;
+      PoseLandmark leftHeel = _landmarksMap[PoseLandmark.LEFT_HEEL]!;
+      PoseLandmark rightHeel = _landmarksMap[PoseLandmark.RIGHT_HEEL]!;
+      PoseLandmark leftFootIndex = _landmarksMap[PoseLandmark.LEFT_FOOT_INDEX]!;
       PoseLandmark rightFootIndex =
-          _landmarksMap[PoseLandmark.RIGHT_FOOT_INDEX];
+          _landmarksMap[PoseLandmark.RIGHT_FOOT_INDEX]!;
 
       //Similarly get other landmarks as well
       // PoseLandmark leftPinky = _landmarksMap[PoseLandmark.LEFT_PINKY];
