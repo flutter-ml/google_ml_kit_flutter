@@ -16,7 +16,9 @@ class DigitalInkRecogniser {
     _isOpened = true;
     List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
     for (var point in points) {
-      pointsList.add(<String, dynamic>{'x': point?.dx, 'y': point?.dy});
+      if (point != null) {
+        pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
+      }
     }
     final result = await GoogleMlKit.channel.invokeMethod(
         'startMlDigitalInkRecognizer',

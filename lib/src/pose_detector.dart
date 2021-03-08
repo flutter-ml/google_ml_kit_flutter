@@ -36,11 +36,11 @@ class PoseDetector {
 
     List<PoseLandmark> poseLandmarks = <PoseLandmark>[];
     poseLandmarks.addAll(
-        result.map((item) => PoseLandmark(item['type'], item['x'], item['y'])));
+        result.map((item) => PoseLandmark(item['position'], item['x'], item['y'])));
 
     Map<int, PoseLandmark> map = {
       for (var item in result)
-        item['position']: PoseLandmark(item['type'], item['x'], item['y'])
+        item['position']: PoseLandmark(item['position'], item['x'], item['y'])
     };
 
     return map;
