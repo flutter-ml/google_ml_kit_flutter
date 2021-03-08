@@ -25,8 +25,6 @@ class ImageLabeler {
 
   ///Function that takes [InputImage] processes it and returns a List of [ImageLabel]
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
-    assert(inputImage != null);
-
     _isOpened = true;
 
     final result = await GoogleMlKit.channel
@@ -83,10 +81,8 @@ class CustomImageLabelerOptions {
   ///Constructor to create an instance of [CustomImageLabelerOptions]
   CustomImageLabelerOptions(
       {this.confidenceThreshold = 0.5,
-      @required this.customModel,
-      @required this.customModelPath})
-      : assert(customModelPath != null),
-        assert(customModel != null);
+      required this.customModel,
+      required this.customModelPath});
 }
 
 ///To create [ImageLabeler] that processes image based on the custom auto ml vision model provided by user.

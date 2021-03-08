@@ -26,7 +26,6 @@ class PoseDetector {
 
   ///Process the image and returns a map where key denotes [PoseLandmark] i.e location. Value contains the info of the PoseLandmark i.e
   Future<Map<int, PoseLandmark>> processImage(InputImage inputImage) async {
-    assert(inputImage != null);
     _isOpened = true;
 
     List<dynamic> result = await GoogleMlKit.channel
@@ -36,10 +35,8 @@ class PoseDetector {
     });
 
     List<PoseLandmark> poseLandmarks = <PoseLandmark>[];
-    if (result != null) {
-      poseLandmarks.addAll(result
-          .map((item) => PoseLandmark(item['type'], item['x'], item['y'])));
-    }
+    poseLandmarks.addAll(
+        result.map((item) => PoseLandmark(item['type'], item['x'], item['y'])));
 
     Map<int, PoseLandmark> map = {
       for (var item in result)
@@ -69,7 +66,7 @@ class PoseDetectorOptions {
 
   ///List of poseLandmarks you want to obtain from the image
   ///By default it returns all available available [PoseLandmarks]
-  final List<int> poseLandmarks;
+  final List<int>? poseLandmarks;
   final LandmarkSelectionType selectionType;
 
   PoseDetectorOptions(
