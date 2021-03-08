@@ -12,14 +12,11 @@ class DigitalInkRecogniser {
   ///Note that modelTag should follow [BCP 47] guidelines of identifying
   ///language visit this site [https://tools.ietf.org/html/bcp47] to know more.
   ///It takes [List<Offset>] which refers to the points being written on screen.
-  Future<String> readText(List<Offset> points, String modelTag) async {
-    assert(points != null);
+  Future<String> readText(List<Offset?> points, String modelTag) async {
     _isOpened = true;
     List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
     for (var point in points) {
-      if (point != null) {
-        pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
-      }
+      pointsList.add(<String, dynamic>{'x': point?.dx, 'y': point?.dy});
     }
     final result = await GoogleMlKit.channel.invokeMethod(
         'startMlDigitalInkRecognizer',
@@ -47,7 +44,6 @@ class LanguageModelManager {
 
   ///Check if a particular model is downloaded.Takes the language tag as input.The language should be according to the BCP-47 guidelines.
   Future<String> isModelDownloaded(String modelTag) async {
-    assert(modelTag != null);
     final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
         <String, dynamic>{'task': 'check', 'modelTag': modelTag});
 
@@ -57,8 +53,6 @@ class LanguageModelManager {
   ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.
   ///Else returns success or failure depending on whether the download completes or not.
   Future<String> downloadModel(String modelTag) async {
-    assert(modelTag != null);
-
     final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
         <String, dynamic>{'task': 'download', 'modelTag': modelTag});
 
@@ -68,8 +62,6 @@ class LanguageModelManager {
   ///Delete the model of the language specified in the argument. If model has not been previously downloaded it returns 'not exists'.
   ///Else returns success or failure depending on whether the deletion completes or not.
   Future<String> deleteModel(String modelTag) async {
-    assert(modelTag != null);
-
     final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
         <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
 

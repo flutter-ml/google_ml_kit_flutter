@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class TextDetectorView extends StatefulWidget {
   @override
@@ -12,20 +12,22 @@ class TextDetectorView extends StatefulWidget {
 class _TextDetectorViewState extends State<TextDetectorView> {
   String result = '';
   List<ImageLabel> imageLabels = <ImageLabel>[];
-  RecognisedText _recognisedText;
+  RecognisedText? _recognisedText;
   TextDetector _textDetector = GoogleMlKit.instance.textDetector();
-  String filePath;
+  String? filePath;
 
   Future<void> fromStorage() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    final inputImage = InputImage.fromFilePath(pickedFile.path);
+    if (pickedFile != null) {
+      final inputImage = InputImage.fromFilePath(pickedFile.path);
 
-    final text = await _textDetector.processImage(inputImage);
-    setState(() {
-      filePath = pickedFile.path;
-      _recognisedText = text;
-    });
+      final text = await _textDetector.processImage(inputImage);
+      setState(() {
+        filePath = pickedFile.path;
+        _recognisedText = text;
+      });
+    }
   }
 
   @override
@@ -46,9 +48,9 @@ class _TextDetectorViewState extends State<TextDetectorView> {
             : Container(
                 height: 400,
                 width: 400,
-                child: Image.file(File(filePath)),
+                child: Image.file(File(filePath!)),
               ),
-        RaisedButton(
+        ElevatedButton(
           onPressed: fromStorage,
           child: const Text("Detect text"),
         ),
@@ -57,14 +59,14 @@ class _TextDetectorViewState extends State<TextDetectorView> {
             : ListView.builder(
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: _recognisedText.textBlocks.length,
+                itemCount: _recognisedText!.textBlocks.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.all(4),
                     child: ExpansionTile(
                       title: Text('Block ${index + 1}'),
                       children: _textBlockWidget(
-                          _recognisedText.textBlocks[index].textLines),
+                          _recognisedText!.textBlocks[index].textLines),
                     ),
                   );
                 },
