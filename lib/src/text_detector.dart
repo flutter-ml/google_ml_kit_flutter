@@ -14,7 +14,6 @@ class TextDetector {
 
   /// Function that takes [InputImage] processes it and returns a [RecognisedText] object.
   Future<RecognisedText> processImage(InputImage inputImage) async {
-
     _isOpened = true;
     final result = await GoogleMlKit.channel.invokeMethod('startTextDetector',
         <String, dynamic>{'imageData': inputImage._getImageData()});
