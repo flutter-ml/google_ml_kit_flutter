@@ -21,3 +21,7 @@
 ## 0.0.3+1
 
 * Update documentation.
+
+## 0.1.0
+
+* NULL SAFETY
