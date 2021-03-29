@@ -58,9 +58,9 @@ To know more about [formats of image](https://developer.android.com/reference/an
 **Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)**
 ## Pose Detection
 
--*Googgle Play service model is not available for this api' so no extra implementation**
+- *Googgle Play service model is not available for this api' so no extra implementation**
 
--**Create [`PoseDetectorOptions`]()**
+- **Create [`PoseDetectorOptions`]()**
 ```
 final options = PoseDetectorOptions(
         poseDetectionModel: PoseDetectionModel.BasePoseDetector,
@@ -69,7 +69,7 @@ final options = PoseDetectorOptions(
 //or PoseDetectionModel.AccuratePoseDetector to use accurate pose detector
         
 ```
--**Obtain [`PoseDetector`] instance.**
+- **Obtain [`PoseDetector`] instance.**
 
 **Note**: To obtain default poseDetector no options need to be specied. It gives all available landmarks using BasePoseDetector Model.
 
@@ -78,7 +78,7 @@ final options = PoseDetectorOptions(
 PoseDetector poseDetector = GoogleMlKit.instance
                                .poseDetector([PoseDetectorOptions options]);
 ```
--Call `processImage(InputImage inputImage)` to obtain the result.
+- Call `processImage(InputImage inputImage)` to obtain the result.
 It returns 
 >Map<int,[PoseLandMark]()>
 ```
