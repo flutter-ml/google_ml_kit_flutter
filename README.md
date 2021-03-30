@@ -12,8 +12,9 @@ Flutter plugin to use [google's standalone ml kit](https://developers.google.com
 * [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
 * [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
 * [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
-
-Support for other api's will be shortly added
+- Support for other api's will be shortly added
+ 
+>Please note - Currently detection is working only with image files and not camera stream data. Hope to fix this soon.
 
 ## Usage
 Add this plugin as dependency in your pubspec.yaml.
