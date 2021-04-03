@@ -14,7 +14,7 @@ Flutter plugin to use [google's standalone ml kit](https://developers.google.com
 * [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
 - Support for other api's will be shortly added
  
->Please note - Currently detection is working only with image files and not camera stream data. Hope to fix this soon.
+>Please note - Currently detection is working only with image files and not camera stream data`fromBytes()`. Hope to fix this soon.
 
 ## Usage
 Add this plugin as dependency in your pubspec.yaml.
