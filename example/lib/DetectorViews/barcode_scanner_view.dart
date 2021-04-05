@@ -18,7 +18,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
     var pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       final inputImage = InputImage.fromFilePath(pickedFile.path);
-      barcodeScanner = GoogleMlKit.instance.barcodeScanner();
+      barcodeScanner = GoogleMlKit.vision.barcodeScanner();
       final result = await barcodeScanner?.processImage(inputImage);
       setState(() {
         imagePath = pickedFile.path;

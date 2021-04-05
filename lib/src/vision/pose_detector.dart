@@ -1,4 +1,4 @@
-part of 'google_ml_kit.dart';
+part of 'vision.dart';
 
 //enum to specify whether to use base pose model or accurate posed model
 //To know differences between these two visit this [https://developers.google.com/ml-kit/vision/pose-detection/android] site
@@ -28,8 +28,8 @@ class PoseDetector {
   Future<Map<int, PoseLandmark>> processImage(InputImage inputImage) async {
     _isOpened = true;
 
-    List<dynamic> result = await GoogleMlKit.channel
-        .invokeMethod('startPoseDetector', <String, dynamic>{
+    List<dynamic> result = await Vision.channel
+        .invokeMethod('vision#startPoseDetector', <String, dynamic>{
       'options': poseDetectorOptions._detectorOption(),
       'imageData': inputImage._getImageData()
     });
@@ -48,7 +48,7 @@ class PoseDetector {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod('closePoseDetector');
+      await Vision.channel.invokeMethod('vision#closePoseDetector');
       _isClosed = true;
       _isOpened = false;
     }

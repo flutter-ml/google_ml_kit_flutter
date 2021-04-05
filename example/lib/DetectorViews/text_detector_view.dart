@@ -13,7 +13,7 @@ class _TextDetectorViewState extends State<TextDetectorView> {
   String result = '';
   List<ImageLabel> imageLabels = <ImageLabel>[];
   RecognisedText? _recognisedText;
-  TextDetector _textDetector = GoogleMlKit.instance.textDetector();
+  TextDetector _textDetector = GoogleMlKit.vision.textDetector();
   String? filePath;
 
   Future<void> fromStorage() async {

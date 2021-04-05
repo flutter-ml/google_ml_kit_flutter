@@ -1,4 +1,4 @@
-part of 'google_ml_kit.dart';
+part of 'vision.dart';
 
 ///Detector that detects the labels present in the [InputImage] provided
 ///Labels implies the objects,places,people etc.. that were recognised on the image
@@ -27,8 +27,8 @@ class ImageLabeler {
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
     _isOpened = true;
 
-    final result = await GoogleMlKit.channel
-        .invokeMethod('startImageLabelDetector', <String, dynamic>{
+    final result = await Vision.channel
+        .invokeMethod('vision#startImageLabelDetector', <String, dynamic>{
       'options': _getImageOptions(_labelerOptions),
       'imageData': inputImage._getImageData()
     });
@@ -43,7 +43,7 @@ class ImageLabeler {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod('closeImageLabelDetector');
+      await Vision.channel.invokeMethod('vision#closeImageLabelDetector');
       _isClosed = true;
       _isOpened = false;
     }

@@ -9,9 +9,9 @@ class DigitalInkView extends StatefulWidget {
 class _DigitalInkViewState extends State<DigitalInkView> {
   List<Offset?> _points = <Offset>[];
   LanguageModelManager _languageModelManager =
-      GoogleMlKit.instance.languageModelManager();
+      GoogleMlKit.vision.languageModelManager();
   DigitalInkRecogniser _digitalInkRecogniser =
-      GoogleMlKit.instance.digitalInkRecogniser();
+      GoogleMlKit.vision.digitalInkRecogniser();
   String _recognisedText = '';
 
   Future<void> _isModelDownloaded() async {

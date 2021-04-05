@@ -1,4 +1,4 @@
-part of 'google_ml_kit.dart';
+part of 'vision.dart';
 
 ///Class to scan the barcode in [InputImage]
 ///Creating an instance of [BarcodeScanner]
@@ -17,8 +17,8 @@ class BarcodeScanner {
   ///Function to process the [InputImage] and returns a list of [Barcode]
   Future<dynamic> processImage(InputImage inputImage) async {
     _isOpened = true;
-    final result = await GoogleMlKit.channel.invokeMethod(
-        'startBarcodeScanner', <String, dynamic>{
+    final result = await Vision.channel.invokeMethod(
+        'vision#startBarcodeScanner', <String, dynamic>{
       'formats': barcodeFormat,
       'imageData': inputImage._getImageData()
     });
@@ -34,7 +34,7 @@ class BarcodeScanner {
   ///To close the instance of barcodeScanner.
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod('closeBarcodeScanner');
+      await Vision.channel.invokeMethod('vision#closeBarcodeScanner');
       _isClosed = true;
       _isOpened = false;
     }
