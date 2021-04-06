@@ -13,14 +13,14 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   String result = '';
   List<ImageLabel> imageLabels = <ImageLabel>[];
   String? filePath;
-  ImageLabeler imageLabeler = GoogleMlKit.instance.imageLabeler();
+  ImageLabeler imageLabeler = GoogleMlKit.vision.imageLabeler();
 
   Future<void> fromStorage() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       final inputImage = InputImage.fromFilePath(pickedFile.path);
-      imageLabeler = GoogleMlKit.instance.imageLabeler();
+      imageLabeler = GoogleMlKit.vision.imageLabeler();
       final labels = await imageLabeler.processImage(inputImage);
       setState(() {
         filePath = pickedFile.path;
@@ -38,7 +38,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
       CustomImageLabelerOptions options = CustomImageLabelerOptions(
           customModel: CustomTrainedModel.asset,
           customModelPath: "antartic.tflite");
-      imageLabeler = GoogleMlKit.instance.imageLabeler(options);
+      imageLabeler = GoogleMlKit.vision.imageLabeler(options);
       final labels = await imageLabeler.processImage(inputImage);
       setState(() {
         filePath = pickedFile.path;

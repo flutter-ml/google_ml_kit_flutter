@@ -55,22 +55,22 @@ public class MlPoseDetector implements ApiDetectorInterface {
                                     new OnSuccessListener<Pose>() {
                                         @Override
                                         public void onSuccess(Pose pose) {
-                                            List<Map<String,Object>> pointsList = new ArrayList<>();
+                                            List<Map<String, Object>> pointsList = new ArrayList<>();
                                             if (selectionType.equals("all")) {
-                                                for(PoseLandmark poseLandmark : pose.getAllPoseLandmarks()){
-                                                    Map<String,Object> poseLandmarkMap = new HashMap<>();
-                                                    poseLandmarkMap.put("position",poseLandmark.getLandmarkType());
-                                                    poseLandmarkMap.put("x",poseLandmark.getPosition().x);
-                                                    poseLandmarkMap.put("y",poseLandmark.getPosition().y);
+                                                for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
+                                                    Map<String, Object> poseLandmarkMap = new HashMap<>();
+                                                    poseLandmarkMap.put("position", poseLandmark.getLandmarkType());
+                                                    poseLandmarkMap.put("x", poseLandmark.getPosition().x);
+                                                    poseLandmarkMap.put("y", poseLandmark.getPosition().y);
                                                     pointsList.add(poseLandmarkMap);
                                                 }
                                             } else {
                                                 for (int i : poseLandMarksList) {
-                                                    Map<String,Object> poseLandmarkMap = new HashMap<>();
+                                                    Map<String, Object> poseLandmarkMap = new HashMap<>();
                                                     PoseLandmark poseLandmark = pose.getPoseLandmark(i);
-                                                    poseLandmarkMap.put("position",poseLandmark.getLandmarkType());
-                                                    poseLandmarkMap.put("x",poseLandmark.getPosition().x);
-                                                    poseLandmarkMap.put("y",poseLandmark.getPosition().y);
+                                                    poseLandmarkMap.put("position", poseLandmark.getLandmarkType());
+                                                    poseLandmarkMap.put("x", poseLandmark.getPosition().x);
+                                                    poseLandmarkMap.put("y", poseLandmark.getPosition().y);
                                                     pointsList.add(poseLandmarkMap);
                                                 }
                                             }
@@ -83,7 +83,7 @@ public class MlPoseDetector implements ApiDetectorInterface {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             e.printStackTrace();
-                                            result.error("poseDetector error",e.toString(),null);
+                                            result.error("poseDetector error", e.toString(), null);
                                         }
                                     });
         }

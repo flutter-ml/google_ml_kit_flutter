@@ -28,7 +28,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       // final options = PoseDetectorOptions(
       //     poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
       //     poseDetectionMode: PoseDetectionMode.StaticImage);
-      final poseDetector = GoogleMlKit.instance.poseDetector();
+      final poseDetector = GoogleMlKit.vision.poseDetector();
       var landMarksMap = await poseDetector.processImage(inputImage);
       setState(() {
         poseLandmarks = landMarksMap;

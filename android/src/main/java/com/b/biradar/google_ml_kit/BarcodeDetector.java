@@ -64,7 +64,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                     case Barcode.TYPE_PRODUCT:
                                     case Barcode.TYPE_TEXT:
                                         break;
-                                    case Barcode.TYPE_WIFI:      
+                                    case Barcode.TYPE_WIFI:
                                         barcodeMap.put("ssid", barcode.getWifi().getSsid());
                                         barcodeMap.put("password", barcode.getWifi().getPassword());
                                         barcodeMap.put("encryption", barcode.getWifi().getEncryptionType());
@@ -169,14 +169,14 @@ public class BarcodeDetector implements ApiDetectorInterface {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             e.printStackTrace();
-                            result.error("barcode scan error",e.toString(),null);
+                            result.error("barcode scan error", e.toString(), null);
                         }
                     });
         }
     }
 
     @Override
-    public void closeDetector()  {
+    public void closeDetector() {
         barcodeScanner.close();
     }
 }

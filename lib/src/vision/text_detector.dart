@@ -1,4 +1,4 @@
-part of 'google_ml_kit.dart';
+part of 'vision.dart';
 
 ///Detector to detect text present in the [InputImage] provided.
 ///It returns [RecognisedText] which contains the info present in the image.
@@ -15,7 +15,7 @@ class TextDetector {
   /// Function that takes [InputImage] processes it and returns a [RecognisedText] object.
   Future<RecognisedText> processImage(InputImage inputImage) async {
     _isOpened = true;
-    final result = await GoogleMlKit.channel.invokeMethod('startTextDetector',
+    final result = await Vision.channel.invokeMethod('vision#startTextDetector',
         <String, dynamic>{'imageData': inputImage._getImageData()});
 
     final recognisedText = RecognisedText.fromMap(result);
@@ -25,7 +25,7 @@ class TextDetector {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod('closeTextDetector');
+      await Vision.channel.invokeMethod('vision#closeTextDetector');
       _isClosed = true;
       _isOpened = false;
     }

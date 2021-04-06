@@ -1,4 +1,4 @@
-part of 'google_ml_kit.dart';
+part of 'vision.dart';
 
 ///Detector to process the text that is being written on screen.
 class DigitalInkRecogniser {
@@ -20,8 +20,8 @@ class DigitalInkRecogniser {
         pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
       }
     }
-    final result = await GoogleMlKit.channel.invokeMethod(
-        'startMlDigitalInkRecognizer',
+    final result = await Vision.channel.invokeMethod(
+        'vision#startMlDigitalInkRecognizer',
         <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
     _isClosed = false;
     return result.toString();
@@ -30,7 +30,7 @@ class DigitalInkRecogniser {
   ///Close the instance of detector.
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await GoogleMlKit.channel.invokeMethod('closeMlDigitalInkRecognizer');
+      await Vision.channel.invokeMethod('vision#closeMlDigitalInkRecognizer');
       _isOpened = false;
       _isClosed = true;
     }
@@ -46,7 +46,7 @@ class LanguageModelManager {
 
   ///Check if a particular model is downloaded.Takes the language tag as input.The language should be according to the BCP-47 guidelines.
   Future<String> isModelDownloaded(String modelTag) async {
-    final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
+    final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'check', 'modelTag': modelTag});
 
     return result.toString();
@@ -55,7 +55,7 @@ class LanguageModelManager {
   ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.
   ///Else returns success or failure depending on whether the download completes or not.
   Future<String> downloadModel(String modelTag) async {
-    final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
+    final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'download', 'modelTag': modelTag});
 
     return result.toString();
@@ -64,7 +64,7 @@ class LanguageModelManager {
   ///Delete the model of the language specified in the argument. If model has not been previously downloaded it returns 'not exists'.
   ///Else returns success or failure depending on whether the deletion completes or not.
   Future<String> deleteModel(String modelTag) async {
-    final result = await GoogleMlKit.channel.invokeMethod('manageInkModels',
+    final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
 
     return result.toString();
