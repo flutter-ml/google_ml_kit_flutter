@@ -25,3 +25,8 @@
 ## 0.1.0
 
 * NULL SAFETY
+
+## 0.2.0
+
+* Breaking changes in Api outline (instance creation of detectors)
+* New : Added language identifier api
