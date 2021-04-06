@@ -10,7 +10,6 @@ class LanguageIdentifier {
   Future<String> identifyLanguange(String text) async {
     _isOpened = true;
 
-    print('In identify language text = $text');
     final result = await NaturalLanguage.channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
       "text": text,

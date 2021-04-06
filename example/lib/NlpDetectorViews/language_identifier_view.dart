@@ -82,7 +82,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
 
   @override
   void dispose() async{
-    await _languageIdentifier.close();
     super.dispose();
-  }
+    await _languageIdentifier.close();
+  } 
 }

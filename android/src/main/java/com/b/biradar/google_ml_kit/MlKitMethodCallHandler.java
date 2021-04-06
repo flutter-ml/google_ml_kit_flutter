@@ -35,7 +35,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         final String[] calls = call.method.split("#");
-        Log.e("Method call name", calls[1]);
+
         if (calls[0].equals("vision")) handleVisionDetection(call, result, calls[1]);
         else handleNlpDetection(call, result, calls[1]);
 
@@ -83,7 +83,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                     detector = new LanguageDetector((double) call.argument("confidence"));
                     nlpDetectors.put(invokeMethod.substring(5), detector);
                 }
-                Log.e("Nlp handling", "calling language identifier methods");
+
                 if (call.argument("possibleLanguages").equals("no")) {
                     ((LanguageDetector) detector).identifyLanguage((String) call.argument("text"), result);
                 } else {
@@ -226,7 +226,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         result.success("exists");
                     }
                     if (!modelDownloadManager.isModelDownloaded()) {
-                        Log.e("Model Download Details", "Model is not Dowwnloaded");
+                        Log.e("Model Download Details", "Model is not Downloaded");
                         result.success("not exists");
                     }
                     if (modelDownloadManager.isModelDownloaded() == null) {

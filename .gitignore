@@ -4,4 +4,9 @@
 .packages
 .pub/
 .vscode/
+.vscode
 build/
+.idea/
+*.iml
+*.ipr
+*.iws
