@@ -1,5 +1,5 @@
+import 'NlpDetectorViews/language_identifier_view.dart';
 import 'VisionDetectorViews/detector_views.dart';
-import 'NlpdetectorViews/language_identifier_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
