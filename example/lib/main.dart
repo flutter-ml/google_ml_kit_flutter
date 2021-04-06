@@ -38,11 +38,15 @@ class Home extends StatelessWidget {
               CustomCard('Text Detector', TextDetectorView()),
             ],
           ),
-          SizedBox(height: 20,),
-          ExpansionTile(title: const Text("NLP Api's"),
-          children: [
-            CustomCard('Language Identifier',LanguageIdentifierView()),
-          ],)
+          SizedBox(
+            height: 20,
+          ),
+          ExpansionTile(
+            title: const Text("NLP Api's"),
+            children: [
+              CustomCard('Language Identifier', LanguageIdentifierView()),
+            ],
+          )
         ],
       ),
     );
@@ -61,7 +65,10 @@ class CustomCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10),
       child: ListTile(
         tileColor: Theme.of(context).accentColor,
-        title: Text(_label,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text(
+          _label,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => _viewPage));

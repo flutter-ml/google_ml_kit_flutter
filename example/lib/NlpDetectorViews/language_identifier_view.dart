@@ -9,7 +9,8 @@ class LanguageIdentifierView extends StatefulWidget {
 class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   List<IdentifiedLanguage> _identifiedLanguages = <IdentifiedLanguage>[];
   late TextEditingController _controller;
-  final _languageIdentifier = GoogleMlKit.nlp.languageIdentifier(confidenceThreshold: 0.34);
+  final _languageIdentifier =
+      GoogleMlKit.nlp.languageIdentifier(confidenceThreshold: 0.34);
   var _identifiedLanguage = '';
 
   Future<void> _identifyLanguage() async {
@@ -26,7 +27,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
     if (_controller.text == '') return;
     final possibleLanguages =
         await _languageIdentifier.identifyPossibleLanguages(_controller.text);
-   
+
     setState(() {
       _identifiedLanguages = possibleLanguages;
     });
@@ -67,7 +68,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
         ),
         Container(
           child: ListView.builder(
-            shrinkWrap: true,
+              shrinkWrap: true,
               itemCount: _identifiedLanguages.length,
               itemBuilder: (context, index) {
                 return ListTile(
@@ -81,8 +82,8 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   }
 
   @override
-  void dispose() async{
+  void dispose() async {
     super.dispose();
     await _languageIdentifier.close();
-  } 
+  }
 }
