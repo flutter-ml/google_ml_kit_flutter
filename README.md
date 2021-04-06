@@ -167,7 +167,7 @@ final text = await textDetector.processImage(inputImage);
 
 **To know more see this [example](example/lib/DetectorViews/VisionDetectorViews/text_detector_view.dart)**
 
-##Language Detection
+## Language Detection
 1. Call `identifyLanguage(text)` to identify language of text.
 2. Call `identifyPossibleLanguages(text)` to get a list of [IdentifiedLanguage](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L53) which contains all possible languages that are above the specified threshold. **Default is 0.5**.
 3. To get info of the identified **BCP-47** tag use this [class](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L63).
