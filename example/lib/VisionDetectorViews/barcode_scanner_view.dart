@@ -11,7 +11,7 @@ class BarcodeScannerView extends StatefulWidget {
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   String? imagePath;
-  BarcodeScanner? barcodeScanner;
+  late BarcodeScanner barcodeScanner;
   List<Barcode>? barcodes;
 
   Future<void> readBarcode() async {
@@ -19,7 +19,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
     if (pickedFile != null) {
       final inputImage = InputImage.fromFilePath(pickedFile.path);
       barcodeScanner = GoogleMlKit.vision.barcodeScanner();
-      final result = await barcodeScanner?.processImage(inputImage);
+      final result = await barcodeScanner.processImage(inputImage);
       setState(() {
         imagePath = pickedFile.path;
         barcodes = result;
@@ -70,7 +70,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
 
   @override
   void dispose() {
-    barcodeScanner?.close();
+    barcodeScanner.close();
     super.dispose();
   }
 }
