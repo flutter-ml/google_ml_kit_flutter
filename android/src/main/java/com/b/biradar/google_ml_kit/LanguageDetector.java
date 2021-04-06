@@ -66,4 +66,8 @@ public class LanguageDetector {
             }
         });
     }
+
+    public void close(){
+        languageIdentifier.close();
+    }
 }

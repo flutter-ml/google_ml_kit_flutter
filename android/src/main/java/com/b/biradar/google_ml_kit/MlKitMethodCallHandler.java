@@ -25,7 +25,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     //To store detector instances that work on other parameters (offset list in digital ink recogniser)
     Map<String, Object> exceptionDetectors = new HashMap<String, Object>();
     //To store nlp detectors
-    Map<String,Object> nlpDetectors = new HashMap<String, Object>();
+    Map<String, Object> nlpDetectors = new HashMap<String, Object>();
 
 
     public MlKitMethodCallHandler(Context applicationContext) {
@@ -56,7 +56,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "closeImageLabelDetector":
             case "closeMlDigitalInkRecognizer":
             case "closeTextDetector":
-                closeDetector(call, result);
+                closeVisionDetectors(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -75,21 +75,24 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     private void handleNlpDetection(MethodCall call, MethodChannel.Result result) {
         String invokeMethod = call.method.split("#")[1];
         Object detector;
-        switch (invokeMethod){
+        switch (invokeMethod) {
             case "startLanguageIdentifier":
-            if(nlpDetectors.containsKey(invokeMethod.substring(5))){
+                if (nlpDetectors.containsKey(invokeMethod.substring(5))) {
+                    detector = nlpDetectors.get(invokeMethod.substring(5));
+                } else {
+                    detector = new LanguageDetector((double) call.argument("confidence"));
+                    nlpDetectors.put(invokeMethod.substring(5), detector);
+                }
+                Log.e("Nlp handling", "calling language identifier methods");
+                if (call.argument("possibleLanguages").equals("no")) {
+                    ((LanguageDetector) detector).identifyLanguage((String) call.argument("text"), result);
+                } else {
+                    ((LanguageDetector) detector).identifyPossibleLanguages((String) call.argument("text"), result);
+                }
+                break;
+            case "closeLanguageIdentifier":
                 detector = nlpDetectors.get(invokeMethod.substring(5));
-            }else{
-                detector = new LanguageDetector((double) call.argument("confidence"));
-                nlpDetectors.put(invokeMethod.substring(5),detector);
-            }
-            Log.e("Nlp handling", "calling language identifier methods");
-            if(call.argument("possibleLanguages").equals("no")){
-                ((LanguageDetector) detector).identifyLanguage((String) call.argument("text"), result);
-            }else{
-                ((LanguageDetector) detector).identifyPossibleLanguages((String) call.argument("text"),result);
-            }
-            break;
+                ((LanguageDetector) detector).close();
         }
     }
 
@@ -147,7 +150,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     }
 
     //Closes the detector instances if already present else throws error.
-    private void closeDetector(MethodCall call, MethodChannel.Result result) {
+    private void closeVisionDetectors(MethodCall call, MethodChannel.Result result) {
         String invokeMethod = call.method.split("#")[1];
         final ApiDetectorInterface detector = detectorMap.get(invokeMethod.substring(5));
         String error = String.format(invokeMethod.substring(5), "Has been closed or not been created yet");
