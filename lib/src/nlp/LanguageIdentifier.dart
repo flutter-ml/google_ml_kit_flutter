@@ -24,6 +24,7 @@ class LanguageIdentifier {
         });
 
     var languages = <IdentifiedLanguage>[];
+    
     for(dynamic languageData in result){
       languages.add(IdentifiedLanguage(languageData['language'],languageData['confidence']));
     }
