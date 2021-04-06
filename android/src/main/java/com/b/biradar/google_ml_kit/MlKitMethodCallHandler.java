@@ -22,8 +22,11 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     private final Context applicationContext;
     //To store detector instances that receive [InputImage] as input.
     Map<String, ApiDetectorInterface> detectorMap = new HashMap<String, ApiDetectorInterface>();
-    //To store detector instances that receive input
+    //To store detector instances that work on other parameters (offset list in digital ink recogniser)
     Map<String, Object> exceptionDetectors = new HashMap<String, Object>();
+    //To store nlp detectors
+    Map<String,Object> nlpDetectors = new HashMap<String, Object>();
+
 
     public MlKitMethodCallHandler(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -32,6 +35,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         final String[] calls = call.method.split("#");
+        Log.e("Method call name", calls[1]);
         if (calls[0].equals("vision")) handleVisionDetection(call, result, calls[1]);
         else handleNlpDetection(call, result, calls[1]);
 
@@ -69,7 +73,24 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void handleNlpDetection(MethodCall call, MethodChannel.Result result) {
-
+        String invokeMethod = call.method.split("#")[1];
+        Object detector;
+        switch (invokeMethod){
+            case "startLanguageIdentifier":
+            if(nlpDetectors.containsKey(invokeMethod.substring(5))){
+                detector = nlpDetectors.get(invokeMethod.substring(5));
+            }else{
+                detector = new LanguageDetector((double) call.argument("confidence"));
+                nlpDetectors.put(invokeMethod.substring(5),detector);
+            }
+            Log.e("Nlp handling", "calling language identifier methods");
+            if(call.argument("possibleLanguages").equals("no")){
+                ((LanguageDetector) detector).identifyLanguage((String) call.argument("text"), result);
+            }else{
+                ((LanguageDetector) detector).identifyPossibleLanguages((String) call.argument("text"),result);
+            }
+            break;
+        }
     }
 
     //Function to deal with method calls requesting to process an image or other information
