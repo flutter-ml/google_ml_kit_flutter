@@ -1,16 +1,17 @@
 package com.b.biradar.google_ml_kit;
 
+import android.graphics.Rect;
+
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.barcode.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +59,13 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                 barcodeMap.put("type", valueType);
                                 barcodeMap.put("rawValue", barcode.getRawValue());
                                 barcodeMap.put("displayValue", barcode.getDisplayValue());
+                                Rect bb = barcode.getBoundingBox();
+                                if (bb != null) {
+                                    barcodeMap.put("boundingBoxBottom", bb.bottom);
+                                    barcodeMap.put("boundingBoxLeft", bb.left);
+                                    barcodeMap.put("boundingBoxRight", bb.right);
+                                    barcodeMap.put("boundingBoxTop", bb.top);
+                                }
                                 switch (valueType) {
                                     case Barcode.TYPE_UNKNOWN:
                                     case Barcode.TYPE_ISBN:

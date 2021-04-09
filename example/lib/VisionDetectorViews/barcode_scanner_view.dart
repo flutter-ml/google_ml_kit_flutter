@@ -59,7 +59,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
                     itemBuilder: (context, index) {
                       return Card(
                         child: Text(
-                            "Type ${barcodes?[index].barcodeUnknown?.type} \n reads ${barcodes?[index].barcodeUnknown?.displayValue} \n rawData ${barcodes?[index].barcodeUnknown?.rawValue}"),
+                            "Type ${barcodes?[index].barcodeUnknown?.type} \n reads ${barcodes?[index].barcodeUnknown?.displayValue} \n rawData ${barcodes?[index].barcodeUnknown?.rawValue} \n boundingBox ${barcodes?[index].barcodeUnknown?.boundingBox}"),
                       );
                     })
           ],
