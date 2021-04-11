@@ -175,11 +175,17 @@ class BarcodeRawOnly {
   final int type;
   final String rawValue;
   final String displayValue;
+  final Rect boundingBox;
 
   BarcodeRawOnly._fromMap(Map<dynamic, dynamic> barcodeData)
       : type = barcodeData['type'],
         rawValue = barcodeData['rawValue'],
-        displayValue = barcodeData['displayValue'];
+        displayValue = barcodeData['displayValue'],
+        boundingBox = Rect.fromLTRB(
+            (barcodeData['boundingBoxLeft'] as int).toDouble(),
+            (barcodeData['boundingBoxTop'] as int).toDouble(),
+            (barcodeData['boundingBoxRight'] as int).toDouble(),
+            (barcodeData['boundingBoxBottom'] as int).toDouble());
 }
 
 ///Class to store wifi info obtained from a barcode.
