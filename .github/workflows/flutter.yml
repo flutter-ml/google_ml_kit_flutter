@@ -31,5 +31,6 @@ jobs:
     # Statically analyze the Dart code for any errors.
     - run: flutter analyze .
     
-    - run: cd example & flutter build apk
+    - run: cd example 
+    - run: flutter build apk
 
