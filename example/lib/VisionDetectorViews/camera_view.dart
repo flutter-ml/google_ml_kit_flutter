@@ -19,7 +19,7 @@ class CameraView extends StatefulWidget {
       : super(key: key);
 
   final String title;
-  CustomPaint? customPaint;
+  final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
 
   @override
