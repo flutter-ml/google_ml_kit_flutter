@@ -1,8 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
+import 'camera_view.dart';
+import 'painters/label_detector_painter.dart';
+
+enum ScreenMode { liveFeed, gallery }
 
 class ImageLabelView extends StatefulWidget {
   @override
@@ -10,79 +11,57 @@ class ImageLabelView extends StatefulWidget {
 }
 
 class _ImageLabelViewState extends State<ImageLabelView> {
-  String result = '';
-  List<ImageLabel> imageLabels = <ImageLabel>[];
-  String? filePath;
   ImageLabeler imageLabeler = GoogleMlKit.vision.imageLabeler();
+  bool isBusy = false;
+  CustomPaint? customPaint;
 
-  Future<void> fromStorage() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final inputImage = InputImage.fromFilePath(pickedFile.path);
-      imageLabeler = GoogleMlKit.vision.imageLabeler();
-      final labels = await imageLabeler.processImage(inputImage);
-      setState(() {
-        filePath = pickedFile.path;
-        imageLabels = labels;
-      });
-      await imageLabeler.close();
-    }
-  }
-
-  Future<void> fromCustomModel() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final inputImage = InputImage.fromFilePath(pickedFile.path);
-      CustomImageLabelerOptions options = CustomImageLabelerOptions(
-          customModel: CustomTrainedModel.asset,
-          customModelPath: "antartic.tflite");
-      imageLabeler = GoogleMlKit.vision.imageLabeler(options);
-      final labels = await imageLabeler.processImage(inputImage);
-      setState(() {
-        filePath = pickedFile.path;
-        imageLabels = labels;
-      });
-      await imageLabeler.close();
-    }
+  @override
+  void dispose() {
+    imageLabeler.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Labeler'),
-      ),
-      body: ListView(shrinkWrap: true, children: [
-        filePath == null
-            ? Container()
-            : Container(
-                height: 400,
-                width: 400,
-                child: Image.file(File(filePath!)),
-              ),
-        ElevatedButton(
-          onPressed: fromStorage,
-          child: Text("Inbuilt model"),
-        ),
-        ElevatedButton(
-          onPressed: fromCustomModel,
-          child: Text("Custom Model(Trained tflite models)"),
-        ),
-        imageLabels.length == 0
-            ? Container()
-            : ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: imageLabels.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                      title: Text(
-                          "${imageLabels[index].label} with confidence ${imageLabels[index].confidence.toString()}"));
-                },
-              )
-      ]),
+    return CameraView(
+      title: 'Image Labeler',
+      customPaint: customPaint,
+      onImage: (inputImage) {
+        // comment this line if you want to use custom model
+        processImageWithDefaultModel(inputImage);
+        // uncomment this line if you want to use custom model
+        //processImageWithCustomModel(inputImage);
+      },
     );
+  }
+
+  Future<void> processImageWithDefaultModel(InputImage inputImage) async {
+    imageLabeler = GoogleMlKit.vision.imageLabeler();
+    processImage(inputImage);
+  }
+
+  Future<void> processImageWithCustomModel(InputImage inputImage) async {
+    CustomImageLabelerOptions options = CustomImageLabelerOptions(
+        customModel: CustomTrainedModel.asset,
+        customModelPath: "antartic.tflite");
+    imageLabeler = GoogleMlKit.vision.imageLabeler(options);
+    processImage(inputImage);
+  }
+
+  Future<void> processImage(InputImage inputImage) async {
+    if (isBusy) return;
+    isBusy = true;
+    await Future.delayed(Duration(milliseconds: 50));
+    final labels = await imageLabeler.processImage(inputImage);
+    // print('Found ${labels.length} labels');
+    // for (ImageLabel label in labels) {
+    //   print('${label.label} - ${label.confidence}');
+    // }
+    final painter = LabelDetectorPainter(labels);
+    customPaint = CustomPaint(painter: painter);
+    isBusy = false;
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
