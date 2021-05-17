@@ -218,13 +218,35 @@ class _CameraViewState extends State<CameraView> {
       allBytes.putUint8List(plane.bytes);
     }
     final bytes = allBytes.done().buffer.asUint8List();
+
     final Size imageSize =
         Size(image.width.toDouble(), image.height.toDouble());
+
+    final camera = cameras[_cameraIndex];
+    InputImageRotation imageRotation = InputImageRotation.Rotation_0deg;
+    switch (camera.sensorOrientation) {
+      case 0:
+        imageRotation = InputImageRotation.Rotation_0deg;
+        break;
+      case 90:
+        imageRotation = InputImageRotation.Rotation_90deg;
+        break;
+      case 180:
+        imageRotation = InputImageRotation.Rotation_180deg;
+        break;
+      case 270:
+        imageRotation = InputImageRotation.Rotation_270deg;
+        break;
+    }
+
     final inputImageData = InputImageData(
       size: imageSize,
+      imageRotation: imageRotation,
     );
+
     final inputImage =
         InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+
     widget.onImage(inputImage);
   }
 }

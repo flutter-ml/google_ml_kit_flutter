@@ -9,6 +9,8 @@ part 'barcode_scanner.dart';
 
 part 'digital_ink_recognizer.dart';
 
+part 'face_detector.dart';
+
 part 'label_detector.dart';
 
 part 'pose_detector.dart';
@@ -16,7 +18,7 @@ part 'pose_detector.dart';
 part 'text_detector.dart';
 
 // To indicate the format of image while creating input image from bytes
-enum InputImageFormat { NV21, YV21, YUV_420_888 }
+enum InputImageFormat { NV21, YV12, YUV_420_888 }
 
 //To specify whether tflite models are stored in asset directory or file stored in device
 enum CustomTrainedModel { asset, file }
@@ -78,6 +80,12 @@ class Vision {
   TextDetector textDetector() {
     return TextDetector._();
   }
+
+  ///Return an instance of [FaceDetector].
+  FaceDetector faceDetector([FaceDetectorOptions? options]) {
+    return FaceDetector._(options ?? const FaceDetectorOptions());
+  }
+
 }
 
 ///[InputImage] is the format Google' Ml kit takes to process the image
@@ -105,13 +113,11 @@ class InputImage {
   ///Create InputImage using bytes.
   factory InputImage.fromBytes(
       {required Uint8List bytes,
-      required InputImageData inputImageData,
-      String? path}) {
+      required InputImageData inputImageData}) {
     return InputImage._(
         bytes: bytes,
         imageType: 'bytes',
-        inputImageData: inputImageData,
-        filePath: path);
+        inputImageData: inputImageData);
   }
 
   final String? filePath;
@@ -159,14 +165,15 @@ class InputImageData {
   }
 }
 
+// source: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#constants
 int _imageFormatToInt(InputImageFormat inputImageFormat) {
   switch (inputImageFormat) {
     case InputImageFormat.NV21:
       return 17;
-    case InputImageFormat.YV21:
-      return 35;
-    case InputImageFormat.YUV_420_888:
+    case InputImageFormat.YV12:
       return 842094169;
+    case InputImageFormat.YUV_420_888:
+      return 35;
     default:
       return 17;
   }

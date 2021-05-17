@@ -41,6 +41,7 @@ class Home extends StatelessWidget {
                 title: const Text("Vision Api's"),
                 children: [
                   CustomCard('Image Label Detector', ImageLabelView()),
+                  CustomCard('Face Detector', FaceDetectorView()),
                   CustomCard('Barcode Scanner', BarcodeScannerView()),
                   CustomCard('Pose Detector view', PoseDetectorView()),
                   CustomCard('Digital Ink Recogniser', DigitalInkView()),
