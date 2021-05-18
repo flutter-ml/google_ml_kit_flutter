@@ -15,7 +15,7 @@ class NaturalLanguage {
   }
 
   OnDeviceTranslator onDeviceTranslator(
-      String sourceLanguage, String targetLanguage) {
+      {required String sourceLanguage, required String targetLanguage}) {
     return OnDeviceTranslator._(sourceLanguage, targetLanguage);
   }
 

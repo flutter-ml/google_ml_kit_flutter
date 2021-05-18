@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Tasks;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
@@ -26,10 +25,10 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class OnDeviceTranslator {
     private static final TranslatorModelManager translaterModelManager = new TranslatorModelManager();
-    private final Translator translater;
+    private final Translator translator;
 
-    public OnDeviceTranslator(Translator translater) {
-        this.translater = translater;
+    public OnDeviceTranslator(Translator translator) {
+        this.translator = translator;
     }
 
     public static OnDeviceTranslator Instance(String sourceLanguage, String targetLanguage, MethodChannel.Result result) {
@@ -54,8 +53,8 @@ public class OnDeviceTranslator {
         }
     }
 
-    public void tranlateText(String text, final MethodChannel.Result result) {
-        translater.translate(text).addOnSuccessListener(new OnSuccessListener<String>() {
+    public void translateText(String text, final MethodChannel.Result result) {
+        translator.translate(text).addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(@NonNull String s) {
                 result.success(s);
@@ -64,19 +63,20 @@ public class OnDeviceTranslator {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e("error translating", e.toString());
-                result.error("error translatin", e.toString(), null);
+                result.error("error translating", e.toString(), null);
             }
         });
     }
 
-    public void close(){
-        translater.close();
+    public void close() {
+        translator.close();
+        Log.e("Detector closed", "");
     }
 }
 
 class TranslatorModelManager {
     RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
-    ExecutorService executorService = Executors.newCachedThreadPool();
+//    ExecutorService executorService = Executors.newCachedThreadPool();
 
     public void getDownloadedModels(final MethodChannel.Result result) {
         remoteModelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(new OnSuccessListener<Set<TranslateRemoteModel>>() {
@@ -98,40 +98,38 @@ class TranslatorModelManager {
     }
 
     public void downloadModel(final MethodChannel.Result result, String languageCode, boolean isWifiReqRequired) {
-        Log.e("In download","Inn download function");
 
         final TranslateRemoteModel downloadModel = new TranslateRemoteModel.Builder(languageCode).build();
         final DownloadConditions downloadConditions;
-        if(isModelDownloaded(downloadModel)){
-            Log.e("Already downloaded","Model is already present");
+        if (isModelDownloaded(downloadModel)) {
+            Log.e("Already downloaded", "Model is already present");
             result.success("success");
             return;
         }
-        Log.e("Model not present","not downloaded");
+
         Log.e("Wifi", String.valueOf(isWifiReqRequired));
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
         else downloadConditions = new DownloadConditions.Builder().build();
 
-        remoteModelManager.download(downloadModel,downloadConditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+        remoteModelManager.download(downloadModel, downloadConditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(@NonNull Void aVoid) {
                 result.success("success");
-                Log.e("Download success","model downloaded");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("error",e.toString());
-                result.error("error",e.toString(),null);
+                Log.e("error", e.toString());
+                result.error("error", e.toString(), null);
             }
         });
     }
 
     public void deleteModel(final MethodChannel.Result result, String languageCode) {
         TranslateRemoteModel deleteModel = new TranslateRemoteModel.Builder(languageCode).build();
-        if(!isModelDownloaded(deleteModel)){
-            Log.e("error","Model not present");
+        if (!isModelDownloaded(deleteModel)) {
+            Log.e("error", "Model not present");
             result.success("success");
             return;
         }
@@ -150,19 +148,14 @@ class TranslatorModelManager {
     }
 
     public Boolean isModelDownloaded(TranslateRemoteModel model) {
-        Log.e("IS model downloaded","");
         ExecutorService executorService = Executors.newCachedThreadPool();
         IsModelDownloaded myCallable = new IsModelDownloaded(remoteModelManager.isModelDownloaded(model));
         Future<Boolean> taskResult = executorService.submit(myCallable);
         try {
-            Log.e("Future Task", "Getting Future task result");
-            Log.e("Future task result",taskResult.get().toString());
             return taskResult.get();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            return null;
         }
-        return false;
     }
 }

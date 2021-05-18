@@ -34,6 +34,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 ### NLP
 
 * [Language Detection](https://developers.google.com/ml-kit/language/identification)
+* [On-Device Translation](https://developers.google.com/ml-kit/language/translation)
 
 ## Usage
 
@@ -222,8 +223,29 @@ final text = await textDetector.processImage(inputImage);
 2. Call `identifyPossibleLanguages(text)` to get a list of [IdentifiedLanguage](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L53) which contains all possible languages that are above the specified threshold. **Default is 0.5**.
 3. To get info of the identified **BCP-47** tag use this [class](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L63).
 
-**To know more see this [example](./example/lib/NlpDetectorViews/language_identifier_view.dart)**
+**To know more see this [example](./example/lib/NlpDetectorViews/language_identifier_view.dart).**
 
+### On-Device Translator
+  1. Create `OnDeviceTranslator` object.
+  ```
+  final _onDeviceTranslator = GoogleMlKit.nlp
+      .onDeviceTranslator(sourceLanguage: TranslateLanguage.ENGLISH, 
+      targetLanguage: TranslateLanguage.SPANISH);
+  ```
+  2. Call `_onDeviceTranslator.translateText(text)` to translate text.
+  >Note: Make sure the models are downloaded before calling translatetext()
+
+#### Managing translate language models explicitly
+1. Create `TranslateLanguageModelManager` instance.
+```
+final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
+```
+2. Call `_languageModelManager.downloadModel(TranslateLanguage.ENGLISH)` to download a model.
+3. Call `_languageModelManager.deleteModel(TranslateLanguage.ENGLISH)` to delete a model.
+4.  Call `_languageModelManager.isModelDownloaded(TranslateLanguage.ENGLISH)` to to check whether a model is downloaded.
+5. Call `_languageModelManager.getAvailableModels()` to get a list of all downloaded models.
+
+**To know more see this [example](./example/lib/NlpDetectorViews/language_translator_view.dart).**
 ## Contributing
 
 Contributions are welcome.
