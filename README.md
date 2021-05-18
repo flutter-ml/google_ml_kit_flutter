@@ -90,7 +90,7 @@ final options = PoseDetectorOptions(
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
-Use the map to extract data. See this [example](example/lib/DetectorViews/VisionDetectorViews/pose_detector_view.dart) to get better idea.
+Use the map to extract data. See this [example](example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
 If you choose google service way. In your  **app level buil.gradle add.**
@@ -133,7 +133,7 @@ final options = AutoMlImageLabelerOptions(
 final labels = await imageLabeler.processImage(inputImage);
 ```
 
-**To know more see this [example](example/lib/DetectorViews/VisionDetectorViews/label_detector_view.dart.dart)**
+**To know more see this [example](example/lib/VisionDetectorViews/label_detector_view.dart)**
 
 ## Barcode Scanner
 **Obtain [`BarcodeScanner`]() instance.**
@@ -156,7 +156,7 @@ It returns List<[Barcode]()>
 ```
 final result = await barcodeScanner.processImage(inputImage);
 ```
-To know more see this [example](example/lib/DetectorViews/VisionDetectorViews/barcode_scanner_view.dart)
+To know more see this [example](example/lib/VisionDetectorViews/barcode_scanner_view.dart)
 
 
 ## Text Recognition
@@ -165,7 +165,7 @@ To know more see this [example](example/lib/DetectorViews/VisionDetectorViews/ba
 final text = await textDetector.processImage(inputImage);
 ```
 
-**To know more see this [example](example/lib/DetectorViews/VisionDetectorViews/text_detector_view.dart)**
+**To know more see this [example](example/lib/VisionDetectorViews/text_detector_view.dart)**
 
 ## Language Detection
 1. Call `identifyLanguage(text)` to identify language of text.
