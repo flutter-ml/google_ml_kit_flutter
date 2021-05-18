@@ -49,6 +49,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "startMlDigitalInkRecognizer":
             case "manageInkModels":
             case "startTextDetector":
+            case "startFaceDetector":
                 handleVisionDetection(call, result);
                 break;
             case "closeBarcodeScanner":
@@ -181,6 +182,9 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                 case "startTextDetector":
                     detector = new TextDetector();
                     break;
+                case "startFaceDetector":
+                    detector = new FaceProcessor(options);
+                    break;
             }
 
             detectorMap.put(invokeMethod.substring(5), detector);
@@ -247,7 +251,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                     (int) (double) metaData.get("width"),
                     (int) (double) metaData.get("height"),
                     (int) metaData.get("rotation"),
-                    InputImage.IMAGE_FORMAT_NV21);
+                    (int) metaData.get("imageFormat"));
             return inputImage;
 
         } else {
