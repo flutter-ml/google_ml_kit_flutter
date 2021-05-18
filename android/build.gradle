@@ -27,7 +27,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 26
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -49,4 +49,6 @@ dependencies {
     implementation 'com.google.mlkit:pose-detection-accurate:17.0.0'
 
     implementation 'com.google.mlkit:language-id:16.1.1'
+
+    implementation 'com.google.mlkit:face-detection:16.0.7'
 }
