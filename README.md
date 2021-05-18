@@ -204,7 +204,6 @@ It returns List<[Barcode]()>
 ```
 final result = await barcodeScanner.processImage(inputImage);
 ```
-To know more see this [example](example/lib/VisionDetectorViews/barcode_scanner_view.dart)
 
 **To know more see this [example](./example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
 
@@ -216,6 +215,10 @@ final text = await textDetector.processImage(inputImage);
 ```
 
 **To know more see this [example](example/lib/VisionDetectorViews/text_detector_view.dart)**
+
+## Face Detection
+
+**To know more see this [example](./example/lib/VisionDetectorViews/face_detector_view.dart)**
 
 ## Language Detection
 
