@@ -135,10 +135,7 @@ final options = PoseDetectorOptions(
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
-
-Use the map to extract data.
-
-**To know more see this [example](./example/lib/VisionDetectorViews/pose_detector_view.dart)**
+Use the map to extract data. See this [example](example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
 
@@ -182,7 +179,7 @@ final options = AutoMlImageLabelerOptions(
 final labels = await imageLabeler.processImage(inputImage);
 ```
 
-**To know more see this [example](./example/lib/VisionDetectorViews/label_detector_view.dart)**
+**To know more see this [example](example/lib/VisionDetectorViews/label_detector_view.dart)**
 
 ## Barcode Scanner
 
@@ -206,6 +203,7 @@ It returns List<[Barcode]()>
 ```
 final result = await barcodeScanner.processImage(inputImage);
 ```
+To know more see this [example](example/lib/VisionDetectorViews/barcode_scanner_view.dart)
 
 **To know more see this [example](./example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
 
@@ -216,11 +214,7 @@ final result = await barcodeScanner.processImage(inputImage);
 final text = await textDetector.processImage(inputImage);
 ```
 
-**To know more see this [example](./example/lib/VisionDetectorViews/text_detector_view.dart)**
-
-## Face Detection
-
-**To know more see this [example](./example/lib/VisionDetectorViews/face_detector_view.dart)**
+**To know more see this [example](example/lib/VisionDetectorViews/text_detector_view.dart)**
 
 ## Language Detection
 
