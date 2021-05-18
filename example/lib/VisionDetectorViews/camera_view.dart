@@ -223,25 +223,29 @@ class _CameraViewState extends State<CameraView> {
         Size(image.width.toDouble(), image.height.toDouble());
 
     final camera = cameras[_cameraIndex];
-    InputImageRotation imageRotation = InputImageRotation.Rotation_0deg;
-    switch (camera.sensorOrientation) {
-      case 0:
-        imageRotation = InputImageRotation.Rotation_0deg;
-        break;
-      case 90:
-        imageRotation = InputImageRotation.Rotation_90deg;
-        break;
-      case 180:
-        imageRotation = InputImageRotation.Rotation_180deg;
-        break;
-      case 270:
-        imageRotation = InputImageRotation.Rotation_270deg;
-        break;
-    }
+    final imageRotation =
+        InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
+            InputImageRotation.Rotation_0deg;
+
+    final inputImageFormat =
+        InputImageFormatMethods.fromRawValue(image.format.raw) ??
+            InputImageFormat.NV21;
+
+    final planeData = image.planes.map(
+      (Plane plane) {
+        return InputImagePlaneMetadata(
+          bytesPerRow: plane.bytesPerRow,
+          height: plane.height,
+          width: plane.width,
+        );
+      },
+    ).toList();
 
     final inputImageData = InputImageData(
       size: imageSize,
       imageRotation: imageRotation,
+      inputImageFormat: inputImageFormat,
+      planeData: planeData,
     );
 
     final inputImage =

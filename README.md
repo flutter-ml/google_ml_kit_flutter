@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, it will come soon!
+A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, features will come soon!
 
 <img src="./screenshots/pose.png?raw=true" height=500 > <img src="./screenshots/imagelabeling.png?raw=true" height=500> <img src="./screenshots/giff.gif" height=500> <img src="./screenshots/barcode.png?raw=true" height=500> <img src="./screenshots/text_detector.jpg?raw=true" height=500>
 
@@ -20,21 +20,25 @@ final exampleDetector = GoogleMlKit.vision.ExampleDetector
 final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 ```
 
-## Currently supported api's
+## Features
 
 ### Vision
 
-* [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
-* [Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
-* [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
-* [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
-* [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
-* [Face Detection](https://developers.google.com/ml-kit/vision/face-detection)
+| Feature                                                                                       | Android | iOS |
+|-----------------------------------------------------------------------------------------------|---------|-----|
+|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
+|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
+|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | yet |
+|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | yet |
+|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | yet |
+|[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
 
 ### NLP
 
-* [Language Detection](https://developers.google.com/ml-kit/language/identification)
-* [On-Device Translation](https://developers.google.com/ml-kit/language/translation)
+| Feature                                                                                       | Android | iOS |
+|-----------------------------------------------------------------------------------------------|---------|-----|
+|[Language Detection](https://developers.google.com/ml-kit/language/identification)             | ✅      | yet |
+|[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 
 ## Usage
 

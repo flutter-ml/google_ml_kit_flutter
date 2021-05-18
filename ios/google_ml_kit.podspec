@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'google_ml_kit'
   s.version          = '0.0.1'
-  s.summary          = 'flutter plugin for google ml kit'
+  s.summary          = 'Flutter Plugin for ML Kit'
   s.description      = <<-DESC
 flutter plugin for google ml kit
                        DESC
@@ -16,8 +16,11 @@ flutter plugin for google ml kit
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '8.0'
+  s.dependency 'GoogleMLKit/FaceDetection'
+  s.platform                = :ios, '12.0'
+  s.ios.deployment_target   = '12.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.swift_version = '5.0'
 end
