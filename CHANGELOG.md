@@ -31,7 +31,7 @@
 * Breaking changes in Api outline (instance creation of detectors)
 * New : Added language identifier api
 
-## 0.30
+## 0.3.0
 
 * Add face detection Api
 * Add On device translation api
