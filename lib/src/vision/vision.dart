@@ -85,7 +85,6 @@ class Vision {
   FaceDetector faceDetector([FaceDetectorOptions? options]) {
     return FaceDetector._(options ?? const FaceDetectorOptions());
   }
-
 }
 
 ///[InputImage] is the format Google' Ml kit takes to process the image
@@ -112,12 +111,9 @@ class InputImage {
 
   ///Create InputImage using bytes.
   factory InputImage.fromBytes(
-      {required Uint8List bytes,
-      required InputImageData inputImageData}) {
+      {required Uint8List bytes, required InputImageData inputImageData}) {
     return InputImage._(
-        bytes: bytes,
-        imageType: 'bytes',
-        inputImageData: inputImageData);
+        bytes: bytes, imageType: 'bytes', inputImageData: inputImageData);
   }
 
   final String? filePath;
