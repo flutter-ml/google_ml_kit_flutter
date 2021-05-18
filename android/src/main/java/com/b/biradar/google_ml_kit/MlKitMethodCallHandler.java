@@ -67,7 +67,10 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     private void handleNlpDetection(MethodCall call, MethodChannel.Result result, String invokeMethod) {
         switch (invokeMethod) {
             case "startLanguageIdentifier":
+            case "startLanguageModelManager":
+            case "startLanguageTranslator":
                 handleNlpDetection(call, result);
+                break;
 
         }
     }
@@ -75,11 +78,10 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     private void handleNlpDetection(MethodCall call, MethodChannel.Result result) {
         String invokeMethod = call.method.split("#")[1];
         Object detector;
+        detector = nlpDetectors.get(invokeMethod.substring(5));
         switch (invokeMethod) {
             case "startLanguageIdentifier":
-                if (nlpDetectors.containsKey(invokeMethod.substring(5))) {
-                    detector = nlpDetectors.get(invokeMethod.substring(5));
-                } else {
+                if (detector == null) {
                     detector = new LanguageDetector((double) call.argument("confidence"));
                     nlpDetectors.put(invokeMethod.substring(5), detector);
                 }
@@ -90,9 +92,50 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                     ((LanguageDetector) detector).identifyPossibleLanguages((String) call.argument("text"), result);
                 }
                 break;
+            case "startLanguageTranslator":
+                if (detector == null) {
+                    detector = OnDeviceTranslator.Instance(
+                            (String) call.argument("source"),
+                            (String) call.argument("target"),
+                            result
+                    );
+                    if(detector!=null) nlpDetectors.put(invokeMethod.substring(5), detector);
+                    else return;
+                }
+                ((OnDeviceTranslator) detector).tranlateText((String) call.argument("text"),result);
+                break;
+            case "startLanguageModelManager":
+                if(detector==null){
+                    Log.e("Detector was null","null");
+                    detector = new TranslatorModelManager();
+                    nlpDetectors.put(invokeMethod.substring(5), detector);
+                }
+                switch ((String) call.argument("task")){
+                    case "download":
+                        Log.e("Downloading", "download model called");
+                        ((TranslatorModelManager) detector)
+                                .downloadModel(result, (String) call.argument("model"),(boolean) call.argument("wifi"));
+                        break;
+                    case "delete":
+                        Log.e("delete", "delete model called");
+                        ((TranslatorModelManager) detector)
+                                .deleteModel(result, (String) call.argument("model"));
+                        break;
+                    case "getModels":
+                        Log.e("list models","getting available models");
+                        ((TranslatorModelManager) detector).getDownloadedModels(result);
+                        break;
+
+                }
+                break;
             case "closeLanguageIdentifier":
                 detector = nlpDetectors.get(invokeMethod.substring(5));
                 ((LanguageDetector) detector).close();
+                break;
+            case "closeLanguageTranslator":
+                detector = nlpDetectors.get(invokeMethod.substring(5));
+                ((OnDeviceTranslator) detector).close();
+                break;
         }
     }
 

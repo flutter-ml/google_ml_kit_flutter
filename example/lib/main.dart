@@ -1,3 +1,5 @@
+import 'package:google_ml_kit_example/NlpDetectorViews/language_translator.dart';
+
 import 'NlpDetectorViews/language_identifier_view.dart';
 import 'VisionDetectorViews/detector_views.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,7 @@ class Home extends StatelessWidget {
             title: const Text("NLP Api's"),
             children: [
               CustomCard('Language Identifier', LanguageIdentifierView()),
+              CustomCard('Language Translator', LanguageTranslatorView()),
             ],
           )
         ],
