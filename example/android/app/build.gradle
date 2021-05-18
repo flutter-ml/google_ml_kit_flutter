@@ -34,7 +34,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.b.biradar.google_ml_kit_example"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

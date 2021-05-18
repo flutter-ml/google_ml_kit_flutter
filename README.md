@@ -1,12 +1,13 @@
-# Google Ml kit Plugin
+# Google's ML Kit Flutter Plugin
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-Flutter plugin to use [google's standalone ml kit](https://developers.google.com/ml-kit) for Android .
+A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, it will come soon!
 
-<img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/pose.png?raw=true" height=500 >   <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/imagelabeling.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/giff.gif" height=500><img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/barcode.png?raw=true" height=500>  <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/text_detector.jpg?raw=true" height=500>
+<img src="./screenshots/pose.png?raw=true" height=500 > <img src="./screenshots/imagelabeling.png?raw=true" height=500> <img src="./screenshots/giff.gif" height=500> <img src="./screenshots/barcode.png?raw=true" height=500> <img src="./screenshots/text_detector.jpg?raw=true" height=500>
 
 ### Note
+
 From version 0.2 the way to create instance of detectors has been changed.
 Creating instance before version 0.2
 ```
@@ -18,21 +19,24 @@ final exampleDetector = GoogleMlKit.vision.ExampleDetector
 //Or 
 final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 ```
+
 ## Currently supported api's
+
 ### Vision
+
 * [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
 * [Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
 * [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
 * [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
 * [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
+* [Face Detection](https://developers.google.com/ml-kit/vision/face-detection)
 
 ### NLP
-* [Language Detection](https://developers.google.com/ml-kit/language/identification)
- 
 
- ##### Please note - Currently image processing is working only with image files and not camera stream data (`fromBytes()`). Hope to fix this soon.
+* [Language Detection](https://developers.google.com/ml-kit/language/identification)
 
 ## Usage
+
 Add this plugin as dependency in your pubspec.yaml.
 
 - In your project-level build.gradle file, make sure to include Google's Maven repository in both your buildscript and allprojects sections(for all api's).
@@ -42,38 +46,78 @@ Add this plugin as dependency in your pubspec.yaml.
   2. [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning/android)
 
 ## Procedure to use vision api's
-1. #### First Create an InputImage
 
-Prepare Input Image(image you want to process)
+#### 1. First Create an InputImage
+
+Prepare Input Image (image you want to process)
+
 ```
 import 'package:google_ml_kit/google_ml_kit.dart';
 
+// From path
 final inputImage = InputImage.fromFilePath(filePath);
 
-// Or you can prepare image form
-//final inputImage = InputImage.fromFile(file);
+// From file
+final inputImage = InputImage.fromFile(file);
+
+// From CameraImage (if you are using the camera plugin)
+final camera; // your camera instance
+final WriteBuffer allBytes = WriteBuffer();
+for (Plane plane in cameraImage.planes) {
+  allBytes.putUint8List(plane.bytes);
+}
+final bytes = allBytes.done().buffer.asUint8List();
+
+final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toDouble());
+
+InputImageRotation imageRotation = InputImageRotation.Rotation_0deg;
+switch (camera.sensorOrientation) {
+  case 0:
+    imageRotation = InputImageRotation.Rotation_0deg;
+    break;
+  case 90:
+    imageRotation = InputImageRotation.Rotation_90deg;
+    break;
+  case 180:
+    imageRotation = InputImageRotation.Rotation_180deg;
+    break;
+  case 270:
+    imageRotation = InputImageRotation.Rotation_270deg;
+    break;
+}
+
+final inputImageData = InputImageData(
+  size: imageSize,
+  imageRotation: imageRotation,
+);
+
+final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
 ```
  
-To know more about [formats of image](https://developer.android.com/reference/android/graphics/ImageFormat.html#NV21).
+To know more about [formats of image](https://developer.android.com/reference/android/graphics/ImageFormat.html).
 
-2. #### Create an instance of detector
+#### 2. Create an instance of detector
+
 ```
 final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
 final digitalInkRecogniser = GoogleMlKit.vision.digitalInkRecogniser();
 ```
-3. #### Call `processImage()` or relevant function of the respective detector
-4. #### Call `close()`
 
-#### [An  example covering all the api's usage](example/lib)
+#### 3. Call `processImage()` or relevant function of the respective detector
+
+#### 4. Call `close()`
 
 ## Digital Ink recognition
-**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)**
+
+**Read to know how to imlpement [Digital Ink Recognition](./digital_ink_recogniser.md)**
+
 ## Pose Detection
 
 - *Google Play service model is not available for this api' so no extra implementation**
 
 - **Create [`PoseDetectorOptions`]()**
+
 ```
 final options = PoseDetectorOptions(
         poseDetectionModel: PoseDetectionModel.BasePoseDetector,
@@ -87,12 +131,14 @@ final options = PoseDetectorOptions(
 
 **The same implies to other detectors as well**
 - Calling `processImage(InputImage inputImage)` returns **Map<int,[PoseLandMark]()>**
+
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
 Use the map to extract data. See this [example](example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
+
 If you choose google service way. In your  **app level buil.gradle add.**
 
 ```
@@ -136,6 +182,7 @@ final labels = await imageLabeler.processImage(inputImage);
 **To know more see this [example](example/lib/VisionDetectorViews/label_detector_view.dart)**
 
 ## Barcode Scanner
+
 **Obtain [`BarcodeScanner`]() instance.**
 ```
 BarcodeScanner barcodeScanner = GoogleMlKit.instance
@@ -158,8 +205,10 @@ final result = await barcodeScanner.processImage(inputImage);
 ```
 To know more see this [example](example/lib/VisionDetectorViews/barcode_scanner_view.dart)
 
+**To know more see this [example](./example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
 
 ## Text Recognition
+
 **Calling `processImage()`** returns [RecognisedText]() object
 ```
 final text = await textDetector.processImage(inputImage);
@@ -168,16 +217,21 @@ final text = await textDetector.processImage(inputImage);
 **To know more see this [example](example/lib/VisionDetectorViews/text_detector_view.dart)**
 
 ## Language Detection
+
 1. Call `identifyLanguage(text)` to identify language of text.
 2. Call `identifyPossibleLanguages(text)` to get a list of [IdentifiedLanguage](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L53) which contains all possible languages that are above the specified threshold. **Default is 0.5**.
 3. To get info of the identified **BCP-47** tag use this [class](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L63).
 
+**To know more see this [example](./example/lib/NlpDetectorViews/language_identifier_view.dart)**
 
 ## Contributing
+
 Contributions are welcome.
 In case of any problems open an issue.
 Create a issue before opening a pull request for non trivial fixes.
 In case of trivial fixes open a pull request directly.
+
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
 

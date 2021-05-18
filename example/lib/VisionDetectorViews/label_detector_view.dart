@@ -3,8 +3,6 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'camera_view.dart';
 import 'painters/label_detector_painter.dart';
 
-enum ScreenMode { liveFeed, gallery }
-
 class ImageLabelView extends StatefulWidget {
   @override
   _ImageLabelViewState createState() => _ImageLabelViewState();
@@ -53,10 +51,6 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     isBusy = true;
     await Future.delayed(Duration(milliseconds: 50));
     final labels = await imageLabeler.processImage(inputImage);
-    // print('Found ${labels.length} labels');
-    // for (ImageLabel label in labels) {
-    //   print('${label.label} - ${label.confidence}');
-    // }
     final painter = LabelDetectorPainter(labels);
     customPaint = CustomPaint(painter: painter);
     isBusy = false;
