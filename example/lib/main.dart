@@ -77,7 +77,7 @@ class CustomCard extends StatelessWidget {
       elevation: 5,
       margin: EdgeInsets.only(bottom: 10),
       child: ListTile(
-        tileColor: Theme.of(context).accentColor,
+        tileColor: Theme.of(context).primaryColor,
         title: Text(
           _label,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
