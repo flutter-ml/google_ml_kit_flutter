@@ -4,6 +4,7 @@ PODS:
   - Flutter (1.0.0)
   - google_ml_kit (0.0.1):
     - Flutter
+    - GoogleMLKit/BarcodeScanning
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/ImageLabeling
     - GoogleMLKit/ImageLabelingCustom
@@ -11,6 +12,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
+  - GoogleMLKit/BarcodeScanning (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitBarcodeScanning (~> 1.2.0)
   - GoogleMLKit/FaceDetection (2.1.0):
     - GoogleMLKit/MLKitCore
     - MLKitFaceDetection (~> 1.2.0)
@@ -45,6 +49,9 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - image_picker (0.0.1):
     - Flutter
+  - MLKitBarcodeScanning (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
   - MLKitCommon (2.1.0):
     - GoogleDataTransport (~> 8.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
@@ -106,6 +113,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
+    - MLKitBarcodeScanning
     - MLKitCommon
     - MLKitFaceDetection
     - MLKitImageLabeling
@@ -131,7 +139,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: 6f91383749f43391d73744303d26df2ce41f523b
+  google_ml_kit: 544eef10c97f7588c6c4982b98f073cf47beb4da
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
   GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
@@ -139,6 +147,7 @@ SPEC CHECKSUMS:
   GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
+  MLKitBarcodeScanning: e9487b3e7c25d0f347dcbf253e7a540478919d9d
   MLKitCommon: 9ed187a042139d51c0d8bf6a8301bb20b375c576
   MLKitFaceDetection: 5b92261dd6e4205e3dab0df62537ac3f4e90e5db
   MLKitImageLabeling: 21c8acbbfac1e9dd912f0cdc5bf8cb09f0f98125

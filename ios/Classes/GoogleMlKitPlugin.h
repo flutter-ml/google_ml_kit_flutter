@@ -17,6 +17,9 @@
 @optional
 @end
 
+@interface BarcodeDetector : NSObject <Handler>
+@end
+
 @interface FaceProcessor : NSObject <Handler>
 @end
 

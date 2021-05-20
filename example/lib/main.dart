@@ -56,7 +56,11 @@ class Home extends StatelessWidget {
                         FaceDetectorView(),
                         featureCompleted: true,
                       ),
-                      CustomCard('Barcode Scanner', BarcodeScannerView()),
+                      CustomCard(
+                        'Barcode Scanner',
+                        BarcodeScannerView(),
+                        featureCompleted: true,
+                      ),
                       CustomCard('Pose Detector view', PoseDetectorView()),
                       CustomCard('Digital Ink Recogniser', DigitalInkView()),
                       CustomCard('Text Detector', TextDetectorView()),
@@ -89,6 +93,7 @@ class CustomCard extends StatelessWidget {
   final String _label;
   final Widget _viewPage;
   final bool featureCompleted;
+
   const CustomCard(this._label, this._viewPage,
       {this.featureCompleted = false});
 
@@ -98,7 +103,9 @@ class CustomCard extends StatelessWidget {
       elevation: 5,
       margin: EdgeInsets.only(bottom: 10),
       child: ListTile(
-        tileColor: Theme.of(context).primaryColor,
+        tileColor: Theme
+            .of(context)
+            .primaryColor,
         title: Text(
           _label,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

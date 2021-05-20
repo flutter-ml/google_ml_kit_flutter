@@ -1,8 +1,9 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+
+import 'coordinates_translator.dart';
 
 class FaceDetectorPainter extends CustomPainter {
   FaceDetectorPainter(this.faces, this.absoluteImageSize, this.rotation);
@@ -18,47 +19,14 @@ class FaceDetectorPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..color = Colors.red;
 
-    double translateX(double x) {
-      switch (rotation) {
-        case InputImageRotation.Rotation_90deg:
-          return x *
-              size.width /
-              (Platform.isIOS
-                  ? absoluteImageSize.width
-                  : absoluteImageSize.height);
-        case InputImageRotation.Rotation_270deg:
-          return size.width -
-              x *
-                  size.width /
-                  (Platform.isIOS
-                      ? absoluteImageSize.width
-                      : absoluteImageSize.height);
-        default:
-          return x * size.width / absoluteImageSize.width;
-      }
-    }
-
-    double translateY(double y) {
-      switch (rotation) {
-        case InputImageRotation.Rotation_90deg:
-        case InputImageRotation.Rotation_270deg:
-          return y *
-              size.height /
-              (Platform.isIOS
-                  ? absoluteImageSize.height
-                  : absoluteImageSize.width);
-        default:
-          return y * size.height / absoluteImageSize.height;
-      }
-    }
-
     for (final Face face in faces) {
       canvas.drawRect(
         Rect.fromLTRB(
-          translateX(face.boundingBox.left),
-          translateY(face.boundingBox.top),
-          translateX(face.boundingBox.right),
-          translateY(face.boundingBox.bottom),
+          translateX(face.boundingBox.left, rotation, size, absoluteImageSize),
+          translateY(face.boundingBox.top, rotation, size, absoluteImageSize),
+          translateX(face.boundingBox.right, rotation, size, absoluteImageSize),
+          translateY(
+              face.boundingBox.bottom, rotation, size, absoluteImageSize),
         ),
         paint,
       );
@@ -69,8 +37,8 @@ class FaceDetectorPainter extends CustomPainter {
           for (Offset point in faceContour!.positionsList) {
             canvas.drawCircle(
                 Offset(
-                  translateX(point.dx),
-                  translateY(point.dy),
+                  translateX(point.dx, rotation, size, absoluteImageSize),
+                  translateY(point.dy, rotation, size, absoluteImageSize),
                 ),
                 1,
                 paint);

@@ -10,6 +10,7 @@
     
     // Add detectors
     NSMutableArray *handlers = [NSMutableArray new];
+    [handlers addObject:[[BarcodeDetector alloc] init]];
     [handlers addObject:[[FaceProcessor alloc] init]];
     [handlers addObject:[[ImageLabeler alloc] init]];
     
