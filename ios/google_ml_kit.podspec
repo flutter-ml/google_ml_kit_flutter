@@ -17,6 +17,8 @@ flutter plugin for google ml kit
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/FaceDetection'
+  s.dependency 'GoogleMLKit/ImageLabeling'
+  s.dependency 'GoogleMLKit/ImageLabelingCustom'
   s.platform                = :ios, '12.0'
   s.ios.deployment_target   = '12.0'
 
