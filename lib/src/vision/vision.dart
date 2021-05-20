@@ -18,7 +18,25 @@ part 'pose_detector.dart';
 part 'text_detector.dart';
 
 // To indicate the format of image while creating input image from bytes
-enum InputImageFormat { NV21, YV12, YUV_420_888 }
+enum InputImageFormat { NV21, YV12, YUV_420_888, YUV420, BGRA8888 }
+
+extension InputImageFormatMethods on InputImageFormat {
+  // source: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#constants
+  static Map<InputImageFormat, int> get _values => {
+        InputImageFormat.NV21: 17,
+        InputImageFormat.YV12: 842094169,
+        InputImageFormat.YUV_420_888: 35,
+        InputImageFormat.YUV420: 875704438,
+        InputImageFormat.BGRA8888: 1111970369,
+      };
+
+  int get rawValue => _values[this] ?? 17;
+
+  static InputImageFormat? fromRawValue(int rawValue) {
+    return InputImageFormatMethods._values
+        .map((k, v) => MapEntry(v, k))[rawValue];
+  }
+}
 
 //To specify whether tflite models are stored in asset directory or file stored in device
 enum CustomTrainedModel { asset, file }
@@ -29,6 +47,22 @@ enum InputImageRotation {
   Rotation_90deg,
   Rotation_180deg,
   Rotation_270deg
+}
+
+extension InputImageRotationMethods on InputImageRotation {
+  static Map<InputImageRotation, int> get _values => {
+        InputImageRotation.Rotation_0deg: 0,
+        InputImageRotation.Rotation_90deg: 90,
+        InputImageRotation.Rotation_180deg: 180,
+        InputImageRotation.Rotation_270deg: 270,
+      };
+
+  int get rawValue => _values[this] ?? 0;
+
+  static InputImageRotation? fromRawValue(int rawValue) {
+    return InputImageRotationMethods._values
+        .map((k, v) => MapEntry(v, k))[rawValue];
+  }
 }
 
 ///Get instance of the individual api's using instance of [Vision]
@@ -136,57 +170,63 @@ class InputImage {
 ///Data of image required when creating image from bytes.
 class InputImageData {
   ///Size of image.
-  final Size? size;
+  final Size size;
 
   ///Image rotation degree.
-  final InputImageRotation? imageRotation;
+  final InputImageRotation imageRotation;
 
   ///Format of the input image.
   final InputImageFormat inputImageFormat;
 
+  /// The plane attributes to create the image buffer on iOS.
+  ///
+  /// Not used on Android.
+  final List<InputImagePlaneMetadata>? planeData;
+
   InputImageData(
-      {this.size,
-      this.imageRotation,
-      this.inputImageFormat = InputImageFormat.NV21});
+      {required this.size,
+      required this.imageRotation,
+      this.inputImageFormat = InputImageFormat.NV21,
+      this.planeData});
 
   ///Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {
     var map = <String, dynamic>{
-      'width': size?.width,
-      'height': size?.height,
-      'rotation': _imageRotationToInt(imageRotation),
-      'imageFormat': _imageFormatToInt(inputImageFormat)
+      'width': size.width,
+      'height': size.height,
+      'rotation': imageRotation.rawValue,
+      'imageFormat': inputImageFormat.rawValue,
+      'planeData': planeData
+          ?.map((InputImagePlaneMetadata plane) => plane._serialize())
+          .toList(),
     };
     return map;
   }
 }
 
-// source: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#constants
-int _imageFormatToInt(InputImageFormat inputImageFormat) {
-  switch (inputImageFormat) {
-    case InputImageFormat.NV21:
-      return 17;
-    case InputImageFormat.YV12:
-      return 842094169;
-    case InputImageFormat.YUV_420_888:
-      return 35;
-    default:
-      return 17;
-  }
-}
+/// Plane attributes to create the image buffer on iOS.
+///
+/// When using iOS, [height], and [width] throw [AssertionError]
+/// if `null`.
+class InputImagePlaneMetadata {
+  InputImagePlaneMetadata({
+    required this.bytesPerRow,
+    this.height,
+    this.width,
+  });
 
-///Function to convert enum [InputImageRotation] to integer value.
-int _imageRotationToInt(InputImageRotation? inputImageRotation) {
-  switch (inputImageRotation) {
-    case InputImageRotation.Rotation_0deg:
-      return 0;
-    case InputImageRotation.Rotation_90deg:
-      return 90;
-    case InputImageRotation.Rotation_180deg:
-      return 180;
-    case InputImageRotation.Rotation_270deg:
-      return 270;
-    default:
-      return 0;
-  }
+  /// The row stride for this color plane, in bytes.
+  final int bytesPerRow;
+
+  /// Height of the pixel buffer on iOS.
+  final int? height;
+
+  /// Width of the pixel buffer on iOS.
+  final int? width;
+
+  Map<String, dynamic> _serialize() => <String, dynamic>{
+        'bytesPerRow': bytesPerRow,
+        'height': height,
+        'width': width,
+      };
 }

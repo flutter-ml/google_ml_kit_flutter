@@ -49,9 +49,9 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "startPoseDetector":
             case "startImageLabelDetector":
             case "startMlDigitalInkRecognizer":
-            case "manageInkModels":
             case "startTextDetector":
             case "startFaceDetector":
+            case "manageInkModels":
                 handleVisionDetection(call, result);
                 break;
             case "closeBarcodeScanner":
@@ -59,6 +59,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "closeImageLabelDetector":
             case "closeMlDigitalInkRecognizer":
             case "closeTextDetector":
+            case "closeFaceDetector":
                 closeVisionDetectors(call, result);
                 break;
             default:
@@ -270,7 +271,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                     (int) (double) metaData.get("width"),
                     (int) (double) metaData.get("height"),
                     (int) metaData.get("rotation"),
-                    (int) metaData.get("imageFormat"));
+                    InputImage.IMAGE_FORMAT_NV21);
             return inputImage;
 
         } else {

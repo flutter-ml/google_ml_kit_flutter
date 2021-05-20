@@ -29,4 +29,6 @@ flutter:
       android:
         package: com.b.biradar.google_ml_kit
         pluginClass: GoogleMlKitPlugin
+      ios:
+        pluginClass: GoogleMlKitPlugin
 

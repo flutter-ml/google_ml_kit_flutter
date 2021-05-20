@@ -42,8 +42,8 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
         inputImage.inputImageData?.imageRotation != null) {
       final painter = FaceDetectorPainter(
           faces,
-          inputImage.inputImageData!.size!,
-          inputImage.inputImageData!.imageRotation!);
+          inputImage.inputImageData!.size,
+          inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
     } else {
       customPaint = null;

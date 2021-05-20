@@ -2,9 +2,9 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, it will come soon!
+A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, features will come soon!
 
-<img src="./screenshots/pose.png?raw=true" height=500 > <img src="./screenshots/imagelabeling.png?raw=true" height=500> <img src="./screenshots/giff.gif" height=500> <img src="./screenshots/barcode.png?raw=true" height=500> <img src="./screenshots/text_detector.jpg?raw=true" height=500>
+<img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/pose.png?raw=true" height=500 > <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/imagelabeling.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/giff.gif" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/barcode.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/text_detector.jpg?raw=true" height=500>
 
 ### Note
 
@@ -20,21 +20,29 @@ final exampleDetector = GoogleMlKit.vision.ExampleDetector
 final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 ```
 
-## Currently supported api's
+## Features
 
 ### Vision
 
-* [Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
-* [Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
-* [Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)
-* [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)
-* [Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
-* [Face Detection](https://developers.google.com/ml-kit/vision/face-detection)
+| Feature                                                                                       | Android | iOS |
+|-----------------------------------------------------------------------------------------------|---------|-----|
+|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | yet |
+|[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
+|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
+|[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
+|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | yet |
+|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | yet |
+|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
+|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
 
 ### NLP
 
-* [Language Detection](https://developers.google.com/ml-kit/language/identification)
-* [On-Device Translation](https://developers.google.com/ml-kit/language/translation)
+| Feature                                                                                       | Android | iOS |
+|-----------------------------------------------------------------------------------------------|---------|-----|
+|[Language Identification](https://developers.google.com/ml-kit/language/identification)         | ✅      | yet |
+|[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
+|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
+|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | yet     | yet |
 
 ## Usage
 
@@ -111,7 +119,7 @@ final digitalInkRecogniser = GoogleMlKit.vision.digitalInkRecogniser();
 
 ## Digital Ink recognition
 
-**Read to know how to imlpement [Digital Ink Recognition](./digital_ink_recogniser.md)**
+**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)**
 
 ## Pose Detection
 
@@ -136,7 +144,7 @@ final options = PoseDetectorOptions(
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
-Use the map to extract data. See this [example](example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
+Use the map to extract data. See this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
 
@@ -180,7 +188,7 @@ final options = AutoMlImageLabelerOptions(
 final labels = await imageLabeler.processImage(inputImage);
 ```
 
-**To know more see this [example](example/lib/VisionDetectorViews/label_detector_view.dart)**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/label_detector_view.dart)**
 
 ## Barcode Scanner
 
@@ -205,7 +213,7 @@ It returns List<[Barcode]()>
 final result = await barcodeScanner.processImage(inputImage);
 ```
 
-**To know more see this [example](./example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
 
 ## Text Recognition
 
@@ -214,11 +222,11 @@ final result = await barcodeScanner.processImage(inputImage);
 final text = await textDetector.processImage(inputImage);
 ```
 
-**To know more see this [example](example/lib/VisionDetectorViews/text_detector_view.dart)**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/text_detector_view.dart)**
 
 ## Face Detection
 
-**To know more see this [example](./example/lib/VisionDetectorViews/face_detector_view.dart)**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/face_detector_view.dart)**
 
 ## Language Detection
 
@@ -226,7 +234,7 @@ final text = await textDetector.processImage(inputImage);
 2. Call `identifyPossibleLanguages(text)` to get a list of [IdentifiedLanguage](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L53) which contains all possible languages that are above the specified threshold. **Default is 0.5**.
 3. To get info of the identified **BCP-47** tag use this [class](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L63).
 
-**To know more see this [example](./example/lib/NlpDetectorViews/language_identifier_view.dart).**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_identifier_view.dart).**
 
 ### On-Device Translator
   1. Create `OnDeviceTranslator` object.
@@ -248,7 +256,7 @@ final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 4.  Call `_languageModelManager.isModelDownloaded(TranslateLanguage.ENGLISH)` to to check whether a model is downloaded.
 5. Call `_languageModelManager.getAvailableModels()` to get a list of all downloaded models.
 
-**To know more see this [example](./example/lib/NlpDetectorViews/language_translator_view.dart).**
+**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_translator_view.dart).**
 ## Contributing
 
 Contributions are welcome.
