@@ -42,6 +42,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[Language Identification](https://developers.google.com/ml-kit/language/identification)         | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
+|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | yet     | yet |
 
 ## Usage
 
