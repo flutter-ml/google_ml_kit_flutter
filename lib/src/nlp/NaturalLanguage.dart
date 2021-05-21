@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 part 'LanguageIdentifier.dart';
 part 'OnDeviceTranslation.dart';
-
+part 'EntityExtraction.dart';
 class NaturalLanguage {
   NaturalLanguage._();
 

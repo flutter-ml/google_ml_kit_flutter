@@ -73,8 +73,10 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "startLanguageIdentifier":
             case "startLanguageModelManager":
             case "startLanguageTranslator":
+            case "startEntityExtraction":
                 handleNlpDetection(call, result);
                 break;
+            case "closeEntityExtraction":
             case "closeLanguageIdentifier":
             case "closeLanguageTranslator":
                 closeNlpDetectors(call);
@@ -132,12 +134,21 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         TranslateRemoteModel model =
                                 new TranslateRemoteModel.Builder((String) call.argument("model")).build();
 
-                        Boolean downloaded = ((TranslatorModelManager) detector).isModelDownloaded(model);
+                        Boolean downloaded = ((GenericModelManager) detector).isModelDownloaded(model);
                         if (downloaded != null) result.success(downloaded);
                         else result.error("error", null, null);
                         break;
 
                 }
+                break;
+            case "startEntityExtraction":
+                if (detector==null){
+                    detector = EntityExtractorApi.getInstance((String) call.argument("language"));
+                    nlpDetectors.put(invokeMethod.substring(5), detector);
+                }
+                ((EntityExtractorApi) detector).
+                        identifyParams((Map<String, Object>) call.argument("parameters"),result,(String) call.argument("text"));
+
                 break;
 
         }
@@ -157,7 +168,12 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "closeLanguageTranslator":
                 ((OnDeviceTranslator) detector).close();
                 break;
+            case "closeEntityExtractor":
+                ((EntityExtractorApi) detector).close();
+                break;
         }
+
+        nlpDetectors.remove(invokeMethod.substring(5));
     }
 
     //Function to deal with method calls requesting to process an image or other information

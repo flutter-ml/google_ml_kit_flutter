@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.common.model.RemoteModel;
 import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
@@ -16,15 +17,11 @@ import com.google.mlkit.nl.translate.TranslatorOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import io.flutter.plugin.common.MethodChannel;
 
 public class OnDeviceTranslator {
-    private static final TranslatorModelManager translaterModelManager = new TranslatorModelManager();
+    private static final GenericModelManager genericModelManager = new GenericModelManager();
     private final Translator translator;
 
     public OnDeviceTranslator(Translator translator) {
@@ -38,8 +35,8 @@ public class OnDeviceTranslator {
         TranslateRemoteModel targetModel =
                 new TranslateRemoteModel.Builder(targetLanguage).build();
 
-        if (translaterModelManager.isModelDownloaded(sourceModel) &&
-                translaterModelManager.isModelDownloaded(targetModel)) {
+        if (genericModelManager.isModelDownloaded(sourceModel) &&
+                genericModelManager.isModelDownloaded(targetModel)) {
             TranslatorOptions translatorOptions = new TranslatorOptions.Builder()
                     .setSourceLanguage(sourceLanguage)
                     .setTargetLanguage(targetLanguage)
@@ -76,6 +73,7 @@ public class OnDeviceTranslator {
 
 class TranslatorModelManager {
     RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
+    GenericModelManager genericModelManager = new GenericModelManager();
 //    ExecutorService executorService = Executors.newCachedThreadPool();
 
     public void getDownloadedModels(final MethodChannel.Result result) {
@@ -101,7 +99,8 @@ class TranslatorModelManager {
 
         final TranslateRemoteModel downloadModel = new TranslateRemoteModel.Builder(languageCode).build();
         final DownloadConditions downloadConditions;
-        if (isModelDownloaded(downloadModel)) {
+
+        if (genericModelManager.isModelDownloaded(downloadModel)) {
             Log.e("Already downloaded", "Model is already present");
             result.success("success");
             return;
@@ -112,50 +111,19 @@ class TranslatorModelManager {
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
         else downloadConditions = new DownloadConditions.Builder().build();
 
-        remoteModelManager.download(downloadModel, downloadConditions).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(@NonNull Void aVoid) {
-                result.success("success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("error", e.toString());
-                result.error("error", e.toString(), null);
-            }
-        });
+        genericModelManager.downloadModel(downloadModel, downloadConditions, result);
     }
 
     public void deleteModel(final MethodChannel.Result result, String languageCode) {
         TranslateRemoteModel deleteModel = new TranslateRemoteModel.Builder(languageCode).build();
-        if (!isModelDownloaded(deleteModel)) {
+
+        if (!genericModelManager.isModelDownloaded(deleteModel)) {
             Log.e("error", "Model not present");
             result.success("success");
             return;
         }
-        remoteModelManager.deleteDownloadedModel(deleteModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(@NonNull Void aVoid) {
-                result.success("success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Error deleting model", e.toString(), null);
-                result.error("error", e.toString(), null);
-            }
-        });
+        genericModelManager.deleteModel(deleteModel, result);
     }
 
-    public Boolean isModelDownloaded(TranslateRemoteModel model) {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        IsModelDownloaded myCallable = new IsModelDownloaded(remoteModelManager.isModelDownloaded(model));
-        Future<Boolean> taskResult = executorService.submit(myCallable);
-        try {
-            return taskResult.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }

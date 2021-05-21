@@ -50,6 +50,7 @@ dependencies {
 
     implementation 'com.google.mlkit:language-id:16.1.1'
     implementation 'com.google.mlkit:translate:16.1.2'
+    implementation 'com.google.mlkit:entity-extraction:16.0.0-beta1'
 
     implementation 'com.google.mlkit:face-detection:16.0.7'
 }
