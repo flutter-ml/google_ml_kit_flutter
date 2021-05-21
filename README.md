@@ -31,7 +31,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | yet |
-|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | yet |
+|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
 

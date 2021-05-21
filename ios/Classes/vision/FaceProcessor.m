@@ -49,9 +49,7 @@
     [detector processImage:image
                 completion:^(NSArray<MLKFace *> *_Nullable faces, NSError *_Nullable error) {
         if (error) {
-            result([FlutterError errorWithCode:[NSString stringWithFormat:@"Error %d", (int)error.code]
-                                       message:error.domain
-                                       details:error.localizedDescription]);
+            result(getFlutterError(error));
             return;
         } else if (!faces) {
             result(@[]);

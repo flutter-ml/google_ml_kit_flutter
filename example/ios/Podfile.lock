@@ -5,6 +5,8 @@ PODS:
   - google_ml_kit (0.0.1):
     - Flutter
     - GoogleMLKit/FaceDetection
+    - GoogleMLKit/ImageLabeling
+    - GoogleMLKit/ImageLabelingCustom
   - GoogleDataTransport (8.4.0):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -12,6 +14,12 @@ PODS:
   - GoogleMLKit/FaceDetection (2.1.0):
     - GoogleMLKit/MLKitCore
     - MLKitFaceDetection (~> 1.2.0)
+  - GoogleMLKit/ImageLabeling (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabeling (~> 1.2.0)
+  - GoogleMLKit/ImageLabelingCustom (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabelingCustom (~> 1.2.0)
   - GoogleMLKit/MLKitCore (2.1.0):
     - MLKitCommon (~> 2.1.0)
   - GoogleToolboxForMac/DebugUtils (2.3.1):
@@ -49,19 +57,40 @@ PODS:
   - MLKitFaceDetection (1.2.0):
     - MLKitCommon (~> 2.1)
     - MLKitVision (~> 1.2)
+  - MLKitImageLabeling (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
+    - MLKitVisionKit (~> 2.1)
+  - MLKitImageLabelingCommon (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitImageLabelingCustom (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
+    - MLKitVisionKit (~> 2.1)
+  - MLKitObjectDetectionCommon (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
   - MLKitVision (1.2.0):
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
     - MLKitCommon (~> 2.1)
     - Protobuf (~> 3.12)
+  - MLKitVisionKit (2.1.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitObjectDetectionCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
-  - Protobuf (3.16.0)
+  - Protobuf (3.17.0)
 
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
@@ -79,7 +108,12 @@ SPEC REPOS:
     - GTMSessionFetcher
     - MLKitCommon
     - MLKitFaceDetection
+    - MLKitImageLabeling
+    - MLKitImageLabelingCommon
+    - MLKitImageLabelingCustom
+    - MLKitObjectDetectionCommon
     - MLKitVision
+    - MLKitVisionKit
     - nanopb
     - PromisesObjC
     - Protobuf
@@ -97,7 +131,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: 8938be189c565167b7975f3c3af9534efd210ee3
+  google_ml_kit: 6f91383749f43391d73744303d26df2ce41f523b
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
   GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
@@ -107,10 +141,15 @@ SPEC CHECKSUMS:
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   MLKitCommon: 9ed187a042139d51c0d8bf6a8301bb20b375c576
   MLKitFaceDetection: 5b92261dd6e4205e3dab0df62537ac3f4e90e5db
+  MLKitImageLabeling: 21c8acbbfac1e9dd912f0cdc5bf8cb09f0f98125
+  MLKitImageLabelingCommon: 621e55f48a1709b886489925edb5939791b66f8c
+  MLKitImageLabelingCustom: ffcdbaa346f0117f113724a9273ff4c0ab13c744
+  MLKitObjectDetectionCommon: 7b197838c58568d44f34cf2fe874787ab43d63c1
   MLKitVision: 51385878c9100024478971856510f9271ff555b5
+  MLKitVisionKit: 92bddf95a91152419cdf3cbf2c2aed43cdf97cc2
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Protobuf: 8e78b4aabb47d17f379fb10b0d22ed5439e69b95
+  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
 
 PODFILE CHECKSUM: c886903733cf0a0267328931ef36f0b17d40a3c6
 

@@ -33,34 +33,42 @@ class Home extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ExpansionTile(
-                title: const Text("Vision Api's"),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
                 children: [
-                  CustomCard('Image Label Detector', ImageLabelView()),
-                  CustomCard('Face Detector', FaceDetectorView()),
-                  CustomCard('Barcode Scanner', BarcodeScannerView()),
-                  CustomCard('Pose Detector view', PoseDetectorView()),
-                  CustomCard('Digital Ink Recogniser', DigitalInkView()),
-                  CustomCard('Text Detector', TextDetectorView()),
+                  ExpansionTile(
+                    title: const Text("Vision Api's"),
+                    children: [
+                      CustomCard('Image Label Detector', ImageLabelView()),
+                      CustomCard('Face Detector', FaceDetectorView()),
+                      CustomCard('Barcode Scanner', BarcodeScannerView()),
+                      CustomCard('Pose Detector view', PoseDetectorView()),
+                      CustomCard('Digital Ink Recogniser', DigitalInkView()),
+                      CustomCard('Text Detector', TextDetectorView()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ExpansionTile(
+                    title: const Text("NLP Api's"),
+                    children: [
+                      CustomCard(
+                          'Language Identifier', LanguageIdentifierView()),
+                      CustomCard(
+                          'Language Translator', LanguageTranslatorView())
+                    ],
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              ExpansionTile(
-                title: const Text("NLP Api's"),
-                children: [
-                  CustomCard('Language Identifier', LanguageIdentifierView()),
-                  CustomCard('Language Translator', LanguageTranslatorView())
-                ],
-              )
-            ],
-          )),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
