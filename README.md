@@ -258,7 +258,7 @@ final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 
 **To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_translator_view.dart).**
 
-### Entity Ectraction
+### Entity Extraction
 1. Create `EntityExtractor` object.
 ```
 final _entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH,);
@@ -273,6 +273,9 @@ extractEntities(String text,
 // locale: BCP-47 tag for the locale language
 // timezone: String for timezone ex:- `America/Los_Angeles`
 ```
+4. To gain infromation from individual entities refer to [orginal api](https://developers.google.com/android/reference/com/google/mlkit/nl/entityextraction/package-summary). Same methods are applied here as well.
+5. Manage models same as `TranslateLanguageModelManager` does but use 
+`EntityModelManager` instead.
 *To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/entity_extraction_view.dart).**
 ## Contributing
 

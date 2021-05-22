@@ -16,7 +16,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   Future<void> _identifyLanguage() async {
     if (_controller.text == '') return;
     final language =
-        await _languageIdentifier.identifyLanguange(_controller.text);
+        await _languageIdentifier.identifyLanguage(_controller.text);
 
     setState(() {
       _identifiedLanguage = language;

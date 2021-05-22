@@ -7,7 +7,7 @@ class LanguageIdentifier {
   bool _isOpened = false;
   bool _isClosed = false;
 
-  Future<String> identifyLanguange(String text) async {
+  Future<String> identifyLanguage(String text) async {
     _isOpened = true;
 
     final result = await NaturalLanguage.channel.invokeMethod(

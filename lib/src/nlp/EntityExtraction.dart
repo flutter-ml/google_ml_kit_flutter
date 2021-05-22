@@ -13,6 +13,7 @@ class EntityExtractor {
 
   EntityExtractor._(this._language);
 
+  /// Extracts entities from the given text and returns [List<EntityAnnotation>]
   Future<List<EntityAnnotation>> extractEntities(String text,
       {List<int>? filters, String? localeLangauge, String? timeZone}) async {
     final parameters = <String, dynamic>{
