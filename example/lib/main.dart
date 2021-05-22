@@ -72,8 +72,7 @@ class Home extends StatelessWidget {
                           'Language Identifier', LanguageIdentifierView()),
                       CustomCard(
                           'Language Translator', LanguageTranslatorView()),
-                      CustomCard(
-                          'Entity Extractor', EntityExtractionView())
+                      CustomCard('Entity Extractor', EntityExtractionView())
                     ],
                   ),
                 ],

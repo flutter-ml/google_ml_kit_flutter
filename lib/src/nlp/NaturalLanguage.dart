@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 part 'LanguageIdentifier.dart';
 part 'OnDeviceTranslation.dart';
 part 'EntityExtraction.dart';
+
 class NaturalLanguage {
   NaturalLanguage._();
 
@@ -25,11 +26,11 @@ class NaturalLanguage {
     return TranslateLanguageModelManager._();
   }
 
-  EntityExtractor entityExtractor(String language){
+  EntityExtractor entityExtractor(String language) {
     return EntityExtractor._(language);
   }
 
-  EntityModelManager entityModelManager(){
+  EntityModelManager entityModelManager() {
     return EntityModelManager._();
   }
 }

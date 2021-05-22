@@ -36,7 +36,7 @@ class EntityExtractor {
     return annotation;
   }
 
-  Future<void> close() async{
+  Future<void> close() async {
     if (!_isClosed && _isOpened) {
       await NaturalLanguage.channel.invokeMethod('nlp#closeLanguageTranslator');
       _isClosed = true;
@@ -105,7 +105,6 @@ class EntityModelManager {
 }
 
 class EntityExtractorOptions {
-
   static const String ARABIC = 'arabic';
   static const String CHINESE = 'chinese';
   static const String DUTCH = 'dutch';
@@ -173,7 +172,7 @@ class EntityAnnotation {
           break;
         case Entity.TYPE_DATE_TIME:
           entities.add(DateTimeEntity(raw.toString(),
-              entity['dateTimeGranularity'], entity['timestamp'] ));
+              entity['dateTimeGranularity'], entity['timestamp']));
           break;
         case Entity.TYPE_FLIGHT_NUMBER:
           entities

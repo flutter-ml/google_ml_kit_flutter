@@ -11,7 +11,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
 
   final _languageModelManager = GoogleMlKit.nlp.entityModelManager();
 
-  final _entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH);
+  final _entityExtractor =
+      GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH);
 
   @override
   void dispose() {
@@ -20,14 +21,17 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   }
 
   Future<void> downloadModel() async {
-    var result = await _languageModelManager.downloadModel(EntityExtractorOptions.ENGLISH, isWifiRequired: false);
+    var result = await _languageModelManager
+        .downloadModel(EntityExtractorOptions.ENGLISH, isWifiRequired: false);
     print(result);
-    result = await _languageModelManager.downloadModel(EntityExtractorOptions.JAPANESE, isWifiRequired: false);
+    result = await _languageModelManager
+        .downloadModel(EntityExtractorOptions.JAPANESE, isWifiRequired: false);
     print(result);
   }
 
   Future<void> deleteModel() async {
-    var result = await _languageModelManager.deleteModel(EntityExtractorOptions.JAPANESE);
+    var result = await _languageModelManager
+        .deleteModel(EntityExtractorOptions.JAPANESE);
     print(result);
   }
 
@@ -37,7 +41,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   }
 
   Future<void> isModelDownloaded() async {
-    var result = await _languageModelManager.isModelDownloaded(EntityExtractorOptions.DUTCH);
+    var result = await _languageModelManager
+        .isModelDownloaded(EntityExtractorOptions.DUTCH);
     print('Model download: $result');
   }
 
@@ -45,7 +50,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
     var result = await _entityExtractor.extractEntities(_controller.text);
     result.forEach((element) {
       print(element.entities);
-     });
+    });
   }
 
   @override
@@ -78,7 +83,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
             ),
             const SizedBox(height: 30),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(onPressed: translateText, child: Text('Extract Entities'))
+              ElevatedButton(
+                  onPressed: translateText, child: Text('Extract Entities'))
             ]),
             const SizedBox(height: 20),
             Row(
