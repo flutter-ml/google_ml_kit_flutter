@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:google_ml_kit_example/NlpDetectorViews/entity_extraction_view.dart';
 import 'package:google_ml_kit_example/NlpDetectorViews/language_translator_view.dart';
 
 import 'NlpDetectorViews/language_identifier_view.dart';
@@ -70,7 +71,9 @@ class Home extends StatelessWidget {
                       CustomCard(
                           'Language Identifier', LanguageIdentifierView()),
                       CustomCard(
-                          'Language Translator', LanguageTranslatorView())
+                          'Language Translator', LanguageTranslatorView()),
+                      CustomCard(
+                          'Entity Extractor', EntityExtractionView())
                     ],
                   ),
                 ],

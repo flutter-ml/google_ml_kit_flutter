@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -54,7 +55,7 @@ public class EntityExtractorApi {
         Locale locale = null;
         TimeZone timeZone = null;
         if(parameters.get("filters")!=null){
-            filters = new HashSet<Integer>(((List<Integer>) parameters.get("filters")));
+            filters = new HashSet<>(((List<Integer>) parameters.get("filters")));
         }
 
         if (parameters.get("locale")!=null){
@@ -89,12 +90,12 @@ public class EntityExtractorApi {
                                     for (Entity entity : entities){
                                         Map<String, Object>  entityData = new HashMap<>();
                                         entityData.put("type",entity.getType());
+                                        entityData.put("raw",entity.toString());
                                         switch (entity.getType()){
                                             case Entity.TYPE_ADDRESS:
                                             case Entity.TYPE_URL:
                                             case Entity.TYPE_PHONE:
                                             case Entity.TYPE_EMAIL:
-                                                entityData.put("raw",entity.toString());
                                                 break;
                                             case Entity.TYPE_DATE_TIME:
                                                 DateTimeEntity dateTimeEntity = entity.asDateTimeEntity();
@@ -128,14 +129,14 @@ public class EntityExtractorApi {
                                                 break;
                                             case Entity.TYPE_TRACKING_NUMBER:
                                                 TrackingNumberEntity trackingNumberEntity = entity.asTrackingNumberEntity();
-                                                entityData.put("carries", trackingNumberEntity.getParcelCarrier());
+                                                entityData.put("carrier", trackingNumberEntity.getParcelCarrier());
                                                 entityData.put("number", trackingNumberEntity.getParcelTrackingNumber());
                                                 break;
                                         }
 
                                         allEntities.add(entityData);
                                     }
-
+                                    annotation.put("entities",allEntities);
                                     allAnnotations.add(annotation);
                                 }
 
@@ -164,7 +165,7 @@ class EntityModelManager{
             public void onSuccess(@NonNull Set<EntityExtractionRemoteModel> entityExtractionRemoteModels) {
                 List<String> downloadedModels = new ArrayList<>(entityExtractionRemoteModels.size());
                 for (EntityExtractionRemoteModel entityRemoteModel : entityExtractionRemoteModels) {
-                    downloadedModels.add(entityRemoteModel.getModelName());
+                    downloadedModels.add(entityRemoteModel.getModelIdentifier());
                 }
                 result.success(downloadedModels);
             }
