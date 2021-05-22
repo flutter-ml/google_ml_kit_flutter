@@ -273,7 +273,7 @@ extractEntities(String text,
 // locale: BCP-47 tag for the locale language
 // timezone: String for timezone ex:- `America/Los_Angeles`
 ```
-
+*To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/entity_extraction_view.dart).**
 ## Contributing
 
 Contributions are welcome.
