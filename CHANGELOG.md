@@ -35,3 +35,9 @@
 
 * Add face detection Api
 * Add On device translation api
+
+## 0.4.0
+
+* Add face detection for IOS
+* Add image labelling for IOS
+* Add Entity Extraction for Android

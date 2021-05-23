@@ -38,9 +38,8 @@ class OnDeviceTranslator {
 
 /// Creating instance of [TranslateLanguageModelManager]
 /// ```
-/// final _onDeviceTranslator = GoogleMlKit.nlp
-///      .onDeviceTranslator(sourceLanguage: TranslateLanguage.ENGLISH,
-///       targetLanguage: TranslateLanguage.SPANISH);
+/// final _languageModelManager = GoogleMlKit.nlp.
+///                               translateLanguageModelManager();;
 /// ```
 class TranslateLanguageModelManager {
   TranslateLanguageModelManager._();

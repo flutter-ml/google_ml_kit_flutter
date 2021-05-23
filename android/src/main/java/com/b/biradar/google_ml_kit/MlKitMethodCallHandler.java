@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.mlkit.nl.entityextraction.EntityExtractionRemoteModel;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.vision.common.InputImage;
@@ -73,8 +74,11 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "startLanguageIdentifier":
             case "startLanguageModelManager":
             case "startLanguageTranslator":
+            case "startEntityExtractor":
+            case "startEntityModelManager":
                 handleNlpDetection(call, result);
                 break;
+            case "closeEntityExtractor":
             case "closeLanguageIdentifier":
             case "closeLanguageTranslator":
                 closeNlpDetectors(call);
@@ -132,12 +136,49 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         TranslateRemoteModel model =
                                 new TranslateRemoteModel.Builder((String) call.argument("model")).build();
 
-                        Boolean downloaded = ((TranslatorModelManager) detector).isModelDownloaded(model);
+                        Boolean downloaded = new GenericModelManager().isModelDownloaded(model);
                         if (downloaded != null) result.success(downloaded);
                         else result.error("error", null, null);
                         break;
 
                 }
+                break;
+            case "startEntityModelManager":
+                if (detector == null) {
+                    detector = new EntityModelManager();
+                    nlpDetectors.put(invokeMethod.substring(5), detector);
+                }
+                switch ((String) call.argument("task")) {
+                    case "download":
+                        ((EntityModelManager) detector)
+                                .downloadModel(result, (String) call.argument("model"), (boolean) call.argument("wifi"));
+                        break;
+                    case "delete":
+                        ((EntityModelManager) detector)
+                                .deleteModel(result, (String) call.argument("model"));
+                        break;
+                    case "getModels":
+                        ((EntityModelManager) detector).getDownloadedModels(result);
+                        break;
+                    case "check":
+                        EntityExtractionRemoteModel model =
+                                new EntityExtractionRemoteModel.Builder((String) call.argument("model")).build();
+
+                        Boolean downloaded =  new GenericModelManager().isModelDownloaded(model);
+                        if (downloaded != null) result.success(downloaded);
+                        else result.error("error", null, null);
+                        break;
+
+                }
+                break;
+            case "startEntityExtractor":
+                if (detector==null){
+                    detector = EntityExtractorApi.getInstance((String) call.argument("language"));
+                    nlpDetectors.put(invokeMethod.substring(5), detector);
+                }
+                ((EntityExtractorApi) detector).
+                        identifyParams((Map<String, Object>) call.argument("parameters"),result,(String) call.argument("text"));
+
                 break;
 
         }
@@ -157,7 +198,12 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
             case "closeLanguageTranslator":
                 ((OnDeviceTranslator) detector).close();
                 break;
+            case "closeEntityExtractor":
+                ((EntityExtractorApi) detector).close();
+                break;
         }
+
+        nlpDetectors.remove(invokeMethod.substring(5));
     }
 
     //Function to deal with method calls requesting to process an image or other information

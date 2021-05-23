@@ -42,7 +42,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[Language Identification](https://developers.google.com/ml-kit/language/identification)         | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
-|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | yet     | yet |
+|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅   | yet |
 
 ## Usage
 
@@ -257,6 +257,26 @@ final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 5. Call `_languageModelManager.getAvailableModels()` to get a list of all downloaded models.
 
 **To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_translator_view.dart).**
+
+### Entity Extraction
+1. Create `EntityExtractor` object.
+```
+final _entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH,);
+```
+2. Call `_entityExtractor.extractEntities(text)` to obatin `List<EntityAnnotation>`.
+3. Configuring custom parameters for extracting entities.
+```
+extractEntities(String text,
+      {List<int>? filters, String? localeLangauge, String? timeZone});
+
+// filters: [Entity.TYPE_ADDRESS,Entity.TYPE_DATE_TIME]
+// locale: BCP-47 tag for the locale language
+// timezone: String for timezone ex:- `America/Los_Angeles`
+```
+4. To gain infromation from individual entities refer to [orginal api](https://developers.google.com/android/reference/com/google/mlkit/nl/entityextraction/package-summary). Same methods are applied here as well.
+5. Manage models same as `TranslateLanguageModelManager` does but use 
+`EntityModelManager` instead.
+*To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/entity_extraction_view.dart).**
 ## Contributing
 
 Contributions are welcome.
