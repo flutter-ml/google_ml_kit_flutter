@@ -34,14 +34,14 @@ class BarcodeDetectorPainter extends CustomPainter {
       builder.addText('${barcode.info!.displayValue}');
       builder.pop();
 
-      final left = translateX(barcode.info!.boundingBox.left,
-          rotation, size, absoluteImageSize);
-      final top = translateY(barcode.info!.boundingBox.top, rotation,
-          size, absoluteImageSize);
-      final right = translateX(barcode.info!.boundingBox.right,
-          rotation, size, absoluteImageSize);
-      final bottom = translateY(barcode.info!.boundingBox.bottom,
-          rotation, size, absoluteImageSize);
+      final left = translateX(
+          barcode.info!.boundingBox.left, rotation, size, absoluteImageSize);
+      final top = translateY(
+          barcode.info!.boundingBox.top, rotation, size, absoluteImageSize);
+      final right = translateX(
+          barcode.info!.boundingBox.right, rotation, size, absoluteImageSize);
+      final bottom = translateY(
+          barcode.info!.boundingBox.bottom, rotation, size, absoluteImageSize);
 
       canvas.drawParagraph(
         builder.build()
