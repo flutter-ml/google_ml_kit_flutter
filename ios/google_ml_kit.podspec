@@ -20,6 +20,7 @@ flutter plugin for google ml kit
   s.dependency 'GoogleMLKit/ImageLabeling'
   s.dependency 'GoogleMLKit/ImageLabelingCustom'
   s.dependency 'GoogleMLKit/BarcodeScanning'
+  s.dependency 'GoogleMLKit/TextRecognition'
   s.platform                = :ios, '12.0'
   s.ios.deployment_target   = '12.0'
 

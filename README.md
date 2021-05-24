@@ -26,7 +26,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 
 | Feature                                                                                       | Android | iOS |
 |-----------------------------------------------------------------------------------------------|---------|-----|
-|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | yet |
+|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | ✅  |
 |[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
 |[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |

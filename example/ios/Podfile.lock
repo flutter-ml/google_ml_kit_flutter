@@ -8,6 +8,7 @@ PODS:
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/ImageLabeling
     - GoogleMLKit/ImageLabelingCustom
+    - GoogleMLKit/TextRecognition
   - GoogleDataTransport (8.4.0):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -26,6 +27,9 @@ PODS:
     - MLKitImageLabelingCustom (~> 1.2.0)
   - GoogleMLKit/MLKitCore (2.1.0):
     - MLKitCommon (~> 2.1.0)
+  - GoogleMLKit/TextRecognition (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognition (~> 1.2.0)
   - GoogleToolboxForMac/DebugUtils (2.3.1):
     - GoogleToolboxForMac/Defines (= 2.3.1)
   - GoogleToolboxForMac/Defines (2.3.1)
@@ -80,6 +84,9 @@ PODS:
   - MLKitObjectDetectionCommon (1.2.0):
     - MLKitCommon (~> 2.1)
     - MLKitVision (~> 1.2)
+  - MLKitTextRecognition (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
   - MLKitVision (1.2.0):
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
@@ -120,6 +127,7 @@ SPEC REPOS:
     - MLKitImageLabelingCommon
     - MLKitImageLabelingCustom
     - MLKitObjectDetectionCommon
+    - MLKitTextRecognition
     - MLKitVision
     - MLKitVisionKit
     - nanopb
@@ -139,7 +147,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: 544eef10c97f7588c6c4982b98f073cf47beb4da
+  google_ml_kit: 4c66a896b085f7e95226659ec22bd9af20751afe
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
   GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
@@ -154,6 +162,7 @@ SPEC CHECKSUMS:
   MLKitImageLabelingCommon: 621e55f48a1709b886489925edb5939791b66f8c
   MLKitImageLabelingCustom: ffcdbaa346f0117f113724a9273ff4c0ab13c744
   MLKitObjectDetectionCommon: 7b197838c58568d44f34cf2fe874787ab43d63c1
+  MLKitTextRecognition: 332ce64ab281af7b38c806746e1fc53a58eb59ef
   MLKitVision: 51385878c9100024478971856510f9271ff555b5
   MLKitVisionKit: 92bddf95a91152419cdf3cbf2c2aed43cdf97cc2
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
