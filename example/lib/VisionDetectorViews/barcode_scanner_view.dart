@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
+import 'camera_view.dart';
+import 'painters/barcode_detector_painter.dart';
 
 class BarcodeScannerView extends StatefulWidget {
   @override
@@ -10,67 +9,61 @@ class BarcodeScannerView extends StatefulWidget {
 }
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
-  String? imagePath;
-  late BarcodeScanner barcodeScanner;
-  List<Barcode>? barcodes;
+  BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
+    BarcodeFormat.Default,
+    BarcodeFormat.Code_128,
+    BarcodeFormat.Code_39,
+    BarcodeFormat.Code_93,
+    BarcodeFormat.Codebar,
+    BarcodeFormat.EAN_13,
+    BarcodeFormat.EAN_8,
+    BarcodeFormat.ITF,
+    BarcodeFormat.UPC_A,
+    BarcodeFormat.UPC_E,
+    BarcodeFormat.QR_Code,
+    BarcodeFormat.PDF417,
+    BarcodeFormat.Aztec,
+    BarcodeFormat.Data_Matrix
+  ]);
 
-  Future<void> readBarcode() async {
-    var pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final inputImage = InputImage.fromFilePath(pickedFile.path);
-      barcodeScanner = GoogleMlKit.vision.barcodeScanner();
-      final result = await barcodeScanner.processImage(inputImage);
-      setState(() {
-        imagePath = pickedFile.path;
-        barcodes = result;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Barcode Scanner"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            imagePath == null
-                ? Container()
-                : Container(
-                    height: 400,
-                    width: 400,
-                    child: Image.file(File(imagePath!)),
-                  ),
-            ElevatedButton(
-              onPressed: readBarcode,
-              child: const Text("Read Barcode"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            barcodes == null
-                ? Container()
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: barcodes?.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Text(
-                            "Type ${barcodes?[index].barcodeUnknown?.type} \n reads ${barcodes?[index].barcodeUnknown?.displayValue} \n rawData ${barcodes?[index].barcodeUnknown?.rawValue} \n boundingBox ${barcodes?[index].barcodeUnknown?.boundingBox}"),
-                      );
-                    })
-          ],
-        ),
-      ),
-    );
-  }
+  bool isBusy = false;
+  CustomPaint? customPaint;
 
   @override
   void dispose() {
     barcodeScanner.close();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CameraView(
+      title: 'Barcode Scanner',
+      customPaint: customPaint,
+      onImage: (inputImage) {
+        processImage(inputImage);
+      },
+    );
+  }
+
+  Future<void> processImage(InputImage inputImage) async {
+    if (isBusy) return;
+    isBusy = true;
+    final barcodes = await barcodeScanner.processImage(inputImage);
+    print('Found ${barcodes.length} barcodes');
+    if (inputImage.inputImageData?.size != null &&
+        inputImage.inputImageData?.imageRotation != null) {
+      final painter = BarcodeDetectorPainter(
+          barcodes,
+          inputImage.inputImageData!.size,
+          inputImage.inputImageData!.imageRotation);
+      customPaint = CustomPaint(painter: painter);
+    } else {
+      customPaint = null;
+    }
+    isBusy = false;
+    if (mounted) {
+      setState(() {});
+    }
   }
 }

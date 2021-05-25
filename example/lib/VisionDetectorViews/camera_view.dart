@@ -15,12 +15,14 @@ class CameraView extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.customPaint,
-      required this.onImage})
+      required this.onImage,
+      this.initialDirection = CameraLensDirection.back})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
+  final CameraLensDirection initialDirection;
 
   @override
   _CameraViewState createState() => _CameraViewState();
@@ -38,7 +40,11 @@ class _CameraViewState extends State<CameraView> {
     super.initState();
 
     _imagePicker = ImagePicker();
-    if (cameras.length > 1) _cameraIndex = 1;
+    for (var i = 0; i < cameras.length; i++) {
+      if (cameras[i].lensDirection == widget.initialDirection) {
+        _cameraIndex = i;
+      }
+    }
     _startLiveFeed();
   }
 

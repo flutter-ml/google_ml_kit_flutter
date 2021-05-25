@@ -30,7 +30,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
 |[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
-|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | yet |
+|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
@@ -39,10 +39,10 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 
 | Feature                                                                                       | Android | iOS |
 |-----------------------------------------------------------------------------------------------|---------|-----|
-|[Language Identification](https://developers.google.com/ml-kit/language/identification)         | ✅      | yet |
+|[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
-|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅   | yet |
+|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
 
 ## Usage
 
