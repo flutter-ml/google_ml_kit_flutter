@@ -1,6 +1,7 @@
 package com.b.biradar.google_ml_kit;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -32,7 +33,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
 
         if (formatList.size() > 1) {
             int[] array = new int[formatList.size() - 1];
-            for (int i = 0; i <= formatList.size(); i++) {
+            for (int i = 1; i < formatList.size()-1; i++) {
                 array[i] = formatList.get(i);
             }
             barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();

@@ -20,10 +20,13 @@
 @interface BarcodeDetector : NSObject <Handler>
 @end
 
-@interface FaceProcessor : NSObject <Handler>
+@interface FaceDetector : NSObject <Handler>
 @end
 
 @interface ImageLabeler : NSObject <Handler>
+@end
+
+@interface TextDetector : NSObject <Handler>
 @end
 
 static FlutterError *getFlutterError(NSError *error) {

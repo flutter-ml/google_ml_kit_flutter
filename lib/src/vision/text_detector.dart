@@ -41,7 +41,7 @@ class RecognisedText {
   RecognisedText._(this.text, this.textBlocks);
 
   factory RecognisedText.fromMap(Map<dynamic, dynamic> map) {
-    var resText = map["result"];
+    var resText = map["text"];
     var textBlocks = <TextBlock>[];
     for (var block in map["blocks"]) {
       var textBlock = TextBlock.fromMap(block);
@@ -59,107 +59,118 @@ class RecognisedText {
 
 ///Class that has a block or group of words present in part of image.
 class TextBlock {
-  TextBlock._(this.textLines, this.blockText, this.blockPoints, this.blockRect);
+  TextBlock._(this.text, this.lines, this.rect, this.recognizedLanguages,
+      this.cornerPoints);
 
   factory TextBlock.fromMap(Map<dynamic, dynamic> map) {
-    var blockText = map['blockText'];
-    var textLines = <TextLine>[];
-    var rect = _mapToRect(map['blockRect']);
-    var offsetList = _mapToOffsetList(map['blockPoints']);
-    for (var line in map['textLines']) {
-      var textLine = TextLine.fromMap(line);
-      textLines.add(textLine);
+    final text = map['text'];
+    final rect = _mapToRect(map['rect']);
+    final recognizedLanguages =
+        _listToRecognizedLanguages(map['recognizedLanguages']);
+    final points = _listToCornerPoints(map['points']);
+    final lines = <TextLine>[];
+    for (var line in map['lines']) {
+      final textLine = TextLine.fromMap(line);
+      lines.add(textLine);
     }
-    return TextBlock._(textLines, blockText, offsetList, rect);
+    return TextBlock._(text, lines, rect, recognizedLanguages, points);
   }
 
-  ///Rect outlining boundary of block.
-  final Rect blockRect;
-
-  ///List of corner points of the rect.
-  final List<Offset> blockPoints;
-
   ///Text in the block.
-  final String blockText;
+  final String text;
 
   ///List of sentences.
-  final List<TextLine> textLines;
+  final List<TextLine> lines;
+
+  ///Rect outlining boundary of block.
+  final Rect rect;
+
+  ///List of recognized Latin-based languages in the text block.
+  final List<String> recognizedLanguages;
+
+  ///List of corner points of the rect.
+  final List<Offset> cornerPoints;
 }
 
 ///Class that represents sentence present in a certain block.
 class TextLine {
-  TextLine._(this.lineRect, this.linePoints, this.lineText, this.textElements);
+  TextLine._(this.text, this.elements, this.rect, this.recognizedLanguages,
+      this.cornerPoints);
 
   factory TextLine.fromMap(Map<dynamic, dynamic> map) {
-    var lineText = map['lineText'];
-    var textElements = <TextElement>[];
-    var rect = _mapToRect(map['lineRect']);
-    var offsetList = _mapToOffsetList(map['linePoints']);
-    var elements = map['textElements'];
-
-    for (var ele in elements) {
-      var textEle = TextElement(
-          _mapToRect(ele['elementRect']),
-          _mapToOffsetList(ele['elementPoints']),
-          ele['elementText'],
-          ele['elementLang']);
-      textElements.add(textEle);
+    final text = map['text'];
+    final rect = _mapToRect(map['rect']);
+    final recognizedLanguages =
+        _listToRecognizedLanguages(map['recognizedLanguages']);
+    final points = _listToCornerPoints(map['points']);
+    final elements = <TextElement>[];
+    for (var element in map['elements']) {
+      final textElement = TextElement.fromMap(element);
+      elements.add(textElement);
     }
-    return TextLine._(rect, offsetList, lineText, textElements);
+    return TextLine._(text, elements, rect, recognizedLanguages, points);
   }
 
-  ///Rect outlining the the text line.
-  final Rect lineRect;
-
-  ///Corner points of the text line.
-  final List<Offset> linePoints;
-
   ///Sentence of a block.
-  final String lineText;
+  final String text;
 
   ///List of text element.
-  final List<TextElement> textElements;
+  final List<TextElement> elements;
+
+  ///Rect outlining the the text line.
+  final Rect rect;
+
+  ///List of recognized Latin-based languages in the text block.
+  final List<String> recognizedLanguages;
+
+  ///Corner points of the text line.
+  final List<Offset> cornerPoints;
 }
 
 ///Fundamental part of text detected.
 class TextElement {
-  TextElement(this.rect, this.points, this._text, this._textLanguage);
+  TextElement._(this.text, this.rect, this.cornerPoints);
+
+  factory TextElement.fromMap(Map<dynamic, dynamic> map) {
+    final text = map['text'];
+    final rect = _mapToRect(map['rect']);
+    final points = _listToCornerPoints(map['points']);
+    return TextElement._(text, rect, points);
+  }
+
+  ///String representation of the text element that was recognized.
+  final String text;
 
   ///Rect outlining the boundary of element.
   final Rect rect;
 
-  ///Language of the text detected.
-  final String _textLanguage;
-
   ///List of corner points of the element.
-  final List<Offset> points;
+  final List<Offset> cornerPoints;
+}
 
-  ///Word in a line.
-  final String _text;
-
-  ///Getter for the word.
-  String get getText => _text;
-
-  ///Getter for identified language.
-  String get getLanguage => _textLanguage;
+///Convert list of Object? to list of Strings.
+List<String> _listToRecognizedLanguages(List<dynamic> languages) {
+  var recognizedLanguages = <String>[];
+  for (var obj in languages) {
+    if (obj != null) {
+      recognizedLanguages.add(obj);
+    }
+  }
+  return recognizedLanguages;
 }
 
 ///Convert map to Rect.
 Rect _mapToRect(Map<dynamic, dynamic> rect) {
-  var rec = Rect.fromLTRB(
-      (rect["left"] as int).toDouble(),
-      (rect["top"] as int).toDouble(),
-      (rect["right"] as int).toDouble(),
-      (rect["bottom"] as int).toDouble());
+  var rec = Rect.fromLTRB((rect["left"]).toDouble(), (rect["top"]).toDouble(),
+      (rect["right"]).toDouble(), (rect["bottom"]).toDouble());
   return rec;
 }
 
-///Convert List of map to list of offset.
-List<Offset> _mapToOffsetList(List<dynamic> points) {
+///Convert list of map to list of offset.
+List<Offset> _listToCornerPoints(List<dynamic> points) {
   var p = <Offset>[];
   for (var point in points) {
-    p.add(
-        Offset((point['x'] as int).toDouble(), (point['y'] as int).toDouble()));
+    p.add(Offset((point['x']).toDouble(), (point['y']).toDouble()));
   }
   return p;
 }

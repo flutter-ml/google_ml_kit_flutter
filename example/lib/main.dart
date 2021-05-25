@@ -63,7 +63,11 @@ class Home extends StatelessWidget {
                       ),
                       CustomCard('Pose Detector view', PoseDetectorView()),
                       CustomCard('Digital Ink Recogniser', DigitalInkView()),
-                      CustomCard('Text Detector', TextDetectorView()),
+                      CustomCard(
+                        'Text Detector',
+                        TextDetectorView(),
+                        featureCompleted: true,
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -112,7 +116,7 @@ class CustomCard extends StatelessWidget {
           if (Platform.isIOS && !featureCompleted) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: const Text(
-                    'This feature has not been impleted for IOS yet')));
+                    'This feature has not been implemented for iOS yet')));
           } else
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => _viewPage));

@@ -4,7 +4,7 @@
 #define startFaceDetector @"vision#startFaceDetector"
 #define closeFaceDetector @"vision#closeFaceDetector"
 
-@implementation FaceProcessor {
+@implementation FaceDetector {
     MLKFaceDetector *detector;
 }
 
