@@ -2,23 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android. Stay tuned for iOS, features will come soon!
-
-<img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/pose.png?raw=true" height=500 > <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/imagelabeling.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/giff.gif" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/barcode.png?raw=true" height=500> <img src="https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/screenshots/text_detector.jpg?raw=true" height=500>
-
-### Note
-
-From version 0.2 the way to create instance of detectors has been changed.
-Creating instance before version 0.2
-```
-final exampleDetector = GoogleMlKit.ExampleDetector
-```
-After 2.0
-```
-final exampleDetector = GoogleMlKit.vision.ExampleDetector
-//Or 
-final exampleDetector = GoogleMlKit.nlp.ExampleDetector
-```
+A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android and iOS.
 
 ## Features
 
@@ -35,7 +19,7 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
 
-### NLP
+### Natural Language
 
 | Feature                                                                                       | Android | iOS |
 |-----------------------------------------------------------------------------------------------|---------|-----|
@@ -43,6 +27,19 @@ final exampleDetector = GoogleMlKit.nlp.ExampleDetector
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
 |[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
+
+## Requirements
+
+iOS:
+
+- Minimum iOS Deployment Target: 12.0
+- Xcode 12 or newer
+- Swift 5
+
+Android:
+
+- minSdkVersion: 21
+- targetSdkVersion: 29
 
 ## Usage
 
@@ -259,6 +256,7 @@ final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 **To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_translator_view.dart).**
 
 ### Entity Extraction
+
 1. Create `EntityExtractor` object.
 ```
 final _entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH,);
@@ -277,6 +275,7 @@ extractEntities(String text,
 5. Manage models same as `TranslateLanguageModelManager` does but use 
 `EntityModelManager` instead.
 *To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/entity_extraction_view.dart).**
+
 ## Contributing
 
 Contributions are welcome.

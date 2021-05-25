@@ -7,63 +7,26 @@ class DigitalInkView extends StatefulWidget {
 }
 
 class _DigitalInkViewState extends State<DigitalInkView> {
-  List<Offset?> _points = <Offset>[];
-  LanguageModelManager _languageModelManager =
+  LanguageModelManager languageModelManager =
       GoogleMlKit.vision.languageModelManager();
-  DigitalInkRecogniser _digitalInkRecogniser =
+  DigitalInkRecogniser digitalInkRecogniser =
       GoogleMlKit.vision.digitalInkRecogniser();
+  List<Offset?> _points = <Offset>[];
   String _recognisedText = '';
-
-  Future<void> _isModelDownloaded() async {
-    final verificationResult =
-        await _languageModelManager.isModelDownloaded('en-US');
-    print('And the... result is ${verificationResult.toString()}');
-  }
-
-  Future<void> _deleteModel() async {
-    final deleteResult = await _languageModelManager.deleteModel('en-US');
-    print('And the... result is ${deleteResult.toString()}');
-  }
-
-  Future<void> _downloadModel() async {
-    final downloadResult = await _languageModelManager.downloadModel('en-US');
-    print('And the... result is ${downloadResult.toString()}');
-  }
-
-  Future<void> recogniseText() async {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Recognising'),
-            ),
-        barrierDismissible: true);
-    final text = await _digitalInkRecogniser.readText(_points, 'en-US');
-    Navigator.pop(context);
-    setState(() {
-      _recognisedText = text;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          child: Text("Clear Pad"),
-          onPressed: () {
-            setState(() {
-              _points.clear();
-              _recognisedText = '';
-            });
-          }),
-      body: Container(
-        child: Stack(
-          children: [
-            GestureDetector(
+      appBar: AppBar(title: Text('Digital Ink Recognition')),
+      body: Column(
+        children: [
+          Expanded(
+            child: GestureDetector(
               onPanUpdate: (DragUpdateDetails details) {
                 setState(() {
                   RenderObject? object = context.findRenderObject();
                   final _localPosition = (object as RenderBox?)
-                      ?.globalToLocal(details.globalPosition);
+                      ?.globalToLocal(details.localPosition);
                   _points = List.from(_points)..add(_localPosition);
                 });
               },
@@ -75,62 +38,106 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                 size: Size.infinite,
               ),
             ),
-            Positioned(
-              bottom: MediaQuery.of(context).size.height / 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    _recognisedText,
-                    style: TextStyle(fontSize: 23),
-                  ),
-                ],
-              ),
+          ),
+          if (_recognisedText.isNotEmpty)
+            Text(
+              'Recognized: $_recognisedText',
+              style: TextStyle(fontSize: 23),
             ),
-            Positioned(
-                bottom: 50,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        child: Text('Read Text'),
-                        onPressed: () async {
-                          await recogniseText();
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            child: Text('Check Download'),
-                            onPressed: () async {
-                              await _isModelDownloaded();
-                            },
-                          ),
-                          ElevatedButton(
-                            child: Text('Download'),
-                            onPressed: () async {
-                              await _downloadModel();
-                            },
-                          ),
-                          ElevatedButton(
-                            child: Text('Delete'),
-                            onPressed: () async {
-                              await _deleteModel();
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ))
-          ],
-        ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  child: Text('Read Text'),
+                  onPressed: _recogniseText,
+                ),
+                ElevatedButton(
+                  child: Text('Clear Pad'),
+                  onPressed: _clearPad,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  child: Text('Check Model'),
+                  onPressed: _isModelDownloaded,
+                ),
+                ElevatedButton(
+                  child: Text('Download'),
+                  onPressed: _downloadModel,
+                ),
+                ElevatedButton(
+                  child: Text('Delete'),
+                  onPressed: _deleteModel,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8),
+        ],
       ),
     );
+  }
+
+  void _clearPad() {
+    setState(() {
+      _points.clear();
+      _recognisedText = '';
+    });
+  }
+
+  void _showResult(String message, Future<String> t) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+    final verificationResult = await t;
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Result: ${verificationResult.toString()}'),
+    ));
+  }
+
+  Future<void> _isModelDownloaded() async {
+    _showResult('Checking if model is downloaded...',
+        languageModelManager.isModelDownloaded('en-US'));
+  }
+
+  Future<void> _deleteModel() async {
+    _showResult('Deleting model...', languageModelManager.deleteModel('en-US'));
+  }
+
+  Future<void> _downloadModel() async {
+    _showResult(
+        'Downloading model...', languageModelManager.downloadModel('en-US'));
+  }
+
+  Future<void> _recogniseText() async {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Recognising'),
+            ),
+        barrierDismissible: true);
+    try {
+      final text = await digitalInkRecogniser.readText(_points, 'en-US');
+      setState(() {
+        _recognisedText = text;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+    }
+    Navigator.pop(context);
   }
 }
 
@@ -144,7 +151,7 @@ class Signature extends CustomPainter {
     Paint paint = Paint()
       ..color = Colors.blue
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 10.0;
+      ..strokeWidth = 4.0;
 
     for (int i = 0; i < points.length - 1; i++) {
       final p1 = points[i];

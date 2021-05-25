@@ -6,7 +6,7 @@
 
 @class MLKLocalModel;
 
-@implementation BarcodeDetector {
+@implementation BarcodeScanner {
     MLKBarcodeScanner *barcodeScanner;
 }
 

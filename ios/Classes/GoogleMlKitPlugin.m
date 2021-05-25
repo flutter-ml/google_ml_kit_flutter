@@ -10,10 +10,10 @@
     
     // Add detectors
     NSMutableArray *handlers = [NSMutableArray new];
-    [handlers addObject:[[BarcodeDetector alloc] init]];
+    [handlers addObject:[[BarcodeScanner alloc] init]];
     [handlers addObject:[[FaceDetector alloc] init]];
     [handlers addObject:[[ImageLabeler alloc] init]];
-    [handlers addObject:[[TextDetector alloc] init]];
+    [handlers addObject:[[TextRecognizer alloc] init]];
     
     instance.handlers = [NSMutableDictionary new];
     for (id<Handler> detector in handlers) {

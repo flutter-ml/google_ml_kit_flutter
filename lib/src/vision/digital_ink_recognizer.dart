@@ -21,7 +21,7 @@ class DigitalInkRecogniser {
       }
     }
     final result = await Vision.channel.invokeMethod(
-        'vision#startMlDigitalInkRecognizer',
+        'vision#startDigitalInkRecognizer',
         <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
     _isClosed = false;
     return result.toString();
@@ -30,7 +30,7 @@ class DigitalInkRecogniser {
   ///Close the instance of detector.
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await Vision.channel.invokeMethod('vision#closeMlDigitalInkRecognizer');
+      await Vision.channel.invokeMethod('vision#closeDigitalInkRecognizer');
       _isOpened = false;
       _isClosed = true;
     }
@@ -48,7 +48,6 @@ class LanguageModelManager {
   Future<String> isModelDownloaded(String modelTag) async {
     final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'check', 'modelTag': modelTag});
-
     return result.toString();
   }
 
@@ -57,7 +56,6 @@ class LanguageModelManager {
   Future<String> downloadModel(String modelTag) async {
     final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'download', 'modelTag': modelTag});
-
     return result.toString();
   }
 
@@ -66,7 +64,6 @@ class LanguageModelManager {
   Future<String> deleteModel(String modelTag) async {
     final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
-
     return result.toString();
   }
 }

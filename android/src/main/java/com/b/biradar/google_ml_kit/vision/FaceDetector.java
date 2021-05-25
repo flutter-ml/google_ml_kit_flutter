@@ -1,37 +1,128 @@
-package com.b.biradar.google_ml_kit;
+package com.b.biradar.google_ml_kit.vision;
 
-
-import android.util.Log;
+import android.content.Context;
 import android.graphics.PointF;
 
 import androidx.annotation.NonNull;
+
+import com.b.biradar.google_ml_kit.ApiDetectorInterface;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceDetection;
-import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
 
-public class FaceProcessor implements ApiDetectorInterface {
-    private final FaceDetector detector;
+public class FaceDetector implements ApiDetectorInterface {
+    private static final String START = "vision#startFaceDetector";
+    private static final String CLOSE = "vision#closeFaceDetector";
 
-    //Constructor to create an instance of FaceProcessor with options received.
-    FaceProcessor(Map<String, Object> options) {
+    private final Context context;
+    private com.google.mlkit.vision.face.FaceDetector detector;
+
+    public FaceDetector(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public List<String> getMethodsKeys() {
+        return new ArrayList<>(
+                Arrays.asList(START,
+                        CLOSE));
+    }
+
+    @Override
+    public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        String method = call.method;
+        if (method.equals(START)) {
+            handleDetection(call, result);
+        } else if (method.equals(CLOSE)) {
+            closeDetector();
+            result.success(null);
+        } else {
+            result.notImplemented();
+        }
+    }
+
+    private void handleDetection(MethodCall call, final MethodChannel.Result result) {
+        Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
+        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
+        if (inputImage == null) return;
+
+        Map<String, Object> options = call.argument("options");
+        if (options == null) {
+            result.error("FaceDetectorError", "Invalid options", null);
+            return;
+        }
+
         FaceDetectorOptions detectorOptions = parseOptions(options);
         detector = FaceDetection.getClient(detectorOptions);
+
+        detector.process(inputImage)
+                .addOnSuccessListener(
+                        new OnSuccessListener<List<Face>>() {
+                            @Override
+                            public void onSuccess(List<Face> visionFaces) {
+                                List<Map<String, Object>> faces = new ArrayList<>(visionFaces.size());
+                                for (Face face : visionFaces) {
+                                    Map<String, Object> faceData = new HashMap<>();
+
+                                    faceData.put("left", (double) face.getBoundingBox().left);
+                                    faceData.put("top", (double) face.getBoundingBox().top);
+                                    faceData.put("width", (double) face.getBoundingBox().width());
+                                    faceData.put("height", (double) face.getBoundingBox().height());
+
+                                    faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
+                                    faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
+
+                                    if (face.getSmilingProbability() != null) {
+                                        faceData.put("smilingProbability", face.getSmilingProbability());
+                                    }
+
+                                    if (face.getLeftEyeOpenProbability()
+                                            != null) {
+                                        faceData.put("leftEyeOpenProbability", face.getLeftEyeOpenProbability());
+                                    }
+
+                                    if (face.getRightEyeOpenProbability()
+                                            != null) {
+                                        faceData.put("rightEyeOpenProbability", face.getRightEyeOpenProbability());
+                                    }
+
+                                    if (face.getTrackingId() != null) {
+                                        faceData.put("trackingId", face.getTrackingId());
+                                    }
+
+                                    faceData.put("landmarks", getLandmarkData(face));
+
+                                    faceData.put("contours", getContourData(face));
+
+                                    faces.add(faceData);
+                                }
+
+                                result.success(faces);
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                result.error("FaceDetectorError", e.toString(), null);
+                            }
+                        });
     }
 
     private FaceDetectorOptions parseOptions(Map<String, Object> options) {
@@ -75,65 +166,6 @@ public class FaceProcessor implements ApiDetectorInterface {
         }
 
         return builder.build();
-    }
-
-    @Override
-    public void handleDetection(final InputImage inputImage, final MethodChannel.Result result) {
-        if (inputImage != null) {
-            detector.process(inputImage)
-                    .addOnSuccessListener(
-                            new OnSuccessListener<List<Face>>() {
-                                @Override
-                                public void onSuccess(List<Face> visionFaces) {
-                                    Log.d("FaceProcessor", "Getting faces " + visionFaces.size());
-                                    List<Map<String, Object>> faces = new ArrayList<>(visionFaces.size());
-                                    for (Face face : visionFaces) {
-                                        Map<String, Object> faceData = new HashMap<>();
-
-                                        faceData.put("left", (double) face.getBoundingBox().left);
-                                        faceData.put("top", (double) face.getBoundingBox().top);
-                                        faceData.put("width", (double) face.getBoundingBox().width());
-                                        faceData.put("height", (double) face.getBoundingBox().height());
-
-                                        faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
-                                        faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
-
-                                        if (face.getSmilingProbability() != null) {
-                                            faceData.put("smilingProbability", face.getSmilingProbability());
-                                        }
-
-                                        if (face.getLeftEyeOpenProbability()
-                                                != null) {
-                                            faceData.put("leftEyeOpenProbability", face.getLeftEyeOpenProbability());
-                                        }
-
-                                        if (face.getRightEyeOpenProbability()
-                                                != null) {
-                                            faceData.put("rightEyeOpenProbability", face.getRightEyeOpenProbability());
-                                        }
-
-                                        if (face.getTrackingId() != null) {
-                                            faceData.put("trackingId", face.getTrackingId());
-                                        }
-
-                                        faceData.put("landmarks", getLandmarkData(face));
-
-                                        faceData.put("contours", getContourData(face));
-
-                                        faces.add(faceData);
-                                    }
-
-                                    result.success(faces);
-                                }
-                            })
-                    .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    result.error("faceDetectorError", e.toString(), null);
-                                }
-                            });
-        }
     }
 
     private Map<String, double[]> getLandmarkData(Face face) {
@@ -203,8 +235,7 @@ public class FaceProcessor implements ApiDetectorInterface {
         return null;
     }
 
-    @Override
-    public void closeDetector() throws IOException {
+    private void closeDetector() {
         detector.close();
     }
 }

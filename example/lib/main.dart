@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
               child: Column(
                 children: [
                   ExpansionTile(
-                    title: const Text("Vision Api's"),
+                    title: const Text("Vision"),
                     children: [
                       CustomCard(
                         'Image Label Detector',
@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
                         BarcodeScannerView(),
                         featureCompleted: true,
                       ),
-                      CustomCard('Pose Detector view', PoseDetectorView()),
+                      CustomCard('Pose Detector', PoseDetectorView()),
                       CustomCard('Digital Ink Recogniser', DigitalInkView()),
                       CustomCard(
                         'Text Detector',
@@ -74,7 +74,7 @@ class Home extends StatelessWidget {
                     height: 20,
                   ),
                   ExpansionTile(
-                    title: const Text("NLP Api's"),
+                    title: const Text("Natural Language"),
                     children: [
                       CustomCard(
                           'Language Identifier', LanguageIdentifierView()),

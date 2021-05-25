@@ -7,7 +7,7 @@
 
 @class MLKLocalModel;
 
-@implementation TextDetector {
+@implementation TextRecognizer {
     MLKTextRecognizer *textRecognizer;
 }
 

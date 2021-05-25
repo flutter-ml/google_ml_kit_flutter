@@ -1,13 +1,15 @@
 package com.b.biradar.google_ml_kit;
 
-import com.google.mlkit.vision.common.InputImage;
+import androidx.annotation.NonNull;
 
-import java.io.IOException;
+import java.util.List;
 
+import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public interface ApiDetectorInterface {
-    void handleDetection(InputImage inputImage, MethodChannel.Result result);
 
-    void closeDetector() throws IOException;
+    List<String> getMethodsKeys();
+
+    void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result);
 }

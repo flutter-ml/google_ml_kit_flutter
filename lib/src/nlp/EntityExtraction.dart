@@ -39,7 +39,7 @@ class EntityExtractor {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await NaturalLanguage.channel.invokeMethod('nlp#closeLanguageTranslator');
+      await NaturalLanguage.channel.invokeMethod('nlp#closeEntityExtractor');
       _isClosed = true;
       _isOpened = false;
     }
