@@ -69,11 +69,13 @@ public class PoseDetector implements ApiDetectorInterface {
             return;
         }
 
-        String detectorModel = (String) options.get("detectorType");
-        int detectorMode = (int) options.get("detectorMode");
-        final List<Integer> poseLandMarksList = (List<Integer>) options.get("landmarksList");
-        final String selectionType = (String) options.get("selections");
-        if (detectorModel.equals("base")) {
+        String model = (String) options.get("type");
+        String mode = (String) options.get("mode");
+        int detectorMode = PoseDetectorOptions.STREAM_MODE;
+        if (mode.equals("single")) {
+            detectorMode = PoseDetectorOptions.SINGLE_IMAGE_MODE;
+        }
+        if (model.equals("base")) {
             PoseDetectorOptions detectorOptions = new PoseDetectorOptions.Builder()
                     .setDetectorMode(detectorMode)
                     .build();
@@ -90,27 +92,19 @@ public class PoseDetector implements ApiDetectorInterface {
                         new OnSuccessListener<Pose>() {
                             @Override
                             public void onSuccess(Pose pose) {
-                                List<Map<String, Object>> pointsList = new ArrayList<>();
-                                if (selectionType.equals("all")) {
+                                List<List<Map<String, Object>>> array = new ArrayList<>();
+                                if (!pose.getAllPoseLandmarks().isEmpty()) {
+                                    List<Map<String, Object>> landmarks = new ArrayList<>();
                                     for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
-                                        Map<String, Object> poseLandmarkMap = new HashMap<>();
-                                        poseLandmarkMap.put("position", poseLandmark.getLandmarkType());
-                                        poseLandmarkMap.put("x", poseLandmark.getPosition().x);
-                                        poseLandmarkMap.put("y", poseLandmark.getPosition().y);
-                                        pointsList.add(poseLandmarkMap);
+                                        Map<String, Object> landmarkMap = new HashMap<>();
+                                        landmarkMap.put("type", poseLandmark.getLandmarkType());
+                                        landmarkMap.put("x", poseLandmark.getPosition().x);
+                                        landmarkMap.put("y", poseLandmark.getPosition().y);
+                                        landmarks.add(landmarkMap);
                                     }
-                                } else {
-                                    for (int i : poseLandMarksList) {
-                                        Map<String, Object> poseLandmarkMap = new HashMap<>();
-                                        PoseLandmark poseLandmark = pose.getPoseLandmark(i);
-                                        poseLandmarkMap.put("position", poseLandmark.getLandmarkType());
-                                        poseLandmarkMap.put("x", poseLandmark.getPosition().x);
-                                        poseLandmarkMap.put("y", poseLandmark.getPosition().y);
-                                        pointsList.add(poseLandmarkMap);
-                                    }
+                                    array.add(landmarks);
                                 }
-
-                                result.success(pointsList);
+                                result.success(array);
                             }
                         })
                 .addOnFailureListener(

@@ -5,8 +5,6 @@
 #define startTextDetector @"vision#startTextDetector"
 #define closeTextDetector @"vision#closeTextDetector"
 
-@class MLKLocalModel;
-
 @implementation TextRecognizer {
     MLKTextRecognizer *textRecognizer;
 }

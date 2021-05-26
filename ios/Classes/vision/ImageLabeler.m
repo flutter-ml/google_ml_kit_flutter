@@ -6,8 +6,6 @@
 #define startImageLabelDetector @"vision#startImageLabelDetector"
 #define closeImageLabelDetector @"vision#closeImageLabelDetector"
 
-@class MLKLocalModel;
-
 @implementation ImageLabeler {
     MLKImageLabeler *labeler;
 }

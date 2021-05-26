@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'google_ml_kit'
-  s.version          = '0.5.1'
+  s.version          = '0.6.0'
   s.summary          = 'Flutter Plugin for ML Kit'
   s.description      = <<-DESC
 flutter plugin for google ml kit
@@ -21,6 +21,8 @@ flutter plugin for google ml kit
   s.dependency 'GoogleMLKit/ImageLabelingCustom'
   s.dependency 'GoogleMLKit/BarcodeScanning'
   s.dependency 'GoogleMLKit/TextRecognition'
+  s.dependency 'GoogleMLKit/PoseDetection'
+  s.dependency 'GoogleMLKit/PoseDetectionAccurate'
   s.platform                = :ios, '9.0'
   s.ios.deployment_target   = '9.0'
   s.static_framework = true

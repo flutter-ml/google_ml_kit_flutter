@@ -9,7 +9,7 @@ class BarcodeScanner {
   final List<int> barcodeFormats;
 
   BarcodeScanner({List<int>? formats})
-      : barcodeFormats = formats ?? const [BarcodeFormat.Default];
+      : barcodeFormats = formats ?? const [BarcodeFormat.all];
 
   bool _isOpened = false;
   bool _isClosed = false;
@@ -39,6 +39,54 @@ class BarcodeScanner {
       _isOpened = false;
     }
   }
+}
+
+///Barcode formats supported by the barcode scanner.
+class BarcodeFormat {
+  /// Barcode format constant representing the union of all supported formats.
+  static const int all = 0xFFFF;
+
+  /// Barcode format unknown to the current SDK.
+  static const int unknown = 0;
+
+  /// Barcode format constant for Code 128.
+  static const int code128 = 0x0001;
+
+  /// Barcode format constant for Code 39.
+  static const int code39 = 0x0002;
+
+  /// Barcode format constant for Code 93.
+  static const int code93 = 0x0004;
+
+  /// Barcode format constant for CodaBar.
+  static const int codabar = 0x0008;
+
+  /// Barcode format constant for Data Matrix.
+  static const int dataMatrix = 0x0010;
+
+  /// Barcode format constant for EAN-13.
+  static const int ean13 = 0x0020;
+
+  /// Barcode format constant for EAN-8.
+  static const int ean8 = 0x0040;
+
+  /// Barcode format constant for ITF (Interleaved Two-of-Five).
+  static const int itf = 0x0080;
+
+  /// Barcode format constant for QR Code.
+  static const int qrCode = 0x0100;
+
+  /// Barcode format constant for UPC-A.
+  static const int upca = 0x0200;
+
+  /// Barcode format constant for UPC-E.
+  static const int upce = 0x0400;
+
+  /// Barcode format constant for PDF-417.
+  static const int pdf417 = 0x0800;
+
+  /// Barcode format constant for AZTEC.
+  static const int aztec = 0x1000;
 }
 
 ///All supported Barcode Types.
@@ -83,34 +131,16 @@ enum BarcodeType {
   driverLicense,
 }
 
-///Barcode formats supported by the barcode scanner.
-class BarcodeFormat {
-  static const int Default = 0;
-  static const int Code_128 = 1;
-  static const int Code_39 = 2;
-  static const int Code_93 = 4;
-  static const int Codebar = 8;
-  static const int EAN_13 = 32;
-  static const int EAN_8 = 64;
-  static const int ITF = 128;
-  static const int UPC_A = 512;
-  static const int UPC_E = 1024;
-  static const int QR_Code = 256;
-  static const int PDF417 = 2048;
-  static const int Aztec = 4096;
-  static const int Data_Matrix = 16;
-}
-
 ///Class to represent the contents of barcode.
 class Barcode {
   Barcode._({
-    this.type,
-    this.info,
+    required this.type,
+    required this.value,
   });
 
   ///Type([BarcodeType]) of the barcode detected.
-  final BarcodeType? type;
-  final BarcodeInfo? info;
+  final BarcodeType type;
+  final BarcodeValue value;
 
   factory Barcode._fromMap(Map<dynamic, dynamic> barcodeData) {
     BarcodeType type = BarcodeType.values[barcodeData['type']];
@@ -119,52 +149,74 @@ class Barcode {
       case BarcodeType.isbn:
       case BarcodeType.text:
       case BarcodeType.product:
-        return Barcode._(info: BarcodeInfo._fromMap(barcodeData), type: type);
+        return Barcode._(value: BarcodeValue._fromMap(barcodeData), type: type);
       case BarcodeType.wifi:
-        return Barcode._(info: BarcodeWifi._(barcodeData), type: type);
+        return Barcode._(value: BarcodeWifi._(barcodeData), type: type);
       case BarcodeType.url:
-        return Barcode._(info: BarcodeUrl._(barcodeData), type: type);
+        return Barcode._(value: BarcodeUrl._(barcodeData), type: type);
       case BarcodeType.email:
-        return Barcode._(info: BarcodeEmail._(barcodeData), type: type);
+        return Barcode._(value: BarcodeEmail._(barcodeData), type: type);
       case BarcodeType.phone:
-        return Barcode._(info: BarcodePhone._(barcodeData), type: type);
+        return Barcode._(value: BarcodePhone._(barcodeData), type: type);
       case BarcodeType.sms:
-        return Barcode._(info: BarcodeSMS._(barcodeData), type: type);
+        return Barcode._(value: BarcodeSMS._(barcodeData), type: type);
       case BarcodeType.geographicCoordinates:
-        return Barcode._(info: BarcodeGeo._(barcodeData), type: type);
+        return Barcode._(value: BarcodeGeo._(barcodeData), type: type);
       case BarcodeType.driverLicense:
-        return Barcode._(info: BarcodeDriverLicense._(barcodeData), type: type);
+        return Barcode._(
+            value: BarcodeDriverLicense._(barcodeData), type: type);
       case BarcodeType.contactInfo:
-        return Barcode._(info: BarcodeContactInfo._(barcodeData), type: type);
+        return Barcode._(value: BarcodeContactInfo._(barcodeData), type: type);
       case BarcodeType.calendarEvent:
-        return Barcode._(info: BarcodeCalenderEvent._(barcodeData), type: type);
+        return Barcode._(
+            value: BarcodeCalenderEvent._(barcodeData), type: type);
       default:
-        return Barcode._(info: BarcodeInfo._fromMap(barcodeData), type: type);
+        return Barcode._(value: BarcodeValue._fromMap(barcodeData), type: type);
     }
   }
 }
 
 ///Base for storing barcode data.
 ///Any type of barcode has at least these three parameters.
-class BarcodeInfo {
-  final int type;
-  final String rawValue;
-  final String displayValue;
-  final Rect boundingBox;
+class BarcodeValue {
+  /// The format type of the barcode value.
+  ///
+  /// For example, [BarcodeType.text], [BarcodeType.product], [BarcodeType.url], etc.
+  ///
+  final BarcodeType type;
 
-  BarcodeInfo._fromMap(Map<dynamic, dynamic> barcodeData)
-      : type = barcodeData['type'],
+  /// Barcode value as it was encoded in the barcode.
+  ///
+  /// Null if nothing found.
+  final String? rawValue;
+
+  /// Barcode value in a user-friendly format.
+  /// This value may be multiline, for example, when line breaks are encoded into the original TEXT barcode value.
+  /// May include the supplement value.
+  ///
+  /// Null if nothing found.
+  final String? displayValue;
+
+  /// The bounding rectangle of the detected barcode.
+  ///
+  /// Could be null if the bounding rectangle can not be determined.
+  final Rect? boundingBox;
+
+  BarcodeValue._fromMap(Map<dynamic, dynamic> barcodeData)
+      : type = BarcodeType.values[barcodeData['type']],
         rawValue = barcodeData['rawValue'],
         displayValue = barcodeData['displayValue'],
-        boundingBox = Rect.fromLTRB(
-            (barcodeData['boundingBoxLeft']).toDouble(),
-            (barcodeData['boundingBoxTop']).toDouble(),
-            (barcodeData['boundingBoxRight']).toDouble(),
-            (barcodeData['boundingBoxBottom']).toDouble());
+        boundingBox = barcodeData['boundingBoxLeft'] != null
+            ? Rect.fromLTRB(
+                (barcodeData['boundingBoxLeft']).toDouble(),
+                (barcodeData['boundingBoxTop']).toDouble(),
+                (barcodeData['boundingBoxRight']).toDouble(),
+                (barcodeData['boundingBoxBottom']).toDouble())
+            : null;
 }
 
 ///Class to store wifi info obtained from a barcode.
-class BarcodeWifi extends BarcodeInfo {
+class BarcodeWifi extends BarcodeValue {
   ///SSID of the wifi.
   final String? ssid;
 
@@ -182,7 +234,7 @@ class BarcodeWifi extends BarcodeInfo {
 }
 
 ///Class to store url info of the bookmark obtained from a barcode.
-class BarcodeUrl extends BarcodeInfo {
+class BarcodeUrl extends BarcodeValue {
   ///String having the url address of bookmark.
   final String? url;
 
@@ -195,13 +247,22 @@ class BarcodeUrl extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
+/// The type of email for [BarcodeEmail.type].
+enum BarcodeEmailType {
+  /// Unknown email type.
+  unknown,
+
+  /// Barcode work email type.
+  work,
+
+  /// Barcode home email type.
+  home,
+}
+
 ///A email message.
-class BarcodeEmail extends BarcodeInfo {
+class BarcodeEmail extends BarcodeValue {
   ///Type of the email sent.
-  ///0 = Unknown
-  ///1 = Work
-  ///2 = Home
-  final int? emailType;
+  final BarcodeEmailType? emailType;
 
   ///Email address of sender.
   final String? address;
@@ -213,32 +274,47 @@ class BarcodeEmail extends BarcodeInfo {
   final String? subject;
 
   BarcodeEmail._(Map<dynamic, dynamic> barcodeData)
-      : emailType = barcodeData['emailType'],
+      : emailType = BarcodeEmailType.values[barcodeData['emailType']],
         address = barcodeData['address'],
         body = barcodeData['body'],
         subject = barcodeData['subject'],
         super._fromMap(barcodeData);
 }
 
-///A phone number.
-class BarcodePhone extends BarcodeInfo {
-  ///Type of the phone number.
-  ///0 = Unknown
-  ///1 = Work
-  ///2 = Home
-  final int? phoneType;
+/// The type of phone number for [BarcodePhone.type].
+enum BarcodePhoneType {
+  /// Unknown phone type.
+  unknown,
 
-  ///Phone numer.
+  /// Barcode work phone type.
+  work,
+
+  /// Barcode home phone type.
+  home,
+
+  /// Barcode fax phone type.
+  fax,
+
+  /// Barcode mobile phone type.
+  mobile,
+}
+
+///A phone number.
+class BarcodePhone extends BarcodeValue {
+  ///Type of the phone number.
+  final BarcodePhoneType? phoneType;
+
+  ///Phone number.
   final String? number;
 
   BarcodePhone._(Map<dynamic, dynamic> barcodeData)
-      : phoneType = barcodeData['phoneType'],
+      : phoneType = BarcodePhoneType.values[barcodeData['phoneType']],
         number = barcodeData['number'],
         super._fromMap(barcodeData);
 }
 
-///Class extending over [BarcodeInfo] to store a SMS.
-class BarcodeSMS extends BarcodeInfo {
+///Class extending over [BarcodeValue] to store a SMS.
+class BarcodeSMS extends BarcodeValue {
   ///Message present in the SMS.
   final String? message;
 
@@ -251,8 +327,8 @@ class BarcodeSMS extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
-///Class extending over [BarcodeInfo] that represents a geolocation.
-class BarcodeGeo extends BarcodeInfo {
+///Class extending over [BarcodeValue] that represents a geolocation.
+class BarcodeGeo extends BarcodeValue {
   ///Latitude co-ordinates of the location.
   final double? latitude;
 
@@ -265,8 +341,8 @@ class BarcodeGeo extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
-///Class extending over [BarcodeInfo] that models a driver's licence cars.
-class BarcodeDriverLicense extends BarcodeInfo {
+///Class extending over [BarcodeValue] that models a driver's licence cars.
+class BarcodeDriverLicense extends BarcodeValue {
   ///City of holder's address.
   final String? addressCity;
 
@@ -319,8 +395,8 @@ class BarcodeDriverLicense extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
-///Class extending over [BarcodeInfo] that models a contact info.
-class BarcodeContactInfo extends BarcodeInfo {
+///Class extending over [BarcodeValue] that models a contact info.
+class BarcodeContactInfo extends BarcodeValue {
   ///Contact person's addresses.
   final List<BarcodeAddress>? barcodeAddresses;
 
@@ -361,8 +437,8 @@ class BarcodeContactInfo extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
-///Class extending over [BarcodeInfo] that models a calender event.
-class BarcodeCalenderEvent extends BarcodeInfo {
+///Class extending over [BarcodeValue] that models a calender event.
+class BarcodeCalenderEvent extends BarcodeValue {
   ///Description of the event.
   final String? description;
 
@@ -411,31 +487,30 @@ class BarcodeCalenderEvent extends BarcodeInfo {
         super._fromMap(barcodeData);
 }
 
+/// Address type constants for [BarcodeAddress.type]
+enum BarcodeAddressType {
+  /// Barcode unknown address type.
+  unknown,
+
+  /// Barcode work address type.
+  work,
+
+  /// Barcode home address type.
+  home,
+}
+
 ///Class to store the information of address type barcode detected in a [InputImage].
 class BarcodeAddress {
   ///Formatted address, can be more than one line.
   final String? addressLines;
 
   ///Denoted the address type -> Home, Work or Unknown.
-  final String? type;
+  final BarcodeAddressType? type;
 
   BarcodeAddress._(this.addressLines, this.type);
 
   factory BarcodeAddress._fromMap(Map<dynamic, dynamic> address) {
-    String addressType;
-    switch (address['addressType']) {
-      case 0:
-        addressType = 'Unknown';
-        break;
-      case 1:
-        addressType = 'Home';
-        break;
-      case 2:
-        addressType = 'Work';
-        break;
-      default:
-        addressType = 'Unknown';
-    }
-    return BarcodeAddress._(address['addressLines'], addressType);
+    return BarcodeAddress._(address['addressLines'],
+        BarcodeAddressType.values[address['addressType']]);
   }
 }

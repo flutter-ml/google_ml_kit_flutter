@@ -12,7 +12,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |-----------------------------------------------------------------------------------------------|---------|-----|
 |[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | ✅  |
 |[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
-|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | yet |
+|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | ✅  |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
@@ -132,7 +132,7 @@ final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
 final String text = await digitalInkRecogniser.readText(point, modelTag);
 final List<Face> faces = await faceDetector.processImage(inputImage);
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
-final Map<int, PoseLandmark> poseLandmarks = await poseDetector.processImage(inputImage);
+final List<Pose> poses = await poseDetector.processImage(inputImage);
 final RecognisedText recognisedText = await textDetector.processImage(inputImage);
 
 // nl
@@ -161,17 +161,17 @@ a. Extract barcodes.
 ```dart
 for (Barcode barcode in barcodes) {
   final BarcodeType type = barcode.type;
-  final Rect boundingBox = barcode.info.boundingBox;
-  final String displayValue = barcode.info.displayValue;
-  final String rawValue = barcode.info.rawValue;
+  final Rect boundingBox = barcode.value.boundingBox;
+  final String displayValue = barcode.value.displayValue;
+  final String rawValue = barcode.value.rawValue;
 
   // See API reference for complete list of supported types
   switch (type) {
-    case BarcodeType.TYPE_WIFI:
-      BarcodeWifi barcodeWifi = barcode.info;
+    case BarcodeType.wifi:
+      BarcodeWifi barcodeWifi = barcode.value;
       break;
-    case BarcodeValueType.TYPE_URL:
-      BarcodeUrl barcodeUrl = barcode.info;
+    case BarcodeValueType.url:
+      BarcodeUrl barcodeUrl = barcode.value;
       break;
   }
 }
@@ -233,7 +233,24 @@ for (TextBlock block in recognisedText.blocks) {
   }
 }
 ```
-e. Extract Suggestions
+
+e. Pose detection
+
+```dart
+for (Pose pose in poses) {
+  // to access all landmarks
+  pose.landmarks.forEach((_, landmark) {
+    final type = landmark.type;
+    final x = landmark.x;
+    final y = landmark.y;
+  }
+  
+  // to access specific landmarks
+  final landmark = pose.landmarks[PoseLandmarkType.nose];
+}
+```
+
+f. Extract Suggestions
 
 ```dart
 //status implications
