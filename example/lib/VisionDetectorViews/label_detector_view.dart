@@ -38,13 +38,14 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     processImage(inputImage);
   }
 
-  Future<void> processImageWithCustomModel(InputImage inputImage) async {
-    CustomImageLabelerOptions options = CustomImageLabelerOptions(
-        customModel: CustomTrainedModel.asset,
-        customModelPath: "antartic.tflite");
-    imageLabeler = GoogleMlKit.vision.imageLabeler(options);
-    processImage(inputImage);
-  }
+  // Add the tflite model in android/src/main/assets
+  // Future<void> processImageWithCustomModel(InputImage inputImage) async {
+  //   CustomImageLabelerOptions options = CustomImageLabelerOptions(
+  //       customModel: CustomTrainedModel.asset,
+  //       customModelPath: "antartic.tflite");
+  //   imageLabeler = GoogleMlKit.vision.imageLabeler(options);
+  //   processImage(inputImage);
+  // }
 
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;

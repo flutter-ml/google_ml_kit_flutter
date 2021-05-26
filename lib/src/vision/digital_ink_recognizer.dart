@@ -53,6 +53,7 @@ class LanguageModelManager {
 
   ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.
   ///Else returns success or failure depending on whether the download completes or not.
+  ///To see available models visit [https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models]
   Future<String> downloadModel(String modelTag) async {
     final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'download', 'modelTag': modelTag});

@@ -77,9 +77,7 @@ public class ImageLabelDetector implements ApiDetectorInterface {
             imageLabeler = ImageLabeling.getClient(getImageLabelerOptions(options));
         } else if (labelerType.equals("custom")) {
             imageLabeler = ImageLabeling.getClient(getCustomLabelerOptions(options));
-        } else if (labelerType.equals("autoMl")) {
-            imageLabeler = ImageLabeling.getClient(getCustomLabelerOptions(options));
-        } else {
+        }  else {
             imageLabeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
         }
 

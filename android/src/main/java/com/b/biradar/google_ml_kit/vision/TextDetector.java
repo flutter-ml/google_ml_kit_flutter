@@ -32,7 +32,7 @@ public class TextDetector implements ApiDetectorInterface {
     private static final String CLOSE = "vision#closeTextDetector";
 
     private final Context context;
-    private TextRecognizer textRecognizer = TextRecognition.getClient();
+    private TextRecognizer textRecognizer ;
 
     public TextDetector(Context context) {
         this.context = context;
@@ -62,6 +62,8 @@ public class TextDetector implements ApiDetectorInterface {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
+
+        if(textRecognizer == null) textRecognizer = TextRecognition.getClient();
 
         textRecognizer.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<Text>() {
@@ -156,5 +158,6 @@ public class TextDetector implements ApiDetectorInterface {
 
     private void closeDetector() {
         textRecognizer.close();
+        textRecognizer = null;
     }
 }

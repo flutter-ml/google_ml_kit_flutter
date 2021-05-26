@@ -172,13 +172,6 @@ CustomImageLabelerOptions options = CustomImageLabelerOptions(
        (or CustomTrainedModel.file),// To use files stored in device
         customModelPath: "file path");
 ```
-To use **autoMl vision models** models
-```
-final options = AutoMlImageLabelerOptions(
-      customTrainedModel: CustomTrainedModel.asset 
-       (or CustomTrainedModel.file), 
-      customModelPath:);
-```
 
 **calling `processImage()`** returns List<[ImageLabel]()>
 ```
