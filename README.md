@@ -25,7 +25,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |-----------------------------------------------------------------------------------------------|---------|-----|
 |[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
-|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅     | yet |
+|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅      | yet |
 |[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
 
 ## Requirements
@@ -262,7 +262,11 @@ languageIdentifier.close();
 onDeviceTranslator.close();
 smartReply.close();
 ```
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) for better understanding.
+
+#### Example app
+
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) to see the plugin in action.
+
 ## Known issues
 
 ### Android
