@@ -41,3 +41,8 @@
 * Add face detection for IOS
 * Add image labelling for IOS
 * Add Entity Extraction for Android
+
+## 0.5.0
+* Add Barcode Scanning for IOS
+* Add Text Recognition for IOS
+* Add Smart Reply Suggestion for android
