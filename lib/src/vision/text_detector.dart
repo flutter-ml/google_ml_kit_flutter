@@ -38,7 +38,7 @@ class TextDetector {
 ///TextBlock ---> List<TextLine> (Lines of text present in a certain identified block).
 ///TextLine ---> List<TextElement> (Fundamental part of a block i.e usually a word or sentence)
 class RecognisedText {
-  RecognisedText._(this.text, this.textBlocks);
+  RecognisedText._(this.text, this.blocks);
 
   factory RecognisedText.fromMap(Map<dynamic, dynamic> map) {
     var resText = map["text"];
@@ -54,7 +54,7 @@ class RecognisedText {
   final String text;
 
   ///All the blocks of text present in image.
-  final List<TextBlock> textBlocks;
+  final List<TextBlock> blocks;
 }
 
 ///Class that has a block or group of words present in part of image.

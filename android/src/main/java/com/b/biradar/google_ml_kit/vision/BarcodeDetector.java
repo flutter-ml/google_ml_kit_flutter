@@ -72,7 +72,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
         BarcodeScannerOptions barcodeScannerOptions;
         if (formatList.size() > 1) {
             int[] array = new int[formatList.size()];
-            for (int i = 1; i < formatList.size() - 1; i++) {
+            for (int i = 1; i < formatList.size(); i++) {
                 array[i] = formatList.get(i);
             }
             barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();

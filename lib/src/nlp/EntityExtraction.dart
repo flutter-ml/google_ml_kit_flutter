@@ -15,10 +15,10 @@ class EntityExtractor {
 
   /// Extracts entities from the given text and returns [List<EntityAnnotation>]
   Future<List<EntityAnnotation>> extractEntities(String text,
-      {List<int>? filters, String? localeLangauge, String? timeZone}) async {
+      {List<int>? filters, String? localeLanguage, String? timeZone}) async {
     final parameters = <String, dynamic>{
       'filters': filters,
-      'locale': localeLangauge,
+      'locale': localeLanguage,
       'timezone': timeZone,
     };
 
@@ -29,7 +29,6 @@ class EntityExtractor {
       'language': _language
     });
 
-    print(result);
     var annotation = <EntityAnnotation>[];
     for (dynamic data in result) {
       annotation.add(EntityAnnotation.instance(data));
