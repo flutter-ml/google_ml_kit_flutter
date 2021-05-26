@@ -14,7 +14,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
   final SmartReply _smartReply = GoogleMlKit.nlp.smartReply();
 
   @override
-  void dispose() { 
+  void dispose() {
     _smartReply.close();
     super.dispose();
   }
@@ -70,6 +70,9 @@ class _SmartReplyViewState extends State<SmartReplyView> {
                     if (_localUserController.text.isNotEmpty) {
                       _addConversation(true);
                       _localUserController.text = '';
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Can't be empty")));
                     }
                   },
                   child: Text('Add conversation')),
@@ -98,6 +101,9 @@ class _SmartReplyViewState extends State<SmartReplyView> {
                     if (_remoteUserController.text.isNotEmpty) {
                       _addConversation(false);
                       _remoteUserController.text = '';
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Can't be empty")));
                     }
                   },
                   child: Text('Add conversation')),
@@ -108,7 +114,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
             ),
             _suggestions.length > 0
                 ? ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     shrinkWrap: true,
                     itemCount: _suggestions.length,
                     itemBuilder: (context, index) => ListTile(
