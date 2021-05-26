@@ -42,20 +42,45 @@ class BarcodeScanner {
 }
 
 ///All supported Barcode Types.
-class BarcodeType {
-  static const int TYPE_UNKNOWN = 0;
-  static const int TYPE_CONTACT_INFO = 1;
-  static const int TYPE_EMAIL = 2;
-  static const int TYPE_ISBN = 3;
-  static const int TYPE_PHONE = 4;
-  static const int TYPE_PRODUCT = 5;
-  static const int TYPE_SMS = 6;
-  static const int TYPE_TEXT = 7;
-  static const int TYPE_URL = 8;
-  static const int TYPE_WIFI = 9;
-  static const int TYPE_GEO = 10;
-  static const int TYPE_CALENDAR_EVENT = 11;
-  static const int TYPE_DRIVER_LICENSE = 12;
+enum BarcodeType {
+  /// Unknown Barcode value types.
+  unknown,
+
+  /// Barcode value type for contact info.
+  contactInfo,
+
+  /// Barcode value type for email addresses.
+  email,
+
+  /// Barcode value type for ISBNs.
+  isbn,
+
+  /// Barcode value type for phone numbers.
+  phone,
+
+  /// Barcode value type for product codes.
+  product,
+
+  /// Barcode value type for SMS details.
+  sms,
+
+  /// Barcode value type for plain text.
+  text,
+
+  /// Barcode value type for URLs/bookmarks.
+  url,
+
+  /// Barcode value type for Wi-Fi access point details.
+  wifi,
+
+  /// Barcode value type for geographic coordinates.
+  geographicCoordinates,
+
+  /// Barcode value type for calendar events.
+  calendarEvent,
+
+  /// Barcode value type for driver's license data.
+  driverLicense,
 }
 
 ///Barcode formats supported by the barcode scanner.
@@ -84,34 +109,34 @@ class Barcode {
   });
 
   ///Type([BarcodeType]) of the barcode detected.
-  final int? type;
+  final BarcodeType? type;
   final BarcodeInfo? info;
 
   factory Barcode._fromMap(Map<dynamic, dynamic> barcodeData) {
-    int type = barcodeData['type'];
+    BarcodeType type = BarcodeType.values[barcodeData['type']];
     switch (type) {
-      case BarcodeType.TYPE_UNKNOWN:
-      case BarcodeType.TYPE_ISBN:
-      case BarcodeType.TYPE_TEXT:
-      case BarcodeType.TYPE_PRODUCT:
+      case BarcodeType.unknown:
+      case BarcodeType.isbn:
+      case BarcodeType.text:
+      case BarcodeType.product:
         return Barcode._(info: BarcodeInfo._fromMap(barcodeData), type: type);
-      case BarcodeType.TYPE_WIFI:
+      case BarcodeType.wifi:
         return Barcode._(info: BarcodeWifi._(barcodeData), type: type);
-      case BarcodeType.TYPE_URL:
+      case BarcodeType.url:
         return Barcode._(info: BarcodeUrl._(barcodeData), type: type);
-      case BarcodeType.TYPE_EMAIL:
+      case BarcodeType.email:
         return Barcode._(info: BarcodeEmail._(barcodeData), type: type);
-      case BarcodeType.TYPE_PHONE:
+      case BarcodeType.phone:
         return Barcode._(info: BarcodePhone._(barcodeData), type: type);
-      case BarcodeType.TYPE_SMS:
+      case BarcodeType.sms:
         return Barcode._(info: BarcodeSMS._(barcodeData), type: type);
-      case BarcodeType.TYPE_GEO:
+      case BarcodeType.geographicCoordinates:
         return Barcode._(info: BarcodeGeo._(barcodeData), type: type);
-      case BarcodeType.TYPE_DRIVER_LICENSE:
+      case BarcodeType.driverLicense:
         return Barcode._(info: BarcodeDriverLicense._(barcodeData), type: type);
-      case BarcodeType.TYPE_CONTACT_INFO:
+      case BarcodeType.contactInfo:
         return Barcode._(info: BarcodeContactInfo._(barcodeData), type: type);
-      case BarcodeType.TYPE_CALENDAR_EVENT:
+      case BarcodeType.calendarEvent:
         return Barcode._(info: BarcodeCalenderEvent._(barcodeData), type: type);
       default:
         return Barcode._(info: BarcodeInfo._fromMap(barcodeData), type: type);

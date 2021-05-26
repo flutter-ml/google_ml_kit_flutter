@@ -155,6 +155,84 @@ final List<String> availableModels = await translateLanguageModelManager.getAvai
 
 #### 4. Extract data from response.
 
+a. Extract barcodes.
+
+```dart
+for (Barcode barcode in barcodes) {
+  final BarcodeType type = barcode.type;
+  final Rect boundingBox = barcode.info.boundingBox;
+  final String displayValue = barcode.info.displayValue;
+  final String rawValue = barcode.info.rawValue;
+
+  // See API reference for complete list of supported types
+  switch (type) {
+    case BarcodeType.TYPE_WIFI:
+      BarcodeWifi barcodeWifi = barcode.info;
+      break;
+    case BarcodeValueType.TYPE_URL:
+      BarcodeUrl barcodeUrl = barcode.info;
+      break;
+  }
+}
+```
+
+b. Extract faces.
+
+```dart
+for (Face face in faces) {
+  final Rect boundingBox = face.boundingBox;
+
+  final double rotY = face.headEulerAngleY; // Head is rotated to the right rotY degrees
+  final double rotZ = face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
+
+  // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
+  // eyes, cheeks, and nose available):
+  final FaceLandmark leftEar = face.getLandmark(FaceLandmarkType.leftEar);
+  if (leftEar != null) {
+    final Point<double> leftEarPos = leftEar.position;
+  }
+
+  // If classification was enabled with FaceDetectorOptions:
+  if (face.smilingProbability != null) {
+    final double smileProb = face.smilingProbability;
+  }
+
+  // If face tracking was enabled with FaceDetectorOptions:
+  if (face.trackingId != null) {
+    final int id = face.trackingId;
+  }
+}
+```
+
+c. Extract labels.
+
+```dart
+for (ImageLabel label in labels) {
+  final String text = label.text;
+  final int index = label.index;
+  final double confidence = label.confidence;
+}
+```
+
+d. Extract text.
+
+```dart
+String text = recognisedText.text;
+for (TextBlock block in recognisedText.blocks) {
+  final Rect rect = block.rect;
+  final List<Offset> cornerPoints = block.cornerPoints;
+  final String text = block.text;
+  final List<String> languages = block.recognizedLanguages;
+
+  for (TextLine line in block.lines) {
+    // Same getters as TextBlock
+    for (TextElement element in line.elements) {
+      // Same getters as TextBlock
+    }
+  }
+}
+```
+
 #### 5. Release resources with `close()`.
 
 ```dart
@@ -172,163 +250,6 @@ languageIdentifier.close();
 onDeviceTranslator.close();
 ```
 
-## Digital Ink recognition
-
-**Read to know how to imlpement [Digital Ink Recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/digital_ink_recogniser.md)**
-
-## Pose Detection
-
-- *Google Play service model is not available for this api' so no extra implementation**
-
-- **Create [`PoseDetectorOptions`]()**
-
-```
-final options = PoseDetectorOptions(
-        poseDetectionModel: PoseDetectionModel.BasePoseDetector,
-        selectionType : LandmarkSelectionType.all,
-        poseLandmarks:(list of poseaLndmarks you want); 
-//or PoseDetectionModel.AccuratePoseDetector to use accurate pose detector
-        
-```
-
-**Note**: To obtain default poseDetector no options need to be specied. It gives all available landmarks using BasePoseDetector Model. **The same implies to other detectors as well**
-
-- Calling `processImage(InputImage inputImage)` returns `Map<int,[PoseLandMark]()`
-
-```
-final landMarksMap = await poseDetector.processImage(inputImage);
-```
-
-Use the map to extract data. See this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
-
-## Image Labeling
-
-If you choose google service way. Add this in your **app level buil.gradle**:
-
-```
-<application ...>
-        ...
-      <meta-data
-          android:name="com.google.mlkit.vision.DEPENDENCIES"
-          android:value="ica" />
-      <!-- To use multiple models: android:value="ica,model2,model3" -->
-      </application>
-```
-
-**The same implies for all other models as well**
-
-**Create `ImageLabelerOptions`**. This uses [google's base model](https://developers.google.com/ml-kit/vision/image-labeling/label-map)
-
-```
-final options =ImageLabelerOptions( confidenceThreshold = confidenceThreshold);
-// Default =0.5
-//lies between 0.0 to 1.0
-        
-```
-To use custom **tflite** models
-```
-CustomImageLabelerOptions options = CustomImageLabelerOptions(
-        customModel: CustomTrainedModel.asset 
-       (or CustomTrainedModel.file),// To use files stored in device
-        customModelPath: "file path");
-```
-
-**calling `processImage()`** returns `List<[ImageLabel]()>`
-```
-final labels = await imageLabeler.processImage(inputImage);
-```
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/label_detector_view.dart)**
-
-## Barcode Scanner
-
-**Obtain [`BarcodeScanner`]() instance.**
-```
-BarcodeScanner barcodeScanner = GoogleMlKit.instance
-                                           .barcodeScanner(
-                                           formats:(List of BarcodeFormats);
-
-```
-Supported [BarcodeFormats](https://developers.google.com/android/reference/com/google/mlkit/vision/barcode/Barcode.BarcodeFormat). To use a specific format use  
-
->Barcode.FORMAT_Default
-
->Barcode.FORMAT_Code_128
-
-etc..
-
-**call `processImage()`**
-It returns List<[Barcode]()>
-```
-final result = await barcodeScanner.processImage(inputImage);
-```
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/barcode_scanner_view.dart)**
-
-## Text Recognition
-
-**Calling `processImage()`** returns [RecognisedText]() object
-```
-final text = await textDetector.processImage(inputImage);
-```
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/text_detector_view.dart)**
-
-## Face Detection
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/face_detector_view.dart)**
-
-## Language Detection
-
-1. Call `identifyLanguage(text)` to identify language of text.
-2. Call `identifyPossibleLanguages(text)` to get a list of [IdentifiedLanguage](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L53) which contains all possible languages that are above the specified threshold. **Default is 0.5**.
-3. To get info of the identified **BCP-47** tag use this [class](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/8b133accc450b69d63febb37499de79069bb55f1/lib/src/nlp/LanguageIdentifier.dart#L63).
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_identifier_view.dart).**
-
-### On-Device Translator
-  1. Create `OnDeviceTranslator` object.
-  ```
-  final _onDeviceTranslator = GoogleMlKit.nlp
-      .onDeviceTranslator(sourceLanguage: TranslateLanguage.ENGLISH, 
-      targetLanguage: TranslateLanguage.SPANISH);
-  ```
-  2. Call `_onDeviceTranslator.translateText(text)` to translate text.
-  >Note: Make sure the models are downloaded before calling translatetext()
-
-#### Managing translate language models explicitly
-1. Create `TranslateLanguageModelManager` instance.
-```
-final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
-```
-2. Call `_languageModelManager.downloadModel(TranslateLanguage.ENGLISH)` to download a model.
-3. Call `_languageModelManager.deleteModel(TranslateLanguage.ENGLISH)` to delete a model.
-4.  Call `_languageModelManager.isModelDownloaded(TranslateLanguage.ENGLISH)` to to check whether a model is downloaded.
-5. Call `_languageModelManager.getAvailableModels()` to get a list of all downloaded models.
-
-**To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/language_translator_view.dart).**
-
-### Entity Extraction
-
-1. Create `EntityExtractor` object.
-```
-final _entityExtractor = GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH,);
-```
-2. Call `_entityExtractor.extractEntities(text)` to obatin `List<EntityAnnotation>`.
-3. Configuring custom parameters for extracting entities.
-```
-extractEntities(String text,
-      {List<int>? filters, String? localeLangauge, String? timeZone});
-
-// filters: [Entity.TYPE_ADDRESS,Entity.TYPE_DATE_TIME]
-// locale: BCP-47 tag for the locale language
-// timezone: String for timezone ex:- `America/Los_Angeles`
-```
-4. To gain infromation from individual entities refer to [orginal api](https://developers.google.com/android/reference/com/google/mlkit/nl/entityextraction/package-summary). Same methods are applied here as well.
-5. Manage models same as `TranslateLanguageModelManager` does but use 
-`EntityModelManager` instead.
-*To know more see this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/NlpDetectorViews/entity_extraction_view.dart).**
-
 ## Contributing
 
 Contributions are welcome.
@@ -339,4 +260,3 @@ In case of trivial fixes open a pull request directly.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-

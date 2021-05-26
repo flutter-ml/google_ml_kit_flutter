@@ -35,7 +35,7 @@ class _TextDetectorViewState extends State<TextDetectorView> {
     if (isBusy) return;
     isBusy = true;
     final recognisedText = await textDetector.processImage(inputImage);
-    print('Found ${recognisedText.textBlocks.length} textBlocks');
+    print('Found ${recognisedText.blocks.length} textBlocks');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = TextDetectorPainter(
