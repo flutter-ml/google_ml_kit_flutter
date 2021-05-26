@@ -85,20 +85,6 @@ class CustomImageLabelerOptions {
       required this.customModelPath});
 }
 
-///To create [ImageLabeler] that processes image based on the custom auto ml vision model provided by user.
-///It extends [CustomImageLabelerOptions] as they share same properties
-class AutoMlImageLabelerOptions extends CustomImageLabelerOptions {
-  //Overridden to indicate that it uses auto ml vision model
-  @override
-  final String labelerType = 'autoMl';
-
-  ///Constructor to create instance of [AutoMlImageLabelerOptions]
-  AutoMlImageLabelerOptions(
-      CustomTrainedModel customTrainedModel, String customModelPath)
-      : super(
-            customModel: customTrainedModel, customModelPath: customModelPath);
-}
-
 ///This represents a label detected in image.
 class ImageLabel {
   ImageLabel(dynamic data)

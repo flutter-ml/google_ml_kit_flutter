@@ -17,7 +17,7 @@
 @optional
 @end
 
-@interface BarcodeDetector : NSObject <Handler>
+@interface BarcodeScanner : NSObject <Handler>
 @end
 
 @interface FaceDetector : NSObject <Handler>
@@ -26,7 +26,7 @@
 @interface ImageLabeler : NSObject <Handler>
 @end
 
-@interface TextDetector : NSObject <Handler>
+@interface TextRecognizer : NSObject <Handler>
 @end
 
 static FlutterError *getFlutterError(NSError *error) {

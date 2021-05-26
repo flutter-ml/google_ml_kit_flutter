@@ -23,26 +23,23 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   Future<void> downloadModel() async {
     var result = await _languageModelManager
         .downloadModel(EntityExtractorOptions.ENGLISH, isWifiRequired: false);
-    print(result);
-    result = await _languageModelManager
-        .downloadModel(EntityExtractorOptions.JAPANESE, isWifiRequired: false);
-    print(result);
+    print('Model downloaded: $result');
   }
 
   Future<void> deleteModel() async {
-    var result = await _languageModelManager
-        .deleteModel(EntityExtractorOptions.JAPANESE);
-    print(result);
+    var result =
+        await _languageModelManager.deleteModel(EntityExtractorOptions.ENGLISH);
+    print('Model deleted: $result');
   }
 
   Future<void> getAvailableModels() async {
     var result = await _languageModelManager.getAvailableModels();
-    print(result);
+    print('Available models: $result');
   }
 
   Future<void> isModelDownloaded() async {
     var result = await _languageModelManager
-        .isModelDownloaded(EntityExtractorOptions.DUTCH);
+        .isModelDownloaded(EntityExtractorOptions.ENGLISH);
     print('Model download: $result');
   }
 

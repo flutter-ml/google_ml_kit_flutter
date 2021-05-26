@@ -24,25 +24,28 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
 
   Future<void> downloadModel() async {
     var result = await _languageModelManager.downloadModel('en');
-    print(result);
-    await _languageModelManager.downloadModel('es');
+    print('Model downloaded: $result');
+    result = await _languageModelManager.downloadModel('es');
+    print('Model downloaded: $result');
   }
 
   Future<void> deleteModel() async {
-    var result = await _languageModelManager.deleteModel('es');
-    print(result);
-    result = await _languageModelManager.deleteModel('ja');
-    print(result);
+    var result = await _languageModelManager.deleteModel('en');
+    print('Model deleted: $result');
+    result = await _languageModelManager.deleteModel('es');
+    print('Model deleted: $result');
   }
 
   Future<void> getAvailableModels() async {
     var result = await _languageModelManager.getAvailableModels();
-    print(result);
+    print('Available models: $result');
   }
 
   Future<void> isModelDownloaded() async {
     var result = await _languageModelManager.isModelDownloaded('es');
-    print('Model download: $result');
+    print('Is model downloaded: $result');
+    result = await _languageModelManager.isModelDownloaded('es');
+    print('Is model downloaded: $result');
   }
 
   Future<void> translateText() async {
