@@ -245,7 +245,7 @@ onDeviceTranslator.close();
 
 ### Android
 
-If you want to reduce the apk size read more about it in issue [#26](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26).
+To reduce the apk size read more about it in issue [#26](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26).
 
 ### iOS
 
