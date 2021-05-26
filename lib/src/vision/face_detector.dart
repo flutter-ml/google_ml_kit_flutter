@@ -49,7 +49,6 @@ class FaceDetector {
 
   // Detects faces in the input image.
   Future<List<Face>> processImage(InputImage inputImage) async {
-    assert(!_isClosed);
     _hasBeenOpened = true;
 
     final result = await Vision.channel.invokeListMethod<dynamic>(

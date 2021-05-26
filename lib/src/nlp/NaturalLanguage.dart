@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 part 'LanguageIdentifier.dart';
 part 'OnDeviceTranslation.dart';
 part 'EntityExtraction.dart';
-
+part 'SmartReply.dart';
 class NaturalLanguage {
   NaturalLanguage._();
 
@@ -30,5 +30,9 @@ class NaturalLanguage {
 
   EntityModelManager entityModelManager() {
     return EntityModelManager._();
+  }
+
+  SmartReply smartReply(){
+    return SmartReply._();
   }
 }
