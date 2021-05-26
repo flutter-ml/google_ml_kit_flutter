@@ -23,7 +23,7 @@ class TextDetectorPainter extends CustomPainter {
 
     final Paint background = Paint()..color = Color(0x99000000);
 
-    for (final textBlock in recognisedText.textBlocks) {
+    for (final textBlock in recognisedText.blocks) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
             textAlign: TextAlign.left,
