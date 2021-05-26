@@ -15,7 +15,7 @@ class BarcodeScanner {
   bool _isClosed = false;
 
   ///Function to process the [InputImage] and returns a list of [Barcode]
-  Future<dynamic> processImage(InputImage inputImage) async {
+  Future<List<Barcode>> processImage(InputImage inputImage) async {
     _isOpened = true;
     final result = await Vision.channel.invokeMethod(
         'vision#startBarcodeScanner', <String, dynamic>{

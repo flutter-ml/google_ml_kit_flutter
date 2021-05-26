@@ -51,22 +51,30 @@ Add this plugin as dependency in your pubspec.yaml.
   1. [Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/android)
   2. [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning/android)
 
-## Procedure to use vision api's
 
-#### 1. First Create an InputImage
+#### 1. Create an InputImage
 
-Prepare Input Image (image you want to process)
+From path:
 
-```
-import 'package:google_ml_kit/google_ml_kit.dart';
-
-// From path
+```dart
 final inputImage = InputImage.fromFilePath(filePath);
+```
 
-// From file
+From file:
+
+```dart
 final inputImage = InputImage.fromFile(file);
+```
 
-// From CameraImage (if you are using the camera plugin)
+From bytes:
+
+```dart
+final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+```
+
+From CameraImage (if you are using the camera plugin):
+
+```dart
 final camera; // your camera instance
 final WriteBuffer allBytes = WriteBuffer();
 for (Plane plane in cameraImage.planes) {
@@ -98,21 +106,71 @@ final inputImageData = InputImageData(
 );
 
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
-
 ```
- 
-To know more about [formats of image](https://developer.android.com/reference/android/graphics/ImageFormat.html).
 
 #### 2. Create an instance of detector
 
-```
+```dart
+// vision
 final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
 final digitalInkRecogniser = GoogleMlKit.vision.digitalInkRecogniser();
+final faceDetector = GoogleMlKit.vision.faceDetector();
+final imageLabeler = GoogleMlKit.vision.imageLabeler();
+final poseDetector = GoogleMlKit.vision.poseDetector();
+final textDetector = GoogleMlKit.vision.textDetector();
+
+// nl
+final entityExtractor = GoogleMlKit.nlp.entityExtractor();
+final entityModelManager = GoogleMlKit.nlp.entityModelManager();
+final languageIdentifier = GoogleMlKit.nlp.languageIdentifier();
+final onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator();
+final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 ```
 
-#### 3. Call `processImage()` or relevant function of the respective detector
+#### 3. Call the corresponding method
 
-#### 4. Call `close()`
+```dart
+// vision
+final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
+final String text = await digitalInkRecogniser.readText(point, modelTag);
+final List<Face> faces = await faceDetector.processImage(inputImage);
+final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
+final Map<int, PoseLandmark> poseLandmarks = await poseDetector.processImage(inputImage);
+final RecognisedText recognisedText = await textDetector.processImage(inputImage);
+
+// nl
+final List<EntityAnnotation> entities = await entityExtractor.extractEntities(text, filters, locale, timezone);
+final bool response = await entityModelManager.downloadModel(modelTag);
+final String response = await entityModelManager.isModelDownloaded(modelTag);
+final String response = await entityModelManager.deleteModel(modelTag);
+final List<String> availableModels = await entityModelManager.getAvailableModels();
+final String response = await languageIdentifier.identifyLanguage(text);
+final List<IdentifiedLanguage> response = await languageIdentifier.identifyPossibleLanguages(text);
+final String response = await onDeviceTranslator.translateText(text);
+final bool response = await translateLanguageModelManager.downloadModel(modelTag);
+final String response = await translateLanguageModelManager.isModelDownloaded(modelTag);
+final String response = await translateLanguageModelManager.deleteModel(modelTag);
+final List<String> availableModels = await translateLanguageModelManager.getAvailableModels();
+```
+
+#### 4. Extract data from response.
+
+#### 5. Release resources with `close()`.
+
+```dart
+// vision
+barcodeScanner.close();
+digitalInkRecogniser.close();
+faceDetector.close();
+imageLabeler.close();
+poseDetector.close();
+textDetector.close();
+
+// nl
+entityExtractor.close();
+languageIdentifier.close();
+onDeviceTranslator.close();
+```
 
 ## Digital Ink recognition
 
@@ -133,19 +191,19 @@ final options = PoseDetectorOptions(
         
 ```
 
-**Note**: To obtain default poseDetector no options need to be specied. It gives all available landmarks using BasePoseDetector Model.
+**Note**: To obtain default poseDetector no options need to be specied. It gives all available landmarks using BasePoseDetector Model. **The same implies to other detectors as well**
 
-**The same implies to other detectors as well**
-- Calling `processImage(InputImage inputImage)` returns **Map<int,[PoseLandMark]()>**
+- Calling `processImage(InputImage inputImage)` returns `Map<int,[PoseLandMark]()`
 
 ```
 final landMarksMap = await poseDetector.processImage(inputImage);
 ```
+
 Use the map to extract data. See this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/example/lib/VisionDetectorViews/pose_detector_view.dart) to get better idea.
 
 ## Image Labeling
 
-If you choose google service way. In your  **app level buil.gradle add.**
+If you choose google service way. Add this in your **app level buil.gradle**:
 
 ```
 <application ...>
@@ -156,9 +214,11 @@ If you choose google service way. In your  **app level buil.gradle add.**
       <!-- To use multiple models: android:value="ica,model2,model3" -->
       </application>
 ```
+
 **The same implies for all other models as well**
 
 **Create `ImageLabelerOptions`**. This uses [google's base model](https://developers.google.com/ml-kit/vision/image-labeling/label-map)
+
 ```
 final options =ImageLabelerOptions( confidenceThreshold = confidenceThreshold);
 // Default =0.5
@@ -173,7 +233,7 @@ CustomImageLabelerOptions options = CustomImageLabelerOptions(
         customModelPath: "file path");
 ```
 
-**calling `processImage()`** returns List<[ImageLabel]()>
+**calling `processImage()`** returns `List<[ImageLabel]()>`
 ```
 final labels = await imageLabeler.processImage(inputImage);
 ```
