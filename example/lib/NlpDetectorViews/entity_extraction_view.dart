@@ -27,8 +27,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   }
 
   Future<void> deleteModel() async {
-    var result = await _languageModelManager
-        .deleteModel(EntityExtractorOptions.ENGLISH);
+    var result =
+        await _languageModelManager.deleteModel(EntityExtractorOptions.ENGLISH);
     print('Model deleted: $result');
   }
 
