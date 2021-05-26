@@ -43,6 +43,11 @@ Android:
 
 ## Usage
 
+Add this plugin as dependency in your pubspec.yaml.
+
+- In your project-level build.gradle file, make sure to include Google's Maven repository in both your buildscript and allprojects sections(for all api's).
+- The plugin has been written using bundled api models, this implies models will be bundled along with plugin and there is no need to implement any dependencies on your part and should work out of the box.
+
 #### 1. Create an InputImage
 
 From path:
