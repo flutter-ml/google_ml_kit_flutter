@@ -8,6 +8,7 @@ import com.b.biradar.google_ml_kit.nl.EntityExtractor;
 import com.b.biradar.google_ml_kit.nl.EntityModelManager;
 import com.b.biradar.google_ml_kit.nl.LanguageDetector;
 import com.b.biradar.google_ml_kit.nl.OnDeviceTranslator;
+import com.b.biradar.google_ml_kit.nl.SmartReply;
 import com.b.biradar.google_ml_kit.nl.TranslatorModelManager;
 import com.b.biradar.google_ml_kit.vision.BarcodeDetector;
 import com.b.biradar.google_ml_kit.vision.FaceDetector;
@@ -42,7 +43,8 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         new EntityModelManager(),
                         new LanguageDetector(),
                         new OnDeviceTranslator(),
-                        new TranslatorModelManager()
+                        new TranslatorModelManager(),
+                        new SmartReply()
                 ));
 
         handlers = new HashMap<>();
