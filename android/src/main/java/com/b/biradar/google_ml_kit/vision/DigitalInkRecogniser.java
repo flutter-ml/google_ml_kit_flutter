@@ -11,7 +11,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.common.model.DownloadConditions;
-import com.google.mlkit.common.model.RemoteModel;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModel;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
@@ -111,11 +110,11 @@ public class DigitalInkRecogniser implements ApiDetectorInterface {
     }
 
     private void manageInkModels(MethodCall call, final MethodChannel.Result result) {
-        RemoteModel model = getModel(call, result);
+        DigitalInkRecognitionModel model = getModel(call, result);
         String task = (String) call.argument("task");
         switch (task) {
             case "download":
-                final DownloadConditions downloadConditions = new DownloadConditions.Builder().build();
+                DownloadConditions downloadConditions = new DownloadConditions.Builder().build();
                 genericModelManager.downloadModel(model, downloadConditions, result);
                 break;
             case "delete":
@@ -146,7 +145,7 @@ public class DigitalInkRecogniser implements ApiDetectorInterface {
             return null;
         }
         if (modelIdentifier == null) {
-            result.error("Model Identifier error", "Failed to create a model Identifier", null);
+            result.error("Model Identifier error", "No model was found", null);
             return null;
         }
         return DigitalInkRecognitionModel.builder(modelIdentifier).build();

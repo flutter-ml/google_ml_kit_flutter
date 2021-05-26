@@ -1,11 +1,10 @@
 package com.b.biradar.google_ml_kit.nl;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.b.biradar.google_ml_kit.ApiDetectorInterface;
 import com.b.biradar.google_ml_kit.GenericModelManager;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -54,10 +53,9 @@ public class TranslatorModelManager implements ApiDetectorInterface {
                 getDownloadedModels(result);
                 break;
             case "check":
-                TranslateRemoteModel model =
+                TranslateRemoteModel model = 
                         new TranslateRemoteModel.Builder((String) call.argument("model")).build();
-
-                Boolean downloaded = new GenericModelManager().isModelDownloaded(model);
+                Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);
                 else result.error("error", null, null);
                 break;
@@ -70,7 +68,7 @@ public class TranslatorModelManager implements ApiDetectorInterface {
         genericModelManager.remoteModelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(new OnSuccessListener<Set<TranslateRemoteModel>>() {
             @Override
             public void onSuccess(@NonNull Set<TranslateRemoteModel> translateRemoteModels) {
-                List<String> downloadedModels = new ArrayList<>(translateRemoteModels.size());
+                List<String> downloadedModels = new ArrayList<>();
                 for (TranslateRemoteModel translateRemoteModel : translateRemoteModels) {
                     downloadedModels.add(translateRemoteModel.getLanguage());
                 }
@@ -79,31 +77,23 @@ public class TranslatorModelManager implements ApiDetectorInterface {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("Error getting models", e.toString());
                 result.error("Error getting downloaded models", e.toString(), null);
             }
         });
     }
 
     private void downloadModel(final MethodChannel.Result result, String languageCode, boolean isWifiReqRequired) {
-        final TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
-        if (genericModelManager.isModelDownloaded(model)) {
-            result.success("success");
-            return;
-        }
-        final DownloadConditions downloadConditions;
+        TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
+        DownloadConditions downloadConditions;
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
-        else downloadConditions = new DownloadConditions.Builder().build();
+        else
+            downloadConditions = new DownloadConditions.Builder().build();
         genericModelManager.downloadModel(model, downloadConditions, result);
     }
 
     private void deleteModel(final MethodChannel.Result result, String languageCode) {
         TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
-        if (!genericModelManager.isModelDownloaded(model)) {
-            result.success("success");
-            return;
-        }
         genericModelManager.deleteModel(model, result);
     }
 }

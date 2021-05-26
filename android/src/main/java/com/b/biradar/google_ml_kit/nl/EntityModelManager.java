@@ -1,11 +1,10 @@
 package com.b.biradar.google_ml_kit.nl;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.b.biradar.google_ml_kit.ApiDetectorInterface;
 import com.b.biradar.google_ml_kit.GenericModelManager;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -22,7 +21,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class EntityModelManager implements ApiDetectorInterface {
     private static final String START = "nlp#startEntityModelManager";
-    
+
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
@@ -56,7 +55,7 @@ public class EntityModelManager implements ApiDetectorInterface {
             case "check":
                 EntityExtractionRemoteModel model =
                         new EntityExtractionRemoteModel.Builder((String) call.argument("model")).build();
-                Boolean downloaded = new GenericModelManager().isModelDownloaded(model);
+                Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);
                 else result.error("error", null, null);
                 break;
@@ -69,7 +68,7 @@ public class EntityModelManager implements ApiDetectorInterface {
         genericModelManager.remoteModelManager.getDownloadedModels(EntityExtractionRemoteModel.class).addOnSuccessListener(new OnSuccessListener<Set<EntityExtractionRemoteModel>>() {
             @Override
             public void onSuccess(@NonNull Set<EntityExtractionRemoteModel> entityExtractionRemoteModels) {
-                List<String> downloadedModels = new ArrayList<>(entityExtractionRemoteModels.size());
+                List<String> downloadedModels = new ArrayList<>();
                 for (EntityExtractionRemoteModel entityRemoteModel : entityExtractionRemoteModels) {
                     downloadedModels.add(entityRemoteModel.getModelIdentifier());
                 }
@@ -84,31 +83,17 @@ public class EntityModelManager implements ApiDetectorInterface {
     }
 
     private void downloadModel(final MethodChannel.Result result, String language, boolean isWifiReqRequired) {
-        final EntityExtractionRemoteModel downloadModel = new EntityExtractionRemoteModel.Builder(language).build();
-        final DownloadConditions downloadConditions;
-
-        if (genericModelManager.isModelDownloaded(downloadModel)) {
-            Log.e("Already downloaded", "Model is already present");
-            result.success("success");
-            return;
-        }
-
-        Log.e("Wifi", String.valueOf(isWifiReqRequired));
+        EntityExtractionRemoteModel downloadModel = new EntityExtractionRemoteModel.Builder(language).build();
+        DownloadConditions downloadConditions;
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
-        else downloadConditions = new DownloadConditions.Builder().build();
-
+        else
+            downloadConditions = new DownloadConditions.Builder().build();
         genericModelManager.downloadModel(downloadModel, downloadConditions, result);
     }
 
     private void deleteModel(final MethodChannel.Result result, String languageCode) {
-        EntityExtractionRemoteModel deleteModel = new EntityExtractionRemoteModel.Builder(languageCode).build();
-
-        if (!genericModelManager.isModelDownloaded(deleteModel)) {
-            Log.e("error", "Model not present");
-            result.success("success");
-            return;
-        }
-        genericModelManager.deleteModel(deleteModel, result);
+        EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(languageCode).build();
+        genericModelManager.deleteModel(model, result);
     }
 }

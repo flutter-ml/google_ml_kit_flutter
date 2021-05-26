@@ -82,7 +82,7 @@ public class LanguageDetector implements ApiDetectorInterface {
                 .addOnSuccessListener(new OnSuccessListener<List<IdentifiedLanguage>>() {
                     @Override
                     public void onSuccess(@NonNull List<IdentifiedLanguage> identifiedLanguages) {
-                        List<Map<String, Object>> languageList = new ArrayList<>(identifiedLanguages.size());
+                        List<Map<String, Object>> languageList = new ArrayList<>();
                         for (IdentifiedLanguage language : identifiedLanguages) {
                             Map<String, Object> languageData = new HashMap<>();
                             languageData.put("confidence", language.getConfidence());

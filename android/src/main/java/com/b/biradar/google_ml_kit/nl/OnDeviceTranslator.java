@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.b.biradar.google_ml_kit.ApiDetectorInterface;
 
 import com.b.biradar.google_ml_kit.GenericModelManager;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
