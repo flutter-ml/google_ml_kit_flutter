@@ -1,53 +1,59 @@
 part of 'NaturalLanguage.dart';
 
-class SmartReply{
+///Generates smart replies based on the conversations list.
+///Creating an instance of [SmartReply]
+///```
+///final smartReply = GoogleMlKit.nlp.smartReply();
+///```
+class SmartReply {
   bool _hasBeenOpened = false;
   bool _isClosed = false;
   int _conversationCount = 0;
 
   SmartReply._();
 
-  Future<void> addConversationForLocalUser(String text) async{
-    
-    final result = NaturalLanguage.channel.invokeMethod(
-        'nlp#addSmartReply', <String, dynamic>{
-      'text': text,
-      'localUser' : true
-    });
+  /// Adds conversation for local user.
+  Future<void> addConversationForLocalUser(String text) async {
+    final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
+        <String, dynamic>{'text': text, 'localUser': true});
     _conversationCount++;
     print(result.toString());
   }
 
-  Future<void> addConversationForRemoteUser(String text, String uID) async{
-  
-    final result = NaturalLanguage.channel.invokeMethod(
-        'nlp#addSmartReply', <String, dynamic>{
-      'text': text,
-      'localUser' : false,
-      'uID' : uID
-    });
+  /// Adds conversation for remote user.
+  Future<void> addConversationForRemoteUser(String text, String uID) async {
+    final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
+        <String, dynamic>{'text': text, 'localUser': false, 'uID': uID});
     _conversationCount++;
     print(result.toString());
   }
 
-  Future<List<SmartReplySuggestion>> suggestReplies() async{
+  ///Suggests possible replies for the conversation.
+  ///Returns a map having the status of suggestions and all the suggestions.
+  Future<Map<String, dynamic>> suggestReplies() async {
     _hasBeenOpened = true;
     _isClosed = false;
 
-    if(_conversationCount==0){
-      print("No conversations added yet");
-      return <SmartReplySuggestion>[];
-    }
-
-    final result = await NaturalLanguage.channel.invokeMethod('nlp#startSmartReply');
     var suggestions = <SmartReplySuggestion>[];
-    
-    for(dynamic suggestion in result){
-        suggestions.add(SmartReplySuggestion(suggestion['result'], suggestion['toString']));
+    if (_conversationCount == 0) {
+      print("No conversations added yet");
+      return <String, dynamic>{'status': 2, 'suggestions': suggestions};
     }
 
-    return suggestions;
+    final result =
+        await NaturalLanguage.channel.invokeMethod('nlp#startSmartReply');
 
+    if (result['suggestions'] != null) {
+      for (dynamic suggestion in result['suggestions']) {
+        suggestions.add(
+            SmartReplySuggestion(suggestion['result'], suggestion['toString']));
+      }
+    }
+
+    return <String, dynamic>{
+      'status': result['status'],
+      'suggestions': suggestions
+    };
   }
 
   Future<void> close() async {
@@ -60,7 +66,7 @@ class SmartReply{
   }
 }
 
-class SmartReplySuggestion{
+class SmartReplySuggestion {
   final String _text;
   final String _toString;
 
@@ -71,4 +77,3 @@ class SmartReplySuggestion{
   @override
   String toString() => _toString;
 }
-

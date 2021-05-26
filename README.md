@@ -25,7 +25,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |-----------------------------------------------------------------------------------------------|---------|-----|
 |[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
-|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | yet     | yet |
+|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅     | yet |
 |[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
 
 ## Requirements
@@ -121,6 +121,7 @@ final entityModelManager = GoogleMlKit.nlp.entityModelManager();
 final languageIdentifier = GoogleMlKit.nlp.languageIdentifier();
 final onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator();
 final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
+final smartReply = GoogleMlKit.nlp.smartReply();
 ```
 
 #### 3. Call the corresponding method
@@ -147,6 +148,10 @@ final bool response = await translateLanguageModelManager.downloadModel(modelTag
 final String response = await translateLanguageModelManager.isModelDownloaded(modelTag);
 final String response = await translateLanguageModelManager.deleteModel(modelTag);
 final List<String> availableModels = await translateLanguageModelManager.getAvailableModels();
+final List<SmartReplySuggestion> suggestions = await smartReply.suggestReplies();
+// add conversations for suggestions
+smartReply.addConversationForLocalUser(text);
+smartReply.addConversationForRemoteUser(text, userID);
 ```
 
 #### 4. Extract data from response.
@@ -228,6 +233,17 @@ for (TextBlock block in recognisedText.blocks) {
   }
 }
 ```
+e. Extract Suggestions
+
+```dart
+//status implications
+//1 = Language Not Supported
+//2 = Can't determine a reply
+//3 = Successfully generated 1-3 replies
+int status = result['status'];
+
+List<SmartReplySuggestion> suggestions = result['suggestions'];
+```
 
 #### 5. Release resources with `close()`.
 
@@ -244,8 +260,9 @@ textDetector.close();
 entityExtractor.close();
 languageIdentifier.close();
 onDeviceTranslator.close();
+smartReply.close();
 ```
-
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) for better understanding.
 ## Known issues
 
 ### Android

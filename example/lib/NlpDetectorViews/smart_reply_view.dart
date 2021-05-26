@@ -31,7 +31,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
     final result = await _smartReply.suggestReplies();
 
     setState(() {
-      _suggestions = result;
+      _suggestions = result['suggestions'];
     });
   }
 
