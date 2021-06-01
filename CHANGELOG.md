@@ -8,7 +8,7 @@
 
 ## 0.0.2
 
-* New : Support for digital ink recognition api added
+* New : Support for digital ink recognition API added
 
 ## 0.0.2+1
 
@@ -16,7 +16,7 @@
 
 ## 0.0.3
 
-* New : Text Recognition api support
+* New : Text Recognition API support
 
 ## 0.0.3+1
 
@@ -28,21 +28,27 @@
 
 ## 0.2.0
 
-* Breaking changes in Api outline (instance creation of detectors)
-* New : Added language identifier api
+* Breaking changes in API outline (instance creation of detectors)
+* New : Added language identifier API
 
 ## 0.3.0
 
-* Add face detection Api
-* Add On device translation api
+* Add face detection API
+* Add On device translation API
 
 ## 0.4.0
 
-* Add face detection for IOS
-* Add image labelling for IOS
+* Add face detection for iOS
+* Add image labelling for iOS
 * Add Entity Extraction for Android
 
 ## 0.5.0
-* Add Barcode Scanning for IOS
-* Add Text Recognition for IOS
-* Add Smart Reply Suggestion for android
+
+* Add Barcode Scanning for iOS
+* Add Text Recognition for iOS
+* Add Smart Reply Suggestion for Android
+
+## 0.5.1
+
+* Change Minimum iOS Deployment Target: 9.0
+* Set podspecs s.static_framework = true

@@ -4,12 +4,12 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'google_ml_kit'
-  s.version          = '0.0.1'
+  s.version          = '0.5.1'
   s.summary          = 'Flutter Plugin for ML Kit'
   s.description      = <<-DESC
 flutter plugin for google ml kit
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/bharat-biradar/Google-Ml-Kit-plugin'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
@@ -21,8 +21,9 @@ flutter plugin for google ml kit
   s.dependency 'GoogleMLKit/ImageLabelingCustom'
   s.dependency 'GoogleMLKit/BarcodeScanning'
   s.dependency 'GoogleMLKit/TextRecognition'
-  s.platform                = :ios, '12.0'
-  s.ios.deployment_target   = '12.0'
+  s.platform                = :ios, '9.0'
+  s.ios.deployment_target   = '9.0'
+  s.static_framework = true
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

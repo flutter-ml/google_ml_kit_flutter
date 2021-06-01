@@ -32,7 +32,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 
 iOS:
 
-- Minimum iOS Deployment Target: 12.0
+- Minimum iOS Deployment Target: 9.0
 - Xcode 12 or newer
 - Swift 5
 
