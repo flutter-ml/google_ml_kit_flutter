@@ -275,7 +275,7 @@ To reduce the apk size read more about it in issue [#26](https://github.com/bhar
 
 ### iOS
 
-If you are using this plugin in your app and any other plugin that requieres Firebase, there is a known issues you will encounter a dependency error when running `pod install`. To read more about it go to issue [#27](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/27).
+If you are using this plugin in your app and any other plugin that requires Firebase, there is a known issues you will encounter a dependency error when running `pod install`. To read more about it go to issue [#27](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/27).
 
 ## Contributing
 
