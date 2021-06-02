@@ -25,14 +25,14 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |-----------------------------------------------------------------------------------------------|---------|-----|
 |[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | yet |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
-|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅     | yet |
+|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅      | yet |
 |[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
 
 ## Requirements
 
 iOS:
 
-- Minimum iOS Deployment Target: 12.0
+- Minimum iOS Deployment Target: 9.0
 - Xcode 12 or newer
 - Swift 5
 
@@ -262,7 +262,11 @@ languageIdentifier.close();
 onDeviceTranslator.close();
 smartReply.close();
 ```
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) for better understanding.
+
+#### Example app
+
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) to see the plugin in action.
+
 ## Known issues
 
 ### Android
@@ -271,7 +275,7 @@ To reduce the apk size read more about it in issue [#26](https://github.com/bhar
 
 ### iOS
 
-If you are using this plugin in your app and any other plugin that requieres Firebase, there is a known issues you will encounter a dependency error when running `pod install`. To read more about it go to issue [#27](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/27).
+If you are using this plugin in your app and any other plugin that requires Firebase, there is a known issues you will encounter a dependency error when running `pod install`. To read more about it go to issue [#27](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/27).
 
 ## Contributing
 

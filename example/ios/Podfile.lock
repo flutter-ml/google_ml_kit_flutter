@@ -2,7 +2,7 @@ PODS:
   - camera (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - google_ml_kit (0.0.1):
+  - google_ml_kit (0.5.1):
     - Flutter
     - GoogleMLKit/BarcodeScanning
     - GoogleMLKit/FaceDetection
@@ -147,7 +147,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: 4c66a896b085f7e95226659ec22bd9af20751afe
+  google_ml_kit: e59224afa40468a45d43fcc4ded1370fbfe8ee32
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
   GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
