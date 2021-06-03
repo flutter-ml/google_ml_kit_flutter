@@ -26,6 +26,9 @@
 @interface ImageLabeler : NSObject <Handler>
 @end
 
+@interface PoseDetector : NSObject <Handler>
+@end
+
 @interface TextRecognizer : NSObject <Handler>
 @end
 

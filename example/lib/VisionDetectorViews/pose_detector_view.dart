@@ -35,11 +35,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
-    final landmarks = await poseDetector.processImage(inputImage);
-    print('Found ${landmarks.length} pose landmarks');
+    final poses = await poseDetector.processImage(inputImage);
+    print('Found ${poses.length} poses');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      final painter = PosePainter(landmarks, inputImage.inputImageData!.size,
+      final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
     } else {

@@ -4,8 +4,6 @@
 #define startBarcodeScanner @"vision#startBarcodeScanner"
 #define closeBarcodeScanner @"vision#closeBarcodeScanner"
 
-@class MLKLocalModel;
-
 @implementation BarcodeScanner {
     MLKBarcodeScanner *barcodeScanner;
 }
@@ -46,11 +44,11 @@
             return;
         }
         
-        NSMutableArray *ret = [NSMutableArray array];
+        NSMutableArray *array = [NSMutableArray array];
         for (MLKBarcode *barcode in barcodes) {
-            [ret addObject:[self visionBarcodeToDictionary:barcode]];
+            [array addObject:[self visionBarcodeToDictionary:barcode]];
         }
-        result(ret);
+        result(array);
     }];
 }
 

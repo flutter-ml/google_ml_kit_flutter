@@ -52,3 +52,7 @@
 
 * Change Minimum iOS Deployment Target: 9.0
 * Set podspecs s.static_framework = true
+
+## 0.6.0
+
+* Add Pose Detection for iOS

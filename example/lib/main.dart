@@ -62,7 +62,11 @@ class Home extends StatelessWidget {
                         BarcodeScannerView(),
                         featureCompleted: true,
                       ),
-                      CustomCard('Pose Detector', PoseDetectorView()),
+                      CustomCard(
+                        'Pose Detector',
+                        PoseDetectorView(),
+                        featureCompleted: true,
+                      ),
                       CustomCard('Digital Ink Recogniser', DigitalInkView()),
                       CustomCard(
                         'Text Detector',

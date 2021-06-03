@@ -9,22 +9,7 @@ class BarcodeScannerView extends StatefulWidget {
 }
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
-  BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
-    BarcodeFormat.Default,
-    BarcodeFormat.Code_128,
-    BarcodeFormat.Code_39,
-    BarcodeFormat.Code_93,
-    BarcodeFormat.Codebar,
-    BarcodeFormat.EAN_13,
-    BarcodeFormat.EAN_8,
-    BarcodeFormat.ITF,
-    BarcodeFormat.UPC_A,
-    BarcodeFormat.UPC_E,
-    BarcodeFormat.QR_Code,
-    BarcodeFormat.PDF417,
-    BarcodeFormat.Aztec,
-    BarcodeFormat.Data_Matrix
-  ]);
+  BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner();
 
   bool isBusy = false;
   CustomPaint? customPaint;
