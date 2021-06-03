@@ -2,9 +2,10 @@ PODS:
   - camera (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - google_ml_kit (0.5.1):
+  - google_ml_kit (0.6.0):
     - Flutter
     - GoogleMLKit/BarcodeScanning
+    - GoogleMLKit/DigitalInkRecognition
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/ImageLabeling
     - GoogleMLKit/ImageLabelingCustom
@@ -18,6 +19,9 @@ PODS:
   - GoogleMLKit/BarcodeScanning (2.1.0):
     - GoogleMLKit/MLKitCore
     - MLKitBarcodeScanning (~> 1.2.0)
+  - GoogleMLKit/DigitalInkRecognition (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitDigitalInkRecognition (~> 1.2.0)
   - GoogleMLKit/FaceDetection (2.1.0):
     - GoogleMLKit/MLKitCore
     - MLKitFaceDetection (~> 1.2.0)
@@ -73,6 +77,10 @@ PODS:
     - GoogleUtilitiesComponents (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
     - Protobuf (~> 3.12)
+  - MLKitDigitalInkRecognition (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitMDD (~> 1.2)
+    - SSZipArchive (~> 2.1)
   - MLKitFaceDetection (1.2.0):
     - MLKitCommon (~> 2.1)
     - MLKitVision (~> 1.2)
@@ -89,6 +97,8 @@ PODS:
     - MLKitImageLabelingCommon (~> 1.2)
     - MLKitVision (~> 1.2)
     - MLKitVisionKit (~> 2.1)
+  - MLKitMDD (1.2.0):
+    - MLKitCommon (~> 2.1)
   - MLKitObjectDetectionCommon (1.2.0):
     - MLKitCommon (~> 2.1)
     - MLKitVision (~> 1.2)
@@ -127,6 +137,7 @@ PODS:
   - nanopb/encode (2.30908.0)
   - PromisesObjC (1.2.12)
   - Protobuf (3.17.0)
+  - SSZipArchive (2.4.1)
 
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
@@ -144,10 +155,12 @@ SPEC REPOS:
     - GTMSessionFetcher
     - MLKitBarcodeScanning
     - MLKitCommon
+    - MLKitDigitalInkRecognition
     - MLKitFaceDetection
     - MLKitImageLabeling
     - MLKitImageLabelingCommon
     - MLKitImageLabelingCustom
+    - MLKitMDD
     - MLKitObjectDetectionCommon
     - MLKitPoseDetection
     - MLKitPoseDetectionAccurate
@@ -159,6 +172,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   camera:
@@ -173,7 +187,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: 10705de9462b848b313d08266e0db61d9da8def4
+  google_ml_kit: 3e25499de151048da453504d2b676cfd1c6c6bd0
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
   GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
@@ -183,10 +197,12 @@ SPEC CHECKSUMS:
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   MLKitBarcodeScanning: e9487b3e7c25d0f347dcbf253e7a540478919d9d
   MLKitCommon: 9ed187a042139d51c0d8bf6a8301bb20b375c576
+  MLKitDigitalInkRecognition: 013d40403784991eb361d06ac2acae27c384a45c
   MLKitFaceDetection: 5b92261dd6e4205e3dab0df62537ac3f4e90e5db
   MLKitImageLabeling: 21c8acbbfac1e9dd912f0cdc5bf8cb09f0f98125
   MLKitImageLabelingCommon: 621e55f48a1709b886489925edb5939791b66f8c
   MLKitImageLabelingCustom: ffcdbaa346f0117f113724a9273ff4c0ab13c744
+  MLKitMDD: a59cb2e0cf957c3700af91f6e55a6eeaf430b174
   MLKitObjectDetectionCommon: 7b197838c58568d44f34cf2fe874787ab43d63c1
   MLKitPoseDetection: a2ca2959c88267f9edf5baad954b40e13f651220
   MLKitPoseDetectionAccurate: 4f64ff60f0a1285b5c8950bd8fdd3226937df96c
@@ -198,7 +214,8 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
+  SSZipArchive: 5232069783e7495861062b54ab3b7f8d4426bbb6
 
-PODFILE CHECKSUM: c886903733cf0a0267328931ef36f0b17d40a3c6
+PODFILE CHECKSUM: 61c4a548bc081754d92a51bab7c131549c1e6f57
 
 COCOAPODS: 1.10.1

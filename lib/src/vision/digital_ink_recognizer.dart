@@ -12,7 +12,8 @@ class DigitalInkRecogniser {
   ///Note that modelTag should follow [BCP 47] guidelines of identifying
   ///language visit this site [https://tools.ietf.org/html/bcp47] to know more.
   ///It takes [List<Offset>] which refers to the points being written on screen.
-  Future<String> readText(List<Offset?> points, String modelTag) async {
+  Future<List<RecognitionCandidate>> readText(
+      List<Offset?> points, String modelTag) async {
     _isOpened = true;
     List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
     for (var point in points) {
@@ -23,8 +24,15 @@ class DigitalInkRecogniser {
     final result = await Vision.channel.invokeMethod(
         'vision#startDigitalInkRecognizer',
         <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
+
+    final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
+    for (final dynamic data in result) {
+      final candidate = RecognitionCandidate(data["text"], data["score"]);
+      candidates.add(candidate);
+    }
+
     _isClosed = false;
-    return result.toString();
+    return candidates;
   }
 
   ///Close the instance of detector.
@@ -67,4 +75,11 @@ class LanguageModelManager {
         <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
     return result.toString();
   }
+}
+
+class RecognitionCandidate {
+  final String text;
+  final double score;
+
+  RecognitionCandidate(this.text, this.score);
 }

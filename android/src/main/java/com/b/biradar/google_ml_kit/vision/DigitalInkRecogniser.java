@@ -16,10 +16,12 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModel;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
+import com.google.mlkit.vision.digitalink.RecognitionCandidate;
 import com.google.mlkit.vision.digitalink.RecognitionResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,7 +100,17 @@ public class DigitalInkRecogniser implements ApiDetectorInterface {
                 .addOnSuccessListener(new OnSuccessListener<RecognitionResult>() {
                     @Override
                     public void onSuccess(RecognitionResult recognitionResult) {
-                        result.success(recognitionResult.getCandidates().get(0).getText());
+                        List<Map<String, Object>> candidatesList = new ArrayList<>(recognitionResult.getCandidates().size());
+                        for (RecognitionCandidate candidate : recognitionResult.getCandidates()) {
+                            Map<String, Object> candidateData = new HashMap<>();
+                            double score = 0;
+                            if (candidate.getScore() != null)
+                                score = candidate.getScore().doubleValue();
+                            candidateData.put("text", candidate.getText());
+                            candidateData.put("score", score);
+                            candidatesList.add(candidateData);
+                        }
+                        result.success(candidatesList);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

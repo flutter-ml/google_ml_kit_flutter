@@ -186,8 +186,8 @@ class InputImageData {
   InputImageData(
       {required this.size,
       required this.imageRotation,
-      this.inputImageFormat = InputImageFormat.NV21,
-      this.planeData});
+      required this.inputImageFormat,
+      required this.planeData});
 
   ///Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {

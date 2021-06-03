@@ -20,6 +20,9 @@
 @interface BarcodeScanner : NSObject <Handler>
 @end
 
+@interface DigitalInkRecogniser : NSObject <Handler>
+@end
+
 @interface FaceDetector : NSObject <Handler>
 @end
 

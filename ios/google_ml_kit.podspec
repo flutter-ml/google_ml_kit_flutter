@@ -23,8 +23,9 @@ flutter plugin for google ml kit
   s.dependency 'GoogleMLKit/TextRecognition'
   s.dependency 'GoogleMLKit/PoseDetection'
   s.dependency 'GoogleMLKit/PoseDetectionAccurate'
-  s.platform                = :ios, '9.0'
-  s.ios.deployment_target   = '9.0'
+  s.dependency 'GoogleMLKit/DigitalInkRecognition'
+  s.platform                = :ios, '10.0'
+  s.ios.deployment_target   = '10.0'
   s.static_framework = true
 
   # Flutter.framework does not contain a i386 slice.
