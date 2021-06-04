@@ -67,7 +67,11 @@ class Home extends StatelessWidget {
                         PoseDetectorView(),
                         featureCompleted: true,
                       ),
-                      CustomCard('Digital Ink Recogniser', DigitalInkView()),
+                      CustomCard(
+                        'Digital Ink Recogniser',
+                        DigitalInkView(),
+                        featureCompleted: true,
+                      ),
                       CustomCard(
                         'Text Detector',
                         TextDetectorView(),

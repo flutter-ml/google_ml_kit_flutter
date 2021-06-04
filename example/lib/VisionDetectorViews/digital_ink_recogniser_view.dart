@@ -18,71 +18,73 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Digital Ink Recognition')),
-      body: Column(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onPanUpdate: (DragUpdateDetails details) {
-                setState(() {
-                  RenderObject? object = context.findRenderObject();
-                  final _localPosition = (object as RenderBox?)
-                      ?.globalToLocal(details.localPosition);
-                  _points = List.from(_points)..add(_localPosition);
-                });
-              },
-              onPanEnd: (DragEndDetails details) {
-                _points.add(null);
-              },
-              child: CustomPaint(
-                painter: Signature(points: _points),
-                size: Size.infinite,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onPanUpdate: (DragUpdateDetails details) {
+                  setState(() {
+                    RenderObject? object = context.findRenderObject();
+                    final _localPosition = (object as RenderBox?)
+                        ?.globalToLocal(details.localPosition);
+                    _points = List.from(_points)..add(_localPosition);
+                  });
+                },
+                onPanEnd: (DragEndDetails details) {
+                  _points.add(null);
+                },
+                child: CustomPaint(
+                  painter: Signature(points: _points),
+                  size: Size.infinite,
+                ),
               ),
             ),
-          ),
-          if (_recognisedText.isNotEmpty)
-            Text(
-              'Recognized: $_recognisedText',
-              style: TextStyle(fontSize: 23),
+            if (_recognisedText.isNotEmpty)
+              Text(
+                'Candidates: $_recognisedText',
+                style: TextStyle(fontSize: 23),
+              ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    child: Text('Read Text'),
+                    onPressed: _recogniseText,
+                  ),
+                  ElevatedButton(
+                    child: Text('Clear Pad'),
+                    onPressed: _clearPad,
+                  ),
+                ],
+              ),
             ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  child: Text('Read Text'),
-                  onPressed: _recogniseText,
-                ),
-                ElevatedButton(
-                  child: Text('Clear Pad'),
-                  onPressed: _clearPad,
-                ),
-              ],
+            SizedBox(height: 8),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    child: Text('Check Model'),
+                    onPressed: _isModelDownloaded,
+                  ),
+                  ElevatedButton(
+                    child: Text('Download'),
+                    onPressed: _downloadModel,
+                  ),
+                  ElevatedButton(
+                    child: Text('Delete'),
+                    onPressed: _deleteModel,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  child: Text('Check Model'),
-                  onPressed: _isModelDownloaded,
-                ),
-                ElevatedButton(
-                  child: Text('Download'),
-                  onPressed: _downloadModel,
-                ),
-                ElevatedButton(
-                  child: Text('Delete'),
-                  onPressed: _deleteModel,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-        ],
+            SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }
@@ -128,10 +130,12 @@ class _DigitalInkViewState extends State<DigitalInkView> {
             ),
         barrierDismissible: true);
     try {
-      final text = await digitalInkRecogniser.readText(_points, 'en-US');
-      setState(() {
-        _recognisedText = text;
-      });
+      final candidates = await digitalInkRecogniser.readText(_points, 'en-US');
+      _recognisedText = "";
+      for (final candidate in candidates) {
+        _recognisedText += "\n" + candidate.text;
+      }
+      setState(() {});
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.toString()),

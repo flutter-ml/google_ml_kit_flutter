@@ -56,3 +56,5 @@
 ## 0.6.0
 
 * Add Pose Detection for iOS
+* Add Digital Ink Recognition for iOS
+* Change Minimum iOS Deployment Target: 10.0

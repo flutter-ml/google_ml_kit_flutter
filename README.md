@@ -17,7 +17,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
-|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | yet |
+|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | ✅  |
 
 ### Natural Language
 
@@ -32,9 +32,10 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 
 iOS:
 
-- Minimum iOS Deployment Target: 9.0
+- Minimum iOS Deployment Target: 10.0
 - Xcode 12 or newer
 - Swift 5
+- ML Kit only supports 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities.
 
 Android:
 
@@ -80,25 +81,29 @@ final bytes = allBytes.done().buffer.asUint8List();
 
 final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toDouble());
 
-InputImageRotation imageRotation = InputImageRotation.Rotation_0deg;
-switch (camera.sensorOrientation) {
-  case 0:
-    imageRotation = InputImageRotation.Rotation_0deg;
-    break;
-  case 90:
-    imageRotation = InputImageRotation.Rotation_90deg;
-    break;
-  case 180:
-    imageRotation = InputImageRotation.Rotation_180deg;
-    break;
-  case 270:
-    imageRotation = InputImageRotation.Rotation_270deg;
-    break;
-}
+final InputImageRotation imageRotation =
+    InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
+        InputImageRotation.Rotation_0deg;
+
+final InputImageFormat inputImageFormat =
+    InputImageFormatMethods.fromRawValue(cameraImage.format.raw) ??
+        InputImageFormat.NV21;
+
+final planeData = cameraImage.planes.map(
+  (Plane plane) {
+    return InputImagePlaneMetadata(
+      bytesPerRow: plane.bytesPerRow,
+      height: plane.height,
+      width: plane.width,
+    );
+  },
+).toList();
 
 final inputImageData = InputImageData(
   size: imageSize,
   imageRotation: imageRotation,
+  inputImageFormat: inputImageFormat,
+  planeData: planeData,
 );
 
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
@@ -129,7 +134,7 @@ final smartReply = GoogleMlKit.nlp.smartReply();
 ```dart
 // vision
 final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
-final String text = await digitalInkRecogniser.readText(point, modelTag);
+final List<RecognitionCandidate> canditates = await digitalInkRecogniser.readText(points, languageTag);
 final List<Face> faces = await faceDetector.processImage(inputImage);
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
 final List<Pose> poses = await poseDetector.processImage(inputImage);
@@ -250,7 +255,16 @@ for (Pose pose in poses) {
 }
 ```
 
-f. Extract Suggestions
+f. Digital Ink Recognition
+
+```dart
+for (final candidate in candidates) {
+  final text = candidate.text;
+  final score = candidate.score;
+}
+```
+
+g. Extract Suggestions
 
 ```dart
 //status implications
@@ -284,11 +298,15 @@ smartReply.close();
 
 Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/example) to see the plugin in action.
 
+## Migrating from ML Kit for Firebase
+
+When Migrating from ML Kit for Firebase read [this guide](https://developers.google.com/ml-kit/migration). For Android details read [this](https://developers.google.com/ml-kit/migration/android). For iOS details read [this](https://developers.google.com/ml-kit/migration/ios).
+
 ## Known issues
 
 ### Android
 
-To reduce the apk size read more about it in issue [#26](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26).
+To reduce the apk size read more about it in issue [#26](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26). Also look at [this](https://developers.google.com/ml-kit/tips/reduce-app-size).
 
 ### iOS
 
