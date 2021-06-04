@@ -16,8 +16,18 @@ class PosePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
+      ..strokeWidth = 4.0
       ..color = Colors.green;
+
+    final leftPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = Colors.yellow;
+
+    final rightPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = Colors.blueAccent;
 
     poses.forEach((pose) {
       pose.landmarks.forEach((_, landmark) {
@@ -30,69 +40,39 @@ class PosePainter extends CustomPainter {
             paint);
       });
 
-      final leftPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 6
-        ..color = Colors.yellow;
-
-      final rightPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 6
-        ..color = Colors.blueAccent;
-
-      PoseLandmark leftShoulder =
-          pose.landmarks[PoseLandmarkType.leftShoulder]!;
-      PoseLandmark rightShoulder =
-          pose.landmarks[PoseLandmarkType.rightShoulder]!;
-      PoseLandmark leftElbow = pose.landmarks[PoseLandmarkType.leftElbow]!;
-      PoseLandmark rightElbow = pose.landmarks[PoseLandmarkType.rightElbow]!;
-      PoseLandmark leftWrist = pose.landmarks[PoseLandmarkType.leftWrist]!;
-      PoseLandmark rightWrist = pose.landmarks[PoseLandmarkType.rightWrist]!;
-      PoseLandmark leftHip = pose.landmarks[PoseLandmarkType.leftHip]!;
-      PoseLandmark rightHip = pose.landmarks[PoseLandmarkType.rightHip]!;
-
-      //Draw body
-      canvas.drawLine(
-          Offset(translateX(leftHip.x, rotation, size, absoluteImageSize),
-              translateY(leftHip.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(leftShoulder.x, rotation, size, absoluteImageSize),
-              translateY(leftShoulder.y, rotation, size, absoluteImageSize)),
-          leftPaint);
-
-      canvas.drawLine(
-          Offset(translateX(rightHip.x, rotation, size, absoluteImageSize),
-              translateY(rightHip.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(rightShoulder.x, rotation, size, absoluteImageSize),
-              translateY(rightShoulder.y, rotation, size, absoluteImageSize)),
-          rightPaint);
+      void paintLine(
+          PoseLandmarkType type1, PoseLandmarkType type2, Paint paintType) {
+        PoseLandmark joint1 = pose.landmarks[type1]!;
+        PoseLandmark joint2 = pose.landmarks[type2]!;
+        canvas.drawLine(
+            Offset(translateX(joint1.x, rotation, size, absoluteImageSize),
+                translateY(joint1.y, rotation, size, absoluteImageSize)),
+            Offset(translateX(joint2.x, rotation, size, absoluteImageSize),
+                translateY(joint2.y, rotation, size, absoluteImageSize)),
+            paintType);
+      }
 
       //Draw arms
-      canvas.drawLine(
-          Offset(translateX(leftElbow.x, rotation, size, absoluteImageSize),
-              translateY(leftElbow.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(leftWrist.x, rotation, size, absoluteImageSize),
-              translateY(leftWrist.y, rotation, size, absoluteImageSize)),
-          leftPaint);
-
-      canvas.drawLine(
-          Offset(translateX(leftElbow.x, rotation, size, absoluteImageSize),
-              translateY(leftElbow.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(leftShoulder.x, rotation, size, absoluteImageSize),
-              translateY(leftShoulder.y, rotation, size, absoluteImageSize)),
-          leftPaint);
-
-      canvas.drawLine(
-          Offset(translateX(rightElbow.x, rotation, size, absoluteImageSize),
-              translateY(rightElbow.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(rightWrist.x, rotation, size, absoluteImageSize),
-              translateY(rightWrist.y, rotation, size, absoluteImageSize)),
+      paintLine(
+          PoseLandmarkType.leftShoulder, PoseLandmarkType.leftElbow, leftPaint);
+      paintLine(
+          PoseLandmarkType.leftElbow, PoseLandmarkType.leftWrist, leftPaint);
+      paintLine(PoseLandmarkType.rightShoulder, PoseLandmarkType.rightElbow,
           rightPaint);
-      canvas.drawLine(
-          Offset(translateX(rightElbow.x, rotation, size, absoluteImageSize),
-              translateY(rightElbow.y, rotation, size, absoluteImageSize)),
-          Offset(translateX(rightShoulder.x, rotation, size, absoluteImageSize),
-              translateY(rightShoulder.y, rotation, size, absoluteImageSize)),
+      paintLine(
+          PoseLandmarkType.rightElbow, PoseLandmarkType.rightWrist, rightPaint);
+
+      //Draw Body
+      paintLine(
+          PoseLandmarkType.leftShoulder, PoseLandmarkType.leftHip, leftPaint);
+      paintLine(PoseLandmarkType.rightShoulder, PoseLandmarkType.rightHip,
           rightPaint);
+
+      //Draw legs
+      paintLine(
+          PoseLandmarkType.leftHip, PoseLandmarkType.leftAnkle, leftPaint);
+      paintLine(
+          PoseLandmarkType.rightHip, PoseLandmarkType.rightAnkle, rightPaint);
     });
   }
 
