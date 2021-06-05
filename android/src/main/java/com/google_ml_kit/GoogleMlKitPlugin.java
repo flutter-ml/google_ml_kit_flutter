@@ -1,4 +1,4 @@
-package com.b.biradar.google_ml_kit;
+package com.google_ml_kit;
 
 import androidx.annotation.NonNull;
 

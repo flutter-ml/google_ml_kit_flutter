@@ -1,14 +1,11 @@
-package com.b.biradar.google_ml_kit.vision;
+package com.google_ml_kit.vision;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.label.ImageLabel;
@@ -16,8 +13,9 @@ import com.google.mlkit.vision.label.ImageLabeler;
 import com.google.mlkit.vision.label.ImageLabeling;
 import com.google.mlkit.vision.label.automl.AutoMLImageLabelerLocalModel;
 import com.google.mlkit.vision.label.automl.AutoMLImageLabelerOptions;
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;

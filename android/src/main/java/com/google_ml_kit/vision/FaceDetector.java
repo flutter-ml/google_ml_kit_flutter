@@ -1,15 +1,19 @@
-package com.b.biradar.google_ml_kit.vision;
+package com.google_ml_kit.vision;
 
 import android.content.Context;
 import android.graphics.PointF;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceContour;
+import com.google.mlkit.vision.face.FaceDetection;
+import com.google.mlkit.vision.face.FaceDetectorOptions;
+import com.google.mlkit.vision.face.FaceLandmark;
+import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,12 +23,6 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-
-import com.google.mlkit.vision.face.Face;
-import com.google.mlkit.vision.face.FaceContour;
-import com.google.mlkit.vision.face.FaceDetection;
-import com.google.mlkit.vision.face.FaceDetectorOptions;
-import com.google.mlkit.vision.face.FaceLandmark;
 
 public class FaceDetector implements ApiDetectorInterface {
     private static final String START = "vision#startFaceDetector";

@@ -1,16 +1,14 @@
-package com.b.biradar.google_ml_kit.nl;
+package com.google_ml_kit.nl;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.mlkit.nl.languageid.IdentifiedLanguage;
 import com.google.mlkit.nl.languageid.LanguageIdentification;
 import com.google.mlkit.nl.languageid.LanguageIdentificationOptions;
 import com.google.mlkit.nl.languageid.LanguageIdentifier;
+import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;

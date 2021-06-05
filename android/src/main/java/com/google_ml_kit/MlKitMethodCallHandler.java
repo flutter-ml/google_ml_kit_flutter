@@ -1,21 +1,21 @@
-package com.b.biradar.google_ml_kit;
+package com.google_ml_kit;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.nl.EntityExtractor;
-import com.b.biradar.google_ml_kit.nl.EntityModelManager;
-import com.b.biradar.google_ml_kit.nl.LanguageDetector;
-import com.b.biradar.google_ml_kit.nl.OnDeviceTranslator;
-import com.b.biradar.google_ml_kit.nl.SmartReply;
-import com.b.biradar.google_ml_kit.nl.TranslatorModelManager;
-import com.b.biradar.google_ml_kit.vision.BarcodeDetector;
-import com.b.biradar.google_ml_kit.vision.FaceDetector;
-import com.b.biradar.google_ml_kit.vision.ImageLabelDetector;
-import com.b.biradar.google_ml_kit.vision.DigitalInkRecogniser;
-import com.b.biradar.google_ml_kit.vision.PoseDetector;
-import com.b.biradar.google_ml_kit.vision.TextDetector;
+import com.google_ml_kit.nl.EntityExtractor;
+import com.google_ml_kit.nl.EntityModelManager;
+import com.google_ml_kit.nl.LanguageDetector;
+import com.google_ml_kit.nl.OnDeviceTranslator;
+import com.google_ml_kit.nl.SmartReply;
+import com.google_ml_kit.nl.TranslatorModelManager;
+import com.google_ml_kit.vision.BarcodeDetector;
+import com.google_ml_kit.vision.DigitalInkRecogniser;
+import com.google_ml_kit.vision.FaceDetector;
+import com.google_ml_kit.vision.ImageLabelDetector;
+import com.google_ml_kit.vision.PoseDetector;
+import com.google_ml_kit.vision.TextDetector;
 
 import java.util.ArrayList;
 import java.util.Arrays;

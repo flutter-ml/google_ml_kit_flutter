@@ -1,14 +1,10 @@
-package com.b.biradar.google_ml_kit.vision;
+package com.google_ml_kit.vision;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-import com.b.biradar.google_ml_kit.GenericModelManager;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
@@ -18,6 +14,8 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
 import com.google.mlkit.vision.digitalink.RecognitionCandidate;
 import com.google.mlkit.vision.digitalink.RecognitionResult;
+import com.google_ml_kit.ApiDetectorInterface;
+import com.google_ml_kit.GenericModelManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

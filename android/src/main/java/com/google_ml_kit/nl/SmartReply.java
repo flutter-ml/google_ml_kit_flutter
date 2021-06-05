@@ -1,14 +1,14 @@
-package com.b.biradar.google_ml_kit.nl;
+package com.google_ml_kit.nl;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.nl.smartreply.SmartReplyGenerator;
 import com.google.mlkit.nl.smartreply.SmartReplySuggestion;
 import com.google.mlkit.nl.smartreply.SmartReplySuggestionResult;
 import com.google.mlkit.nl.smartreply.TextMessage;
+import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;

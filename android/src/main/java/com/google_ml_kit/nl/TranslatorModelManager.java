@@ -1,15 +1,13 @@
-package com.b.biradar.google_ml_kit.nl;
+package com.google_ml_kit.nl;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-import com.b.biradar.google_ml_kit.GenericModelManager;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.mlkit.common.model.DownloadConditions;
-import com.google.mlkit.nl.entityextraction.EntityExtractionRemoteModel;
+import com.google.mlkit.nl.translate.TranslateRemoteModel;
+import com.google_ml_kit.ApiDetectorInterface;
+import com.google_ml_kit.GenericModelManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,10 +17,10 @@ import java.util.Set;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class EntityModelManager implements ApiDetectorInterface {
-    private static final String START = "nlp#startEntityModelManager";
+public class TranslatorModelManager implements ApiDetectorInterface {
+    private static final String START = "nlp#startLanguageModelManager";
 
-    private final GenericModelManager genericModelManager = new GenericModelManager();
+    GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
     public List<String> getMethodsKeys() {
@@ -34,13 +32,13 @@ public class EntityModelManager implements ApiDetectorInterface {
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
         if (method.equals(START)) {
-            startEntityModelManager(call, result);
+            startLanguageModelManager(call, result);
         } else {
             result.notImplemented();
         }
     }
 
-    private void startEntityModelManager(MethodCall call, final MethodChannel.Result result) {
+    private void startLanguageModelManager(MethodCall call, final MethodChannel.Result result) {
         String task = (String) call.argument("task");
         switch (task) {
             case "download":
@@ -53,8 +51,8 @@ public class EntityModelManager implements ApiDetectorInterface {
                 getDownloadedModels(result);
                 break;
             case "check":
-                EntityExtractionRemoteModel model =
-                        new EntityExtractionRemoteModel.Builder((String) call.argument("model")).build();
+                TranslateRemoteModel model = 
+                        new TranslateRemoteModel.Builder((String) call.argument("model")).build();
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);
                 else result.error("error", null, null);
@@ -65,12 +63,12 @@ public class EntityModelManager implements ApiDetectorInterface {
     }
 
     private void getDownloadedModels(final MethodChannel.Result result) {
-        genericModelManager.remoteModelManager.getDownloadedModels(EntityExtractionRemoteModel.class).addOnSuccessListener(new OnSuccessListener<Set<EntityExtractionRemoteModel>>() {
+        genericModelManager.remoteModelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(new OnSuccessListener<Set<TranslateRemoteModel>>() {
             @Override
-            public void onSuccess(@NonNull Set<EntityExtractionRemoteModel> entityExtractionRemoteModels) {
+            public void onSuccess(@NonNull Set<TranslateRemoteModel> translateRemoteModels) {
                 List<String> downloadedModels = new ArrayList<>();
-                for (EntityExtractionRemoteModel entityRemoteModel : entityExtractionRemoteModels) {
-                    downloadedModels.add(entityRemoteModel.getModelIdentifier());
+                for (TranslateRemoteModel translateRemoteModel : translateRemoteModels) {
+                    downloadedModels.add(translateRemoteModel.getLanguage());
                 }
                 result.success(downloadedModels);
             }
@@ -82,18 +80,18 @@ public class EntityModelManager implements ApiDetectorInterface {
         });
     }
 
-    private void downloadModel(final MethodChannel.Result result, String language, boolean isWifiReqRequired) {
-        EntityExtractionRemoteModel downloadModel = new EntityExtractionRemoteModel.Builder(language).build();
+    private void downloadModel(final MethodChannel.Result result, String languageCode, boolean isWifiReqRequired) {
+        TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
         DownloadConditions downloadConditions;
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
         else
             downloadConditions = new DownloadConditions.Builder().build();
-        genericModelManager.downloadModel(downloadModel, downloadConditions, result);
+        genericModelManager.downloadModel(model, downloadConditions, result);
     }
 
     private void deleteModel(final MethodChannel.Result result, String languageCode) {
-        EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(languageCode).build();
+        TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
         genericModelManager.deleteModel(model, result);
     }
 }

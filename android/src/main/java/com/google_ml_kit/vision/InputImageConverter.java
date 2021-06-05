@@ -1,4 +1,4 @@
-package com.b.biradar.google_ml_kit.vision;
+package com.google_ml_kit.vision;
 
 import android.content.Context;
 import android.net.Uri;

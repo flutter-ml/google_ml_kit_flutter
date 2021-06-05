@@ -1,4 +1,4 @@
-package com.b.biradar.google_ml_kit.vision;
+package com.google_ml_kit.vision;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -6,15 +6,13 @@ import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
 
-import com.b.biradar.google_ml_kit.ApiDetectorInterface;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
+import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
-import com.google.mlkit.vision.common.InputImage;
+import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
