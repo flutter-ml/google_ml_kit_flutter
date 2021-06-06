@@ -14,6 +14,7 @@ import com.google_ml_kit.vision.BarcodeDetector;
 import com.google_ml_kit.vision.DigitalInkRecogniser;
 import com.google_ml_kit.vision.FaceDetector;
 import com.google_ml_kit.vision.ImageLabelDetector;
+import com.google_ml_kit.vision.ObjectDetector;
 import com.google_ml_kit.vision.PoseDetector;
 import com.google_ml_kit.vision.TextDetector;
 
@@ -39,6 +40,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         new ImageLabelDetector(context),
                         new PoseDetector(context),
                         new TextDetector(context),
+                        new ObjectDetector(context),
                         new EntityExtractor(),
                         new EntityModelManager(),
                         new LanguageDetector(),

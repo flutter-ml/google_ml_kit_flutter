@@ -47,7 +47,7 @@ class FaceDetector {
   bool _hasBeenOpened = false;
   bool _isClosed = false;
 
-  // Detects faces in the input image.
+  /// Detects faces in the input image.
   Future<List<Face>> processImage(InputImage inputImage) async {
     _hasBeenOpened = true;
 
