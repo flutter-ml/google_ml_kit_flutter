@@ -42,10 +42,9 @@ abstract class ObjectDetectorOptionsBase {
 
 ///Options to configure the detector while using with base model.
 class ObjectDetectorOptions extends ObjectDetectorOptionsBase {
-  
-  ///Determines whether to coarsely classify detected objects. 
+  ///Determines whether to coarsely classify detected objects.
   final bool classifyObjects;
-  
+
   ///Determines whether to track objects or not.
   final bool trackMutipleObjects;
 
@@ -63,11 +62,10 @@ class ObjectDetectorOptions extends ObjectDetectorOptionsBase {
 
 ///Options to configure the detector while using custom models.
 class CustomObjectDetectorOptions extends ObjectDetectorOptionsBase {
-
-  ///Determines whether to coarsely classify detected objects. 
+  ///Determines whether to coarsely classify detected objects.
   final bool classifyObjects;
 
-   ///Determines whether to track objects or not.
+  ///Determines whether to track objects or not.
   final bool trackMutipleObjects;
 
   final CustomModel _customModel;
@@ -93,7 +91,7 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptionsBase {
         'modelPath': _customModel.modelIdentifier,
         'threshold': confidenceThreshold,
         'maxLabels': maximumLabelsPerObject,
-        'modelType' : _customModel.modelType,   
+        'modelType': _customModel.modelType,
       };
 }
 
@@ -152,8 +150,7 @@ class Label {
 }
 
 ///Abstract class to serve as base for [LocalModel] and [RemoteModel].
-abstract class CustomModel{
-  
+abstract class CustomModel {
   ///For [LocalModel] this will refer to the path of local model.
   ///For [RemoteModel] this will refer to the name of hosted model.
   final String modelIdentifier;
@@ -162,17 +159,16 @@ abstract class CustomModel{
 
   CustomModel(this.modelIdentifier);
 }
-class LocalModel extends CustomModel{
 
+class LocalModel extends CustomModel {
   ///Constructor for [LocalModel]. Takes the model path relative to assets path(Android).
   LocalModel(String modelPath) : super(modelPath);
 
   @override
-  final String modelType = 'local'; 
+  final String modelType = 'local';
 }
 
-class RemoteModel extends CustomModel{
-
+class RemoteModel extends CustomModel {
   ///Constructor for [RemoteModel]. Takes the model name.
   RemoteModel(String modelName) : super(modelName);
 
@@ -184,7 +180,7 @@ class ObjectRemoteModelManager {
   Future<bool> isModelDownloaded(String modelName) async {
     final result = await Vision.channel.invokeMethod(
         'vision#startObjectModelManager',
-        <String, dynamic>{"task": "check", "modelName": modelName});
+        <String, dynamic>{"task": "check", "model": modelName});
     return result as bool;
   }
 
@@ -211,20 +207,5 @@ class ObjectRemoteModelManager {
       "model": modelTag,
     });
     return result.toString();
-  }
-
-  /// Returns a list of all downloaded models.
-  Future<List<String>> getAvailableModels() async {
-    final result = await Vision.channel
-        .invokeMethod("vision#startObjectModelManagerr", <String, dynamic>{
-      "task": "getModels",
-    });
-
-    var _models = <String>[];
-
-    for (dynamic data in result) {
-      _models.add(data.toString());
-    }
-    return _models;
   }
 }

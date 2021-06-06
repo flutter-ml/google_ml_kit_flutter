@@ -15,14 +15,11 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   late ObjectDetector objectDetector;
 
   @override
-  void initState() { 
+  void initState() {
     objectDetector = GoogleMlKit.vision.objectDetector(
-      CustomObjectDetectorOptions(model,
-      trackMutipleObjects: true,
-      classifyObjects: true)
-    );
+        CustomObjectDetectorOptions(model,
+            trackMutipleObjects: true, classifyObjects: true));
     super.initState();
-    
   }
 
   bool isBusy = false;
@@ -52,7 +49,8 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     final result = await objectDetector.processImage(inputImage);
     print(result);
     if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null && result.length>0) {
+        inputImage.inputImageData?.imageRotation != null &&
+        result.length > 0) {
       final painter = ObjectDetectorPainter(
           result,
           inputImage.inputImageData!.imageRotation,

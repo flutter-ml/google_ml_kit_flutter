@@ -7,8 +7,8 @@ import 'dart:ui' as ui;
 
 import 'coordinates_translator.dart';
 
-class ObjectDetectorPainter extends CustomPainter{
-  ObjectDetectorPainter(this._objects,this.rotation,this.absoluteSize);
+class ObjectDetectorPainter extends CustomPainter {
+  ObjectDetectorPainter(this._objects, this.rotation, this.absoluteSize);
 
   final List<DetectedObject> _objects;
   final Size absoluteSize;
@@ -16,14 +16,14 @@ class ObjectDetectorPainter extends CustomPainter{
 
   @override
   void paint(Canvas canvas, Size size) {
-     final Paint paint = Paint()
+    final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
       ..color = Colors.lightGreenAccent;
 
     final Paint background = Paint()..color = Color(0x99000000);
 
-    for(DetectedObject detectedObject in _objects){
+    for (DetectedObject detectedObject in _objects) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
             textAlign: TextAlign.left,
@@ -33,21 +33,21 @@ class ObjectDetectorPainter extends CustomPainter{
       builder.pushStyle(
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
 
-      for(Label label in detectedObject.getLabels()){
+      for (Label label in detectedObject.getLabels()) {
         builder.addText('${label.getText()} ${label.getConfidence()}\n');
       }
 
       builder.pop();
 
-      final left =
-          translateX(detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
-      final top =
-          translateY(detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
-      final right =
-          translateX(detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
-      final bottom =
-          translateY(detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
-      
+      final left = translateX(
+          detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
+      final top = translateY(
+          detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
+      final right = translateX(
+          detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
+      final bottom = translateY(
+          detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
+
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),
         paint,
@@ -62,10 +62,9 @@ class ObjectDetectorPainter extends CustomPainter{
       );
     }
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
-
 }

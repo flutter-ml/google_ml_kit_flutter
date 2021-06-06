@@ -49,12 +49,11 @@ public class ObjectModelManager implements ApiDetectorInterface {
             case "delete":
                 deleteModel(result, (String) call.argument("model"));
                 break;
-            case "getModels":
-                getAvailableModels(result);
-                break;
             case "check":
-                EntityExtractionRemoteModel model =
-                        new EntityExtractionRemoteModel.Builder((String) call.argument("model")).build();
+                CustomRemoteModel model =
+                        new CustomRemoteModel.Builder(
+                            new FirebaseModelSource.Builder((String) call.argument("model")).build()
+                        ).build();
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);
                 else result.error("error", null, null);
@@ -83,26 +82,5 @@ public class ObjectModelManager implements ApiDetectorInterface {
         ).build();
 
         genericModelManager.deleteModel(deleteModel, result);
-    }
-
-    private void getAvailableModels(final MethodChannel.Result result) {
-        genericModelManager.remoteModelManager.getDownloadedModels(CustomRemoteModel.class)
-                .addOnSuccessListener(new OnSuccessListener<Set<CustomRemoteModel>>() {
-                    @Override
-                    public void onSuccess(@NonNull Set<CustomRemoteModel> customRemoteModels) {
-                        List<String> downloadedModels = new ArrayList<>();
-                        for (CustomRemoteModel remoteModel : customRemoteModels) {
-                            if (remoteModel.getModelName() != null)
-                                downloadedModels.add(remoteModel.getModelName());
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        result.error("Error getting downloaded models", e.toString(), null);
-                    }
-                });
-
     }
 }
