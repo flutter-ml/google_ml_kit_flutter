@@ -123,8 +123,8 @@ class Vision {
   }
 
   ///Returns an instance of [ObjectDetector].
-  ObjectDetector objectDetector([ObjectDetectorOptions? options]){
-    return ObjectDetector._(options?? ObjectDetectorOptions());
+  ObjectDetector objectDetector(ObjectDetectorOptionsBase options){
+    return ObjectDetector._(options);
   }
 }
 

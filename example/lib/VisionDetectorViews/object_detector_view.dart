@@ -11,11 +11,19 @@ class ObjectDetectorView extends StatefulWidget {
 }
 
 class _ObjectDetectorView extends State<ObjectDetectorView> {
-  ObjectDetector objectDetector =
-      GoogleMlKit.vision.objectDetector(ObjectDetectorOptions(
-    trackMutipleObjects: true,
-    classifyObjects: true,
-  ));
+  LocalModel model = LocalModel("object_labeler.tflite");
+  late ObjectDetector objectDetector;
+
+  @override
+  void initState() { 
+    objectDetector = GoogleMlKit.vision.objectDetector(
+      CustomObjectDetectorOptions(model,
+      trackMutipleObjects: true,
+      classifyObjects: true)
+    );
+    super.initState();
+    
+  }
 
   bool isBusy = false;
   CustomPaint? customPaint;

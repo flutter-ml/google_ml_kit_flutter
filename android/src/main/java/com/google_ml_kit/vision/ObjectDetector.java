@@ -1,7 +1,6 @@
 package com.google_ml_kit.vision;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -9,9 +8,13 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.CustomRemoteModel;
+import com.google.mlkit.common.model.LocalModel;
+import com.google.mlkit.linkfirebase.FirebaseModelSource;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.objects.DetectedObject;
 import com.google.mlkit.vision.objects.ObjectDetection;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
 import com.google_ml_kit.ApiDetectorInterface;
 
@@ -28,6 +31,7 @@ public class ObjectDetector implements ApiDetectorInterface {
     private static final String START = "vision#startObjectDetector";
     private static final String CLOSE = "vision#closeObjectDetector";
 
+    private boolean customModel;
     private final Context context;
     private com.google.mlkit.vision.objects.ObjectDetector objectDetector;
 
@@ -55,7 +59,8 @@ public class ObjectDetector implements ApiDetectorInterface {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
 
         if (inputImage == null) return;
-        if (objectDetector == null)
+        if (objectDetector == null ||
+                customModel != (boolean) ((Map<String, Object>) call.argument("options")).get("custom"))
             initiateDetector((Map<String, Object>) call.argument("options"));
 
         objectDetector.process(inputImage).addOnSuccessListener(new OnSuccessListener<List<DetectedObject>>() {
@@ -86,6 +91,54 @@ public class ObjectDetector implements ApiDetectorInterface {
     }
 
     private void initiateDetector(Map<String, Object> options) {
+        boolean customModelTemp = (boolean) options.get("custom");
+        close();
+        if(customModelTemp) initiateCustomDetector(options);
+        else initiateBaseDetector(options);
+
+        customModel = customModelTemp;
+    }
+
+    private void initiateCustomDetector(Map<String, Object> options){
+        String modelPath = (String) options.get("modelPath");
+        CustomObjectDetectorOptions customObjectDetectorOptions;
+        CustomObjectDetectorOptions.Builder builder;
+
+        if(((String) options.get("modelType")).equals("local")){
+            LocalModel localModel = new LocalModel.Builder()
+                    .setAssetFilePath(modelPath).build();
+
+            builder = new CustomObjectDetectorOptions.Builder(localModel)
+                    .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE);
+        }else{
+            CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(
+                    new FirebaseModelSource.Builder(modelPath).build()
+            ).build();
+
+            builder = new CustomObjectDetectorOptions.Builder(remoteModel)
+                    .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE);
+        }
+
+
+        boolean classify = (boolean) options.get("classify");
+        boolean multipleObjects = (boolean) options.get("multiple");
+        double classificationThreshold = (double) options.get("threshold");
+        int maxLabels = (int) options.get("maxLabels");
+
+
+
+        if(classify) {
+            builder.enableClassification();
+            builder.setMaxPerObjectLabelCount(maxLabels);
+        }
+        if(multipleObjects) builder.enableMultipleObjects();
+        builder.setClassificationConfidenceThreshold((float) classificationThreshold);
+
+        customObjectDetectorOptions = builder.build();
+        objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
+    }
+
+    private void initiateBaseDetector(Map<String, Object> options){
         ObjectDetectorOptions objectDetectorOptions;
         ObjectDetectorOptions.Builder builder = new ObjectDetectorOptions.Builder()
                 .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE);
@@ -134,6 +187,7 @@ public class ObjectDetector implements ApiDetectorInterface {
     }
 
     private void close() {
+        if(objectDetector==null) return;
         objectDetector.close();
         objectDetector = null;
     }

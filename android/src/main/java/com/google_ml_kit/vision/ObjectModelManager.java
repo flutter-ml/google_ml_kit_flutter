@@ -1,10 +1,12 @@
-package com.google_ml_kit.nl;
+package com.google_ml_kit.vision;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.CustomRemoteModel;
 import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.linkfirebase.FirebaseModelSource;
 import com.google.mlkit.nl.entityextraction.EntityExtractionRemoteModel;
 import com.google_ml_kit.ApiDetectorInterface;
 import com.google_ml_kit.GenericModelManager;
@@ -17,9 +19,8 @@ import java.util.Set;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class EntityModelManager implements ApiDetectorInterface {
-    private static final String START = "nlp#startEntityModelManager";
-
+public class ObjectModelManager implements ApiDetectorInterface {
+    private static final String START = "vision#startObjectModelManager";
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
@@ -32,14 +33,15 @@ public class EntityModelManager implements ApiDetectorInterface {
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
         if (method.equals(START)) {
-            startEntityModelManager(call, result);
+            handleCall(call, result);
         } else {
             result.notImplemented();
         }
     }
 
-    private void startEntityModelManager(MethodCall call, final MethodChannel.Result result) {
+    private void handleCall(MethodCall call, final MethodChannel.Result result) {
         String task = (String) call.argument("task");
+
         switch (task) {
             case "download":
                 downloadModel(result, (String) call.argument("model"), (boolean) call.argument("wifi"));
@@ -48,7 +50,7 @@ public class EntityModelManager implements ApiDetectorInterface {
                 deleteModel(result, (String) call.argument("model"));
                 break;
             case "getModels":
-                getDownloadedModels(result);
+                getAvailableModels(result);
                 break;
             case "check":
                 EntityExtractionRemoteModel model =
@@ -62,27 +64,11 @@ public class EntityModelManager implements ApiDetectorInterface {
         }
     }
 
-    private void getDownloadedModels(final MethodChannel.Result result) {
-        genericModelManager.remoteModelManager.getDownloadedModels(EntityExtractionRemoteModel.class)
-                .addOnSuccessListener(new OnSuccessListener<Set<EntityExtractionRemoteModel>>() {
-                    @Override
-                    public void onSuccess(@NonNull Set<EntityExtractionRemoteModel> entityExtractionRemoteModels) {
-                        List<String> downloadedModels = new ArrayList<>();
-                        for (EntityExtractionRemoteModel entityRemoteModel : entityExtractionRemoteModels) {
-                            downloadedModels.add(entityRemoteModel.getModelIdentifier());
-                        }
-                        result.success(downloadedModels);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                result.error("Error getting downloaded models", e.toString(), null);
-            }
-        });
-    }
+    private void downloadModel(final MethodChannel.Result result, String modelName, boolean isWifiReqRequired) {
+        CustomRemoteModel downloadModel = new CustomRemoteModel.Builder(
+                new FirebaseModelSource.Builder(modelName).build()
+        ).build();
 
-    private void downloadModel(final MethodChannel.Result result, String language, boolean isWifiReqRequired) {
-        EntityExtractionRemoteModel downloadModel = new EntityExtractionRemoteModel.Builder(language).build();
         DownloadConditions downloadConditions;
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
@@ -91,8 +77,32 @@ public class EntityModelManager implements ApiDetectorInterface {
         genericModelManager.downloadModel(downloadModel, downloadConditions, result);
     }
 
-    private void deleteModel(final MethodChannel.Result result, String languageCode) {
-        EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(languageCode).build();
-        genericModelManager.deleteModel(model, result);
+    private void deleteModel(final MethodChannel.Result result, String modelName) {
+        CustomRemoteModel deleteModel = new CustomRemoteModel.Builder(
+                new FirebaseModelSource.Builder(modelName).build()
+        ).build();
+
+        genericModelManager.deleteModel(deleteModel, result);
+    }
+
+    private void getAvailableModels(final MethodChannel.Result result) {
+        genericModelManager.remoteModelManager.getDownloadedModels(CustomRemoteModel.class)
+                .addOnSuccessListener(new OnSuccessListener<Set<CustomRemoteModel>>() {
+                    @Override
+                    public void onSuccess(@NonNull Set<CustomRemoteModel> customRemoteModels) {
+                        List<String> downloadedModels = new ArrayList<>();
+                        for (CustomRemoteModel remoteModel : customRemoteModels) {
+                            if (remoteModel.getModelName() != null)
+                                downloadedModels.add(remoteModel.getModelName());
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        result.error("Error getting downloaded models", e.toString(), null);
+                    }
+                });
+
     }
 }

@@ -16,7 +16,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
-|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | yet     | yet |
+|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | ✅     | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | ✅  |
 
 ### Natural Language
@@ -119,6 +119,7 @@ final faceDetector = GoogleMlKit.vision.faceDetector();
 final imageLabeler = GoogleMlKit.vision.imageLabeler();
 final poseDetector = GoogleMlKit.vision.poseDetector();
 final textDetector = GoogleMlKit.vision.textDetector();
+final objectDetector = GoogleMlKit.vision.objectDetector(CustomObjectDetectorOptions or ObjectDetectorOptions);
 
 // nl
 final entityExtractor = GoogleMlKit.nlp.entityExtractor();
@@ -139,6 +140,7 @@ final List<Face> faces = await faceDetector.processImage(inputImage);
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
 final List<Pose> poses = await poseDetector.processImage(inputImage);
 final RecognisedText recognisedText = await textDetector.processImage(inputImage);
+final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
 
 // nl
 final List<EntityAnnotation> entities = await entityExtractor.extractEntities(text, filters, locale, timezone);
@@ -276,6 +278,19 @@ int status = result['status'];
 List<SmartReplySuggestion> suggestions = result['suggestions'];
 ```
 
+h. Extract Objects
+
+```dart
+for(DetectedObject detectedObject in _objects){
+  final rect = detectedObject.getBoundinBox();
+  final trackingId = detectedObject.getTrackingId();
+
+  for(Label label in detectedObject.getLabels()){
+    print('${label.getText()} ${label.getConfidence()}');
+  }
+}
+```
+
 #### 5. Release resources with `close()`.
 
 ```dart
@@ -286,6 +301,7 @@ faceDetector.close();
 imageLabeler.close();
 poseDetector.close();
 textDetector.close();
+objectDetector.close();
 
 // nl
 entityExtractor.close();

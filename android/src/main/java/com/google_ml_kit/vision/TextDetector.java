@@ -12,6 +12,7 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.TextRecognizerOptions;
 import com.google_ml_kit.ApiDetectorInterface;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class TextDetector implements ApiDetectorInterface {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        if(textRecognizer == null) textRecognizer = TextRecognition.getClient();
+        if(textRecognizer == null) textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
         textRecognizer.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<Text>() {

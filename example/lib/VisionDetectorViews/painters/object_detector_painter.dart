@@ -8,10 +8,10 @@ import 'dart:ui' as ui;
 import 'coordinates_translator.dart';
 
 class ObjectDetectorPainter extends CustomPainter{
-  ObjectDetectorPainter(this._objects,this.rotation,this.size);
+  ObjectDetectorPainter(this._objects,this.rotation,this.absoluteSize);
 
   final List<DetectedObject> _objects;
-  final Size size;
+  final Size absoluteSize;
   final InputImageRotation rotation;
 
   @override
@@ -34,19 +34,19 @@ class ObjectDetectorPainter extends CustomPainter{
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
 
       for(Label label in detectedObject.getLabels()){
-        builder.addText('${label.getText()} ${label.getConfidence()}');
+        builder.addText('${label.getText()} ${label.getConfidence()}\n');
       }
 
       builder.pop();
 
       final left =
-          translateX(detectedObject.getBoundinBox().left, rotation, size, size);
+          translateX(detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
       final top =
-          translateY(detectedObject.getBoundinBox().top, rotation, size, size);
+          translateY(detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
       final right =
-          translateX(detectedObject.getBoundinBox().right, rotation, size, size);
+          translateX(detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
       final bottom =
-          translateY(detectedObject.getBoundinBox().bottom, rotation, size, size);
+          translateY(detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
       
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),
