@@ -9,12 +9,12 @@ part of 'vision.dart';
 class TextDetector {
   TextDetector._();
 
-  bool _isOpened = false;
+  bool _hasBeenOpened = false;
   bool _isClosed = false;
 
   /// Function that takes [InputImage] processes it and returns a [RecognisedText] object.
   Future<RecognisedText> processImage(InputImage inputImage) async {
-    _isOpened = true;
+    _hasBeenOpened = true;
     final result = await Vision.channel.invokeMethod('vision#startTextDetector',
         <String, dynamic>{'imageData': inputImage._getImageData()});
 
@@ -24,11 +24,10 @@ class TextDetector {
   }
 
   Future<void> close() async {
-    if (!_isClosed && _isOpened) {
-      await Vision.channel.invokeMethod('vision#closeTextDetector');
-      _isClosed = true;
-      _isOpened = false;
-    }
+    if (!_hasBeenOpened) _isClosed = true;
+    if (_isClosed) return Future<void>.value();
+    _isClosed = true;
+    return Vision.channel.invokeMethod('vision#closeTextDetector');
   }
 }
 

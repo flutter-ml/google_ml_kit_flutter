@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:google_ml_kit_example/NlpDetectorViews/entity_extraction_view.dart';
 import 'package:google_ml_kit_example/NlpDetectorViews/language_translator_view.dart';
 import 'package:google_ml_kit_example/NlpDetectorViews/smart_reply_view.dart';
+import 'package:google_ml_kit_example/VisionDetectorViews/object_detector_view.dart';
 
 import 'NlpDetectorViews/language_identifier_view.dart';
 import 'VisionDetectorViews/detector_views.dart';
@@ -76,6 +77,10 @@ class Home extends StatelessWidget {
                         'Text Detector',
                         TextDetectorView(),
                         featureCompleted: true,
+                      ),
+                      CustomCard(
+                        'Object Detector',
+                        ObjectDetectorView(),
                       ),
                     ],
                   ),

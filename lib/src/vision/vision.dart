@@ -17,6 +17,8 @@ part 'pose_detector.dart';
 
 part 'text_detector.dart';
 
+part 'object_detector.dart';
+
 // To indicate the format of image while creating input image from bytes
 enum InputImageFormat { NV21, YV12, YUV_420_888, YUV420, BGRA8888 }
 
@@ -118,6 +120,11 @@ class Vision {
   ///Return an instance of [FaceDetector].
   FaceDetector faceDetector([FaceDetectorOptions? options]) {
     return FaceDetector._(options ?? const FaceDetectorOptions());
+  }
+
+  ///Returns an instance of [ObjectDetector].
+  ObjectDetector objectDetector(ObjectDetectorOptionsBase options) {
+    return ObjectDetector._(options);
   }
 }
 
