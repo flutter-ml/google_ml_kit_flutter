@@ -79,7 +79,8 @@
     NSString *modelType = optionsData[@"customModel"];
     NSString *path = optionsData[@"path"];
     NSNumber *conf = optionsData[@"confidenceThreshold"];
-    MLKLocalModel *localModel;
+    
+    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath: path];
     
     MLKCustomImageLabelerOptions *options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
     options.confidenceThreshold = conf;
