@@ -57,6 +57,7 @@
     [dictionary addEntriesFromDictionary:@{
         @"type" : @(barcode.valueType) ?: [NSNull null],
         @"rawValue" : barcode.rawValue ?: [NSNull null],
+        @"rawBytes" : barcode.rawData ?: [NSNull null],
         @"displayValue" : barcode.displayValue ?: [NSNull null],
         @"boundingBoxLeft" : @(barcode.frame.origin.x),
         @"boundingBoxTop" : @(barcode.frame.origin.y),

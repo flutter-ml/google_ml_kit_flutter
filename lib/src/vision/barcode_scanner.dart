@@ -190,6 +190,11 @@ class BarcodeValue {
   /// Null if nothing found.
   final String? rawValue;
 
+  /// Barcode bytes as encoded in the barcode.
+  ///
+  /// Null if nothing found.
+  final Uint8List? rawBytes;
+
   /// Barcode value in a user-friendly format.
   /// This value may be multiline, for example, when line breaks are encoded into the original TEXT barcode value.
   /// May include the supplement value.
@@ -205,6 +210,7 @@ class BarcodeValue {
   BarcodeValue._fromMap(Map<dynamic, dynamic> barcodeData)
       : type = BarcodeType.values[barcodeData['type']],
         rawValue = barcodeData['rawValue'],
+        rawBytes = barcodeData['rawBytes'],
         displayValue = barcodeData['displayValue'],
         boundingBox = barcodeData['boundingBoxLeft'] != null
             ? Rect.fromLTRB(
