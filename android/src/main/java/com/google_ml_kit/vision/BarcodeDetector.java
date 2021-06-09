@@ -90,6 +90,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
                             int valueType = barcode.getValueType();
                             barcodeMap.put("type", valueType);
                             barcodeMap.put("rawValue", barcode.getRawValue());
+                            barcodeMap.put("rawBytes", barcode.getRawBytes());
                             barcodeMap.put("displayValue", barcode.getDisplayValue());
                             Rect bb = barcode.getBoundingBox();
                             if (bb != null) {
