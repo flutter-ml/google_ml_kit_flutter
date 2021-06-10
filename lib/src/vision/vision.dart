@@ -88,10 +88,9 @@ class Vision {
     return ImageLabeler._(imageLabelerOptions ?? ImageLabelerOptions());
   }
 
-  ///Returns instance of [BarcodeScanner].By default it searches the input image for all [BarcodeFormat]
-  ///To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as arguement
-  ///All the supported formats have been declared as static constants in [Barcode] class
-  BarcodeScanner barcodeScanner([List<int>? formatList]) {
+  ///Returns instance of [BarcodeScanner]. By default it searches the input image for all [BarcodeFormat]s.
+  ///To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as argument.
+  BarcodeScanner barcodeScanner([List<BarcodeFormat>? formatList]) {
     return BarcodeScanner(formats: formatList);
   }
 
