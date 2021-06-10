@@ -185,6 +185,11 @@ class BarcodeValue {
   ///
   final BarcodeType type;
 
+  /// The format (symbology) of the barcode value.
+  ///
+  /// For example, [BarcodeFormat.upca], [BarcodeFormat.code128], [BarcodeFormat.dataMatrix]
+  final int format;
+
   /// Barcode value as it was encoded in the barcode.
   ///
   /// Null if nothing found.
@@ -209,6 +214,7 @@ class BarcodeValue {
 
   BarcodeValue._fromMap(Map<dynamic, dynamic> barcodeData)
       : type = BarcodeType.values[barcodeData['type']],
+        format = barcodeData['format'],
         rawValue = barcodeData['rawValue'],
         rawBytes = barcodeData['rawBytes'],
         displayValue = barcodeData['displayValue'],
