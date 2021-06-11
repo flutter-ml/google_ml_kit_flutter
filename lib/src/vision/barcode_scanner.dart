@@ -6,9 +6,9 @@ part of 'vision.dart';
 /// BarcodeScanner barcodeScanner = GoogleMlKit.instance.barcodeScanner([List of Barcode formats (optional)]);
 class BarcodeScanner {
   //List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
-  final List<int> barcodeFormats;
+  final List<BarcodeFormat> barcodeFormats;
 
-  BarcodeScanner({List<int>? formats})
+  BarcodeScanner({List<BarcodeFormat>? formats})
       : barcodeFormats = formats ?? const [BarcodeFormat.all];
 
   bool _isOpened = false;
@@ -17,9 +17,9 @@ class BarcodeScanner {
   ///Function to process the [InputImage] and returns a list of [Barcode]
   Future<List<Barcode>> processImage(InputImage inputImage) async {
     _isOpened = true;
-    final result = await Vision.channel.invokeMethod(
-        'vision#startBarcodeScanner', <String, dynamic>{
-      'formats': barcodeFormats,
+    final result =
+        await Vision.channel.invokeMethod('vision#startBarcodeScanner', {
+      'formats': barcodeFormats.map((f) => f.value).toList(),
       'imageData': inputImage._getImageData()
     });
 
@@ -42,51 +42,123 @@ class BarcodeScanner {
 }
 
 ///Barcode formats supported by the barcode scanner.
-class BarcodeFormat {
-  /// Barcode format constant representing the union of all supported formats.
-  static const int all = 0xFFFF;
+enum BarcodeFormat {
+  /// Barcode format representing all supported formats.
+  all,
 
   /// Barcode format unknown to the current SDK.
-  static const int unknown = 0;
+  unknown,
 
   /// Barcode format constant for Code 128.
-  static const int code128 = 0x0001;
+  code128,
 
   /// Barcode format constant for Code 39.
-  static const int code39 = 0x0002;
+  code39,
 
   /// Barcode format constant for Code 93.
-  static const int code93 = 0x0004;
+  code93,
 
   /// Barcode format constant for CodaBar.
-  static const int codabar = 0x0008;
+  codabar,
 
   /// Barcode format constant for Data Matrix.
-  static const int dataMatrix = 0x0010;
+  dataMatrix,
 
   /// Barcode format constant for EAN-13.
-  static const int ean13 = 0x0020;
+  ean13,
 
   /// Barcode format constant for EAN-8.
-  static const int ean8 = 0x0040;
+  ean8,
 
   /// Barcode format constant for ITF (Interleaved Two-of-Five).
-  static const int itf = 0x0080;
+  itf,
 
   /// Barcode format constant for QR Code.
-  static const int qrCode = 0x0100;
+  qrCode,
 
   /// Barcode format constant for UPC-A.
-  static const int upca = 0x0200;
+  upca,
 
   /// Barcode format constant for UPC-E.
-  static const int upce = 0x0400;
+  upce,
 
   /// Barcode format constant for PDF-417.
-  static const int pdf417 = 0x0800;
+  pdf417,
 
   /// Barcode format constant for AZTEC.
-  static const int aztec = 0x1000;
+  aztec,
+}
+
+extension _BarcodeFormatValue on BarcodeFormat {
+  static BarcodeFormat of(int value) {
+    switch (value) {
+      case 0xFFFF:
+        return BarcodeFormat.all;
+      case 0x0001:
+        return BarcodeFormat.code128;
+      case 0x0002:
+        return BarcodeFormat.code39;
+      case 0x0004:
+        return BarcodeFormat.code93;
+      case 0x0008:
+        return BarcodeFormat.codabar;
+      case 0x0010:
+        return BarcodeFormat.dataMatrix;
+      case 0x0020:
+        return BarcodeFormat.ean13;
+      case 0x0040:
+        return BarcodeFormat.ean8;
+      case 0x0080:
+        return BarcodeFormat.itf;
+      case 0x0100:
+        return BarcodeFormat.qrCode;
+      case 0x0200:
+        return BarcodeFormat.upca;
+      case 0x0400:
+        return BarcodeFormat.upce;
+      case 0x0800:
+        return BarcodeFormat.pdf417;
+      case 0x1000:
+        return BarcodeFormat.aztec;
+      default:
+        return BarcodeFormat.unknown;
+    }
+  }
+
+  int get value {
+    switch (this) {
+      case BarcodeFormat.all:
+        return 0xFFFF;
+      case BarcodeFormat.unknown:
+        return 0;
+      case BarcodeFormat.code128:
+        return 0x0001;
+      case BarcodeFormat.code39:
+        return 0x0002;
+      case BarcodeFormat.code93:
+        return 0x0004;
+      case BarcodeFormat.codabar:
+        return 0x0008;
+      case BarcodeFormat.dataMatrix:
+        return 0x0010;
+      case BarcodeFormat.ean13:
+        return 0x0020;
+      case BarcodeFormat.ean8:
+        return 0x0040;
+      case BarcodeFormat.itf:
+        return 0x0080;
+      case BarcodeFormat.qrCode:
+        return 0x0100;
+      case BarcodeFormat.upca:
+        return 0x0200;
+      case BarcodeFormat.upce:
+        return 0x0400;
+      case BarcodeFormat.pdf417:
+        return 0x0800;
+      case BarcodeFormat.aztec:
+        return 0x1000;
+    }
+  }
 }
 
 ///All supported Barcode Types.
@@ -185,6 +257,11 @@ class BarcodeValue {
   ///
   final BarcodeType type;
 
+  /// The format (symbology) of the barcode value.
+  ///
+  /// For example, [BarcodeFormat.upca], [BarcodeFormat.code128], [BarcodeFormat.dataMatrix]
+  final BarcodeFormat format;
+
   /// Barcode value as it was encoded in the barcode.
   ///
   /// Null if nothing found.
@@ -209,6 +286,7 @@ class BarcodeValue {
 
   BarcodeValue._fromMap(Map<dynamic, dynamic> barcodeData)
       : type = BarcodeType.values[barcodeData['type']],
+        format = _BarcodeFormatValue.of(barcodeData['format']),
         rawValue = barcodeData['rawValue'],
         rawBytes = barcodeData['rawBytes'],
         displayValue = barcodeData['displayValue'],

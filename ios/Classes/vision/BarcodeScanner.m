@@ -56,6 +56,7 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     [dictionary addEntriesFromDictionary:@{
         @"type" : @(barcode.valueType) ?: [NSNull null],
+        @"format" : @(barcode.format) ?: [NSNull null],
         @"rawValue" : barcode.rawValue ?: [NSNull null],
         @"rawBytes" : barcode.rawData ?: [NSNull null],
         @"displayValue" : barcode.displayValue ?: [NSNull null],
