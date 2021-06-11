@@ -17,11 +17,11 @@ class BarcodeScanner {
   ///Function to process the [InputImage] and returns a list of [Barcode]
   Future<List<Barcode>> processImage(InputImage inputImage) async {
     _isOpened = true;
-    final result = await Vision.channel.invokeMethod(
-        'vision#startBarcodeScanner', {
-          'formats': barcodeFormats.map((f) => f.value).toList(),
-          'imageData': inputImage._getImageData()
-        });
+    final result =
+        await Vision.channel.invokeMethod('vision#startBarcodeScanner', {
+      'formats': barcodeFormats.map((f) => f.value).toList(),
+      'imageData': inputImage._getImageData()
+    });
 
     final barcodesList = <Barcode>[];
     for (dynamic item in result) {
@@ -90,44 +90,73 @@ enum BarcodeFormat {
 }
 
 extension _BarcodeFormatValue on BarcodeFormat {
-
   static BarcodeFormat of(int value) {
-    switch(value) {
-      case 0xFFFF: return BarcodeFormat.all;
-      case 0x0001: return BarcodeFormat.code128;
-      case 0x0002: return BarcodeFormat.code39;
-      case 0x0004: return BarcodeFormat.code93;
-      case 0x0008: return BarcodeFormat.codabar;
-      case 0x0010: return BarcodeFormat.dataMatrix;
-      case 0x0020: return BarcodeFormat.ean13;
-      case 0x0040: return BarcodeFormat.ean8;
-      case 0x0080: return BarcodeFormat.itf;
-      case 0x0100: return BarcodeFormat.qrCode;
-      case 0x0200: return BarcodeFormat.upca;
-      case 0x0400: return BarcodeFormat.upce;
-      case 0x0800: return BarcodeFormat.pdf417;
-      case 0x1000: return BarcodeFormat.aztec;
-      default: return BarcodeFormat.unknown;
+    switch (value) {
+      case 0xFFFF:
+        return BarcodeFormat.all;
+      case 0x0001:
+        return BarcodeFormat.code128;
+      case 0x0002:
+        return BarcodeFormat.code39;
+      case 0x0004:
+        return BarcodeFormat.code93;
+      case 0x0008:
+        return BarcodeFormat.codabar;
+      case 0x0010:
+        return BarcodeFormat.dataMatrix;
+      case 0x0020:
+        return BarcodeFormat.ean13;
+      case 0x0040:
+        return BarcodeFormat.ean8;
+      case 0x0080:
+        return BarcodeFormat.itf;
+      case 0x0100:
+        return BarcodeFormat.qrCode;
+      case 0x0200:
+        return BarcodeFormat.upca;
+      case 0x0400:
+        return BarcodeFormat.upce;
+      case 0x0800:
+        return BarcodeFormat.pdf417;
+      case 0x1000:
+        return BarcodeFormat.aztec;
+      default:
+        return BarcodeFormat.unknown;
     }
   }
 
   int get value {
-    switch(this) {
-      case BarcodeFormat.all: return 0xFFFF;
-      case BarcodeFormat.unknown: return 0;
-      case BarcodeFormat.code128: return 0x0001;
-      case BarcodeFormat.code39: return 0x0002;
-      case BarcodeFormat.code93: return 0x0004;
-      case BarcodeFormat.codabar: return 0x0008;
-      case BarcodeFormat.dataMatrix: return 0x0010;
-      case BarcodeFormat.ean13: return 0x0020;
-      case BarcodeFormat.ean8: return 0x0040;
-      case BarcodeFormat.itf: return 0x0080;
-      case BarcodeFormat.qrCode: return 0x0100;
-      case BarcodeFormat.upca: return 0x0200;
-      case BarcodeFormat.upce: return 0x0400;
-      case BarcodeFormat.pdf417: return 0x0800;
-      case BarcodeFormat.aztec: return 0x1000;
+    switch (this) {
+      case BarcodeFormat.all:
+        return 0xFFFF;
+      case BarcodeFormat.unknown:
+        return 0;
+      case BarcodeFormat.code128:
+        return 0x0001;
+      case BarcodeFormat.code39:
+        return 0x0002;
+      case BarcodeFormat.code93:
+        return 0x0004;
+      case BarcodeFormat.codabar:
+        return 0x0008;
+      case BarcodeFormat.dataMatrix:
+        return 0x0010;
+      case BarcodeFormat.ean13:
+        return 0x0020;
+      case BarcodeFormat.ean8:
+        return 0x0040;
+      case BarcodeFormat.itf:
+        return 0x0080;
+      case BarcodeFormat.qrCode:
+        return 0x0100;
+      case BarcodeFormat.upca:
+        return 0x0200;
+      case BarcodeFormat.upce:
+        return 0x0400;
+      case BarcodeFormat.pdf417:
+        return 0x0800;
+      case BarcodeFormat.aztec:
+        return 0x1000;
     }
   }
 }
