@@ -1,4 +1,5 @@
 #import "GoogleMlKitPlugin.h"
+#import <MLKitCommon/MLKitCommon.h>
 #import <MLKitImageLabeling/MLKitImageLabeling.h>
 #import <MLKitImageLabelingCommon/MLKitImageLabelingCommon.h>
 #import <MLKitImageLabelingCustom/MLKitImageLabelingCustom.h>
@@ -80,7 +81,7 @@
     NSString *path = optionsData[@"path"];
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     
-    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath: path];
+    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:path];
     
     MLKCustomImageLabelerOptions *options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
     options.confidenceThreshold = conf;
