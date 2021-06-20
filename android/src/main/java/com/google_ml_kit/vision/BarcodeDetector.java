@@ -158,10 +158,16 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                     for (Barcode.Address address : barcode.getContactInfo().getAddresses()) {
                                         Map<String, Object> addressMap = new HashMap<>();
                                         addressMap.put("addressType", address.getType());
-                                        addressMap.put("addressLines", address.getAddressLines());
+
+                                        List<String> addressLines = new ArrayList<>();
+                                        for(String addressLine : address.getAddressLines()){
+                                            addressLines.add(addressLine);
+                                        }
+                                        addressMap.put("addressLines",addressLines);
+
                                         queries.add(addressMap);
                                     }
-                                    barcodeMap.put("addresses", queries);
+                                        barcodeMap.put("addresses", queries);
                                     queries = new ArrayList<>();
                                     for (Barcode.Phone phone : barcode.getContactInfo().getPhones()) {
                                         Map<String, Object> phoneMap = new HashMap<>();
@@ -181,7 +187,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                     }
                                     barcodeMap.put("emails", queries);
                                     List<String> urls = new ArrayList<>(barcode.getContactInfo().getUrls());
-                                    barcodeMap.put("urlList", urls);
+                                    barcodeMap.put("urls", urls);
                                     break;
 
                                 case Barcode.TYPE_CALENDAR_EVENT:
