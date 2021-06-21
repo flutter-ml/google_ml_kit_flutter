@@ -27,8 +27,8 @@ class ImageLabeler {
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
     _isOpened = true;
 
-    final result = await Vision.channel
-        .invokeMethod('vision#startImageLabelDetector', <String, dynamic>{
+    final result = await Vision.channel.invokeMethod(
+        'vision#startImageLabelDetector', <String, dynamic>{
       'options': _labelerOptions._map,
       'imageData': inputImage._getImageData()
     });
@@ -50,12 +50,12 @@ class ImageLabeler {
   }
 }
 
-abstract class ImageLabelerOptionsBase{
+abstract class ImageLabelerOptionsBase {
   Map<String, dynamic> get _map => <String, dynamic>{};
 }
 
 /// To create [ImageLabeler] that process image considering google's base model
-class ImageLabelerOptions implements ImageLabelerOptionsBase{
+class ImageLabelerOptions implements ImageLabelerOptionsBase {
   /// The minimum confidence(probability) a label should have to been returned in the result
   /// Default value is set 0.5
   final double confidenceThreshold;
@@ -67,14 +67,14 @@ class ImageLabelerOptions implements ImageLabelerOptionsBase{
   ImageLabelerOptions({this.confidenceThreshold = 0.5});
 
   @override
-  Map<String, dynamic> get _map => <String,dynamic>{
-    'confidenceThreshold' : confidenceThreshold,
-    'labelerType' : labelerType,
-  };
+  Map<String, dynamic> get _map => <String, dynamic>{
+        'confidenceThreshold': confidenceThreshold,
+        'labelerType': labelerType,
+      };
 }
 
 /// To create [ImageLabeler] that processes image based on the custom tflite model provided by user.
-class CustomImageLabelerOptions implements ImageLabelerOptionsBase{
+class CustomImageLabelerOptions implements ImageLabelerOptionsBase {
   /// The minimum confidence(probability) a label should have to been returned in the result.
   /// Default value is set 0.5
   final double confidenceThreshold;
@@ -95,23 +95,21 @@ class CustomImageLabelerOptions implements ImageLabelerOptionsBase{
   CustomImageLabelerOptions(
       {this.confidenceThreshold = 0.5,
       required this.customModel,
-      required this.customModelPath, 
+      required this.customModelPath,
       this.maxCount = 5});
 
   @override
-  Map<String, dynamic> get _map => <String,dynamic>{
-    'confidenceThreshold' : confidenceThreshold,
-    'labelerType' : labelerType,
-    'local' : true,
-    'type' : customModel == CustomLocalModel.asset
-          ? 'asset'
-          : 'file',
-    'path' : customModelPath,
-    'maxCount' : maxCount
-  };
+  Map<String, dynamic> get _map => <String, dynamic>{
+        'confidenceThreshold': confidenceThreshold,
+        'labelerType': labelerType,
+        'local': true,
+        'type': customModel == CustomLocalModel.asset ? 'asset' : 'file',
+        'path': customModelPath,
+        'maxCount': maxCount
+      };
 }
 
-class CustomRemoteLabelerOption implements ImageLabelerOptionsBase{
+class CustomRemoteLabelerOption implements ImageLabelerOptionsBase {
   /// The minimum confidence(probability) a label should have to been returned in the result.
   /// Default value is set 0.5
   final double confidenceThreshold;
@@ -125,18 +123,19 @@ class CustomRemoteLabelerOption implements ImageLabelerOptionsBase{
   /// Max number of results detector will return
   final int maxCount;
 
-  CustomRemoteLabelerOption({required this.confidenceThreshold, required this.modelName, this.maxCount = 5});
+  CustomRemoteLabelerOption(
+      {required this.confidenceThreshold,
+      required this.modelName,
+      this.maxCount = 5});
 
-  
   @override
-  Map<String, dynamic> get _map => <String,dynamic>{
-    'confidenceThreshold' : confidenceThreshold,
-    'labelerType' : labelerType,
-    'local' : false,
-    'modelName' : modelName,
-    'maxCount' : maxCount
-  };
-
+  Map<String, dynamic> get _map => <String, dynamic>{
+        'confidenceThreshold': confidenceThreshold,
+        'labelerType': labelerType,
+        'local': false,
+        'modelName': modelName,
+        'maxCount': maxCount
+      };
 }
 
 /// This represents a label detected in image.
@@ -155,4 +154,3 @@ class ImageLabel {
   /// Index of label according to google's label map [https://developers.google.com/ml-kit/vision/image-labeling/label-map]
   final int index;
 }
-

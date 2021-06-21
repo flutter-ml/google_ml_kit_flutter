@@ -127,7 +127,7 @@ class Vision {
   }
 
   /// returns an instance of [RemoteModelManager].
-  RemoteModelManager remoteModelManager(){
+  RemoteModelManager remoteModelManager() {
     return RemoteModelManager();
   }
 }
