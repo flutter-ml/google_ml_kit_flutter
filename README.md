@@ -123,11 +123,14 @@ final objectDetector = GoogleMlKit.vision.objectDetector(CustomObjectDetectorOpt
 
 // nl
 final entityExtractor = GoogleMlKit.nlp.entityExtractor();
-final entityModelManager = GoogleMlKit.nlp.entityModelManager();
 final languageIdentifier = GoogleMlKit.nlp.languageIdentifier();
 final onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator();
-final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 final smartReply = GoogleMlKit.nlp.smartReply();
+
+//  Managing models
+final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
+final entityModelManager = GoogleMlKit.nlp.entityModelManager();
+final remoteModelManager = GoogleMlKit.vision.remoteModelManager();
 ```
 
 #### 3. Call the corresponding method

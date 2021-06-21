@@ -19,8 +19,8 @@ import java.util.Set;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-public class ObjectModelManager implements ApiDetectorInterface {
-    private static final String START = "vision#startObjectModelManager";
+public class CustomRemoteModelManager implements ApiDetectorInterface {
+    private static final String START = "vision#startRemoteModelManager";
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override

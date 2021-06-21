@@ -26,9 +26,9 @@ class _ImageLabelViewState extends State<ImageLabelView> {
       customPaint: customPaint,
       onImage: (inputImage) {
         // comment this line if you want to use custom model
-        processImageWithDefaultModel(inputImage);
+        // processImageWithDefaultModel(inputImage);
         // uncomment this line if you want to use custom model
-        //processImageWithCustomModel(inputImage);
+        processImageWithRemoteModel(inputImage);
       },
     );
   }
@@ -39,13 +39,11 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   }
 
   // Add the tflite model in android/src/main/assets
-  // Future<void> processImageWithCustomModel(InputImage inputImage) async {
-  //   CustomImageLabelerOptions options = CustomImageLabelerOptions(
-  //       customModel: CustomTrainedModel.asset,
-  //       customModelPath: "antartic.tflite");
-  //   imageLabeler = GoogleMlKit.vision.imageLabeler(options);
-  //   processImage(inputImage);
-  // }
+  Future<void> processImageWithRemoteModel(InputImage inputImage) async {
+    final options = CustomRemoteLabelerOption(confidenceThreshold: 0.5, modelName: 'bird-classifier');
+    imageLabeler = GoogleMlKit.vision.imageLabeler(options);
+    processImage(inputImage);
+  }
 
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;

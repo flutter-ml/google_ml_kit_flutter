@@ -82,6 +82,7 @@ class Home extends StatelessWidget {
                         'Object Detector',
                         ObjectDetectorView(),
                       ),
+                      CustomCard('Remote Model Manager', RemoteModelView(),)
                     ],
                   ),
                   SizedBox(
