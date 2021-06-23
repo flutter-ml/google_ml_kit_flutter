@@ -15,7 +15,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | ✅  |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
-|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
+|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | yet  |
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | ✅     | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | ✅  |
 
@@ -123,11 +123,14 @@ final objectDetector = GoogleMlKit.vision.objectDetector(CustomObjectDetectorOpt
 
 // nl
 final entityExtractor = GoogleMlKit.nlp.entityExtractor();
-final entityModelManager = GoogleMlKit.nlp.entityModelManager();
 final languageIdentifier = GoogleMlKit.nlp.languageIdentifier();
 final onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator();
-final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 final smartReply = GoogleMlKit.nlp.smartReply();
+
+//  Managing models
+final translateLanguageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
+final entityModelManager = GoogleMlKit.nlp.entityModelManager();
+final remoteModelManager = GoogleMlKit.vision.remoteModelManager();
 ```
 
 #### 3. Call the corresponding method

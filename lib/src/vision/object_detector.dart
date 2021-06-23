@@ -175,37 +175,3 @@ class RemoteModel extends CustomModel {
   @override
   final String modelType = 'remote';
 }
-
-class ObjectRemoteModelManager {
-  Future<bool> isModelDownloaded(String modelName) async {
-    final result = await Vision.channel.invokeMethod(
-        'vision#startObjectModelManager',
-        <String, dynamic>{"task": "check", "model": modelName});
-    return result as bool;
-  }
-
-  /// Downloads a model.
-  /// Returns `success` if model downloads succesfully or model is already downloaded.
-  /// On failing to dowload it throws an error.
-  Future<String> downloadModel(String modelTag,
-      {bool isWifiRequired = true}) async {
-    final result = await Vision.channel.invokeMethod(
-        "vision#startObjectModelManager", <String, dynamic>{
-      "task": "download",
-      "model": modelTag,
-      "wifi": isWifiRequired
-    });
-    return result.toString();
-  }
-
-  /// Deletes a model.
-  /// Returns `success` if model is delted successfully or model is not present.
-  Future<String> deleteModel(String modelTag) async {
-    final result = await Vision.channel
-        .invokeMethod("vision#startObjectModelManager", <String, dynamic>{
-      "task": "delete",
-      "model": modelTag,
-    });
-    return result.toString();
-  }
-}

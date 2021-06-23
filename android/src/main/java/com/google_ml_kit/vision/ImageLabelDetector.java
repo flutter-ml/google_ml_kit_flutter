@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.common.model.CustomRemoteModel;
 import com.google.mlkit.common.model.LocalModel;
+import com.google.mlkit.linkfirebase.FirebaseModelSource;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.label.ImageLabel;
 import com.google.mlkit.vision.label.ImageLabeler;
@@ -32,6 +34,7 @@ public class ImageLabelDetector implements ApiDetectorInterface {
     private static final String START = "vision#startImageLabelDetector";
     private static final String CLOSE = "vision#closeImageLabelDetector";
 
+    private String type;
     private final Context context;
     private ImageLabeler imageLabeler;
 
@@ -71,13 +74,21 @@ public class ImageLabelDetector implements ApiDetectorInterface {
         }
 
         String labelerType = (String) options.get("labelerType");
-        if (labelerType.equals("default")) {
-            imageLabeler = ImageLabeling.getClient(getImageLabelerOptions(options));
-        } else if (labelerType.equals("custom")) {
-            imageLabeler = ImageLabeling.getClient(getCustomLabelerOptions(options));
-        }  else {
-            imageLabeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+
+        if (imageLabeler == null || type == null ||
+                !type.equals(labelerType)) {
+            type = labelerType;
+
+            if (labelerType.equals("default")) {
+                imageLabeler = ImageLabeling.getClient(getImageLabelerOptions(options));
+            } else if (labelerType.equals("customLocal") || labelerType.equals("customRemote")) {
+                imageLabeler = ImageLabeling.getClient(getCustomLabelerOptions(options));
+            } else {
+                imageLabeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+            }
+
         }
+
 
         imageLabeler.process(inputImage)
                 .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
@@ -114,44 +125,38 @@ public class ImageLabelDetector implements ApiDetectorInterface {
 
     //Options for labeler to work with custom model.
     private CustomImageLabelerOptions getCustomLabelerOptions(Map<String, Object> labelerOptions) {
-        String modelType = (String) labelerOptions.get("customModel");
-        String path = (String) labelerOptions.get("path");
-        LocalModel localModel;
-        if (modelType.equals("asset")) {
-            localModel = new LocalModel.Builder().setAssetFilePath(path).build();
-        } else {
-            localModel = new LocalModel.Builder().setAbsoluteFilePath(path).build();
-        }
-        CustomImageLabelerOptions customImageLabelerOptions =
-                new CustomImageLabelerOptions.Builder(localModel)
-                        .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
-                        .build();
-        return customImageLabelerOptions;
-    }
+        boolean isLocal = (boolean) labelerOptions.get("local");
+        int maxCount = (int) labelerOptions.get("maxCount");
+        if (isLocal) {
+            String modelType = (String) labelerOptions.get("type");
+            String path = (String) labelerOptions.get("path");
+            LocalModel localModel;
 
-    //Options for labeler to work with AutoMlVisionModel
-    private AutoMLImageLabelerOptions getAutoMLImageLabelerOptions(Map<String, Object> labelerOptions) {
-        String modelType = (String) labelerOptions.get("customModel");
-        String path = (String) labelerOptions.get("path");
-        AutoMLImageLabelerLocalModel autoMLImageLabelerLocalModel;
-        if (modelType.equals("assets")) {
-            autoMLImageLabelerLocalModel =
-                    new AutoMLImageLabelerLocalModel.Builder()
-                            .setAssetFilePath(path)
-                            .build();
-        } else {
-            autoMLImageLabelerLocalModel = new AutoMLImageLabelerLocalModel.Builder().setAbsoluteFilePath(path).build();
+            if (modelType.equals("asset")) {
+                localModel = new LocalModel.Builder().setAssetFilePath(path).build();
+            } else {
+                localModel = new LocalModel.Builder().setAbsoluteFilePath(path).build();
+            }
+            return new CustomImageLabelerOptions.Builder(localModel)
+                    .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
+                    .setMaxResultCount(maxCount)
+                    .build();
         }
 
-        AutoMLImageLabelerOptions autoMLImageLabelerOptions =
-                new AutoMLImageLabelerOptions.Builder(autoMLImageLabelerLocalModel)
-                        .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
-                        .build();
+        String name = (String) labelerOptions.get("modelName");
 
-        return autoMLImageLabelerOptions;
+        CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(
+                new FirebaseModelSource.Builder(name).build()
+        ).build();
+
+        return new CustomImageLabelerOptions.Builder(remoteModel)
+                .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
+                .setMaxResultCount(maxCount)
+                .build();
     }
 
     private void closeDetector() {
         imageLabeler.close();
+        imageLabeler = null;
     }
 }
