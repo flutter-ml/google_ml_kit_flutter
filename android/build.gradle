@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.2.1'
     }
 }
 
@@ -22,6 +22,7 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -29,33 +30,16 @@ android {
     defaultConfig {
         minSdkVersion 21
     }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
 }
 dependencies {
-    implementation 'com.google.mlkit:barcode-scanning:16.1.2'
-
-    implementation 'com.google.mlkit:image-labeling:17.0.4'
-    implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
-    implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
-
-    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.2.0'
-    implementation 'com.google.mlkit:language-id:16.1.1'
-    implementation 'com.google.mlkit:digital-ink-recognition:16.2.0'
-
-    implementation 'com.google.mlkit:pose-detection:17.0.0'
-    implementation 'com.google.mlkit:pose-detection-accurate:17.0.0'
-
-    implementation 'com.google.mlkit:language-id:16.1.1'
-    implementation 'com.google.mlkit:translate:16.1.2'
-    implementation 'com.google.mlkit:entity-extraction:16.0.0-beta1'
-    implementation 'com.google.mlkit:smart-reply:16.1.1'
-
     implementation 'com.google.mlkit:object-detection:16.2.5'
     implementation 'com.google.mlkit:object-detection-custom:16.3.2'
     implementation 'com.google.mlkit:linkfirebase:16.1.1'
-
-    implementation 'com.google.mlkit:face-detection:16.0.7'
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

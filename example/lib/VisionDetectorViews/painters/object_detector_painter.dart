@@ -1,9 +1,9 @@
 import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'dart:ui' as ui;
 
 import 'coordinates_translator.dart';
 
@@ -40,13 +40,13 @@ class ObjectDetectorPainter extends CustomPainter {
       builder.pop();
 
       final left = translateX(
-          detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
+          detectedObject.getBoundingBox().left, rotation, size, absoluteSize);
       final top = translateY(
-          detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
+          detectedObject.getBoundingBox().top, rotation, size, absoluteSize);
       final right = translateX(
-          detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
+          detectedObject.getBoundingBox().right, rotation, size, absoluteSize);
       final bottom = translateY(
-          detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
+          detectedObject.getBoundingBox().bottom, rotation, size, absoluteSize);
 
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),

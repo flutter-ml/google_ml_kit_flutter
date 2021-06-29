@@ -5,18 +5,6 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-part 'barcode_scanner.dart';
-
-part 'digital_ink_recognizer.dart';
-
-part 'face_detector.dart';
-
-part 'label_detector.dart';
-
-part 'pose_detector.dart';
-
-part 'text_detector.dart';
-
 part 'object_detector.dart';
 
 // To indicate the format of image while creating input image from bytes
@@ -67,6 +55,13 @@ extension InputImageRotationMethods on InputImageRotation {
   }
 }
 
+///Convert map to Rect.
+Rect _mapToRect(Map<dynamic, dynamic> rect) {
+  var rec = Rect.fromLTRB((rect["left"]).toDouble(), (rect["top"]).toDouble(),
+      (rect["right"]).toDouble(), (rect["bottom"]).toDouble());
+  return rec;
+}
+
 /// Get instance of the individual api's using instance of [Vision]
 /// For example
 /// To get an instance of [ImageLabeler]
@@ -79,47 +74,6 @@ class Vision {
 
   // Creates an instance of [GoogleMlKit] by calling the private constructor
   static final Vision instance = Vision._();
-
-  /// Get an instance of [ImageLabeler] by calling this function
-  /// [imageLabelerOptions]  if not provided it creates [ImageLabeler] with [ImageLabelerOptions]
-  /// You can provide either [CustomImageLabelerOptions] to use a custom tflite model
-  /// Or [AutoMLImageLabelerOptions] to use auto ml vision model trained by you
-  ImageLabeler imageLabeler([dynamic imageLabelerOptions]) {
-    return ImageLabeler._(imageLabelerOptions ?? ImageLabelerOptions());
-  }
-
-  /// Returns instance of [BarcodeScanner]. By default it searches the input image for all [BarcodeFormat]s.
-  /// To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as argument.
-  BarcodeScanner barcodeScanner([List<BarcodeFormat>? formatList]) {
-    return BarcodeScanner(formats: formatList);
-  }
-
-  /// Returns instance of [PoseDetector].By default it returns all [PoseLandmark] available in image
-  /// To limit the result to specific [PoseLandmark] pass list of [PoseLandmark]'s a
-  /// All the 33 positions have been declared as static constants in [PoseLandmark] class
-  PoseDetector poseDetector({PoseDetectorOptions? poseDetectorOptions}) {
-    return PoseDetector(poseDetectorOptions ?? PoseDetectorOptions());
-  }
-
-  /// Creates on instance of [LanguageModelManager].
-  LanguageModelManager languageModelManager() {
-    return LanguageModelManager._();
-  }
-
-  /// Returns an instance of [DigitalInkRecogniser]
-  DigitalInkRecogniser digitalInkRecogniser() {
-    return DigitalInkRecogniser._();
-  }
-
-  /// Return an instance of [TextDetector].
-  TextDetector textDetector() {
-    return TextDetector._();
-  }
-
-  /// Return an instance of [FaceDetector].
-  FaceDetector faceDetector([FaceDetectorOptions? options]) {
-    return FaceDetector._(options ?? const FaceDetectorOptions());
-  }
 
   /// Returns an instance of [ObjectDetector].
   ObjectDetector objectDetector(ObjectDetectorOptionsBase options) {

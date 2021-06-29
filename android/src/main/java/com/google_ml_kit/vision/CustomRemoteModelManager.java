@@ -2,19 +2,16 @@ package com.google_ml_kit.vision;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.CustomRemoteModel;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.linkfirebase.FirebaseModelSource;
-import com.google.mlkit.nl.entityextraction.EntityExtractionRemoteModel;
 import com.google_ml_kit.ApiDetectorInterface;
 import com.google_ml_kit.GenericModelManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -26,7 +23,7 @@ public class CustomRemoteModelManager implements ApiDetectorInterface {
     @Override
     public List<String> getMethodsKeys() {
         return new ArrayList<>(
-                Arrays.asList(START));
+                Collections.singletonList(START));
     }
 
     @Override
@@ -40,19 +37,19 @@ public class CustomRemoteModelManager implements ApiDetectorInterface {
     }
 
     private void handleCall(MethodCall call, final MethodChannel.Result result) {
-        String task = (String) call.argument("task");
+        String task = call.argument("task");
 
-        switch (task) {
+        switch (Objects.requireNonNull(task)) {
             case "download":
-                downloadModel(result, (String) call.argument("model"), (boolean) call.argument("wifi"));
+                downloadModel(result, call.argument("model"), call.argument("wifi"));
                 break;
             case "delete":
-                deleteModel(result, (String) call.argument("model"));
+                deleteModel(result, call.argument("model"));
                 break;
             case "check":
                 CustomRemoteModel model =
                         new CustomRemoteModel.Builder(
-                            new FirebaseModelSource.Builder((String) call.argument("model")).build()
+                            new FirebaseModelSource.Builder(call.argument("model")).build()
                         ).build();
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);

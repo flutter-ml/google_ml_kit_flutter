@@ -126,7 +126,7 @@ class DetectedObject {
   List<Label> getLabels() => _labels;
 
   ///Gets the axis-aligned bounding rectangle of the detected object.
-  Rect getBoundinBox() => _boundingBox;
+  Rect getBoundingBox() => _boundingBox;
 
   int? getTrackingId() => _trackingId;
 }
