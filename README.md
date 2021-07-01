@@ -46,11 +46,14 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Then your Podfile should look like this:
 
 ```
+# add this line:
+$iOSVersion = '10.0'
+
 post_install do |installer|
   # add these lines:
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
   end
   
   installer.pods_project.targets.each do |target|
@@ -58,8 +61,8 @@ post_install do |installer|
     
     # add these lines:
     target.build_configurations.each do |config|
-      if Gem::Version.new('10.0') > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
       end
     end
     
