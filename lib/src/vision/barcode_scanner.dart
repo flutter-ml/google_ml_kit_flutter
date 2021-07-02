@@ -221,7 +221,7 @@ class Barcode {
       case BarcodeType.isbn:
       case BarcodeType.text:
       case BarcodeType.product:
-        return Barcode._(value: BarcodeValue._fromMap(barcodeData), type: type);
+        return Barcode._(value: BarcodeValue._(barcodeData), type: type);
       case BarcodeType.wifi:
         return Barcode._(value: BarcodeWifi._(barcodeData), type: type);
       case BarcodeType.url:
@@ -243,7 +243,7 @@ class Barcode {
         return Barcode._(
             value: BarcodeCalenderEvent._(barcodeData), type: type);
       default:
-        return Barcode._(value: BarcodeValue._fromMap(barcodeData), type: type);
+        return Barcode._(value: BarcodeValue._(barcodeData), type: type);
     }
   }
 }
@@ -284,7 +284,7 @@ class BarcodeValue {
   /// Could be null if the bounding rectangle can not be determined.
   final Rect? boundingBox;
 
-  BarcodeValue._fromMap(Map<dynamic, dynamic> barcodeData)
+  BarcodeValue._(Map<dynamic, dynamic> barcodeData)
       : type = BarcodeType.values[barcodeData['type']],
         format = _BarcodeFormatValue.of(barcodeData['format']),
         rawValue = barcodeData['rawValue'],
@@ -314,7 +314,7 @@ class BarcodeWifi extends BarcodeValue {
       : ssid = barcodeData['ssid'],
         password = barcodeData['password'],
         encryptionType = barcodeData['encryption'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// Class to store url info of the bookmark obtained from a barcode.
@@ -328,7 +328,7 @@ class BarcodeUrl extends BarcodeValue {
   BarcodeUrl._(Map<dynamic, dynamic> barcodeData)
       : url = barcodeData['url'],
         title = barcodeData['title'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// The type of email for [BarcodeEmail.type].
@@ -362,7 +362,7 @@ class BarcodeEmail extends BarcodeValue {
         address = barcodeData['address'],
         body = barcodeData['body'],
         subject = barcodeData['subject'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// The type of phone number for [BarcodePhone.type].
@@ -394,7 +394,7 @@ class BarcodePhone extends BarcodeValue {
   BarcodePhone._(Map<dynamic, dynamic> barcodeData)
       : phoneType = BarcodePhoneType.values[barcodeData['phoneType']],
         number = barcodeData['number'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// Class extending over [BarcodeValue] to store a SMS.
@@ -408,7 +408,7 @@ class BarcodeSMS extends BarcodeValue {
   BarcodeSMS._(Map<dynamic, dynamic> barcodeData)
       : message = barcodeData['message'],
         phoneNumber = barcodeData['number'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// Class extending over [BarcodeValue] that represents a geolocation.
@@ -422,7 +422,7 @@ class BarcodeGeo extends BarcodeValue {
   BarcodeGeo._(Map<dynamic, dynamic> barcodeData)
       : latitude = barcodeData['latitude'],
         longitude = barcodeData['longitude'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 ///Class extending over [BarcodeValue] that models a driver's licence cars.
@@ -476,45 +476,61 @@ class BarcodeDriverLicense extends BarcodeValue {
         firstName = barcodeData['firstName'],
         lastName = barcodeData['lastName'],
         country = barcodeData['country'],
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// Class extending over [BarcodeValue] that models a contact info.
 class BarcodeContactInfo extends BarcodeValue {
   /// Contact person's addresses.
-  final List<BarcodeAddress>? barcodeAddresses;
+  final List<BarcodeAddress> addresses;
 
   /// Email addresses of the contact person.
-  final List<BarcodeEmail>? emails;
+  final List<BarcodeEmail> emails;
 
   /// Phone numbers of the contact person.
-  final List<BarcodePhone>? phoneNumbers;
+  final List<BarcodePhone> phoneNumbers;
 
   /// First name of the contact person.
   final String? firstName;
 
-  /// Last name of the peron.
+  /// Middle name of the person.
+  final String? middleName;
+
+  /// Last name of the person.
   final String? lastName;
 
   /// Properly formatted name of the person.
   final String? formattedName;
 
-  /// Organisation of the contact person.
-  final String? organisationName;
+  /// Name prefix
+  final String? prefix;
+
+  /// Name pronunciation
+  final String? pronunciation;
+
+  /// Job title
+  final String? jobTitle;
+
+  /// Organization of the contact person.
+  final String? organizationName;
 
   /// Url's of contact person.
-  final List<String>? urls;
+  final List<String> urls;
 
   BarcodeContactInfo._(Map<dynamic, dynamic> barcodeData)
-      : barcodeAddresses = _getBarcodeAddresses(barcodeData),
+      : addresses = _getBarcodeAddresses(barcodeData),
         emails = _getBarcodeEmails(barcodeData),
         phoneNumbers = _getBarcodePhones(barcodeData),
         firstName = barcodeData['firstName'],
+        middleName = barcodeData['middleName'],
         lastName = barcodeData['lastName'],
         formattedName = barcodeData['formattedName'],
-        organisationName = barcodeData['organisation'],
+        prefix = barcodeData['prefix'],
+        pronunciation = barcodeData['pronunciation'],
+        jobTitle = barcodeData['jobTitle'],
+        organizationName = barcodeData['organization'],
         urls = _getUrls(barcodeData['urls']),
-        super._fromMap(barcodeData);
+        super._(barcodeData);
 }
 
 /// Class extending over [BarcodeValue] that models a calender event.
@@ -532,39 +548,23 @@ class BarcodeCalenderEvent extends BarcodeValue {
   final String? summary;
 
   /// A person or the organisation who is organising the event.
-  final String? organiser;
+  final String? organizer;
 
-  /// String representing the raw value of the start time as encoded in the barcode.
-  final String? startRawValue;
+  /// Start DateTime of the calender event.
+  final DateTime? start;
 
-  /// Day of the month on which the event takes place.
-  final int? startDate;
-
-  /// Start hour of the calender event.
-  final int? startHour;
-
-  /// String representing the raw value of the end time of event as encoded in the barcode.
-  final String? endRawValue;
-
-  /// End day of the calender event.
-  final int? endDate;
-
-  /// Ending hour of the event.
-  final int? endHour;
+  /// End DateTime of the calender event.
+  final DateTime? end;
 
   BarcodeCalenderEvent._(Map<dynamic, dynamic> barcodeData)
       : description = barcodeData['description'],
         location = barcodeData['location'],
         status = barcodeData['status'],
         summary = barcodeData['summary'],
-        organiser = barcodeData['organiser'],
-        startRawValue = barcodeData['startRawValue'],
-        startDate = barcodeData['startDate'],
-        startHour = barcodeData['startHour'],
-        endRawValue = barcodeData['endRawValue'],
-        endDate = barcodeData['endDate'],
-        endHour = barcodeData['endHour'],
-        super._fromMap(barcodeData);
+        organizer = barcodeData['organizer'],
+        start = _getDateTime(barcodeData['start']),
+        end = _getDateTime(barcodeData['end']),
+        super._(barcodeData);
 }
 
 /// Address type constants for [BarcodeAddress.type]
@@ -599,45 +599,47 @@ class BarcodeAddress {
   }
 }
 
+DateTime? _getDateTime(dynamic barcodeData) {
+  if (barcodeData is double) {
+    return DateTime.fromMillisecondsSinceEpoch(barcodeData.toInt() * 1000);
+  } else if (barcodeData is String) {
+    return DateTime.parse(barcodeData);
+  }
+  return null;
+}
+
 List<BarcodeAddress> _getBarcodeAddresses(dynamic barcodeData) {
   var list = <BarcodeAddress>[];
-
-  barcodeData['addresses'].forEach((address) {
+  barcodeData['addresses']?.forEach((address) {
     list.add(BarcodeAddress._fromMap(address));
   });
-
   return list;
 }
 
 List<BarcodeEmail> _getBarcodeEmails(dynamic barcodeData) {
   var list = <BarcodeEmail>[];
-
-  barcodeData['emails'].forEach((email) {
-    email['type'] = 2;
+  barcodeData['emails']?.forEach((email) {
+    email['type'] = BarcodeType.email.index;
     email['format'] = barcodeData['format'];
     list.add(BarcodeEmail._(email));
   });
-
   return list;
 }
 
 List<BarcodePhone> _getBarcodePhones(dynamic barcodeData) {
   var list = <BarcodePhone>[];
-
-  barcodeData['contactNumbers'].forEach((phone) {
-    phone['type'] = 4;
+  barcodeData['phones']?.forEach((phone) {
+    phone['type'] = BarcodeType.phone.index;
     phone['format'] = barcodeData['format'];
     list.add(BarcodePhone._(phone));
   });
-
   return list;
 }
 
 List<String> _getUrls(dynamic urls) {
   var list = <String>[];
-
-  urls.forEach((ele) {
-    list.add(ele.toString());
+  urls.forEach((url) {
+    list.add(url.toString());
   });
   return list;
 }
