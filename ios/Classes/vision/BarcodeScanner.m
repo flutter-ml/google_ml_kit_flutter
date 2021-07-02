@@ -46,13 +46,13 @@
         
         NSMutableArray *array = [NSMutableArray array];
         for (MLKBarcode *barcode in barcodes) {
-            [array addObject:[self visionBarcodeToDictionary:barcode]];
+            [array addObject:[self barcodeToDictionary:barcode]];
         }
         result(array);
     }];
 }
 
-- (NSDictionary *)visionBarcodeToDictionary:(MLKBarcode *)barcode {
+- (NSDictionary *)barcodeToDictionary:(MLKBarcode *)barcode {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     [dictionary addEntriesFromDictionary:@{
         @"type" : @(barcode.valueType) ?: [NSNull null],
@@ -73,25 +73,25 @@
         case MLKBarcodeValueTypeText:
             break;
         case MLKBarcodeValueTypeWiFi:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeWiFiToDictionary:barcode.wifi]];
+            [dictionary addEntriesFromDictionary:[self wifiToDictionary:barcode.wifi]];
             break;
         case MLKBarcodeValueTypeURL:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeURLToDictionary:barcode.URL]];
+            [dictionary addEntriesFromDictionary:[self urlToDictionary:barcode.URL]];
             break;
         case MLKBarcodeValueTypeEmail:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeEmailToDictionary:barcode.email]];
+            [dictionary addEntriesFromDictionary:[self emailToDictionary:barcode.email]];
             break;
         case MLKBarcodeValueTypePhone:
-            [dictionary addEntriesFromDictionary:[self visionBarcodePhoneToDictionary:barcode.phone]];
+            [dictionary addEntriesFromDictionary:[self phoneToDictionary:barcode.phone]];
             break;
         case MLKBarcodeValueTypeSMS:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeSMSToDictionary:barcode.sms]];
+            [dictionary addEntriesFromDictionary:[self smsToDictionary:barcode.sms]];
             break;
         case MLKBarcodeValueTypeGeographicCoordinates:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeGeoPointToDictionary:barcode.geoPoint]];
+            [dictionary addEntriesFromDictionary:[self geoPointToDictionary:barcode.geoPoint]];
             break;
         case MLKBarcodeValueTypeDriversLicense:
-            [dictionary addEntriesFromDictionary:[self visionBarcodeDriverLicenseToDictionary:barcode.driverLicense]];
+            [dictionary addEntriesFromDictionary:[self driverLicenseToDictionary:barcode.driverLicense]];
             break;
         case MLKBarcodeValueTypeContactInfo:
             [dictionary addEntriesFromDictionary:[self contactInfoToDictionary:barcode.contactInfo]];
@@ -104,7 +104,7 @@
     return dictionary;
 }
 
-- (NSDictionary *)visionBarcodeWiFiToDictionary:(MLKBarcodeWiFi *)wifi {
+- (NSDictionary *)wifiToDictionary:(MLKBarcodeWiFi *)wifi {
     return @{
         @"ssid" : wifi.ssid ?: [NSNull null],
         @"password" : wifi.password ?: [NSNull null],
@@ -112,14 +112,14 @@
     };
 }
 
-- (NSDictionary *)visionBarcodeURLToDictionary:(MLKBarcodeURLBookmark *)url {
+- (NSDictionary *)urlToDictionary:(MLKBarcodeURLBookmark *)url {
     return @{
         @"title" : url.title ?: [NSNull null],
         @"url" : url.url ?: [NSNull null]
     };
 }
 
-- (NSDictionary *)visionBarcodeEmailToDictionary:(MLKBarcodeEmail *)email {
+- (NSDictionary *)emailToDictionary:(MLKBarcodeEmail *)email {
     return @{
         @"address" : email.address ?: [NSNull null],
         @"body" : email.body ?: [NSNull null],
@@ -128,28 +128,28 @@
     };
 }
 
-- (NSDictionary *)visionBarcodePhoneToDictionary:(MLKBarcodePhone *)phone {
+- (NSDictionary *)phoneToDictionary:(MLKBarcodePhone *)phone {
     return @{
         @"number" : phone.number ?: [NSNull null],
         @"phoneType" : @(phone.type)
     };
 }
 
-- (NSDictionary *)visionBarcodeSMSToDictionary:(MLKBarcodeSMS *)sms {
+- (NSDictionary *)smsToDictionary:(MLKBarcodeSMS *)sms {
     return @{
         @"number" : sms.phoneNumber ?: [NSNull null],
         @"message" : sms.message ?: [NSNull null]
     };
 }
 
-- (NSDictionary *)visionBarcodeGeoPointToDictionary:(MLKBarcodeGeoPoint *)geo {
+- (NSDictionary *)geoPointToDictionary:(MLKBarcodeGeoPoint *)geo {
     return @{
         @"longitude" : @(geo.longitude),
         @"latitude" : @(geo.latitude)
     };
 }
 
-- (NSDictionary *)visionBarcodeDriverLicenseToDictionary:(MLKBarcodeDriverLicense *)license {
+- (NSDictionary *)driverLicenseToDictionary:(MLKBarcodeDriverLicense *)license {
     return @{
         @"firstName" : license.firstName ?: [NSNull null],
         @"middleName" : license.middleName ?: [NSNull null],
@@ -169,35 +169,35 @@
 }
 
 - (NSDictionary *)contactInfoToDictionary:(MLKBarcodeContactInfo *)contact {
-    __block NSMutableArray<NSDictionary *> *addresses = [NSMutableArray array];
+    NSMutableArray<NSDictionary *> *addresses = [NSMutableArray array];
     [contact.addresses enumerateObjectsUsingBlock:^(MLKBarcodeAddress *_Nonnull address,
                                                     NSUInteger idx, BOOL *_Nonnull stop) {
-        __block NSMutableArray<NSString *> *addressLines = [NSMutableArray array];
+        NSMutableArray<NSString *> *addressLines = [NSMutableArray array];
         [address.addressLines enumerateObjectsUsingBlock:^(NSString *_Nonnull addressLine,
                                                            NSUInteger idx, BOOL *_Nonnull stop) {
             [addressLines addObject:addressLine];
         }];
-        [addresses addObject:@{@"addressLines" : addressLines, @"type" : @(address.type)}];
+        [addresses addObject:@{@"addressLines" : addressLines, @"addressType" : @(address.type)}];
     }];
     
-    __block NSMutableArray<NSDictionary *> *emails = [NSMutableArray array];
+    NSMutableArray<NSDictionary *> *emails = [NSMutableArray array];
     [contact.emails enumerateObjectsUsingBlock:^(MLKBarcodeEmail *_Nonnull email,
                                                  NSUInteger idx, BOOL *_Nonnull stop) {
         [emails addObject:@{
             @"address" : email.address ?: [NSNull null],
             @"body" : email.body ?: [NSNull null],
             @"subject" : email.subject ?: [NSNull null],
-            @"type" : @(email.type)
+            @"emailType" : @(email.type)
         }];
     }];
     
-    __block NSMutableArray<NSDictionary *> *phones = [NSMutableArray array];
+    NSMutableArray<NSDictionary *> *phones = [NSMutableArray array];
     [contact.phones enumerateObjectsUsingBlock:^(MLKBarcodePhone *_Nonnull phone,
                                                  NSUInteger idx, BOOL *_Nonnull stop) {
-        [phones addObject:@{@"number" : phone.number ?: [NSNull null], @"type" : @(phone.type)}];
+        [phones addObject:@{@"number" : phone.number ?: [NSNull null], @"phoneType" : @(phone.type)}];
     }];
     
-    __block NSMutableArray<NSString *> *urls = [NSMutableArray array];
+    NSMutableArray<NSString *> *urls = [NSMutableArray array];
     [contact.urls
      enumerateObjectsUsingBlock:^(NSString *_Nonnull url, NSUInteger idx, BOOL *_Nonnull stop) {
         [urls addObject:url];
@@ -207,33 +207,27 @@
         @"emails" : emails,
         @"phones" : phones,
         @"urls" : urls,
-        @"name" : @{
-                @"formattedName" : contact.name.formattedName ?: [NSNull null],
-                @"first" : contact.name.first ?: [NSNull null],
-                @"last" : contact.name.last ?: [NSNull null],
-                @"middle" : contact.name.middle ?: [NSNull null],
-                @"prefix" : contact.name.prefix ?: [NSNull null],
-                @"pronunciation" : contact.name.pronunciation ?: [NSNull null],
-                @"suffix" : contact.name.suffix ?: [NSNull null],
-        },
+        @"formattedName" : contact.name.formattedName ?: [NSNull null],
+        @"firstName" : contact.name.first ?: [NSNull null],
+        @"lastName" : contact.name.last ?: [NSNull null],
+        @"middleName" : contact.name.middle ?: [NSNull null],
+        @"prefix" : contact.name.prefix ?: [NSNull null],
+        @"pronunciation" : contact.name.pronunciation ?: [NSNull null],
+        @"suffix" : contact.name.suffix ?: [NSNull null],
         @"jobTitle" : contact.jobTitle ?: [NSNull null],
         @"organization" : contact.organization ?: [NSNull null]
     };
 }
 
 - (NSDictionary *)calendarEventToDictionary:(MLKBarcodeCalendarEvent *)calendar {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
-    dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     return @{
-        @"eventDescription" : calendar.eventDescription ?: [NSNull null],
+        @"description" : calendar.eventDescription ?: [NSNull null],
         @"location" : calendar.location ?: [NSNull null],
         @"organizer" : calendar.organizer ?: [NSNull null],
         @"status" : calendar.status ?: [NSNull null],
         @"summary" : calendar.summary ?: [NSNull null],
-        @"start" : [dateFormatter stringFromDate:calendar.start],
-        @"end" : [dateFormatter stringFromDate:calendar.end]
+        @"start" : @(calendar.start.timeIntervalSince1970),
+        @"end" : @(calendar.end.timeIntervalSince1970)
     };
 }
 

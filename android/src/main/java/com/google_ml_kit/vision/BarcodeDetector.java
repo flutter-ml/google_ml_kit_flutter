@@ -153,21 +153,19 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                     barcodeMap.put("firstName", barcode.getContactInfo().getName().getFirst());
                                     barcodeMap.put("lastName", barcode.getContactInfo().getName().getLast());
                                     barcodeMap.put("formattedName", barcode.getContactInfo().getName().getFormattedName());
-                                    barcodeMap.put("organisation", barcode.getContactInfo().getOrganization());
+                                    barcodeMap.put("organization", barcode.getContactInfo().getOrganization());
                                     List<Map<String, Object>> queries = new ArrayList<>();
                                     for (Barcode.Address address : barcode.getContactInfo().getAddresses()) {
                                         Map<String, Object> addressMap = new HashMap<>();
                                         addressMap.put("addressType", address.getType());
-
                                         List<String> addressLines = new ArrayList<>();
                                         for(String addressLine : address.getAddressLines()){
                                             addressLines.add(addressLine);
                                         }
                                         addressMap.put("addressLines",addressLines);
-
                                         queries.add(addressMap);
                                     }
-                                        barcodeMap.put("addresses", queries);
+                                    barcodeMap.put("addresses", queries);
                                     queries = new ArrayList<>();
                                     for (Barcode.Phone phone : barcode.getContactInfo().getPhones()) {
                                         Map<String, Object> phoneMap = new HashMap<>();
@@ -175,7 +173,7 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                         phoneMap.put("phoneType", phone.getType());
                                         queries.add(phoneMap);
                                     }
-                                    barcodeMap.put("contactNumbers", queries);
+                                    barcodeMap.put("phones", queries);
                                     queries = new ArrayList<>();
                                     for (Barcode.Email email : barcode.getContactInfo().getEmails()) {
                                         Map<String, Object> emailMap = new HashMap<>();
@@ -195,17 +193,9 @@ public class BarcodeDetector implements ApiDetectorInterface {
                                     barcodeMap.put("location", barcode.getCalendarEvent().getLocation());
                                     barcodeMap.put("status", barcode.getCalendarEvent().getStatus());
                                     barcodeMap.put("summary", barcode.getCalendarEvent().getSummary());
-                                    barcodeMap.put("organiser", barcode.getCalendarEvent().getOrganizer());
-                                    barcodeMap.put("startRawValue", barcode.getCalendarEvent().getStart().getRawValue());
-                                    if (barcode.getCalendarEvent().getStart() != null) {
-                                        barcodeMap.put("startDate", barcode.getCalendarEvent().getStart().getDay());
-                                        barcodeMap.put("startHour", barcode.getCalendarEvent().getStart().getHours());
-                                    }
-                                    barcodeMap.put("endRawValue", barcode.getCalendarEvent().getEnd().getRawValue());
-                                    if (barcode.getCalendarEvent().getStart() != null) {
-                                        barcodeMap.put("endDate", barcode.getCalendarEvent().getEnd().getDay());
-                                        barcodeMap.put("endHour", barcode.getCalendarEvent().getEnd().getHours());
-                                    }
+                                    barcodeMap.put("organizer", barcode.getCalendarEvent().getOrganizer());
+                                    barcodeMap.put("start", barcode.getCalendarEvent().getStart().getRawValue());
+                                    barcodeMap.put("end", barcode.getCalendarEvent().getEnd().getRawValue());
                                     break;
                             }
                             barcodeList.add(barcodeMap);
