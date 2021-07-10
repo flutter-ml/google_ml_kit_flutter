@@ -30,7 +30,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 
 ## Requirements
 
-###iOS
+### iOS
 
 - Minimum iOS Deployment Target: 10.0
 - Xcode 12 or newer
@@ -82,19 +82,22 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to 
 Add this plugin as dependency in your pubspec.yaml.
 
 - In your project-level build.gradle file, make sure to include Google's Maven repository in both your buildscript and allprojects sections(for all api's).
-- All API's except `Image Labeling`, `Face Detection` and `Barcode Scanning` use bundled models, hence others should work 
-  out of the box.
-- For Api's using unbundled models, configure your application to download the model to your device automatically
-  from play store by adding the following to your app's `AndroidManifest.xml`
+- All API's except `Image Labeling`, `Face Detection` and `Barcode Scanning` use bundled models, hence others should work out of the box.
+- For Api's using unbundled models, configure your application to download the model to your device automatically from play store by adding the following to your app's `AndroidManifest.xml`
+
   ```xml
   <meta-data
           android:name="com.google.mlkit.vision.DEPENDENCIES"
           android:value="ica" />
       <!-- To use multiple models: android:value="ica,model2,model3" -->
   ```
+  
+  Use these options:
+  
   - **ica** - `Image Labeling`
   - **ocr** - `Barcode Scanning`
   - **face** -`Face Detection`
+
 #### 1. Create an InputImage
 
 From path:
