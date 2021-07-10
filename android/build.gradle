@@ -35,9 +35,9 @@ android {
 
 }
 dependencies {
-    implementation 'com.google.mlkit:barcode-scanning:16.2.0'
+    implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:16.2.0'
 
-    implementation 'com.google.mlkit:image-labeling:17.0.5'
+    implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.5'
     implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
     implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
 
@@ -57,5 +57,5 @@ dependencies {
     implementation 'com.google.mlkit:object-detection-custom:16.3.3'
     implementation 'com.google.mlkit:linkfirebase:16.1.1'
 
-    implementation 'com.google.mlkit:face-detection:16.1.2'
+    implementation 'com.google.android.gms:play-services-mlkit-face-detection:16.2.0'
 }
