@@ -83,7 +83,7 @@ Add this plugin as dependency in your pubspec.yaml.
 
 - In your project-level build.gradle file, make sure to include Google's Maven repository in both your buildscript and allprojects sections(for all api's).
 - All API's except `Image Labeling`, `Face Detection` and `Barcode Scanning` use bundled models, hence others should work out of the box.
-- For Api's using unbundled models, configure your application to download the model to your device automatically from play store by adding the following to your app's `AndroidManifest.xml`
+- For API's using unbundled models, configure your application to download the model to your device automatically from play store by adding the following to your app's `AndroidManifest.xml`, if not configured the respective models will be downloaded when the API's are invoked for the first time. 
 
   ```xml
   <meta-data
