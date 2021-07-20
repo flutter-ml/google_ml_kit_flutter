@@ -95,13 +95,13 @@ public class PoseDetector implements ApiDetectorInterface {
                                     List<Map<String, Object>> landmarks = new ArrayList<>();
                                     for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
                                         Map<String, Object> landmarkMap = new HashMap<>();
-                                        Map<String, Object> pointF3D = new HashMap<>();
                                         landmarkMap.put("type", poseLandmark.getLandmarkType());
                                         landmarkMap.put("x", poseLandmark.getPosition().x);
                                         landmarkMap.put("y", poseLandmark.getPosition().y);
-                                        pointF3D.put("z", poseLandmark.getPosition3D().getZ());
+                                        Map<String, Object> pointF3D = new HashMap<>();
                                         pointF3D.put("x", poseLandmark.getPosition3D().getX());
                                         pointF3D.put("y", poseLandmark.getPosition3D().getY());
+                                        pointF3D.put("z", poseLandmark.getPosition3D().getZ());
                                         landmarkMap.put("3d",pointF3D);
                                         landmarkMap.put("likelihood",poseLandmark.getInFrameLikelihood());
                                         landmarks.add(landmarkMap);

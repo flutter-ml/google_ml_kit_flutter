@@ -66,6 +66,12 @@
                 dictionary[@"type"] = [self poseLandmarkTypeToNumber:landmark.type];
                 dictionary[@"x"] = @(landmark.position.x);
                 dictionary[@"y"] = @(landmark.position.y);
+                NSMutableDictionary *pointF3D = [NSMutableDictionary new];
+                pointF3D[@"x"] = @(landmark.position.x);
+                pointF3D[@"y"] = @(landmark.position.y);
+                pointF3D[@"z"] = @(landmark.position.z);
+                dictionary[@"3d"] = pointF3D;
+                dictionary[@"likelihood"] = @(landmark.inFrameLikelihood);
                 [landmarks addObject:dictionary];
             }
             [array addObject:landmarks];

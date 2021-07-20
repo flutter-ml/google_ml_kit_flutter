@@ -163,7 +163,7 @@ class PointF3D {
   /// y co-ordinate in 3D point space.
   final double y;
 
-  /// z co-ordiante in 3D point space.
+  /// z co-ordinate in 3D point space.
   final double z;
 
   PointF3D._(this.x, this.y, this.z);
@@ -172,7 +172,6 @@ class PointF3D {
     if (point == null) {
       return PointF3D._(0, 0, 0);
     }
-
     return PointF3D._(point['x'], point['y'], point['z']);
   }
 }
