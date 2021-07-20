@@ -132,13 +132,13 @@ class PoseLandmark {
 
   final PoseLandmarkType type;
 
-  /// Gives x co-ordinate of landmark in image frame.
+  /// Gives x coordinate of landmark in image frame.
   final double x;
 
-  /// Gives y co-ordinate of landmark in image fram.
+  /// Gives y coordinate of landmark in image frame.
   final double y;
 
-  /// Gives the point in co-ordinates in 3d space.
+  /// Gives the point in coordinates in 3D space.
   final PointF3D pointF3D;
 
   /// Gives the likelihood of this landmark being in the image frame.
@@ -157,13 +157,13 @@ class PoseLandmark {
 
 /// The position of the 3D point in the input image space.
 class PointF3D {
-  /// x co-ordinate in 3D point space.
+  /// x coordinate in 3D point space.
   final double x;
 
-  /// y co-ordinate in 3D point space.
+  /// y coordinate in 3D point space.
   final double y;
 
-  /// z co-ordinate in 3D point space.
+  /// z coordinate in 3D point space.
   final double z;
 
   PointF3D._(this.x, this.y, this.z);
