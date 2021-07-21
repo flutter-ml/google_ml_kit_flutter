@@ -1,23 +1,26 @@
 part of 'vision.dart';
 
-//enum to specify whether to use base pose model or accurate posed model
-//To know differences between these two visit this [https://developers.google.com/ml-kit/vision/pose-detection/android] site
+// enum to specify whether to use base pose model or accurate posed model
+// To know differences between these two visit this [https://developers.google.com/ml-kit/vision/pose-detection/android] site
 enum PoseDetectionModel { base, accurate }
 
-//To decide whether you want to process a static image and wait for a future
-//or stream image please note feature to stream image is not yet available and will be implemented in the future
+// To decide whether you want to process a static image and wait for a future
+// or stream image please note feature to stream image is not yet available and will be implemented in the future
 enum PoseDetectionMode { singleImage, streamImage }
 
 enum LandmarkSelectionType { all, specific }
 
-///A detector that processes the input image and return list of [PoseLandmark]
-///To gt an instance of the class
+/// A detector that processes the input image and return list of [PoseLandmark].
+///
+/// To gt an instance of the class
 /// create [PoseDetectorOptions]
+/// ```dart
 ///  final options = PoseDetectorOptions(
 ///    poseDetectionModel: PoseDetectionModel.AccuratePoseDetector,
 ///     poseDetectionMode: PoseDetectionMode.StaticImage);
-///     Note : [PoseDetectorOptions] is optional parameter,if not given it gives [PoseDetector] with default options
+///   //  Note : [PoseDetectorOptions] is optional parameter,if not given it gives [PoseDetector] with default options
 ///   PoseDetector poseDetector = GoogleMlKit.instance.poseDetector();
+/// ```
 class PoseDetector {
   final PoseDetectorOptions poseDetectorOptions;
   bool _isOpened = false;
@@ -25,7 +28,7 @@ class PoseDetector {
 
   PoseDetector(this.poseDetectorOptions);
 
-  ///Process the image and returns a map where key denotes [PoseLandmark] i.e location. Value contains the info of the PoseLandmark i.e
+  /// Process the image and returns a map where key denotes [PoseLandmark] i.e location. Value contains the info of the PoseLandmark i.e
   Future<List<Pose>> processImage(InputImage inputImage) async {
     _isOpened = true;
 
@@ -56,12 +59,12 @@ class PoseDetector {
   }
 }
 
-///[PoseDetectorOptions] determines the parameters on which [PoseDetector] works
+/// [PoseDetectorOptions] determines the parameters on which [PoseDetector] works
 class PoseDetectorOptions {
-  ///enum PoseDetectionModel default is set to Base Pose Detector Model
+  /// enum PoseDetectionModel default is set to Base Pose Detector Model.
   final PoseDetectionModel model;
 
-  ///enum PoseDetectionMode, currently only static supported
+  /// enum PoseDetectionMode, currently only static supported.
   final PoseDetectionMode mode;
 
   PoseDetectorOptions(
@@ -117,20 +120,58 @@ class Pose {
   final Map<PoseLandmarkType, PoseLandmark> landmarks;
 }
 
-///This gives the [Offset] information as to where pose landmarks are locates in image
+/// This gives the [Offset] information as to where pose landmarks are locates in image.
 class PoseLandmark {
-  PoseLandmark(this.type, this.x, this.y);
+  PoseLandmark(
+    this.type,
+    this.x,
+    this.y,
+    this.pointF3D,
+    this.likelihood,
+  );
 
   final PoseLandmarkType type;
 
-  ///Gives x position of landmark in image.
+  /// Gives x coordinate of landmark in image frame.
   final double x;
 
-  ///Gives y position of landmark in image.
+  /// Gives y coordinate of landmark in image frame.
   final double y;
+
+  /// Gives the point in coordinates in 3D space.
+  final PointF3D pointF3D;
+
+  /// Gives the likelihood of this landmark being in the image frame.
+  final double likelihood;
 
   factory PoseLandmark._fromMap(Map<dynamic, dynamic> data) {
     return PoseLandmark(
-        PoseLandmarkType.values[data['type']], data['x'], data['y']);
+      PoseLandmarkType.values[data['type']],
+      data['x'],
+      data['y'],
+      PointF3D._fromMap(data['3d']),
+      data['likelihood'] ?? 0.0,
+    );
+  }
+}
+
+/// The position of the 3D point in the input image space.
+class PointF3D {
+  /// x coordinate in 3D point space.
+  final double x;
+
+  /// y coordinate in 3D point space.
+  final double y;
+
+  /// z coordinate in 3D point space.
+  final double z;
+
+  PointF3D._(this.x, this.y, this.z);
+
+  factory PointF3D._fromMap(Map<dynamic, dynamic>? point) {
+    if (point == null) {
+      return PointF3D._(0, 0, 0);
+    }
+    return PointF3D._(point['x'], point['y'], point['z']);
   }
 }
