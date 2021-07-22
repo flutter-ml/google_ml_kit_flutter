@@ -85,6 +85,7 @@ class Home extends StatelessWidget {
                       CustomCard(
                         'Remote Model Manager',
                         RemoteModelView(),
+                        featureCompleted: true,
                       )
                     ],
                   ),

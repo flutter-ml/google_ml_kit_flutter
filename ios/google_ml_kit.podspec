@@ -19,6 +19,7 @@ flutter plugin for google ml kit
   s.dependency 'GoogleMLKit/FaceDetection'
   s.dependency 'GoogleMLKit/ImageLabeling'
   s.dependency 'GoogleMLKit/ImageLabelingCustom'
+  s.dependency 'GoogleMLKit/LinkFirebase'
   s.dependency 'GoogleMLKit/BarcodeScanning'
   s.dependency 'GoogleMLKit/TextRecognition'
   s.dependency 'GoogleMLKit/PoseDetection'

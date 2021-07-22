@@ -3,6 +3,7 @@
 #import <MLKitImageLabeling/MLKitImageLabeling.h>
 #import <MLKitImageLabelingCommon/MLKitImageLabelingCommon.h>
 #import <MLKitImageLabelingCustom/MLKitImageLabelingCustom.h>
+#import <MLKitLinkFirebase/MLKitLinkFirebase.h>
 
 #define startImageLabelDetector @"vision#startImageLabelDetector"
 #define closeImageLabelDetector @"vision#closeImageLabelDetector"
@@ -33,7 +34,7 @@
     if ([@"default" isEqualToString:type]) {
         MLKImageLabelerOptions *options = [self getImageLabelerOptions:dictionary];
         labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-    } else if ([@"custom" isEqualToString:type]) {
+    } else if ([@"customLocal" isEqualToString:type] || [@"customRemote" isEqualToString:type]) {
         MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary];
         labeler = [MLKImageLabeler imageLabelerWithOptions:options];
     } else {
@@ -77,15 +78,21 @@
 }
 
 - (MLKCustomImageLabelerOptions *)getCustomLabelerOptions:(NSDictionary *)optionsData {
-    NSString *modelType = optionsData[@"customModel"];
-    NSString *path = optionsData[@"path"];
+    NSNumber *local = optionsData[@"local"];
     NSNumber *conf = optionsData[@"confidenceThreshold"];
-    
-    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:path];
-    
-    MLKCustomImageLabelerOptions *options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
+    MLKLocalModel *localModel;
+    MLKCustomImageLabelerOptions *options;
+    if (local.boolValue) {
+        NSString *path = optionsData[@"path"];
+        localModel = [[MLKLocalModel alloc] initWithPath:path];
+        options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
+    } else {
+        NSString *modelName = optionsData[@"modelName"];
+        MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
+        MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
+        options = [[MLKCustomImageLabelerOptions alloc] initWithRemoteModel:remoteModel];
+    }
     options.confidenceThreshold = conf;
-    
     return options;
 }
 
