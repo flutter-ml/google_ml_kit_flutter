@@ -245,8 +245,7 @@ class InputImagePlaneMetadata {
 /// Class to manage firebase remote models.
 class RemoteModelManager {
   Future<bool> isModelDownloaded(String modelName) async {
-    final result = await Vision.channel.invokeMethod(
-        'vision#manageRemoteModel',
+    final result = await Vision.channel.invokeMethod('vision#manageRemoteModel',
         <String, dynamic>{"task": "check", "model": modelName});
     return result as bool;
   }
