@@ -246,7 +246,7 @@ class InputImagePlaneMetadata {
 class RemoteModelManager {
   Future<bool> isModelDownloaded(String modelName) async {
     final result = await Vision.channel.invokeMethod(
-        'vision#startRemoteModelManager',
+        'vision#manageRemoteModel',
         <String, dynamic>{"task": "check", "model": modelName});
     return result as bool;
   }
@@ -257,7 +257,7 @@ class RemoteModelManager {
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await Vision.channel.invokeMethod(
-        "vision#startRemoteModelManager", <String, dynamic>{
+        "vision#manageRemoteModel", <String, dynamic>{
       "task": "download",
       "model": modelTag,
       "wifi": isWifiRequired
@@ -269,7 +269,7 @@ class RemoteModelManager {
   /// Returns `success` if model is delted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
     final result = await Vision.channel
-        .invokeMethod("vision#startRemoteModelManager", <String, dynamic>{
+        .invokeMethod("vision#manageRemoteModel", <String, dynamic>{
       "task": "delete",
       "model": modelTag,
     });

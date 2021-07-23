@@ -1,4 +1,5 @@
 #import "GoogleMlKitPlugin.h"
+#import "GenericModelManager.h"
 #import <MLKitCommon/MLKitCommon.h>
 #import <MLKitDigitalInkRecognition/MLKitDigitalInkRecognition.h>
 
@@ -6,9 +7,11 @@
 #define closeDigitalInkRecognizer @"vision#closeDigitalInkRecognizer"
 #define manageInkModels @"vision#manageInkModels"
 
+
 @implementation DigitalInkRecogniser {
     MLKDigitalInkRecognizer *recognizer;
     FlutterResult downloadInkResult;
+    GenericModelManager *genericModelManager;
 }
 
 - (NSArray *)getMethodsKeys {
@@ -21,7 +24,7 @@
     if ([call.method isEqualToString:startDigitalInkRecognizer]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:manageInkModels]) {
-        [self manageInkModel:call result:result];
+        [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeDigitalInkRecognizer]) {
     } else {
         result(FlutterMethodNotImplemented);
@@ -84,53 +87,12 @@
     }];
 }
 
-- (void)manageInkModel:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSString *task = call.arguments[@"task"];
+- (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSString *modelTag = call.arguments[@"modelTag"];
-    
     MLKDigitalInkRecognitionModelIdentifier *identifier = [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
     MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc] initWithModelIdentifier:identifier];
-    
-    MLKModelManager *modelManager = [MLKModelManager modelManager];
-    
-    if ([task isEqualToString:@"download"]) {
-        MLKModelDownloadConditions *downloadConditions = [[MLKModelDownloadConditions alloc]
-                                                          initWithAllowsCellularAccess:YES
-                                                          allowsBackgroundDownloading:YES];
-        [modelManager downloadModel:model conditions:downloadConditions];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveTestNotification:)
-                                                     name:MLKModelDownloadDidSucceedNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receiveTestNotification:)
-                                                     name:MLKModelDownloadDidFailNotification
-                                                   object:nil];
-        downloadInkResult = result;
-    } else if ([task isEqualToString:@"delete"]) {
-        [modelManager deleteDownloadedModel:model completion:^(NSError * _Nullable error) {
-            if (error == NULL) {
-                result(@"success");
-            } else {
-                result(@"error");
-            }
-        }];
-    } else if ([task isEqualToString:@"check"]) {
-        BOOL isModelDownloaded = [modelManager isModelDownloaded:model];
-        result(@(isModelDownloaded));
-    } else {
-        result(FlutterMethodNotImplemented);
-    }
-}
-
-- (void) receiveTestNotification:(NSNotification *) notification {
-    if ([notification.name isEqualToString:MLKModelDownloadDidSucceedNotification]) {
-        downloadInkResult(@"success");
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    } else if ([notification.name isEqualToString:MLKModelDownloadDidFailNotification]) {
-        downloadInkResult(@"error");
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }
+    genericModelManager = [[GenericModelManager alloc] init];
+    [genericModelManager manageModel:model call:call result:result];
 }
 
 @end

@@ -20,13 +20,13 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class CustomRemoteModelManager implements ApiDetectorInterface {
-    private static final String START = "vision#startRemoteModelManager";
+    private static final String MANAGE = "vision#manageRemoteModel";
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
     public List<String> getMethodsKeys() {
         return new ArrayList<>(
-                Arrays.asList(START));
+                Arrays.asList(MANAGE));
     }
 
     @Override
