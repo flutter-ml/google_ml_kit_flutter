@@ -88,17 +88,16 @@
     NSString *task = call.arguments[@"task"];
     NSString *modelTag = call.arguments[@"modelTag"];
     
-    MLKDigitalInkRecognitionModelIdentifier *identifier =
-    [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
-    MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc]
-                                            initWithModelIdentifier:identifier];
+    MLKDigitalInkRecognitionModelIdentifier *identifier = [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
+    MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc] initWithModelIdentifier:identifier];
     
     MLKModelManager *modelManager = [MLKModelManager modelManager];
     
     if ([task isEqualToString:@"download"]) {
-        [modelManager downloadModel:model conditions:[[MLKModelDownloadConditions alloc]
-                                                      initWithAllowsCellularAccess:YES
-                                                      allowsBackgroundDownloading:YES]];
+        MLKModelDownloadConditions *downloadConditions = [[MLKModelDownloadConditions alloc]
+                                                          initWithAllowsCellularAccess:YES
+                                                          allowsBackgroundDownloading:YES];
+        [modelManager downloadModel:model conditions:downloadConditions];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(receiveTestNotification:)
                                                      name:MLKModelDownloadDidSucceedNotification
@@ -118,7 +117,7 @@
         }];
     } else if ([task isEqualToString:@"check"]) {
         BOOL isModelDownloaded = [modelManager isModelDownloaded:model];
-        result(isModelDownloaded ? @"exists" : @"not exists");
+        result(@(isModelDownloaded));
     } else {
         result(FlutterMethodNotImplemented);
     }

@@ -35,7 +35,8 @@
         MLKImageLabelerOptions *options = [self getImageLabelerOptions:dictionary];
         labeler = [MLKImageLabeler imageLabelerWithOptions:options];
     } else if ([@"customLocal" isEqualToString:type] || [@"customRemote" isEqualToString:type]) {
-        MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary];
+        MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary result:result];
+        if (options == NULL) return;
         labeler = [MLKImageLabeler imageLabelerWithOptions:options];
     } else {
         NSString *reason =
@@ -77,7 +78,7 @@
     return options;
 }
 
-- (MLKCustomImageLabelerOptions *)getCustomLabelerOptions:(NSDictionary *)optionsData {
+- (MLKCustomImageLabelerOptions *)getCustomLabelerOptions:(NSDictionary *)optionsData result:(FlutterResult)result {
     NSNumber *local = optionsData[@"local"];
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     MLKLocalModel *localModel;
@@ -91,6 +92,18 @@
         MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
         MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
         options = [[MLKCustomImageLabelerOptions alloc] initWithRemoteModel:remoteModel];
+        
+        MLKModelManager *modelManager = [MLKModelManager modelManager];
+        
+        BOOL isModelDownloaded = [modelManager isModelDownloaded:remoteModel];
+        
+        if (!isModelDownloaded) {
+            FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
+                                                      message:@"Model has not been downloaded yet"
+                                                      details:@"Model has not been downloaded yet"];
+            result(error);
+            return NULL;
+        }
     }
     options.confidenceThreshold = conf;
     return options;

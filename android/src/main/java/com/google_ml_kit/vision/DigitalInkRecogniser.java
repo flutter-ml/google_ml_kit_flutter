@@ -132,13 +132,8 @@ public class DigitalInkRecogniser implements ApiDetectorInterface {
                 break;
             case "check":
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
-                if (downloaded == null) {
-                    result.error("Verify Failed", "Error in running the is DownLoad method", null);
-                } else if (downloaded) {
-                    result.success("exists");
-                } else if (!downloaded) {
-                    result.success("not exists");
-                }
+                if (downloaded != null) result.success(downloaded);
+                else result.error("Verify Failed", "Error in running the is DownLoad method", null);
                 break;
             default:
                 result.notImplemented();
