@@ -32,7 +32,7 @@ public class CustomRemoteModelManager implements ApiDetectorInterface {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
+        if (method.equals(MANAGE)) {
             handleCall(call, result);
         } else {
             result.notImplemented();
