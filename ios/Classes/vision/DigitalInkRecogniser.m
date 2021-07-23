@@ -7,7 +7,6 @@
 #define closeDigitalInkRecognizer @"vision#closeDigitalInkRecognizer"
 #define manageInkModels @"vision#manageInkModels"
 
-
 @implementation DigitalInkRecogniser {
     MLKDigitalInkRecognizer *recognizer;
     FlutterResult downloadInkResult;
