@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
+import 'toast.dart';
+
 class DigitalInkView extends StatefulWidget {
   @override
   _DigitalInkViewState createState() => _DigitalInkViewState();
@@ -13,6 +15,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
       GoogleMlKit.vision.digitalInkRecogniser();
   List<Offset?> _points = <Offset>[];
   String _recognisedText = '';
+  String _language = 'en-US';
 
   @override
   Widget build(BuildContext context) {
@@ -96,30 +99,24 @@ class _DigitalInkViewState extends State<DigitalInkView> {
     });
   }
 
-  void _showResult(String message, Future<String> t) async {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-    final verificationResult = await t;
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Result: ${verificationResult.toString()}'),
-    ));
-  }
-
   Future<void> _isModelDownloaded() async {
-    _showResult('Checking if model is downloaded...',
-        languageModelManager.isModelDownloaded('en-US'));
+    Future<String> Function() function = () async {
+      final isModelDownloaded =
+          await languageModelManager.isModelDownloaded(_language);
+      return isModelDownloaded ? 'exists' : 'not exists';
+    };
+    Toast()
+        .show('Checking if model is downloaded...', function(), context, this);
   }
 
   Future<void> _deleteModel() async {
-    _showResult('Deleting model...', languageModelManager.deleteModel('en-US'));
+    Toast().show('Deleting model...',
+        languageModelManager.deleteModel(_language), context, this);
   }
 
   Future<void> _downloadModel() async {
-    _showResult(
-        'Downloading model...', languageModelManager.downloadModel('en-US'));
+    Toast().show('Downloading model...',
+        languageModelManager.downloadModel(_language), context, this);
   }
 
   Future<void> _recogniseText() async {
@@ -130,7 +127,8 @@ class _DigitalInkViewState extends State<DigitalInkView> {
             ),
         barrierDismissible: true);
     try {
-      final candidates = await digitalInkRecogniser.readText(_points, 'en-US');
+      final candidates =
+          await digitalInkRecogniser.readText(_points, _language);
       _recognisedText = "";
       for (final candidate in candidates) {
         _recognisedText += "\n" + candidate.text;

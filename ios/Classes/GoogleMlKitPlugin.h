@@ -20,6 +20,9 @@
 @interface BarcodeScanner : NSObject <Handler>
 @end
 
+@interface CustomRemoteModelManager : NSObject <Handler>
+@end
+
 @interface DigitalInkRecogniser : NSObject <Handler>
 @end
 

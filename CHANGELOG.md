@@ -58,3 +58,10 @@
 * Add Pose Detection for iOS
 * Add Digital Ink Recognition for iOS
 * Change Minimum iOS Deployment Target: 10.0
+
+## 0.7.0
+
+* Add firebase remote model support for image labelling .
+* Change available API's to use unbundled models for Android.
+* Update Pose Detector API version and add z co-ordinate.
+* Fixes for barcode data parsing.

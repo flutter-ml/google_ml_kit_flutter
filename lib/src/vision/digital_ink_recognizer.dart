@@ -53,10 +53,10 @@ class LanguageModelManager {
   LanguageModelManager._();
 
   ///Check if a particular model is downloaded.Takes the language tag as input.The language should be according to the BCP-47 guidelines.
-  Future<String> isModelDownloaded(String modelTag) async {
+  Future<bool> isModelDownloaded(String modelTag) async {
     final result = await Vision.channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'check', 'modelTag': modelTag});
-    return result.toString();
+    return result as bool;
   }
 
   ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.

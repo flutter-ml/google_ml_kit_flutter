@@ -126,7 +126,7 @@ class PoseLandmark {
     this.type,
     this.x,
     this.y,
-    this.pointF3D,
+    this.z,
     this.likelihood,
   );
 
@@ -138,8 +138,8 @@ class PoseLandmark {
   /// Gives y coordinate of landmark in image frame.
   final double y;
 
-  /// Gives the point in coordinates in 3D space.
-  final PointF3D pointF3D;
+  /// Gives z coordinate of landmark in image space.
+  final double z;
 
   /// Gives the likelihood of this landmark being in the image frame.
   final double likelihood;
@@ -149,29 +149,8 @@ class PoseLandmark {
       PoseLandmarkType.values[data['type']],
       data['x'],
       data['y'],
-      PointF3D._fromMap(data['3d']),
+      data['z'],
       data['likelihood'] ?? 0.0,
     );
-  }
-}
-
-/// The position of the 3D point in the input image space.
-class PointF3D {
-  /// x coordinate in 3D point space.
-  final double x;
-
-  /// y coordinate in 3D point space.
-  final double y;
-
-  /// z coordinate in 3D point space.
-  final double z;
-
-  PointF3D._(this.x, this.y, this.z);
-
-  factory PointF3D._fromMap(Map<dynamic, dynamic>? point) {
-    if (point == null) {
-      return PointF3D._(0, 0, 0);
-    }
-    return PointF3D._(point['x'], point['y'], point['z']);
   }
 }

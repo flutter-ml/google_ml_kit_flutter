@@ -20,19 +20,19 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class CustomRemoteModelManager implements ApiDetectorInterface {
-    private static final String START = "vision#startRemoteModelManager";
+    private static final String MANAGE = "vision#manageRemoteModel";
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
     public List<String> getMethodsKeys() {
         return new ArrayList<>(
-                Arrays.asList(START));
+                Arrays.asList(MANAGE));
     }
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
+        if (method.equals(MANAGE)) {
             handleCall(call, result);
         } else {
             result.notImplemented();
@@ -41,46 +41,33 @@ public class CustomRemoteModelManager implements ApiDetectorInterface {
 
     private void handleCall(MethodCall call, final MethodChannel.Result result) {
         String task = (String) call.argument("task");
-
+        String modelName = (String) call.argument("model");
+        CustomRemoteModel model = new CustomRemoteModel.Builder(
+                new FirebaseModelSource.Builder(modelName).build()
+        ).build();
         switch (task) {
             case "download":
-                downloadModel(result, (String) call.argument("model"), (boolean) call.argument("wifi"));
+                downloadModel(result, model, (boolean) call.argument("wifi"));
                 break;
             case "delete":
-                deleteModel(result, (String) call.argument("model"));
+                genericModelManager.deleteModel(model, result);
                 break;
             case "check":
-                CustomRemoteModel model =
-                        new CustomRemoteModel.Builder(
-                            new FirebaseModelSource.Builder((String) call.argument("model")).build()
-                        ).build();
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);
-                else result.error("error", null, null);
+                else result.error("Verify Failed", "Error in running the is DownLoad method", null);
                 break;
             default:
                 result.notImplemented();
         }
     }
 
-    private void downloadModel(final MethodChannel.Result result, String modelName, boolean isWifiReqRequired) {
-        CustomRemoteModel downloadModel = new CustomRemoteModel.Builder(
-                new FirebaseModelSource.Builder(modelName).build()
-        ).build();
-
+    private void downloadModel(final MethodChannel.Result result, CustomRemoteModel model, boolean isWifiReqRequired) {
         DownloadConditions downloadConditions;
         if (isWifiReqRequired)
             downloadConditions = new DownloadConditions.Builder().requireWifi().build();
         else
             downloadConditions = new DownloadConditions.Builder().build();
-        genericModelManager.downloadModel(downloadModel, downloadConditions, result);
-    }
-
-    private void deleteModel(final MethodChannel.Result result, String modelName) {
-        CustomRemoteModel deleteModel = new CustomRemoteModel.Builder(
-                new FirebaseModelSource.Builder(modelName).build()
-        ).build();
-
-        genericModelManager.deleteModel(deleteModel, result);
+        genericModelManager.downloadModel(model, downloadConditions, result);
     }
 }

@@ -80,6 +80,7 @@ class CustomImageLabelerOptions implements ImageLabelerOptionsBase {
   final double confidenceThreshold;
 
   /// Indicates the location of custom model.[CustomLocalModel.asset] implies the model is stored in assets folder of android module.
+  /// This is ignored in iOS
   final CustomLocalModel customModel;
 
   /// Path where your custom model is stores.
@@ -89,6 +90,7 @@ class CustomImageLabelerOptions implements ImageLabelerOptionsBase {
   final String labelerType = 'customLocal';
 
   /// Max number of results detector will return
+  /// This is ignored in iOS
   final int maxCount;
 
   /// Constructor to create an instance of [CustomImageLabelerOptions]
@@ -121,6 +123,7 @@ class CustomRemoteLabelerOption implements ImageLabelerOptionsBase {
   final String labelerType = 'customRemote';
 
   /// Max number of results detector will return
+  /// This is ignored in iOS
   final int maxCount;
 
   CustomRemoteLabelerOption(
