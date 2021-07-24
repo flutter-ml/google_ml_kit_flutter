@@ -61,7 +61,7 @@
 
 ## 0.7.0
 
-* Add firebase remote model support for image labelling
-* Change available API's to use unbundled models for Android
-* Update Pose Detector API version and add 3D point feature
-* Fixes for barcode data parsing
+* Add firebase remote model support for image labelling .
+* Change available API's to use unbundled models for Android.
+* Update Pose Detector API version and add z co-ordinate.
+* Fixes for barcode data parsing.

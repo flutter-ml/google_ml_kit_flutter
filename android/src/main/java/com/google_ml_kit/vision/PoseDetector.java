@@ -1,6 +1,7 @@
 package com.google_ml_kit.vision;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -96,13 +97,9 @@ public class PoseDetector implements ApiDetectorInterface {
                                     for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
                                         Map<String, Object> landmarkMap = new HashMap<>();
                                         landmarkMap.put("type", poseLandmark.getLandmarkType());
-                                        landmarkMap.put("x", poseLandmark.getPosition().x);
-                                        landmarkMap.put("y", poseLandmark.getPosition().y);
-                                        Map<String, Object> pointF3D = new HashMap<>();
-                                        pointF3D.put("x", poseLandmark.getPosition3D().getX());
-                                        pointF3D.put("y", poseLandmark.getPosition3D().getY());
-                                        pointF3D.put("z", poseLandmark.getPosition3D().getZ());
-                                        landmarkMap.put("3d",pointF3D);
+                                        landmarkMap.put("x", poseLandmark.getPosition3D().getX());
+                                        landmarkMap.put("y", poseLandmark.getPosition3D().getY());
+                                        landmarkMap.put("z", poseLandmark.getPosition3D().getZ());
                                         landmarkMap.put("likelihood",poseLandmark.getInFrameLikelihood());
                                         landmarks.add(landmarkMap);
                                     }
