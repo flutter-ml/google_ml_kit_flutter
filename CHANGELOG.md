@@ -65,3 +65,7 @@
 * Change available API's to use unbundled models for Android.
 * Update Pose Detector API version and add z co-ordinate.
 * Fixes for barcode data parsing.
+
+## 0.7.1
+
+* Add podspec dependency version constraints
