@@ -15,31 +15,29 @@ public class SwiftFirebaseLanguageidPlugin: NSObject, FlutterPlugin {
         // https://firebase.google.com/docs/ml-kit/ios/identify-languages#identify-the-language-of-a-string
         let languageId = LanguageIdentification.languageIdentification()
         
+        // no text provided, return empty result
         guard let textSafe = text else {
-            // TODO:
-            result(FlutterError(code: "CAST_ERROR",
-                                message: "Battery info unavailable",
-                                details: nil)
-            )
-            return
+            return result({})
         }
         
+        // identify language on text
         languageId.identifyLanguage(for: textSafe) { (languageCode, error) in
             if let error = error {
                 print("Failed with error: \(error)")
-                return
+                return result(FlutterError(code: "idenfity_error",
+                                    message: "error while identifying language: \(error)",
+                                    details: nil)
+                )
             }
             
 
+            // success case
             if let languageCode = languageCode, languageCode != "und" {
-                print("Identified Language: \(languageCode)")
-                result(languageCode)
+                return result(languageCode)
             } else {
-                // https://firebase.google.com/docs/ml-kit/identify-languages
                 // "und" <=> undetermined
                 print("No language was identified")
-                // TODO:
-                result({})
+                return result({})
             }
         }
     }
@@ -50,35 +48,33 @@ public class SwiftFirebaseLanguageidPlugin: NSObject, FlutterPlugin {
         // https://firebase.google.com/docs/ml-kit/ios/identify-languages#get-the-possible-languages-of-a-string
         let languageId = LanguageIdentification.languageIdentification()
 
-        guard let text = text else {
-            // TODO: no guard needed here
-            result(FlutterError(code: "CAST_ERROR",
-                                message: "Battery info unavailable",
-                                details: nil)
-            )
-            return
+        // no text provided, return empty result
+        guard let textSafe = text else {
+            return result({})
         }
         
-        languageId.identifyPossibleLanguages(for: text) { (identifiedLanguages, error) in
+        // identify languages on text
+        languageId.identifyPossibleLanguages(for: textSafe) { (identifiedLanguages, error) in
             
             if let error = error {
                 print("Failed with error: \(error)")
-                result(FlutterError(code: "DETECTION_ERROR",
-                                    message: error.localizedDescription,
+                return result(FlutterError(code: "idenfity_error",
+                                    message: "error while identifying language: \(error)",
                                     details: nil)
                 )
-                return
             }
             
             guard let identifiedLanguages = identifiedLanguages,
                 !identifiedLanguages.isEmpty,
                 identifiedLanguages[0].languageTag != "und"
                 else {
+                    print("No languages were identified")
                     // no language detected
                     result([])
                     return
             }
-            
+
+            // serialize result
             let serializedResult = identifiedLanguages.map({ (identifiedLanguage) -> [String: Any] in
                 return [
                     "languageCode": identifiedLanguage.languageTag,
@@ -86,7 +82,7 @@ public class SwiftFirebaseLanguageidPlugin: NSObject, FlutterPlugin {
                 ]
             })
             
-            result(serializedResult)
+            return result(serializedResult)
         }
     }
     
@@ -98,7 +94,7 @@ public class SwiftFirebaseLanguageidPlugin: NSObject, FlutterPlugin {
         case "identifyLanguages":
             identifyLanguages(text: call.arguments as? String, result: result)
         default:
-            result(FlutterMethodNotImplemented)
+            return result(FlutterMethodNotImplemented)
         }
     }
 }
