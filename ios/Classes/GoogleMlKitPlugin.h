@@ -1,6 +1,7 @@
 #import <Flutter/Flutter.h>
 
 #import <MLKitVision/MLKitVision.h>
+#import <MLKitLanguageID/MLKitLanguageID.h>
 
 @interface GoogleMlKitPlugin : NSObject<FlutterPlugin>
 @property(nonatomic, readwrite) NSMutableDictionary *handlers;
