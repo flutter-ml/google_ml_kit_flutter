@@ -96,7 +96,10 @@ class Home extends StatelessWidget {
                     title: const Text("Natural Language"),
                     children: [
                       CustomCard(
-                          'Language Identifier', LanguageIdentifierView()),
+                        'Language Identifier',
+                        LanguageIdentifierView(),
+                        featureCompleted: true,
+                      ),
                       CustomCard(
                           'Language Translator', LanguageTranslatorView()),
                       CustomCard('Entity Extractor', EntityExtractionView()),
