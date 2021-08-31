@@ -24,9 +24,11 @@
 
 - (void)identifyLanguages:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSString *text = call.arguments[@"text"];
-
+    NSNumber *confidence = call.arguments[@"confidence"];
+    
     if(languageId == nil) {
-        languageId = [MLKLanguageIdentification languageIdentification];
+        MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence.floatValue];
+        languageId = [MLKLanguageIdentification languageIdentificationWithOptions:options];
     }
 
     // source: https://developers.google.com/ml-kit/language/identification/ios#swift
