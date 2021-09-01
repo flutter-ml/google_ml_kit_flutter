@@ -1,6 +1,7 @@
 
 #import "GoogleMlKitPlugin.h"
 #import <MLKitLanguageID/MLKitLanguageID.h>
+#import <Flutter/Flutter.h>
 
 #define startLanguageIdentifier @"nlp#startLanguageIdentifier"
 #define closeLanguageIdentifier @"nlp#closeLanguageIdentifier"
@@ -13,6 +14,9 @@
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startLanguageIdentifier]) {
+        // ensure all arguments are provided
+        [self ensureCallArguments:call result:result];
+        
         // handle method based on call argument
         NSString *possibleLanguages = call.arguments[@"possibleLanguages"];
         if([possibleLanguages isEqualToString: @"yes"]) {
@@ -20,7 +24,7 @@
         } else if([possibleLanguages isEqualToString:@"no"]) {
             [self identifyLanguage:call result:result];
         } else {
-            result([FlutterError errorWithCode:@"error in dart plugin" message:[NSString stringWithFormat:@"Value is unknown: %@", possibleLanguages] details:nil]);
+            result([FlutterError errorWithCode:@"error in dart plugin" message:[NSString stringWithFormat:@"Value for possibleLanguages is unknown: %@", possibleLanguages] details:nil]);
         }
     } else if ([call.method isEqualToString:closeLanguageIdentifier]) {
         // nothing to do here
@@ -48,10 +52,14 @@
             result(getFlutterError(error));
             return;
         }
+        
+        // no language detected
         if (identifiedLanguages.count == 1
             && [((MLKIdentifiedLanguage *) identifiedLanguages[0]).languageTag isEqualToString:@"und"] ) {
-            return result(@{});
+            result([FlutterError errorWithCode:@"language detection" message:@"no languages detected" details:nil]);
+            return;
         }
+
         NSMutableArray *resultArray = [NSMutableArray array];
         for (MLKIdentifiedLanguage *language in identifiedLanguages) {
             NSDictionary *data = @{
@@ -82,14 +90,41 @@
             result(getFlutterError(error));
             return;
         }
+        // no language detected
         if([languageTag isEqualToString:@"und"]) {
-            return result(@{});
+            result([FlutterError errorWithCode:@"language detection" message:@"no language detected" details:nil]);
+            return;
         }
         NSDictionary *data = @{
             @"language" : languageTag,
         };
         result(data);
     }];
+}
+
+// Perform some sanity checks on the call arguments
+- (void)ensureCallArguments:(FlutterMethodCall *)call result:(FlutterResult)result {
+    if(![call.arguments isKindOfClass:[NSDictionary class]]) {
+        result([FlutterError errorWithCode:@"error in dart plugin" message:@"parameters not provided as dictionary" details:nil]);
+    }
+
+    // handle text argument
+    if([((NSDictionary *)call.arguments) objectForKey:@"text"] == nil) {
+        result([FlutterError errorWithCode:@"error in dart plugin" message:@"text parameter not provided" details:nil]);
+    } else {
+        if(![call.arguments[@"text"] isKindOfClass:[NSString class]]) {
+            result([FlutterError errorWithCode:@"error in dart plugin" message:@"text parameter has wrong type" details:nil]);
+        }
+    }
+
+    // handle confidence argument
+    if([((NSDictionary *)call.arguments) objectForKey:@"confidence"] == nil) {
+        result([FlutterError errorWithCode:@"error in dart plugin" message:@"confidence parameter not provided" details:nil]);
+    } else {
+        if(![call.arguments[@"confidence"] isKindOfClass:[NSNumber class]]) {
+            result([FlutterError errorWithCode:@"error in dart plugin" message:@"confidence parameter has wrong type" details:nil]);
+        }
+    }
 }
 
 @end
