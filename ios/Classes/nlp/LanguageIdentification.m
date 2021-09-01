@@ -7,13 +7,13 @@
 #define closeLanguageIdentifier @"nlp#closeLanguageIdentifier"
 
 // possible call arguments
-#define kCallArgumentPossibleLangauges @"possibleLanguages"
+#define kCallArgumentPossibleLanguages @"possibleLanguages"
 #define kCallArgumentText @"text"
 #define kCallArgumentConfidence @"confidence"
 
 // possible call arguments values
-#define kCallArgumentPossibleLangaugesYes @"yes"
-#define kCallArgumentPossibleLangaugesNo @"no"
+#define kCallArgumentPossibleLanguagesYes @"yes"
+#define kCallArgumentPossibleLanguagesNo @"no"
 
 // possible call return arguments
 #define kReturnArgumentLanguage @"language"
@@ -24,7 +24,7 @@
 @implementation LanguageIdentifier {}
 
 - (NSArray *)getMethodsKeys {
-    return @[startLanguageIdentifier];
+    return @[startLanguageIdentifier, closeLanguageIdentifier];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
@@ -33,13 +33,13 @@
         [self ensureCallArguments:call result:result];
         
         // handle method based on call argument
-        NSString *possibleLanguages = call.arguments[kCallArgumentPossibleLangauges];
-        if([possibleLanguages isEqualToString: kCallArgumentPossibleLangaugesYes]) {
+        NSString *possibleLanguages = call.arguments[kCallArgumentPossibleLanguages];
+        if([possibleLanguages isEqualToString: kCallArgumentPossibleLanguagesYes]) {
             [self identifyLanguages:call result:result];
-        } else if([possibleLanguages isEqualToString:kCallArgumentPossibleLangaugesNo]) {
+        } else if([possibleLanguages isEqualToString:kCallArgumentPossibleLanguagesNo]) {
             [self identifyLanguage:call result:result];
         } else {
-            result([FlutterError errorWithCode:@"error in dart plugin" message:[NSString stringWithFormat:@"Value for %@ is unknown: %@", kCallArgumentPossibleLangauges, possibleLanguages] details:nil]);
+            result([FlutterError errorWithCode:@"error in dart plugin" message:[NSString stringWithFormat:@"Value for %@ is unknown: %@", kCallArgumentPossibleLanguages, possibleLanguages] details:nil]);
         }
     } else if ([call.method isEqualToString:closeLanguageIdentifier]) {
         // nothing to do here
@@ -57,8 +57,7 @@
     NSString *text = call.arguments[kCallArgumentText];
     NSNumber *confidence = call.arguments[kCallArgumentConfidence];
     
-    MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence.floatValue];
-    MLKLanguageIdentification *languageId = [MLKLanguageIdentification languageIdentificationWithOptions:options];
+    MLKLanguageIdentification *languageId = [LanguageIdentifier getlanguageIdentifier:confidence.floatValue];
 
     [languageId identifyPossibleLanguagesForText:text
                                       completion:^(NSArray * _Nonnull identifiedLanguages,
@@ -75,7 +74,6 @@
             return;
         }
         
-
         NSMutableArray *resultArray = [NSMutableArray array];
         for (MLKIdentifiedLanguage *language in identifiedLanguages) {
             NSDictionary *data = @{
@@ -95,9 +93,7 @@
     NSString *text = call.arguments[kCallArgumentText];
     NSNumber *confidence = call.arguments[kCallArgumentConfidence];
     
-    // source: https://developers.google.com/ml-kit/language/identification/ios#swift
-    MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence.floatValue];
-    MLKLanguageIdentification *languageId = [MLKLanguageIdentification languageIdentificationWithOptions:options];
+    MLKLanguageIdentification *languageId = [LanguageIdentifier getlanguageIdentifier:confidence.floatValue];
 
     [languageId identifyLanguageForText:text
                                       completion:^(NSString * _Nonnull languageTag,
@@ -143,13 +139,20 @@
     }
 
     // handle possibleLanguages argument
-    if([((NSDictionary *)call.arguments) objectForKey:kCallArgumentPossibleLangauges] == nil) {
+    if([((NSDictionary *)call.arguments) objectForKey:kCallArgumentPossibleLanguages] == nil) {
         result([FlutterError errorWithCode:@"error in dart plugin" message:@"possibleLanguages parameter not provided" details:nil]);
     } else {
-        if(![call.arguments[kCallArgumentPossibleLangauges] isKindOfClass:[NSString class]]) {
+        if(![call.arguments[kCallArgumentPossibleLanguages] isKindOfClass:[NSString class]]) {
             result([FlutterError errorWithCode:@"error in dart plugin" message:@"possibleLanguages parameter has wrong type" details:nil]);
         }
     }
 }
 
++ (MLKLanguageIdentification*)getlanguageIdentifier:(float) confidence {
+    MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence];
+    MLKLanguageIdentification *languageId = [MLKLanguageIdentification languageIdentificationWithOptions:options];
+    return languageId;
+}
+
 @end
+
