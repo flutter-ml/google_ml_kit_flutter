@@ -43,15 +43,16 @@ PODS:
   - Flutter (1.0.0)
   - google_ml_kit (0.6.0):
     - Flutter
-    - GoogleMLKit/BarcodeScanning
-    - GoogleMLKit/DigitalInkRecognition
-    - GoogleMLKit/FaceDetection
-    - GoogleMLKit/ImageLabeling
-    - GoogleMLKit/ImageLabelingCustom
-    - GoogleMLKit/LinkFirebase
-    - GoogleMLKit/PoseDetection
-    - GoogleMLKit/PoseDetectionAccurate
-    - GoogleMLKit/TextRecognition
+    - GoogleMLKit/BarcodeScanning (~> 2.2.0)
+    - GoogleMLKit/DigitalInkRecognition (~> 2.2.0)
+    - GoogleMLKit/FaceDetection (~> 2.2.0)
+    - GoogleMLKit/ImageLabeling (~> 2.2.0)
+    - GoogleMLKit/ImageLabelingCustom (~> 2.2.0)
+    - GoogleMLKit/LanguageID (~> 2.2.0)
+    - GoogleMLKit/LinkFirebase (~> 2.2.0)
+    - GoogleMLKit/PoseDetection (~> 2.2.0)
+    - GoogleMLKit/PoseDetectionAccurate (~> 2.2.0)
+    - GoogleMLKit/TextRecognition (~> 2.2.0)
   - GoogleAppMeasurement (8.4.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.4.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -84,6 +85,9 @@ PODS:
   - GoogleMLKit/ImageLabelingCustom (2.2.0):
     - GoogleMLKit/MLKitCore
     - MLKitImageLabelingCustom (~> 1.3.0)
+  - GoogleMLKit/LanguageID (2.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitLanguageID (~> 1.3.0)
   - GoogleMLKit/LinkFirebase (2.2.0):
     - GoogleMLKit/MLKitCore
     - MLKitLinkFirebase (~> 1.3.0)
@@ -110,6 +114,8 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.3.1)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.1)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.3.1)"
+  - GoogleToolboxForMac/StringEncoding (2.3.1):
+    - GoogleToolboxForMac/Defines (= 2.3.1)
   - GoogleUtilities/AppDelegateSwizzler (7.4.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -167,6 +173,8 @@ PODS:
     - MLKitImageLabelingCommon (~> 1.3)
     - MLKitVision (~> 1.3)
     - MLKitVisionKit (~> 2.2)
+  - MLKitLanguageID (1.3.0):
+    - MLKitNaturalLanguage (~> 1.3)
   - MLKitLinkFirebase (1.3.0):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
@@ -174,6 +182,14 @@ PODS:
     - MLKitCommon (~> 3.0)
   - MLKitMDD (1.3.0):
     - MLKitCommon (~> 3.0)
+  - MLKitNaturalLanguage (1.3.0):
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleToolboxForMac/StringEncoding (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - MLKitCommon (~> 3.0)
+    - Protobuf (~> 3.12)
   - MLKitObjectDetectionCommon (1.3.0):
     - MLKitCommon (~> 3.0)
     - MLKitVision (~> 1.3)
@@ -244,8 +260,10 @@ SPEC REPOS:
     - MLKitImageLabeling
     - MLKitImageLabelingCommon
     - MLKitImageLabelingCustom
+    - MLKitLanguageID
     - MLKitLinkFirebase
     - MLKitMDD
+    - MLKitNaturalLanguage
     - MLKitObjectDetectionCommon
     - MLKitPoseDetection
     - MLKitPoseDetectionAccurate
@@ -270,14 +288,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker/ios"
 
 SPEC CHECKSUMS:
-  camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
+  camera: 3164201dc344383e62282964016528c4f5a9ad50
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
   FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  google_ml_kit: f968359a5e5f2fbcc2a56b79e1c5e16a8fa80697
+  google_ml_kit: 5e37e6c2840533822892b9ec09fa919a3d9d50e5
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
@@ -294,8 +312,10 @@ SPEC CHECKSUMS:
   MLKitImageLabeling: fc44a4f90b1cf16bcb62c043d477c052ba7539ca
   MLKitImageLabelingCommon: fbe695a04fb236555e6b7e69e7def153a04324c1
   MLKitImageLabelingCustom: 83e609e6b7dd8a16dc8790ef325bab1372d1d91d
+  MLKitLanguageID: 3848cf59a1693e2076ba65b37da261c674f97170
   MLKitLinkFirebase: ae5bd6996d0a1a3d3e0bb4c634b594101c07d094
   MLKitMDD: 37b4fbb5fd45809e646fca676945d6a8479ae66e
+  MLKitNaturalLanguage: 2a0295232578461ec25bf5933e45570c3b651d27
   MLKitObjectDetectionCommon: 6abf300c61cd781ee3abc8abea8a3f8baca886dc
   MLKitPoseDetection: bbc263ae4e961e83c9350abe919cff183797e687
   MLKitPoseDetectionAccurate: c87162574669a84b89fdd0279a1f0722faa99b6e
