@@ -69,3 +69,6 @@
 ## 0.7.1
 
 * Add podspec dependency version constraints
+
+## 0.7.2
+* Increase android sdk compile version to 30 
