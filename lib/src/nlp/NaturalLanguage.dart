@@ -12,6 +12,8 @@ class NaturalLanguage {
 
   static final NaturalLanguage instance = NaturalLanguage._();
 
+  final String errorCodeNoLanguageIdentified = "no language identified";
+
   /// Returns instance of [LanguageIdentifier].
   LanguageIdentifier languageIdentifier({double confidenceThreshold = 0.5}) {
     return LanguageIdentifier._(confidenceThreshold);

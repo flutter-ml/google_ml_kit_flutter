@@ -3,12 +3,16 @@ part of 'NaturalLanguage.dart';
 class LanguageIdentifier {
   LanguageIdentifier._(this._confidenceThreshold);
 
+  /// This error code is used inside a [PlatformException] to signal that no language could be determined.
   final String errorCodeNoLanguageIdentified = "no language identified";
 
   final double _confidenceThreshold;
   bool _isOpened = false;
   bool _isClosed = false;
 
+  /// Identifies the language of the given [text].
+  /// In no language could be determined, a [PlatformException] with the [errorCodeNoLanguageIdentified] as error code is thrown.
+  /// More information: https://developers.google.com/ml-kit/language/identification
   Future<String> identifyLanguage(String text) async {
     _isOpened = true;
 
@@ -22,6 +26,9 @@ class LanguageIdentifier {
     return result.toString();
   }
 
+  /// Identifies the possible languages of the given [text].
+  /// In no language could be determined, a [PlatformException] with the [errorCodeNoLanguageIdentified] as error code is thrown.
+  /// More information: https://developers.google.com/ml-kit/language/identification
   Future<List<IdentifiedLanguage>> identifyPossibleLanguages(
       String text) async {
     _isOpened = true;
