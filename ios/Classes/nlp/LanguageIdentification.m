@@ -21,6 +21,9 @@
 
 #define kNoLanguageIdentified @"und"
 
+// NOTE: changing this value means a breaking change for plugin API (on dart side)
+#define kErrorCodeNoLanguageIdentified @"no language identified";
+
 @implementation LanguageIdentifier {}
 
 - (NSArray *)getMethodsKeys {
@@ -70,7 +73,7 @@
         // no language detected
         if (identifiedLanguages.count == 1
             && [((MLKIdentifiedLanguage *) identifiedLanguages[0]).languageTag isEqualToString:kNoLanguageIdentified] ) {
-            result([FlutterError errorWithCode:@"language detection" message:@"no languages detected" details:nil]);
+            result([FlutterError errorWithCode:kErrorCodeNoLanguageIdentified message:@"no languages detected" details:nil]);
             return;
         }
         
@@ -104,7 +107,7 @@
         }
         // no language detected
         if([languageTag isEqualToString:kNoLanguageIdentified]) {
-            result([FlutterError errorWithCode:@"language detection" message:@"no language detected" details:nil]);
+            result([FlutterError errorWithCode:kErrorCodeNoLanguageIdentified message:@"no language detected" details:nil]);
             return;
         }
         NSDictionary *data = @{
