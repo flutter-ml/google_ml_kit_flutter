@@ -23,7 +23,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 
 | Feature                                                                                       | Android | iOS |
 |-----------------------------------------------------------------------------------------------|---------|-----|
-|[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | yet |
+|[Language Identification](https://developers.google.com/ml-kit/language/identification)        | ✅      | ✅  |
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | ✅      | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | ✅      | yet |
 |[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | ✅      | yet |
@@ -200,8 +200,22 @@ final bool response = await entityModelManager.downloadModel(modelTag);
 final String response = await entityModelManager.isModelDownloaded(modelTag);
 final String response = await entityModelManager.deleteModel(modelTag);
 final List<String> availableModels = await entityModelManager.getAvailableModels();
-final String response = await languageIdentifier.identifyLanguage(text);
-final List<IdentifiedLanguage> response = await languageIdentifier.identifyPossibleLanguages(text);
+try {
+  final String response = await languageIdentifier.identifyLanguage(text);
+} on PlatformException catch (pe) {
+  if (pe.code == languageIdentifier.errorCodeNoLanguageIdentified) {
+    // no language detected
+  }
+  // other plugin error
+}
+try {
+  final List<IdentifiedLanguage> response = await languageIdentifier.identifyPossibleLanguages(text);
+} on PlatformException catch (pe) {
+  if (pe.code == languageIdentifier.errorCodeNoLanguageIdentified) {
+    // no language detected
+  }
+  // other plugin error
+}
 final String response = await onDeviceTranslator.translateText(text);
 final bool response = await translateLanguageModelManager.downloadModel(modelTag);
 final String response = await translateLanguageModelManager.isModelDownloaded(modelTag);
