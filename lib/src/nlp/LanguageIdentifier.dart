@@ -3,6 +3,8 @@ part of 'NaturalLanguage.dart';
 class LanguageIdentifier {
   LanguageIdentifier._(this._confidenceThreshold);
 
+  final String errorCodeNoLanguageIdentified = "no language identified";
+
   final double _confidenceThreshold;
   bool _isOpened = false;
   bool _isClosed = false;
