@@ -22,7 +22,7 @@
 #define kNoLanguageIdentified @"und"
 
 // NOTE: changing this value means a breaking change for plugin API (on dart side)
-#define kErrorCodeNoLanguageIdentified @"no language identified";
+#define kErrorCodeNoLanguageIdentified @"no language identified"
 
 @implementation LanguageIdentifier {}
 
