@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,18 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
 
   Future<void> _identifyLanguage() async {
     if (_controller.text == '') return;
-    final language =
-        await _languageIdentifier.identifyLanguage(_controller.text);
+
+    String language;
+    try {
+      language = await _languageIdentifier.identifyLanguage(_controller.text);
+    } on PlatformException catch (pe) {
+      if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
+        language = "error: no language identified!";
+      }
+      language = "error: ${pe.code}: ${pe.message}";
+    } catch (e) {
+      language = "error: ${e.toString()}";
+    }
 
     setState(() {
       _identifiedLanguage = language;
@@ -25,11 +36,25 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
 
   Future<void> _identifyPossibleLanguages() async {
     if (_controller.text == '') return;
-    final possibleLanguages =
-        await _languageIdentifier.identifyPossibleLanguages(_controller.text);
-
+    String error;
+    try {
+      final possibleLanguages =
+          await _languageIdentifier.identifyPossibleLanguages(_controller.text);
+      setState(() {
+        _identifiedLanguages = possibleLanguages;
+      });
+      return;
+    } on PlatformException catch (pe) {
+      if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
+        error = "error: no languages identified!";
+      }
+      error = "error: ${pe.code}: ${pe.message}";
+    } catch (e) {
+      error = "error: ${e.toString()}";
+    }
     setState(() {
-      _identifiedLanguages = possibleLanguages;
+      _identifiedLanguages = [];
+      _identifiedLanguage = error;
     });
   }
 
