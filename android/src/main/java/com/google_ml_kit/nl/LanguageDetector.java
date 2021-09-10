@@ -23,6 +23,11 @@ public class LanguageDetector implements ApiDetectorInterface {
     private static final String START = "nlp#startLanguageIdentifier";
     private static final String CLOSE = "nlp#closeLanguageIdentifier";
 
+    // NOTE: changing this value means a breaking change for plugin API (on dart side)
+    private static final String errorCodeNoLanguageIdentified = "no language identified";
+
+    private static final String bcpLanguageTagUndetermined = "und";
+
     private LanguageIdentifier languageIdentifier;
 
     @Override
@@ -64,7 +69,11 @@ public class LanguageDetector implements ApiDetectorInterface {
                 .addOnSuccessListener(new OnSuccessListener<String>() {
                     @Override
                     public void onSuccess(@NonNull String languageCode) {
-                        result.success(languageCode);
+                      if(languageCode.equals(bcpLanguageTagUndetermined)) {
+                        result.error(errorCodeNoLanguageIdentified, "no language detected", null);
+                        return;
+                      }
+                      result.success(languageCode);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -81,6 +90,10 @@ public class LanguageDetector implements ApiDetectorInterface {
                     @Override
                     public void onSuccess(@NonNull List<IdentifiedLanguage> identifiedLanguages) {
                         List<Map<String, Object>> languageList = new ArrayList<>();
+                        if(identifiedLanguages.size() == 1 && identifiedLanguages.get(0).getLanguageTag().equals(bcpLanguageTagUndetermined)) {
+                            result.error(errorCodeNoLanguageIdentified, "no languages detected", null);
+                            return;
+                        }
                         for (IdentifiedLanguage language : identifiedLanguages) {
                             Map<String, Object> languageData = new HashMap<>();
                             languageData.put("confidence", language.getConfidence());
