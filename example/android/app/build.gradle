@@ -26,7 +26,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     lintOptions {
         disable 'InvalidPackage'
@@ -52,9 +52,8 @@ android {
     dependencies {
         implementation platform('com.google.firebase:firebase-bom:28.1.0')
     }
-
     aaptOptions {
-        noCompress "tflite"  // Your model's file extension: "tflite", "lite", etc.
+        noCompress '...'
     }
 }
 

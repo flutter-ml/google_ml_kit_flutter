@@ -1,6 +1,7 @@
 #import <Flutter/Flutter.h>
 
 #import <MLKitVision/MLKitVision.h>
+#import <MLKitLanguageID/MLKitLanguageID.h>
 
 @interface GoogleMlKitPlugin : NSObject<FlutterPlugin>
 @property(nonatomic, readwrite) NSMutableDictionary *handlers;
@@ -20,6 +21,9 @@
 @interface BarcodeScanner : NSObject <Handler>
 @end
 
+@interface CustomRemoteModelManager : NSObject <Handler>
+@end
+
 @interface DigitalInkRecogniser : NSObject <Handler>
 @end
 
@@ -33,6 +37,9 @@
 @end
 
 @interface TextRecognizer : NSObject <Handler>
+@end
+
+@interface LanguageIdentifier : NSObject <Handler>
 @end
 
 static FlutterError *getFlutterError(NSError *error) {

@@ -66,6 +66,8 @@
                 dictionary[@"type"] = [self poseLandmarkTypeToNumber:landmark.type];
                 dictionary[@"x"] = @(landmark.position.x);
                 dictionary[@"y"] = @(landmark.position.y);
+                dictionary[@"z"] = @(landmark.position.z);
+                dictionary[@"likelihood"] = @(landmark.inFrameLikelihood);
                 [landmarks addObject:dictionary];
             }
             [array addObject:landmarks];

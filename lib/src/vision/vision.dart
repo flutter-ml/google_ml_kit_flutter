@@ -199,19 +199,18 @@ class InputImagePlaneMetadata {
 /// Class to manage firebase remote models.
 class RemoteModelManager {
   Future<bool> isModelDownloaded(String modelName) async {
-    final result = await Vision.channel.invokeMethod(
-        'vision#startRemoteModelManager',
+    final result = await Vision.channel.invokeMethod('vision#manageRemoteModel',
         <String, dynamic>{"task": "check", "model": modelName});
     return result as bool;
   }
 
   /// Downloads a model.
-  /// Returns `success` if model downloads succesfully or model is already downloaded.
-  /// On failing to dowload it throws an error.
+  /// Returns `success` if model downloads successfully or model is already downloaded.
+  /// On failing to download it throws an error.
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await Vision.channel.invokeMethod(
-        "vision#startRemoteModelManager", <String, dynamic>{
+        "vision#manageRemoteModel", <String, dynamic>{
       "task": "download",
       "model": modelTag,
       "wifi": isWifiRequired
@@ -220,10 +219,10 @@ class RemoteModelManager {
   }
 
   /// Deletes a model.
-  /// Returns `success` if model is delted successfully or model is not present.
+  /// Returns `success` if model is deleted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
     final result = await Vision.channel
-        .invokeMethod("vision#startRemoteModelManager", <String, dynamic>{
+        .invokeMethod("vision#manageRemoteModel", <String, dynamic>{
       "task": "delete",
       "model": modelTag,
     });
