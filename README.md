@@ -18,6 +18,7 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
 |[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | ✅      | yet |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | ✅  |
+|[Text Detector V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)            | ✅      | yet |
 
 ### Natural Language
 

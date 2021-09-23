@@ -18,6 +18,7 @@ import com.google_ml_kit.vision.ObjectDetector;
 import com.google_ml_kit.vision.CustomRemoteModelManager;
 import com.google_ml_kit.vision.PoseDetector;
 import com.google_ml_kit.vision.TextDetector;
+import com.google_ml_kit.vision.TextDetectorV2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +49,8 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
                         new LanguageDetector(),
                         new OnDeviceTranslator(),
                         new TranslatorModelManager(),
-                        new SmartReply()
+                        new SmartReply(),
+                        new TextDetectorV2(context)
                 ));
 
         handlers = new HashMap<>();

@@ -130,6 +130,11 @@ class Vision {
   RemoteModelManager remoteModelManager() {
     return RemoteModelManager();
   }
+
+  /// Returns an instance of Text Detector v2.
+  TextDetectorV2 textDetectorV2() {
+    return TextDetectorV2._();
+  }
 }
 
 /// [InputImage] is the format Google' Ml kit takes to process the image
