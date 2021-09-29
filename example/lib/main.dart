@@ -10,6 +10,8 @@ import 'NlpDetectorViews/language_identifier_view.dart';
 import 'VisionDetectorViews/detector_views.dart';
 import 'package:flutter/material.dart';
 
+import 'VisionDetectorViews/text_detectorv2_view.dart';
+
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
@@ -77,6 +79,10 @@ class Home extends StatelessWidget {
                         'Text Detector',
                         TextDetectorView(),
                         featureCompleted: true,
+                      ),
+                      CustomCard(
+                        'Text Detector V2',
+                        TextDetectorV2View(),
                       ),
                       CustomCard(
                         'Object Detector',
