@@ -34,6 +34,7 @@ class _CameraViewState extends State<CameraView> {
   File? _image;
   ImagePicker? _imagePicker;
   int _cameraIndex = 0;
+  double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
 
   @override
   void initState() {
@@ -118,6 +119,25 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           CameraPreview(_controller!),
           if (widget.customPaint != null) widget.customPaint!,
+          Positioned(
+            bottom: 100,
+            left: 50,
+            right: 50,
+            child: Slider(
+              value: zoomLevel,
+              min: minZoomLevel,
+              max: maxZoomLevel,
+              onChanged: (newSliderValue) {
+                setState(() {
+                  zoomLevel = newSliderValue;
+                  _controller!.setZoomLevel(zoomLevel);
+                });
+              },
+              divisions: (maxZoomLevel - 1).toInt() < 1
+                  ? null
+                  : (maxZoomLevel - 1).toInt(),
+            ),
+          )
         ],
       ),
     );
@@ -190,6 +210,13 @@ class _CameraViewState extends State<CameraView> {
       if (!mounted) {
         return;
       }
+      _controller?.getMinZoomLevel().then((value) {
+        zoomLevel = value;
+        minZoomLevel = value;
+      });
+      _controller?.getMaxZoomLevel().then((value) {
+        maxZoomLevel = value;
+      });
       _controller?.startImageStream(_processCameraImage);
       setState(() {});
     });
