@@ -11,7 +11,7 @@
 .svn/
 
 # IntelliJ related
-*.iml
+# *.iml
 *.ipr
 *.iws
 .idea/
@@ -29,7 +29,6 @@
 .pub-cache/
 .pub/
 **/build/
-pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
