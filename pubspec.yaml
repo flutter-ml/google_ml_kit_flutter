@@ -1,6 +1,6 @@
 name: google_ml_kit
 description: A Flutter plugin to implement google's standalone ml kit made for mobile platform.
-version: 0.7.2
+version: 0.7.3
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:

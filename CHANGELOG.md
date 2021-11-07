@@ -72,3 +72,7 @@
 
 ## 0.7.2
 * Increase android sdk compile version to 30 
+
+## 0.7.3
+* Increase android sdk compile version to 31
+* Add android support for text-recognition v2 
