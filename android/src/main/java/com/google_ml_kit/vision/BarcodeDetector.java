@@ -1,6 +1,7 @@
 package com.google_ml_kit.vision;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 import com.google_ml_kit.ApiDetectorInterface;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -93,6 +95,17 @@ public class BarcodeDetector implements ApiDetectorInterface {
                             barcodeMap.put("rawValue", barcode.getRawValue());
                             barcodeMap.put("rawBytes", barcode.getRawBytes());
                             barcodeMap.put("displayValue", barcode.getDisplayValue());
+                            Point[] corners = barcode.getCornerPoints();
+                            if(corners != null) {
+                                int [] x = new int[corners.length];
+                                int [] y = new int[corners.length];
+                                for(int i = 0; i < corners.length; i++) {
+                                    x[i] = corners[i].x;
+                                    y[i] = corners[i].y;
+                                }
+                                barcodeMap.put("cornerPointsX", x);
+                                barcodeMap.put("cornerPointsY", y);
+                            }
                             Rect bb = barcode.getBoundingBox();
                             if (bb != null) {
                                 barcodeMap.put("boundingBoxBottom", bb.bottom);

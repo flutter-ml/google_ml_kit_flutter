@@ -284,6 +284,12 @@ class BarcodeValue {
   /// Could be null if the bounding rectangle can not be determined.
   final Rect? boundingBox;
 
+  /// The corner points of the detected barcode.
+  ///
+  /// These are useful to detect the orientation and adjust for skew
+  /// Could be null if the points could not be determined.
+  final List<Point>? cornerPoints;
+
   BarcodeValue._(Map<dynamic, dynamic> barcodeData)
       : type = BarcodeType.values[barcodeData['type']],
         format = _BarcodeFormatValue.of(barcodeData['format']),
@@ -292,11 +298,12 @@ class BarcodeValue {
         displayValue = barcodeData['displayValue'],
         boundingBox = barcodeData['boundingBoxLeft'] != null
             ? Rect.fromLTRB(
-                (barcodeData['boundingBoxLeft']).toDouble(),
-                (barcodeData['boundingBoxTop']).toDouble(),
-                (barcodeData['boundingBoxRight']).toDouble(),
-                (barcodeData['boundingBoxBottom']).toDouble())
-            : null;
+            (barcodeData['boundingBoxLeft']).toDouble(),
+            (barcodeData['boundingBoxTop']).toDouble(),
+            (barcodeData['boundingBoxRight']).toDouble(),
+            (barcodeData['boundingBoxBottom']).toDouble())
+            : null,
+        cornerPoints = barcodeData['cornerPointsX'] != null ? [for(int i=0; i<barcodeData['cornerPointsX'].length; i++)Point(barcodeData['cornerPointsX'][i], barcodeData['cornerPointsY'][i])] : null;
 }
 
 /// Class to store wifi info obtained from a barcode.
