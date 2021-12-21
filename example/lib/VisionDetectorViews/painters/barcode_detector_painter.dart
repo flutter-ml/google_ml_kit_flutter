@@ -47,10 +47,10 @@ class BarcodeDetectorPainter extends CustomPainter {
             barcode.value.boundingBox!.left, rotation, size, absoluteImageSize);
         top = translateY(
             barcode.value.boundingBox!.top, rotation, size, absoluteImageSize);
-        right = translateX(barcode.value.boundingBox!.right, rotation,
-            size, absoluteImageSize);
-        bottom = translateY(barcode.value.boundingBox!.bottom, rotation,
-            size, absoluteImageSize);
+        right = translateX(barcode.value.boundingBox!.right, rotation, size,
+            absoluteImageSize);
+        bottom = translateY(barcode.value.boundingBox!.bottom, rotation, size,
+            absoluteImageSize);
 
         // Draw a bounding rectangle around the barcode
         canvas.drawRect(

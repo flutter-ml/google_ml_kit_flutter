@@ -298,12 +298,18 @@ class BarcodeValue {
         displayValue = barcodeData['displayValue'],
         boundingBox = barcodeData['boundingBoxLeft'] != null
             ? Rect.fromLTRB(
-            (barcodeData['boundingBoxLeft']).toDouble(),
-            (barcodeData['boundingBoxTop']).toDouble(),
-            (barcodeData['boundingBoxRight']).toDouble(),
-            (barcodeData['boundingBoxBottom']).toDouble())
+                (barcodeData['boundingBoxLeft']).toDouble(),
+                (barcodeData['boundingBoxTop']).toDouble(),
+                (barcodeData['boundingBoxRight']).toDouble(),
+                (barcodeData['boundingBoxBottom']).toDouble())
             : null,
-        cornerPoints = barcodeData['cornerPointsX'] != null ? [for(int i=0; i<barcodeData['cornerPointsX'].length; i++)Point(barcodeData['cornerPointsX'][i], barcodeData['cornerPointsY'][i])] : null;
+        cornerPoints = barcodeData['cornerPointsX'] != null
+            ? [
+                for (int i = 0; i < barcodeData['cornerPointsX'].length; i++)
+                  Point(barcodeData['cornerPointsX'][i],
+                      barcodeData['cornerPointsY'][i])
+              ]
+            : null;
 }
 
 /// Class to store wifi info obtained from a barcode.
