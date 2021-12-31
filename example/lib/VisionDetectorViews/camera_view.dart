@@ -42,11 +42,23 @@ class _CameraViewState extends State<CameraView> {
 
     _imagePicker = ImagePicker();
 
-    _cameraIndex = cameras.indexOf(
-      cameras.firstWhere((element) =>
+    if (cameras.any(
+      (element) =>
           element.lensDirection == widget.initialDirection &&
-          element.sensorOrientation == 90),
-    );
+          element.sensorOrientation == 90,
+    )) {
+      _cameraIndex = cameras.indexOf(
+        cameras.firstWhere((element) =>
+            element.lensDirection == widget.initialDirection &&
+            element.sensorOrientation == 90),
+      );
+    } else {
+      _cameraIndex = cameras.indexOf(
+        cameras.firstWhere(
+          (element) => element.lensDirection == widget.initialDirection,
+        ),
+      );
+    }
 
     _startLiveFeed();
   }
