@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit_example/NlpDetectorViews/entity_extraction_view.dart';
-import 'package:google_ml_kit_example/NlpDetectorViews/language_translator_view.dart';
-import 'package:google_ml_kit_example/NlpDetectorViews/smart_reply_view.dart';
-import 'package:google_ml_kit_example/VisionDetectorViews/object_detector_view.dart';
 
-import 'NlpDetectorViews/language_identifier_view.dart';
-import 'VisionDetectorViews/detector_views.dart';
-import 'VisionDetectorViews/text_detectorv2_view.dart';
+import 'nlp_detector_views/entity_extraction_view.dart';
+import 'nlp_detector_views/language_identifier_view.dart';
+import 'nlp_detector_views/language_translator_view.dart';
+import 'nlp_detector_views/smart_reply_view.dart';
+import 'vision_detector_views/detector_views.dart';
+import 'vision_detector_views/object_detector_view.dart';
+import 'vision_detector_views/text_detectorv2_view.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
               child: Column(
                 children: [
                   ExpansionTile(
-                    title: const Text("Vision"),
+                    title: const Text('Vision'),
                     children: [
                       CustomCard(
                         'Image Label Detector',
@@ -99,7 +99,7 @@ class Home extends StatelessWidget {
                     height: 20,
                   ),
                   ExpansionTile(
-                    title: const Text("Natural Language"),
+                    title: const Text('Natural Language'),
                     children: [
                       CustomCard(
                         'Language Identifier',
@@ -146,9 +146,10 @@ class CustomCard extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: const Text(
                     'This feature has not been implemented for iOS yet')));
-          } else
+          } else {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => _viewPage));
+          }
         },
       ),
     );

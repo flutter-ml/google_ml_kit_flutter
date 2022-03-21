@@ -11,7 +11,7 @@ class ObjectDetectorView extends StatefulWidget {
 }
 
 class _ObjectDetectorView extends State<ObjectDetectorView> {
-  LocalModel model = LocalModel("object_labeler.tflite");
+  LocalModel model = LocalModel('object_labeler.tflite');
   late ObjectDetector objectDetector;
 
   @override
@@ -50,7 +50,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     print(result);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null &&
-        result.length > 0) {
+        result.isNotEmpty) {
       final painter = ObjectDetectorPainter(
           result,
           inputImage.inputImageData!.imageRotation,

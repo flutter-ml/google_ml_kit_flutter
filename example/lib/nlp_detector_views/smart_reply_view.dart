@@ -7,8 +7,8 @@ class SmartReplyView extends StatefulWidget {
 }
 
 class _SmartReplyViewState extends State<SmartReplyView> {
-  var _localUserController = TextEditingController();
-  var _remoteUserController = TextEditingController();
+  final _localUserController = TextEditingController();
+  final _remoteUserController = TextEditingController();
   var _suggestions = <SmartReplySuggestion>[];
 
   final SmartReply _smartReply = GoogleMlKit.nlp.smartReply();
@@ -20,11 +20,12 @@ class _SmartReplyViewState extends State<SmartReplyView> {
   }
 
   Future<void> _addConversation(bool localUser) async {
-    if (localUser)
+    if (localUser) {
       _smartReply.addConversationForLocalUser(_localUserController.text);
-    else
+    } else {
       _smartReply.addConversationForRemoteUser(
           _remoteUserController.text, 'userZ');
+    }
   }
 
   Future<void> _suggestReplies() async {
@@ -40,15 +41,14 @@ class _SmartReplyViewState extends State<SmartReplyView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Entity Extractor"),
+          title: const Text('Entity Extractor'),
         ),
         body: ListView(
           children: [
             const SizedBox(
               height: 30,
             ),
-            const Center(
-                child: const Text('Enter conversation for Local User')),
+            const Center(child: Text('Enter conversation for Local User')),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -78,8 +78,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
                   child: Text('Add conversation')),
             ),
             SizedBox(height: 30),
-            const Center(
-                child: const Text('Enter conversation for remote user')),
+            const Center(child: Text('Enter conversation for remote user')),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -112,7 +111,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
               child: ElevatedButton(
                   onPressed: _suggestReplies, child: Text('Suggest Replies')),
             ),
-            _suggestions.length > 0
+            _suggestions.isNotEmpty
                 ? ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     shrinkWrap: true,

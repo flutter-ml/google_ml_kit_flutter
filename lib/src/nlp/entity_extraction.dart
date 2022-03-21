@@ -1,4 +1,4 @@
-part of 'NaturalLanguage.dart';
+part of 'natural_language.dart';
 
 /// Extracts entities from the given text.
 /// Creating an instance.
@@ -29,8 +29,8 @@ class EntityExtractor {
       'language': _language
     });
 
-    var annotation = <EntityAnnotation>[];
-    for (dynamic data in result) {
+    final annotation = <EntityAnnotation>[];
+    for (final dynamic data in result) {
       annotation.add(EntityAnnotation.instance(data));
     }
     return annotation;
@@ -57,8 +57,8 @@ class EntityModelManager {
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String modelTag) async {
     final result = await NaturalLanguage.channel.invokeMethod(
-        "nlp#startEntityModelManager",
-        <String, dynamic>{"task": "check", "model": modelTag});
+        'nlp#startEntityModelManager',
+        <String, dynamic>{'task': 'check', 'model': modelTag});
     return result as bool;
   }
 
@@ -68,10 +68,10 @@ class EntityModelManager {
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await NaturalLanguage.channel.invokeMethod(
-        "nlp#startEntityModelManager", <String, dynamic>{
-      "task": "download",
-      "model": modelTag,
-      "wifi": isWifiRequired
+        'nlp#startEntityModelManager', <String, dynamic>{
+      'task': 'download',
+      'model': modelTag,
+      'wifi': isWifiRequired
     });
     return result.toString();
   }
@@ -80,9 +80,9 @@ class EntityModelManager {
   /// Returns `success` if model is delted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
     final result = await NaturalLanguage.channel
-        .invokeMethod("nlp#startEntityModelManager", <String, dynamic>{
-      "task": "delete",
-      "model": modelTag,
+        .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
+      'task': 'delete',
+      'model': modelTag,
     });
     return result.toString();
   }
@@ -91,13 +91,13 @@ class EntityModelManager {
   /// These are `BCP-47` tags.
   Future<List<String>> getAvailableModels() async {
     final result = await NaturalLanguage.channel
-        .invokeMethod("nlp#startEntityModelManager", <String, dynamic>{
-      "task": "getModels",
+        .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
+      'task': 'getModels',
     });
 
-    var _languages = <String>[];
+    final _languages = <String>[];
 
-    for (dynamic data in result) {
+    for (final dynamic data in result) {
       _languages.add(data.toString());
     }
     return _languages;
@@ -105,39 +105,40 @@ class EntityModelManager {
 }
 
 class EntityExtractorOptions {
-  static const String ARABIC = 'arabic';
-  static const String CHINESE = 'chinese';
-  static const String DUTCH = 'dutch';
-  static const String ENGLISH = 'english';
-  static const String FRENCH = 'french';
-  static const String GERMAN = 'german';
-  static const String ITALIAN = 'italian';
-  static const String JAPANESE = 'japanese';
-  static const String KOREAN = 'korean';
-  static const String POLISH = 'polish';
-  static const String PORTUGUESE = 'portuguese';
-  static const String RUSSIAN = 'russian';
-  static const String SPANISH = 'spanish';
-  static const String THAI = 'thai';
-  static const String TURKISH = 'turkish';
+  static const String arabic = 'arabic';
+  static const String chinese = 'chinese';
+  static const String dutch = 'dutch';
+  static const String english = 'english';
+  static const String french = 'french';
+  static const String german = 'german';
+  static const String italian = 'italian';
+  static const String japanese = 'japanese';
+  static const String korean = 'korean';
+  static const String polish = 'polish';
+  static const String portuguese = 'portuguese';
+  static const String russian = 'russian';
+  static const String spanish = 'spanish';
+  static const String thai = 'thai';
+  static const String turkish = 'turkish';
 }
 
-class Entity {
+class EntityType {
   final String _string;
 
-  static const int TYPE_ADDRESS = 1;
-  static const int TYPE_DATE_TIME = 2;
-  static const int TYPE_EMAIL = 3;
-  static const int TYPE_FLIGHT_NUMBER = 4;
-  static const int TYPE_IBAN = 5;
-  static const int TYPE_ISBN = 6;
-  static const int TYPE_MONEY = 11;
-  static const int TYPE_PAYMENT_CARD = 7;
-  static const int TYPE_PHONE = 8;
-  static const int TYPE_TRACKING_NUMBER = 9;
-  static const int TYPE_URL = 10;
+  static const int unknown = 0;
+  static const int address = 1;
+  static const int dateTime = 2;
+  static const int email = 3;
+  static const int flightNumber = 4;
+  static const int iban = 5;
+  static const int isbn = 6;
+  static const int money = 11;
+  static const int paymentCard = 7;
+  static const int phone = 8;
+  static const int trackingNumber = 9;
+  static const int url = 10;
 
-  Entity(this._string);
+  EntityType(this._string);
 
   @override
   String toString() => _string;
@@ -147,52 +148,52 @@ class EntityAnnotation {
   final int start;
   final int end;
   final String text;
-  final List<Entity> entities;
+  final List<EntityType> entities;
 
   EntityAnnotation._(this.start, this.end, this.text, this.entities);
 
   static EntityAnnotation instance(Map<dynamic, dynamic> annotation) {
-    var entities = <Entity>[];
+    final entities = <EntityType>[];
 
-    for (dynamic entity in annotation['entities']) {
-      var type = entity['type'];
-      var raw = entity['raw'];
+    for (final dynamic entity in annotation['entities']) {
+      final type = entity['type'];
+      final raw = entity['raw'];
       switch (type) {
-        case Entity.TYPE_ADDRESS:
+        case EntityType.address:
           entities.add(AddressEntity(raw));
           break;
-        case Entity.TYPE_URL:
+        case EntityType.url:
           entities.add(UrlEntity(raw));
           break;
-        case Entity.TYPE_PHONE:
+        case EntityType.phone:
           entities.add(PhoneEntity(raw));
           break;
-        case Entity.TYPE_EMAIL:
+        case EntityType.email:
           entities.add(EmailEntity(raw));
           break;
-        case Entity.TYPE_DATE_TIME:
+        case EntityType.dateTime:
           entities.add(DateTimeEntity(raw.toString(),
               entity['dateTimeGranularity'], entity['timestamp']));
           break;
-        case Entity.TYPE_FLIGHT_NUMBER:
+        case EntityType.flightNumber:
           entities
               .add(FlightNumberEntity(raw, entity['code'], entity['number']));
           break;
-        case Entity.TYPE_IBAN:
+        case EntityType.iban:
           entities.add(IbanEntity(raw, entity['iban'], entity['code']));
           break;
-        case Entity.TYPE_ISBN:
+        case EntityType.isbn:
           entities.add(IsbnEntity(raw, entity['isbn']));
           break;
-        case Entity.TYPE_MONEY:
+        case EntityType.money:
           entities.add(MoneyEntity(raw, entity['fraction'], entity['integer'],
               entity['unnormalized']));
           break;
-        case Entity.TYPE_PAYMENT_CARD:
+        case EntityType.paymentCard:
           entities
               .add(PaymentCardEntity(raw, entity['network'], entity['number']));
           break;
-        case Entity.TYPE_TRACKING_NUMBER:
+        case EntityType.trackingNumber:
           entities.add(
               TrackingNumberEntity(raw, entity['carrier'], entity['number']));
           break;
@@ -205,9 +206,10 @@ class EntityAnnotation {
   }
 }
 
-class DateTimeEntity extends Entity {
+class DateTimeEntity extends EntityType {
   final int _dateTimeGranularity;
   final int _timeStamp;
+
   DateTimeEntity(String string, this._dateTimeGranularity, this._timeStamp)
       : super(string);
 
@@ -216,19 +218,19 @@ class DateTimeEntity extends Entity {
   int getTimestampMillis() => _timeStamp;
 }
 
-class TrackingNumberEntity extends Entity {
-  static const int CARRIER_AMAZON = 10;
-  static const int CARRIER_DHL = 3;
-  static const int CARRIER_FEDEX = 1;
-  static const int CARRIER_ISRAEL_POST = 7;
-  static const int CARRIER_I_PARCEL = 11;
-  static const int CARRIER_LASERSHIP = 6;
-  static const int CARRIER_MSC = 9;
-  static const int CARRIER_ONTRAC = 5;
-  static const int CARRIER_SWISS_POST = 8;
-  static const int CARRIER_UNKNOWN = 0;
-  static const int CARRIER_UPS = 2;
-  static const int CARRIER_USPS = 4;
+class TrackingNumberEntity extends EntityType {
+  static const int unknown = 0;
+  static const int fedex = 1;
+  static const int ups = 2;
+  static const int dhl = 3;
+  static const int usps = 4;
+  static const int ontrac = 5;
+  static const int lasership = 6;
+  static const int israelPost = 7;
+  static const int swissPost = 8;
+  static const int mcs = 9;
+  static const int amazon = 10;
+  static const int iParcel = 11;
 
   final int _carrier;
   final String _number;
@@ -241,22 +243,23 @@ class TrackingNumberEntity extends Entity {
   String getParcelTrackingNumber() => _number;
 }
 
-class PaymentCardEntity extends Entity {
-  static const CARD_AMEX = 1;
-  static const CARD_DINERS_CLUB = 2;
-  static const CARD_DISCOVER = 3;
-  static const CARD_INTER_PAYMENT = 4;
-  static const CARD_JCB = 5;
-  static const CARD_MAESTRO = 6;
-  static const CARD_MASTERCARD = 7;
-  static const CARD_MIR = 8;
-  static const CARD_TROY = 9;
-  static const CARD_UNIONPAY = 10;
-  static const CARD_UNKNOWN = 0;
-  static const CARD_VISA = 11;
+class PaymentCardEntity extends EntityType {
+  static const int unknown = 0;
+  static const int amex = 1;
+  static const int dinersClub = 2;
+  static const int discover = 3;
+  static const int interPayment = 4;
+  static const int jcb = 5;
+  static const int maestro = 6;
+  static const int mastercard = 7;
+  static const int mir = 8;
+  static const int troy = 9;
+  static const int unionpay = 10;
+  static const int visa = 11;
 
   final int _network;
   final String _number;
+
   PaymentCardEntity(String string, this._network, this._number) : super(string);
 
   int getPaymentCardNetwork() => _network;
@@ -264,7 +267,7 @@ class PaymentCardEntity extends Entity {
   String getPaymentCardNumber() => _number;
 }
 
-class IbanEntity extends Entity {
+class IbanEntity extends EntityType {
   final String _iban;
   final String _countryCode;
 
@@ -275,7 +278,7 @@ class IbanEntity extends Entity {
   String getIbanCountryCode() => _countryCode;
 }
 
-class MoneyEntity extends Entity {
+class MoneyEntity extends EntityType {
   final int _fraction;
   final int _integer;
   final String _currency;
@@ -290,7 +293,7 @@ class MoneyEntity extends Entity {
   String getUnnormalizedCurrency() => _currency;
 }
 
-class IsbnEntity extends Entity {
+class IsbnEntity extends EntityType {
   final String _isbn;
 
   IsbnEntity(String string, this._isbn) : super(string);
@@ -298,7 +301,7 @@ class IsbnEntity extends Entity {
   String getIsbn() => _isbn;
 }
 
-class FlightNumberEntity extends Entity {
+class FlightNumberEntity extends EntityType {
   final String _airlineCode;
   final String _flightNumber;
 
@@ -310,18 +313,18 @@ class FlightNumberEntity extends Entity {
   String getFlightNumber() => _flightNumber;
 }
 
-class AddressEntity extends Entity {
+class AddressEntity extends EntityType {
   AddressEntity(String string) : super(string);
 }
 
-class UrlEntity extends Entity {
+class UrlEntity extends EntityType {
   UrlEntity(String string) : super(string);
 }
 
-class PhoneEntity extends Entity {
+class PhoneEntity extends EntityType {
   PhoneEntity(String string) : super(string);
 }
 
-class EmailEntity extends Entity {
+class EmailEntity extends EntityType {
   EmailEntity(String string) : super(string);
 }

@@ -1,4 +1,4 @@
-part of 'NaturalLanguage.dart';
+part of 'natural_language.dart';
 
 ///Generates smart replies based on the conversations list.
 ///Creating an instance of [SmartReply]
@@ -34,9 +34,9 @@ class SmartReply {
     _hasBeenOpened = true;
     _isClosed = false;
 
-    var suggestions = <SmartReplySuggestion>[];
+    final suggestions = <SmartReplySuggestion>[];
     if (_conversationCount == 0) {
-      print("No conversations added yet");
+      print('No conversations added yet');
       return <String, dynamic>{'status': 2, 'suggestions': suggestions};
     }
 
@@ -44,7 +44,7 @@ class SmartReply {
         await NaturalLanguage.channel.invokeMethod('nlp#startSmartReply');
 
     if (result['suggestions'] != null) {
-      for (dynamic suggestion in result['suggestions']) {
+      for (final dynamic suggestion in result['suggestions']) {
         suggestions.add(
             SmartReplySuggestion(suggestion['result'], suggestion['toString']));
       }

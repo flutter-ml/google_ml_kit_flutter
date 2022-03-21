@@ -15,7 +15,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
       GoogleMlKit.vision.digitalInkRecogniser();
   List<Offset?> _points = <Offset>[];
   String _recognisedText = '';
-  String _language = 'en-US';
+  final String _language = 'en-US';
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
               child: GestureDetector(
                 onPanUpdate: (DragUpdateDetails details) {
                   setState(() {
-                    RenderObject? object = context.findRenderObject();
+                    final RenderObject? object = context.findRenderObject();
                     final _localPosition = (object as RenderBox?)
                         ?.globalToLocal(details.localPosition);
                     _points = List.from(_points)..add(_localPosition);
@@ -100,13 +100,8 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   }
 
   Future<void> _isModelDownloaded() async {
-    Future<String> Function() function = () async {
-      final isModelDownloaded =
-          await languageModelManager.isModelDownloaded(_language);
-      return isModelDownloaded ? 'exists' : 'not exists';
-    };
-    Toast()
-        .show('Checking if model is downloaded...', function(), context, this);
+    Toast().show('Checking if model is downloaded...', isModelDownloaded(),
+        context, this);
   }
 
   Future<void> _deleteModel() async {
@@ -119,6 +114,12 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         languageModelManager.downloadModel(_language), context, this);
   }
 
+  Future<String> isModelDownloaded() async {
+    final isModelDownloaded =
+        await languageModelManager.isModelDownloaded(_language);
+    return isModelDownloaded ? 'exists' : 'not exists';
+  }
+
   Future<void> _recogniseText() async {
     showDialog(
         context: context,
@@ -129,9 +130,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
     try {
       final candidates =
           await digitalInkRecogniser.readText(_points, _language);
-      _recognisedText = "";
+      _recognisedText = '';
       for (final candidate in candidates) {
-        _recognisedText += "\n" + candidate.text;
+        _recognisedText += '\n${candidate.text}';
       }
       setState(() {});
     } catch (e) {
@@ -150,7 +151,7 @@ class Signature extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final Paint paint = Paint()
       ..color = Colors.blue
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 4.0;

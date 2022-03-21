@@ -8,13 +8,13 @@ class LanguageTranslatorView extends StatefulWidget {
 
 class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   var _translatedText = '';
-  var _controller = TextEditingController();
+  final _controller = TextEditingController();
 
   final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
 
   final _onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator(
-      sourceLanguage: TranslateLanguage.ENGLISH,
-      targetLanguage: TranslateLanguage.SPANISH);
+      sourceLanguage: TranslateLanguage.english,
+      targetLanguage: TranslateLanguage.spanish);
 
   @override
   void dispose() {
@@ -37,7 +37,7 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   }
 
   Future<void> getAvailableModels() async {
-    var result = await _languageModelManager.getAvailableModels();
+    final result = await _languageModelManager.getAvailableModels();
     print('Available models: $result');
   }
 
@@ -49,7 +49,7 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   }
 
   Future<void> translateText() async {
-    var result = await _onDeviceTranslator.translateText(_controller.text);
+    final result = await _onDeviceTranslator.translateText(_controller.text);
     setState(() {
       _translatedText = result;
     });
@@ -60,14 +60,14 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Language Translator"),
+          title: const Text('Language Translator'),
         ),
         body: ListView(
           children: [
             const SizedBox(
               height: 30,
             ),
-            const Center(child: const Text('Enter text (English)')),
+            const Center(child: Text('Enter text (English)')),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -83,7 +83,7 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
                 ),
               ),
             ),
-            const Center(child: const Text('Translated Text (Spanish)')),
+            const Center(child: Text('Translated Text (Spanish)')),
             const SizedBox(
               height: 30,
             ),

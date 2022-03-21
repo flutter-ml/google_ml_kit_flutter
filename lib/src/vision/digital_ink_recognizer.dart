@@ -15,8 +15,8 @@ class DigitalInkRecogniser {
   Future<List<RecognitionCandidate>> readText(
       List<Offset?> points, String modelTag) async {
     _isOpened = true;
-    List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
-    for (var point in points) {
+    final List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
+    for (final point in points) {
       if (point != null) {
         pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
       }
@@ -27,7 +27,7 @@ class DigitalInkRecogniser {
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
     for (final dynamic data in result) {
-      final candidate = RecognitionCandidate(data["text"], data["score"]);
+      final candidate = RecognitionCandidate(data['text'], data['score']);
       candidates.add(candidate);
     }
 

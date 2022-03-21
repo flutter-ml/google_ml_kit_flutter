@@ -1,5 +1,5 @@
-import 'vision/ml_vision.dart';
-import 'nlp/NLP.dart';
+import 'nlp/natural_language.dart';
+import 'vision/vision.dart';
 
 class GoogleMlKit {
   GoogleMlKit._();

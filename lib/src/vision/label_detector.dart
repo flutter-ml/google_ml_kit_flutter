@@ -32,9 +32,9 @@ class ImageLabeler {
       'options': _labelerOptions._map,
       'imageData': inputImage._getImageData()
     });
-    var imageLabels = <ImageLabel>[];
+    final imageLabels = <ImageLabel>[];
 
-    for (dynamic data in result) {
+    for (final dynamic data in result) {
       imageLabels.add(ImageLabel(data));
     }
 
