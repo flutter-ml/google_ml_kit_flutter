@@ -122,7 +122,7 @@ class EntityExtractorOptions {
   static const String turkish = 'turkish';
 }
 
-class EntityType {
+class Entity {
   final String _string;
 
   static const int unknown = 0;
@@ -138,7 +138,7 @@ class EntityType {
   static const int trackingNumber = 9;
   static const int url = 10;
 
-  EntityType(this._string);
+  Entity(this._string);
 
   @override
   String toString() => _string;
@@ -148,52 +148,52 @@ class EntityAnnotation {
   final int start;
   final int end;
   final String text;
-  final List<EntityType> entities;
+  final List<Entity> entities;
 
   EntityAnnotation._(this.start, this.end, this.text, this.entities);
 
   static EntityAnnotation instance(Map<dynamic, dynamic> annotation) {
-    final entities = <EntityType>[];
+    final entities = <Entity>[];
 
     for (final dynamic entity in annotation['entities']) {
       final type = entity['type'];
       final raw = entity['raw'];
       switch (type) {
-        case EntityType.address:
+        case Entity.address:
           entities.add(AddressEntity(raw));
           break;
-        case EntityType.url:
+        case Entity.url:
           entities.add(UrlEntity(raw));
           break;
-        case EntityType.phone:
+        case Entity.phone:
           entities.add(PhoneEntity(raw));
           break;
-        case EntityType.email:
+        case Entity.email:
           entities.add(EmailEntity(raw));
           break;
-        case EntityType.dateTime:
+        case Entity.dateTime:
           entities.add(DateTimeEntity(raw.toString(),
               entity['dateTimeGranularity'], entity['timestamp']));
           break;
-        case EntityType.flightNumber:
+        case Entity.flightNumber:
           entities
               .add(FlightNumberEntity(raw, entity['code'], entity['number']));
           break;
-        case EntityType.iban:
+        case Entity.iban:
           entities.add(IbanEntity(raw, entity['iban'], entity['code']));
           break;
-        case EntityType.isbn:
+        case Entity.isbn:
           entities.add(IsbnEntity(raw, entity['isbn']));
           break;
-        case EntityType.money:
+        case Entity.money:
           entities.add(MoneyEntity(raw, entity['fraction'], entity['integer'],
               entity['unnormalized']));
           break;
-        case EntityType.paymentCard:
+        case Entity.paymentCard:
           entities
               .add(PaymentCardEntity(raw, entity['network'], entity['number']));
           break;
-        case EntityType.trackingNumber:
+        case Entity.trackingNumber:
           entities.add(
               TrackingNumberEntity(raw, entity['carrier'], entity['number']));
           break;
@@ -206,7 +206,7 @@ class EntityAnnotation {
   }
 }
 
-class DateTimeEntity extends EntityType {
+class DateTimeEntity extends Entity {
   final int _dateTimeGranularity;
   final int _timeStamp;
 
@@ -218,7 +218,7 @@ class DateTimeEntity extends EntityType {
   int getTimestampMillis() => _timeStamp;
 }
 
-class TrackingNumberEntity extends EntityType {
+class TrackingNumberEntity extends Entity {
   static const int unknown = 0;
   static const int fedex = 1;
   static const int ups = 2;
@@ -243,7 +243,7 @@ class TrackingNumberEntity extends EntityType {
   String getParcelTrackingNumber() => _number;
 }
 
-class PaymentCardEntity extends EntityType {
+class PaymentCardEntity extends Entity {
   static const int unknown = 0;
   static const int amex = 1;
   static const int dinersClub = 2;
@@ -267,7 +267,7 @@ class PaymentCardEntity extends EntityType {
   String getPaymentCardNumber() => _number;
 }
 
-class IbanEntity extends EntityType {
+class IbanEntity extends Entity {
   final String _iban;
   final String _countryCode;
 
@@ -278,7 +278,7 @@ class IbanEntity extends EntityType {
   String getIbanCountryCode() => _countryCode;
 }
 
-class MoneyEntity extends EntityType {
+class MoneyEntity extends Entity {
   final int _fraction;
   final int _integer;
   final String _currency;
@@ -293,7 +293,7 @@ class MoneyEntity extends EntityType {
   String getUnnormalizedCurrency() => _currency;
 }
 
-class IsbnEntity extends EntityType {
+class IsbnEntity extends Entity {
   final String _isbn;
 
   IsbnEntity(String string, this._isbn) : super(string);
@@ -301,7 +301,7 @@ class IsbnEntity extends EntityType {
   String getIsbn() => _isbn;
 }
 
-class FlightNumberEntity extends EntityType {
+class FlightNumberEntity extends Entity {
   final String _airlineCode;
   final String _flightNumber;
 
@@ -313,18 +313,18 @@ class FlightNumberEntity extends EntityType {
   String getFlightNumber() => _flightNumber;
 }
 
-class AddressEntity extends EntityType {
+class AddressEntity extends Entity {
   AddressEntity(String string) : super(string);
 }
 
-class UrlEntity extends EntityType {
+class UrlEntity extends Entity {
   UrlEntity(String string) : super(string);
 }
 
-class PhoneEntity extends EntityType {
+class PhoneEntity extends Entity {
   PhoneEntity(String string) : super(string);
 }
 
-class EmailEntity extends EntityType {
+class EmailEntity extends Entity {
   EmailEntity(String string) : super(string);
 }
