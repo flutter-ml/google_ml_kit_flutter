@@ -1,0 +1,27 @@
+name: google_ml_kit_face_detection
+description: A new Flutter project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+  flutter: ">=2.5.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_ml_kit_commons:
+    path: ../google_ml_kit_commons
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.google_ml_kit_face_detection
+        pluginClass: GoogleMlKitFaceDetectionPlugin
+      ios:
+        pluginClass: GoogleMlKitFaceDetectionPlugin

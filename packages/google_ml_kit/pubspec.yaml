@@ -1,0 +1,34 @@
+name: google_ml_kit
+description: A Flutter plugin to implement google's standalone ml kit made for mobile platform.
+version: 0.7.3
+homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.20.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_ml_kit_commons:
+    path: ../google_ml_kit_commons
+  google_ml_kit_barcode_scanner:
+    path: ../google_ml_kit_barcode_scanner
+  google_ml_kit_face_detection:
+    path: ../google_ml_kit_face_detection
+  google_ml_kit_pose_detection:
+    path: ../google_ml_kit_pose_detection
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^1.0.1
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.google_ml_kit
+        pluginClass: GoogleMlKitPlugin
+      ios:
+        pluginClass: GoogleMlKitPlugin
