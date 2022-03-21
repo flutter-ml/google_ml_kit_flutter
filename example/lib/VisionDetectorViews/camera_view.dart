@@ -41,11 +41,25 @@ class _CameraViewState extends State<CameraView> {
     super.initState();
 
     _imagePicker = ImagePicker();
-    for (var i = 0; i < cameras.length; i++) {
-      if (cameras[i].lensDirection == widget.initialDirection) {
-        _cameraIndex = i;
-      }
+
+    if (cameras.any(
+      (element) =>
+          element.lensDirection == widget.initialDirection &&
+          element.sensorOrientation == 90,
+    )) {
+      _cameraIndex = cameras.indexOf(
+        cameras.firstWhere((element) =>
+            element.lensDirection == widget.initialDirection &&
+            element.sensorOrientation == 90),
+      );
+    } else {
+      _cameraIndex = cameras.indexOf(
+        cameras.firstWhere(
+          (element) => element.lensDirection == widget.initialDirection,
+        ),
+      );
     }
+
     _startLiveFeed();
   }
 
@@ -112,12 +126,28 @@ class _CameraViewState extends State<CameraView> {
     if (_controller?.value.isInitialized == false) {
       return Container();
     }
+
+    final size = MediaQuery.of(context).size;
+    // calculate scale depending on screen and camera ratios
+    // this is actually size.aspectRatio / (1 / camera.aspectRatio)
+    // because camera preview size is received as landscape
+    // but we're calculating for portrait orientation
+    var scale = size.aspectRatio * _controller!.value.aspectRatio;
+
+    // to prevent scaling down, invert the value
+    if (scale < 1) scale = 1 / scale;
+
     return Container(
       color: Colors.black,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          CameraPreview(_controller!),
+          Transform.scale(
+            scale: scale,
+            child: Center(
+              child: CameraPreview(_controller!),
+            ),
+          ),
           if (widget.customPaint != null) widget.customPaint!,
           Positioned(
             bottom: 100,
@@ -203,7 +233,7 @@ class _CameraViewState extends State<CameraView> {
     final camera = cameras[_cameraIndex];
     _controller = CameraController(
       camera,
-      ResolutionPreset.low,
+      ResolutionPreset.high,
       enableAudio: false,
     );
     _controller?.initialize().then((_) {
@@ -229,10 +259,12 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future _switchLiveCamera() async {
-    if (_cameraIndex == 0)
-      _cameraIndex = 1;
-    else
+    if (cameras.length > _cameraIndex) {
+      _cameraIndex++;
+    } else {
       _cameraIndex = 0;
+    }
+
     await _stopLiveFeed();
     await _startLiveFeed();
   }
