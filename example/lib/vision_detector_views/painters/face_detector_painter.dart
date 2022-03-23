@@ -32,7 +32,7 @@ class FaceDetectorPainter extends CustomPainter {
       void paintContour(FaceContourType type) {
         final faceContour = face.getContour(type);
         if (faceContour?.positionsList != null) {
-          for (Offset point in faceContour!.positionsList) {
+          for (final Offset point in faceContour!.positionsList) {
             canvas.drawCircle(
                 Offset(
                   translateX(point.dx, rotation, size, absoluteImageSize),

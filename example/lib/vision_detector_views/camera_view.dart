@@ -115,10 +115,11 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _body() {
     Widget body;
-    if (_mode == ScreenMode.liveFeed)
+    if (_mode == ScreenMode.liveFeed) {
       body = _liveFeedBody();
-    else
+    } else {
       body = _galleryBody();
+    }
     return body;
   }
 
@@ -209,7 +210,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future _getImage(ImageSource source) async {
-    final pickedFile = await _imagePicker?.getImage(source: source);
+    final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
       _processPickedFile(pickedFile);
     } else {
@@ -269,17 +270,21 @@ class _CameraViewState extends State<CameraView> {
     await _startLiveFeed();
   }
 
-  Future _processPickedFile(PickedFile pickedFile) async {
+  Future _processPickedFile(XFile? pickedFile) async {
+    final path = pickedFile?.path;
+    if (path == null) {
+      return;
+    }
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(path);
     });
-    final inputImage = InputImage.fromFilePath(pickedFile.path);
+    final inputImage = InputImage.fromFilePath(path);
     widget.onImage(inputImage);
   }
 
   Future _processCameraImage(CameraImage image) async {
     final WriteBuffer allBytes = WriteBuffer();
-    for (Plane plane in image.planes) {
+    for (final Plane plane in image.planes) {
       allBytes.putUint8List(plane.bytes);
     }
     final bytes = allBytes.done().buffer.asUint8List();
@@ -290,11 +295,11 @@ class _CameraViewState extends State<CameraView> {
     final camera = cameras[_cameraIndex];
     final imageRotation =
         InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
-            InputImageRotation.Rotation_0deg;
+            InputImageRotation.rotation0deg;
 
     final inputImageFormat =
         InputImageFormatMethods.fromRawValue(image.format.raw) ??
-            InputImageFormat.NV21;
+            InputImageFormat.nv21;
 
     final planeData = image.planes.map(
       (Plane plane) {

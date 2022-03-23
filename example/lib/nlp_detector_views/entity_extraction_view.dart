@@ -7,13 +7,13 @@ class EntityExtractionView extends StatefulWidget {
 }
 
 class _EntityExtractionViewState extends State<EntityExtractionView> {
-  var _controller = TextEditingController();
+  final _controller = TextEditingController();
 
   final _languageModelManager = GoogleMlKit.nlp.entityModelManager();
 
   final _entityExtractor =
-      GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.ENGLISH);
-
+      GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.english);
+  var _entities = <EntityAnnotation>[];
   @override
   void dispose() {
     _entityExtractor.close();
@@ -21,32 +21,33 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   }
 
   Future<void> downloadModel() async {
-    var result = await _languageModelManager
-        .downloadModel(EntityExtractorOptions.ENGLISH, isWifiRequired: false);
+    final result = await _languageModelManager
+        .downloadModel(EntityExtractorOptions.english, isWifiRequired: false);
     print('Model downloaded: $result');
   }
 
   Future<void> deleteModel() async {
-    var result =
-        await _languageModelManager.deleteModel(EntityExtractorOptions.ENGLISH);
+    final result =
+        await _languageModelManager.deleteModel(EntityExtractorOptions.english);
     print('Model deleted: $result');
   }
 
   Future<void> getAvailableModels() async {
-    var result = await _languageModelManager.getAvailableModels();
+    final result = await _languageModelManager.getAvailableModels();
     print('Available models: $result');
   }
 
   Future<void> isModelDownloaded() async {
-    var result = await _languageModelManager
-        .isModelDownloaded(EntityExtractorOptions.ENGLISH);
+    final result = await _languageModelManager
+        .isModelDownloaded(EntityExtractorOptions.english);
     print('Model download: $result');
   }
 
   Future<void> translateText() async {
-    var result = await _entityExtractor.extractEntities(_controller.text);
-    result.forEach((element) {
-      print(element.entities);
+    final result = await _entityExtractor.extractEntities(_controller.text);
+
+    setState(() {
+      _entities = result;
     });
   }
 
@@ -55,14 +56,14 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Entity Extractor"),
+          title: const Text('Entity Extractor'),
         ),
         body: ListView(
           children: [
             const SizedBox(
               height: 30,
             ),
-            const Center(child: const Text('Enter text (English)')),
+            const Center(child: Text('Enter text (English)')),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -100,7 +101,25 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
                   child: Text('Get Available models')),
               ElevatedButton(
                   onPressed: isModelDownloaded, child: Text('Check download'))
-            ])
+            ]),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: const Text('Result', style: TextStyle(fontSize: 20)),
+            ),
+            ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              shrinkWrap: true,
+              itemCount: _entities.length,
+              itemBuilder: (context, index) => ExpansionTile(
+                  title: Text(_entities[index].text),
+                  children: _entities[index]
+                      .entities
+                      .map((e) => Text(e.toString()))
+                      .toList()),
+            )
           ],
         ),
       ),

@@ -1,0 +1,20 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+
+linter:
+  rules:
+    prefer_relative_imports: true
+    avoid_renaming_method_parameters: true
+    overridden_fields: false
+    prefer_typing_uninitialized_variables: true
+    hash_and_equals: true
+    directives_ordering: true
+    curly_braces_in_flow_control_structures: true
+    prefer_interpolation_to_compose_strings: true
+    prefer_adjacent_string_concatenation: true
+    prefer_collection_literals: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_single_quotes: true

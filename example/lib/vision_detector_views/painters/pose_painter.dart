@@ -27,7 +27,7 @@ class PosePainter extends CustomPainter {
       ..strokeWidth = 3.0
       ..color = Colors.blueAccent;
 
-    poses.forEach((pose) {
+    for (final pose in poses) {
       pose.landmarks.forEach((_, landmark) {
         canvas.drawCircle(
             Offset(
@@ -40,8 +40,8 @@ class PosePainter extends CustomPainter {
 
       void paintLine(
           PoseLandmarkType type1, PoseLandmarkType type2, Paint paintType) {
-        PoseLandmark joint1 = pose.landmarks[type1]!;
-        PoseLandmark joint2 = pose.landmarks[type2]!;
+        final PoseLandmark joint1 = pose.landmarks[type1]!;
+        final PoseLandmark joint2 = pose.landmarks[type2]!;
         canvas.drawLine(
             Offset(translateX(joint1.x, rotation, size, absoluteImageSize),
                 translateY(joint1.y, rotation, size, absoluteImageSize)),
@@ -71,7 +71,7 @@ class PosePainter extends CustomPainter {
           PoseLandmarkType.leftHip, PoseLandmarkType.leftAnkle, leftPaint);
       paintLine(
           PoseLandmarkType.rightHip, PoseLandmarkType.rightAnkle, rightPaint);
-    });
+    }
   }
 
   @override
