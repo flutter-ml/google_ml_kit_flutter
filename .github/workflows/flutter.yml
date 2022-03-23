@@ -21,7 +21,8 @@ jobs:
       with:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1.5.3
-    - run: flutter pub get
+    - working-directory: ./packages/google_ml_kit
+      run: flutter pub get
     # Check for any formatting issues in the code.
     - run: flutter format --set-exit-if-changed .
     # Statically analyze the Dart code for any errors.
