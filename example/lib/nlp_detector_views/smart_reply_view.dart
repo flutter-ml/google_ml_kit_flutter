@@ -41,7 +41,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Entity Extractor'),
+          title: const Text('Smart Reply'),
         ),
         body: ListView(
           children: [
