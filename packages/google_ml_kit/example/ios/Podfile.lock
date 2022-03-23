@@ -41,7 +41,7 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (< 3.0, >= 1.2)
   - Flutter (1.0.0)
-  - google_ml_kit (0.6.0):
+  - google_ml_kit (0.7.3):
     - Flutter
     - google_ml_kit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 2.2.0)
@@ -327,11 +327,11 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
   FirebaseInstallations: 60edbf7e11d91ae4c751d26c200dfd037099abe0
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  google_ml_kit: cfd4a57971bcfb7d7a16b710432b3798a24dcf41
-  google_ml_kit_barcode_scanner: 28a87283071d9b2b68b68fd08d01b8baa7e97a5f
-  google_ml_kit_commons: 0dc47bc3b309bf32968efa061091d6d1079c9596
-  google_ml_kit_face_detection: 19122a7e0eae1ddc470618c9022fa4d02f10c6ae
-  google_ml_kit_pose_detection: 49f7df3b6cb5466c556d515e0d310f1d7320a73b
+  google_ml_kit: 2261d325c1154f3952ad6795af68106cd5b5eab7
+  google_ml_kit_barcode_scanner: 4cdd331edf01c2a96180cd05da82a5f1ae21900f
+  google_ml_kit_commons: 876a112416fcfec90a1885f75a4e03a82027d9ec
+  google_ml_kit_face_detection: b8009dedb70add584cb6c875fdb438b236af4f68
+  google_ml_kit_pose_detection: 918c2cc6ea226c313efc9bfb6da0a7406d4b4510
   GoogleAppMeasurement: 135c2fbcf5038e0f37dbce04fa641a702fc275d1
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
