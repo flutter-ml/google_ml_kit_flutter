@@ -1,4 +1,4 @@
-part of 'natural_language.dart';
+part of '../natural_language.dart';
 
 /// Extracts entities from the given text.
 /// Creating an instance.

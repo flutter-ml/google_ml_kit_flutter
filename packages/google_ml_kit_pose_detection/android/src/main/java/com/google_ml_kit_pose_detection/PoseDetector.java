@@ -1,7 +1,6 @@
 package com.google_ml_kit_pose_detection;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -16,7 +15,6 @@ import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions;
 import com.google_ml_kit_commons.InputImageConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

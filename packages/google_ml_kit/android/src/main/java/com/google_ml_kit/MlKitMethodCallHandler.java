@@ -6,16 +6,9 @@ import androidx.annotation.NonNull;
 
 import com.google_ml_kit.nl.EntityExtractor;
 import com.google_ml_kit.nl.EntityModelManager;
-import com.google_ml_kit.nl.LanguageDetector;
 import com.google_ml_kit.nl.OnDeviceTranslator;
 import com.google_ml_kit.nl.SmartReply;
 import com.google_ml_kit.nl.TranslatorModelManager;
-import com.google_ml_kit.vision.DigitalInkRecogniser;
-import com.google_ml_kit.vision.ImageLabelDetector;
-import com.google_ml_kit.vision.ObjectDetector;
-import com.google_ml_kit.vision.CustomRemoteModelManager;
-import com.google_ml_kit.vision.TextDetector;
-import com.google_ml_kit.vision.TextDetectorV2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,18 +26,11 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     public MlKitMethodCallHandler(Context context) {
         List<ApiDetectorInterface> detectors = new ArrayList<ApiDetectorInterface>(
                 Arrays.asList(
-                        new DigitalInkRecogniser(),
-                        new ImageLabelDetector(context),
-                        new TextDetector(context),
-                        new ObjectDetector(context),
-                        new CustomRemoteModelManager(),
                         new EntityExtractor(),
                         new EntityModelManager(),
-                        new LanguageDetector(),
                         new OnDeviceTranslator(),
                         new TranslatorModelManager(),
-                        new SmartReply(),
-                        new TextDetectorV2(context)
+                        new SmartReply()
                 ));
 
         handlers = new HashMap<>();

@@ -1,4 +1,4 @@
-part of 'natural_language.dart';
+part of '../natural_language.dart';
 
 /// Creating an instance of [OnDeviceTranslator]
 /// ```

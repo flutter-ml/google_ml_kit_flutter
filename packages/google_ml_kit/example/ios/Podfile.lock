@@ -43,14 +43,7 @@ PODS:
   - Flutter (1.0.0)
   - google_ml_kit (0.7.3):
     - Flutter
-    - google_ml_kit_commons
-    - GoogleMLKit/DigitalInkRecognition (~> 2.2.0)
-    - GoogleMLKit/ImageLabeling (~> 2.2.0)
-    - GoogleMLKit/ImageLabelingCustom (~> 2.2.0)
-    - GoogleMLKit/LanguageID (~> 2.2.0)
-    - GoogleMLKit/LinkFirebase (~> 2.2.0)
-    - GoogleMLKit/TextRecognition (~> 2.2.0)
-  - google_ml_kit_barcode_scanner (0.0.1):
+  - google_ml_kit_barcode_scanning (0.0.1):
     - Flutter
     - google_ml_kit_commons
     - GoogleMLKit/BarcodeScanning (~> 2.2.0)
@@ -61,11 +54,37 @@ PODS:
     - Flutter
     - google_ml_kit_commons
     - GoogleMLKit/FaceDetection (~> 2.2.0)
+  - google_ml_kit_image_labeling (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/ImageLabeling (~> 2.2.0)
+    - GoogleMLKit/ImageLabelingCustom (~> 2.2.0)
+  - google_ml_kit_ink_recognition (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/DigitalInkRecognition (~> 2.2.0)
+  - google_ml_kit_language_id (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/LanguageID (~> 2.2.0)
+  - google_ml_kit_object_detection (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/ObjectDetection (~> 2.2.0)
+    - GoogleMLKit/ObjectDetectionCustom (~> 2.2.0)
   - google_ml_kit_pose_detection (0.0.1):
     - Flutter
     - google_ml_kit_commons
     - GoogleMLKit/PoseDetection (~> 2.2.0)
     - GoogleMLKit/PoseDetectionAccurate (~> 2.2.0)
+  - google_ml_kit_remote_model (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/LinkFirebase (~> 2.2.0)
+  - google_ml_kit_text_recognition (0.0.1):
+    - Flutter
+    - google_ml_kit_commons
+    - GoogleMLKit/TextRecognition (~> 2.2.0)
   - GoogleAppMeasurement (8.13.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.13.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -113,6 +132,12 @@ PODS:
     - MLKitLinkFirebase (~> 1.3.0)
   - GoogleMLKit/MLKitCore (2.2.0):
     - MLKitCommon (~> 3.0.0)
+  - GoogleMLKit/ObjectDetection (2.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitObjectDetection (~> 1.3.0)
+  - GoogleMLKit/ObjectDetectionCustom (2.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitObjectDetectionCustom (~> 1.3.0)
   - GoogleMLKit/PoseDetection (2.2.0):
     - GoogleMLKit/MLKitCore
     - MLKitPoseDetection (~> 1.0.0-beta4)
@@ -210,9 +235,19 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
     - MLKitCommon (~> 3.0)
     - Protobuf (~> 3.12)
+  - MLKitObjectDetection (1.3.0):
+    - MLKitCommon (~> 3.0)
+    - MLKitObjectDetectionCommon (~> 1.3)
+    - MLKitVision (~> 1.3)
+    - MLKitVisionKit (~> 2.2)
   - MLKitObjectDetectionCommon (1.3.0):
     - MLKitCommon (~> 3.0)
     - MLKitVision (~> 1.3)
+  - MLKitObjectDetectionCustom (1.3.0):
+    - MLKitCommon (~> 3.0)
+    - MLKitObjectDetectionCommon (~> 1.3)
+    - MLKitVision (~> 1.3)
+    - MLKitVisionKit (~> 2.2)
   - MLKitPoseDetection (1.0.0-beta4):
     - MLKitCommon (~> 3.0)
     - MLKitPoseDetectionCommon (= 1.0.0-beta4)
@@ -256,10 +291,16 @@ DEPENDENCIES:
   - Firebase
   - Flutter (from `Flutter`)
   - google_ml_kit (from `.symlinks/plugins/google_ml_kit/ios`)
-  - google_ml_kit_barcode_scanner (from `.symlinks/plugins/google_ml_kit_barcode_scanner/ios`)
+  - google_ml_kit_barcode_scanning (from `.symlinks/plugins/google_ml_kit_barcode_scanning/ios`)
   - google_ml_kit_commons (from `.symlinks/plugins/google_ml_kit_commons/ios`)
   - google_ml_kit_face_detection (from `.symlinks/plugins/google_ml_kit_face_detection/ios`)
+  - google_ml_kit_image_labeling (from `.symlinks/plugins/google_ml_kit_image_labeling/ios`)
+  - google_ml_kit_ink_recognition (from `.symlinks/plugins/google_ml_kit_ink_recognition/ios`)
+  - google_ml_kit_language_id (from `.symlinks/plugins/google_ml_kit_language_id/ios`)
+  - google_ml_kit_object_detection (from `.symlinks/plugins/google_ml_kit_object_detection/ios`)
   - google_ml_kit_pose_detection (from `.symlinks/plugins/google_ml_kit_pose_detection/ios`)
+  - google_ml_kit_remote_model (from `.symlinks/plugins/google_ml_kit_remote_model/ios`)
+  - google_ml_kit_text_recognition (from `.symlinks/plugins/google_ml_kit_text_recognition/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
 
 SPEC REPOS:
@@ -288,7 +329,9 @@ SPEC REPOS:
     - MLKitLinkFirebase
     - MLKitMDD
     - MLKitNaturalLanguage
+    - MLKitObjectDetection
     - MLKitObjectDetectionCommon
+    - MLKitObjectDetectionCustom
     - MLKitPoseDetection
     - MLKitPoseDetectionAccurate
     - MLKitPoseDetectionCommon
@@ -308,14 +351,26 @@ EXTERNAL SOURCES:
     :path: Flutter
   google_ml_kit:
     :path: ".symlinks/plugins/google_ml_kit/ios"
-  google_ml_kit_barcode_scanner:
-    :path: ".symlinks/plugins/google_ml_kit_barcode_scanner/ios"
+  google_ml_kit_barcode_scanning:
+    :path: ".symlinks/plugins/google_ml_kit_barcode_scanning/ios"
   google_ml_kit_commons:
     :path: ".symlinks/plugins/google_ml_kit_commons/ios"
   google_ml_kit_face_detection:
     :path: ".symlinks/plugins/google_ml_kit_face_detection/ios"
+  google_ml_kit_image_labeling:
+    :path: ".symlinks/plugins/google_ml_kit_image_labeling/ios"
+  google_ml_kit_ink_recognition:
+    :path: ".symlinks/plugins/google_ml_kit_ink_recognition/ios"
+  google_ml_kit_language_id:
+    :path: ".symlinks/plugins/google_ml_kit_language_id/ios"
+  google_ml_kit_object_detection:
+    :path: ".symlinks/plugins/google_ml_kit_object_detection/ios"
   google_ml_kit_pose_detection:
     :path: ".symlinks/plugins/google_ml_kit_pose_detection/ios"
+  google_ml_kit_remote_model:
+    :path: ".symlinks/plugins/google_ml_kit_remote_model/ios"
+  google_ml_kit_text_recognition:
+    :path: ".symlinks/plugins/google_ml_kit_text_recognition/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
 
@@ -327,11 +382,17 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
   FirebaseInstallations: 60edbf7e11d91ae4c751d26c200dfd037099abe0
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  google_ml_kit: 2261d325c1154f3952ad6795af68106cd5b5eab7
-  google_ml_kit_barcode_scanner: 4cdd331edf01c2a96180cd05da82a5f1ae21900f
+  google_ml_kit: 0fd4cf6725dd724dcb50c3e2b04d205b8d4f6ef8
+  google_ml_kit_barcode_scanning: 2948be742c92358b1dbb014872dedc600efde50e
   google_ml_kit_commons: 876a112416fcfec90a1885f75a4e03a82027d9ec
   google_ml_kit_face_detection: b8009dedb70add584cb6c875fdb438b236af4f68
+  google_ml_kit_image_labeling: 3ef18992696f53a4bb2a7e793bd007b23fca4c79
+  google_ml_kit_ink_recognition: 0e0fda08e65ff2ddf4086d21d10bfc2fe98098e7
+  google_ml_kit_language_id: 32d6d40f988def7f9e6c1767469bf03a3fee9123
+  google_ml_kit_object_detection: 80fde111a751244bb3089aa12823e8ae63ae7c41
   google_ml_kit_pose_detection: 918c2cc6ea226c313efc9bfb6da0a7406d4b4510
+  google_ml_kit_remote_model: 8b3447d965e3bd2859d15a8479a993ab184a5a19
+  google_ml_kit_text_recognition: 97ab6fb3bfe117c5e52c11a2f611ce0600124c85
   GoogleAppMeasurement: 135c2fbcf5038e0f37dbce04fa641a702fc275d1
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
@@ -352,7 +413,9 @@ SPEC CHECKSUMS:
   MLKitLinkFirebase: ae5bd6996d0a1a3d3e0bb4c634b594101c07d094
   MLKitMDD: 37b4fbb5fd45809e646fca676945d6a8479ae66e
   MLKitNaturalLanguage: 2a0295232578461ec25bf5933e45570c3b651d27
+  MLKitObjectDetection: b530ae6179f69b8e378e21a7d6cf5f6646c1db8a
   MLKitObjectDetectionCommon: 6abf300c61cd781ee3abc8abea8a3f8baca886dc
+  MLKitObjectDetectionCustom: 5e20ce13cacf15fcd04f6a6ff57b25fb79c9b585
   MLKitPoseDetection: bbc263ae4e961e83c9350abe919cff183797e687
   MLKitPoseDetectionAccurate: c87162574669a84b89fdd0279a1f0722faa99b6e
   MLKitPoseDetectionCommon: 5dedea934317c80c32b5eda8ede161128e096bdc

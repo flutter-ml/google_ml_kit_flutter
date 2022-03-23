@@ -14,6 +14,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   final _entityExtractor =
       GoogleMlKit.nlp.entityExtractor(EntityExtractorOptions.english);
 
+  var _entities = <EntityAnnotation>[];
+
   @override
   void dispose() {
     _entityExtractor.close();
@@ -45,9 +47,9 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
 
   Future<void> translateText() async {
     final result = await _entityExtractor.extractEntities(_controller.text);
-    for (final element in result) {
-      print(element.entities);
-    }
+    setState(() {
+      _entities = result;
+    });
   }
 
   @override
@@ -100,7 +102,25 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
                   child: Text('Get Available models')),
               ElevatedButton(
                   onPressed: isModelDownloaded, child: Text('Check download'))
-            ])
+            ]),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: const Text('Result', style: TextStyle(fontSize: 20)),
+            ),
+            ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              shrinkWrap: true,
+              itemCount: _entities.length,
+              itemBuilder: (context, index) => ExpansionTile(
+                  title: Text(_entities[index].text),
+                  children: _entities[index]
+                      .entities
+                      .map((e) => Text(e.toString()))
+                      .toList()),
+            ),
           ],
         ),
       ),

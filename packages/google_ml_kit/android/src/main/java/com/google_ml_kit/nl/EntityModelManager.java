@@ -7,7 +7,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.entityextraction.EntityExtractionRemoteModel;
 import com.google_ml_kit.ApiDetectorInterface;
-import com.google_ml_kit.GenericModelManager;
+import com.google_ml_kit_commons.GenericModelManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

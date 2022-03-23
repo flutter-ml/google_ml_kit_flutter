@@ -6,11 +6,11 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'coordinates_translator.dart';
 
-class TextDetectorPainter extends CustomPainter {
-  TextDetectorPainter(
-      this.recognisedText, this.absoluteImageSize, this.rotation);
+class TextRecognizerPainter extends CustomPainter {
+  TextRecognizerPainter(
+      this.recognizedText, this.absoluteImageSize, this.rotation);
 
-  final RecognisedText recognisedText;
+  final RecognizedText recognizedText;
   final Size absoluteImageSize;
   final InputImageRotation rotation;
 
@@ -23,7 +23,7 @@ class TextDetectorPainter extends CustomPainter {
 
     final Paint background = Paint()..color = Color(0x99000000);
 
-    for (final textBlock in recognisedText.blocks) {
+    for (final textBlock in recognizedText.blocks) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
             textAlign: TextAlign.left,
@@ -60,7 +60,7 @@ class TextDetectorPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(TextDetectorPainter oldDelegate) {
-    return oldDelegate.recognisedText != recognisedText;
+  bool shouldRepaint(TextRecognizerPainter oldDelegate) {
+    return oldDelegate.recognizedText != recognizedText;
   }
 }

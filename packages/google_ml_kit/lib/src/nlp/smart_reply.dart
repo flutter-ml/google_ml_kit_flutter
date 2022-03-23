@@ -1,4 +1,4 @@
-part of 'natural_language.dart';
+part of '../natural_language.dart';
 
 ///Generates smart replies based on the conversations list.
 ///Creating an instance of [SmartReply]

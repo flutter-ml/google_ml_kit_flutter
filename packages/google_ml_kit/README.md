@@ -11,15 +11,14 @@ A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.c
 | Feature                                                                                       | Android | iOS |
 |-----------------------------------------------------------------------------------------------|---------|-----|
 |[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | ✅      | ✅  |
+|[Text Recognition V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)         | ✅      | yet |
 |[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | ✅      | ✅  |
 |[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | ✅      | ✅  |
 |[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | yet     | yet |
 |[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | ✅      | ✅  |
 |[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | ✅      | ✅  |
-|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | ✅      | yet |
+|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | ✅      | ✅  |
 |[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | ✅      | ✅  |
-|[Text Detector V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)            | ✅      | yet |
-|[Text Recognition V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)         | ✅      | yet |
 
 ### Natural Language
 
@@ -165,11 +164,11 @@ final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImage
 ```dart
 // vision
 final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
-final digitalInkRecogniser = GoogleMlKit.vision.digitalInkRecogniser();
+final digitalInkRecognizer = GoogleMlKit.vision.digitalInkRecognizer();
 final faceDetector = GoogleMlKit.vision.faceDetector();
 final imageLabeler = GoogleMlKit.vision.imageLabeler();
 final poseDetector = GoogleMlKit.vision.poseDetector();
-final textDetector = GoogleMlKit.vision.textDetector();
+final textRecognizer = GoogleMlKit.vision.textRecognizer();
 final objectDetector = GoogleMlKit.vision.objectDetector(CustomObjectDetectorOptions or ObjectDetectorOptions);
 
 // nl
@@ -189,11 +188,11 @@ final remoteModelManager = GoogleMlKit.vision.remoteModelManager();
 ```dart
 // vision
 final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
-final List<RecognitionCandidate> canditates = await digitalInkRecogniser.readText(points, languageTag);
+final List<RecognitionCandidate> canditates = await digitalInkRecognizer.readText(points, languageTag);
 final List<Face> faces = await faceDetector.processImage(inputImage);
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
 final List<Pose> poses = await poseDetector.processImage(inputImage);
-final RecognisedText recognisedText = await textDetector.processImage(inputImage);
+final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
 final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
 
 // nl
@@ -293,8 +292,8 @@ for (ImageLabel label in labels) {
 d. Extract text.
 
 ```dart
-String text = recognisedText.text;
-for (TextBlock block in recognisedText.blocks) {
+String text = recognizedText.text;
+for (TextBlock block in recognizedText.blocks) {
   final Rect rect = block.rect;
   final List<Offset> cornerPoints = block.cornerPoints;
   final String text = block.text;
@@ -364,11 +363,11 @@ for(DetectedObject detectedObject in _objects){
 ```dart
 // vision
 barcodeScanner.close();
-digitalInkRecogniser.close();
+digitalInkRecognizer.close();
 faceDetector.close();
 imageLabeler.close();
 poseDetector.close();
-textDetector.close();
+textRecognizer.close();
 objectDetector.close();
 
 // nl

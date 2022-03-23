@@ -71,22 +71,24 @@ class Home extends StatelessWidget {
                         featureCompleted: true,
                       ),
                       CustomCard(
-                        'Digital Ink Recogniser',
+                        'Digital Ink Recognizer',
                         DigitalInkView(),
                         featureCompleted: true,
                       ),
                       CustomCard(
                         'Text Detector',
-                        TextDetectorView(),
+                        TextRecognizerView(),
                         featureCompleted: true,
                       ),
                       CustomCard(
                         'Text Detector V2',
-                        TextDetectorV2View(),
+                        TextRecognizerV2View(),
+                        featureCompleted: true,
                       ),
                       CustomCard(
                         'Object Detector',
                         ObjectDetectorView(),
+                        featureCompleted: true,
                       ),
                       CustomCard(
                         'Remote Model Manager',

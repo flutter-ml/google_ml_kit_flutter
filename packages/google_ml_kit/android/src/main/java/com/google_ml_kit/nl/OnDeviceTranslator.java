@@ -9,7 +9,7 @@ import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.google_ml_kit.ApiDetectorInterface;
-import com.google_ml_kit.GenericModelManager;
+import com.google_ml_kit_commons.GenericModelManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,4 +87,3 @@ public class OnDeviceTranslator implements ApiDetectorInterface {
         translator.close();
     }
 }
-

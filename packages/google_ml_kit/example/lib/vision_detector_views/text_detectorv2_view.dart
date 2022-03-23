@@ -4,20 +4,20 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'camera_view.dart';
 import 'painters/text_detector_painter.dart';
 
-class TextDetectorV2View extends StatefulWidget {
+class TextRecognizerV2View extends StatefulWidget {
   @override
-  _TextDetectorViewV2State createState() => _TextDetectorViewV2State();
+  _TextRecognizerViewV2State createState() => _TextRecognizerViewV2State();
 }
 
-class _TextDetectorViewV2State extends State<TextDetectorV2View> {
-  TextDetectorV2 textDetector = GoogleMlKit.vision.textDetectorV2();
+class _TextRecognizerViewV2State extends State<TextRecognizerV2View> {
+  TextRecognizer textRecognizer = GoogleMlKit.vision.textRecognizer();
   bool isBusy = false;
   CustomPaint? customPaint;
 
   @override
   void dispose() async {
     super.dispose();
-    await textDetector.close();
+    await textRecognizer.close();
   }
 
   @override
@@ -34,13 +34,13 @@ class _TextDetectorViewV2State extends State<TextDetectorV2View> {
   Future<void> processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
-    final recognisedText = await textDetector.processImage(inputImage,
-        script: TextRecognitionOptions.devanagiri);
-    print('Found ${recognisedText.blocks.length} textBlocks');
+    final recognizedText = await textRecognizer.processImage(inputImage,
+        script: TextRecognitionScript.devanagiri);
+    print('Found ${recognizedText.blocks.length} textBlocks');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      final painter = TextDetectorPainter(
-          recognisedText,
+      final painter = TextRecognizerPainter(
+          recognizedText,
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       customPaint = CustomPaint(painter: painter);
