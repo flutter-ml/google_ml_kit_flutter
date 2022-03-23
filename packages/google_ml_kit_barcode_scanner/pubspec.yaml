@@ -1,7 +1,8 @@
 name: google_ml_kit_barcode_scanner
-description: A new Flutter project.
+description: A Flutter Plugin for ML Kit - Barcode scanner.
 version: 0.0.1
-homepage:
+homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
+publish_to: none # TODO: remove once split is ready
 
 environment:
   sdk: ">=2.16.0 <3.0.0"

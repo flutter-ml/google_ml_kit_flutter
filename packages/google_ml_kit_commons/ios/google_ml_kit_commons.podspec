@@ -1,17 +1,16 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint google_ml_kit_commons.podspec` to validate before publishing.
-#
+require 'yaml'
+
+pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
+library_version = pubspec['version'].gsub('+', '-')
+
 Pod::Spec.new do |s|
-  s.name             = 'google_ml_kit_commons'
-  s.version          = '0.0.1'
-  s.summary          = 'A Flutter plugin with commons files to implement google\'s standalone ml kit made for mobile platform.'
-  s.description      = <<-DESC
-A new Flutter project.
-                       DESC
-  s.homepage         = 'https://github.com/fbernaly/google-ml-kit-commons'
+  s.name             = pubspec['name']
+  s.version          = library_version
+  s.summary          = pubspec['description']
+  s.description      = pubspec['description']
+  s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'fbernaly' => 'https://github.com/fbernaly' }
+  s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'

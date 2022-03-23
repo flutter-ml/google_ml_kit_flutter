@@ -1,17 +1,16 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint google_ml_kit_barcode_scanner.podspec` to validate before publishing.
-#
+require 'yaml'
+
+pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
+library_version = pubspec['version'].gsub('+', '-')
+
 Pod::Spec.new do |s|
-  s.name             = 'google_ml_kit_barcode_scanner'
-  s.version          = '0.0.1'
-  s.summary          = 'A Flutter Plugin for ML Kit - Barcode Scanner'
-  s.description      = <<-DESC
-A new Flutter project.
-                       DESC
-  s.homepage         = 'http://example.com'
+  s.name             = pubspec['name']
+  s.version          = library_version
+  s.summary          = pubspec['description']
+  s.description      = pubspec['description']
+  s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
