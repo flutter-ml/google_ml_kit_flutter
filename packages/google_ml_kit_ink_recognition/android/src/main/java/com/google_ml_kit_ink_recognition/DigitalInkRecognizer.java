@@ -3,8 +3,6 @@ package com.google_ml_kit_ink_recognition;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
@@ -13,7 +11,6 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
 import com.google.mlkit.vision.digitalink.RecognitionCandidate;
-import com.google.mlkit.vision.digitalink.RecognitionResult;
 import com.google_ml_kit_commons.GenericModelManager;
 
 import java.util.ArrayList;
@@ -24,8 +21,6 @@ import java.util.Map;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-//Detector to recognise the text written on screen.
-//Creates an abstraction over DigitalInkRecognizer api provided by ml tool kit.
 public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
 
     private static final String START = "vision#startDigitalInkRecognizer";
@@ -38,11 +33,11 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
+        if (START.equals(method)) {
             handleDetection(call, result);
-        } else if (method.equals(MANAGE)) {
+        } else if (MANAGE.equals(method)) {
             manageInkModels(call, result);
-        } else if (method.equals(CLOSE)) {
+        } else if (CLOSE.equals(method)) {
             closeDetector();
         } else {
             result.notImplemented();
@@ -86,28 +81,20 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
         Ink ink = inkBuilder.build();
 
         recognizer.recognize(ink)
-                .addOnSuccessListener(new OnSuccessListener<RecognitionResult>() {
-                    @Override
-                    public void onSuccess(RecognitionResult recognitionResult) {
-                        List<Map<String, Object>> candidatesList = new ArrayList<>(recognitionResult.getCandidates().size());
-                        for (RecognitionCandidate candidate : recognitionResult.getCandidates()) {
-                            Map<String, Object> candidateData = new HashMap<>();
-                            double score = 0;
-                            if (candidate.getScore() != null)
-                                score = candidate.getScore().doubleValue();
-                            candidateData.put("text", candidate.getText());
-                            candidateData.put("score", score);
-                            candidatesList.add(candidateData);
-                        }
-                        result.success(candidatesList);
+                .addOnSuccessListener(recognitionResult -> {
+                    List<Map<String, Object>> candidatesList = new ArrayList<>(recognitionResult.getCandidates().size());
+                    for (RecognitionCandidate candidate : recognitionResult.getCandidates()) {
+                        Map<String, Object> candidateData = new HashMap<>();
+                        double score = 0;
+                        if (candidate.getScore() != null)
+                            score = candidate.getScore().doubleValue();
+                        candidateData.put("text", candidate.getText());
+                        candidateData.put("score", score);
+                        candidatesList.add(candidateData);
                     }
+                    result.success(candidatesList);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        result.error("recognition Error", e.toString(), null);
-                    }
-                });
+                .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
     }
 
     private void manageInkModels(MethodCall call, final MethodChannel.Result result) {

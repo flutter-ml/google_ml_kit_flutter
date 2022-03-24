@@ -32,6 +32,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class EntityExtractor implements ApiDetectorInterface {
+
     private static final String START = "nlp#startEntityExtractor";
     private static final String CLOSE = "nlp#closeEntityExtractor";
 
@@ -169,4 +170,3 @@ public class EntityExtractor implements ApiDetectorInterface {
         entityExtractor.close();
     }
 }
-

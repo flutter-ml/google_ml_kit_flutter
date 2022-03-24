@@ -2,11 +2,10 @@ package com.google_ml_kit_face_detection;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
@@ -64,56 +63,51 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
 
         detector.process(inputImage)
                 .addOnSuccessListener(
-                        new OnSuccessListener<List<Face>>() {
-                            @Override
-                            public void onSuccess(List<Face> visionFaces) {
-                                List<Map<String, Object>> faces = new ArrayList<>(visionFaces.size());
-                                for (Face face : visionFaces) {
-                                    Map<String, Object> faceData = new HashMap<>();
+                        visionFaces -> {
+                            List<Map<String, Object>> faces = new ArrayList<>(visionFaces.size());
+                            for (Face face : visionFaces) {
+                                Map<String, Object> faceData = new HashMap<>();
 
-                                    faceData.put("left", (double) face.getBoundingBox().left);
-                                    faceData.put("top", (double) face.getBoundingBox().top);
-                                    faceData.put("width", (double) face.getBoundingBox().width());
-                                    faceData.put("height", (double) face.getBoundingBox().height());
+                                Map<String, Integer> frame = new HashMap<>();
+                                Rect rect = face.getBoundingBox();
+                                frame.put("left", rect.left);
+                                frame.put("top", rect.top);
+                                frame.put("right", rect.right);
+                                frame.put("bottom", rect.bottom);
+                                faceData.put("rect", frame);
 
-                                    faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
-                                    faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
+                                faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
+                                faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
 
-                                    if (face.getSmilingProbability() != null) {
-                                        faceData.put("smilingProbability", face.getSmilingProbability());
-                                    }
-
-                                    if (face.getLeftEyeOpenProbability()
-                                            != null) {
-                                        faceData.put("leftEyeOpenProbability", face.getLeftEyeOpenProbability());
-                                    }
-
-                                    if (face.getRightEyeOpenProbability()
-                                            != null) {
-                                        faceData.put("rightEyeOpenProbability", face.getRightEyeOpenProbability());
-                                    }
-
-                                    if (face.getTrackingId() != null) {
-                                        faceData.put("trackingId", face.getTrackingId());
-                                    }
-
-                                    faceData.put("landmarks", getLandmarkData(face));
-
-                                    faceData.put("contours", getContourData(face));
-
-                                    faces.add(faceData);
+                                if (face.getSmilingProbability() != null) {
+                                    faceData.put("smilingProbability", face.getSmilingProbability());
                                 }
 
-                                result.success(faces);
+                                if (face.getLeftEyeOpenProbability()
+                                        != null) {
+                                    faceData.put("leftEyeOpenProbability", face.getLeftEyeOpenProbability());
+                                }
+
+                                if (face.getRightEyeOpenProbability()
+                                        != null) {
+                                    faceData.put("rightEyeOpenProbability", face.getRightEyeOpenProbability());
+                                }
+
+                                if (face.getTrackingId() != null) {
+                                    faceData.put("trackingId", face.getTrackingId());
+                                }
+
+                                faceData.put("landmarks", getLandmarkData(face));
+
+                                faceData.put("contours", getContourData(face));
+
+                                faces.add(faceData);
                             }
+
+                            result.success(faces);
                         })
                 .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                result.error("FaceDetectorError", e.toString(), null);
-                            }
-                        });
+                        e -> result.error("FaceDetectorError", e.toString(), null));
     }
 
     private FaceDetectorOptions parseOptions(Map<String, Object> options) {

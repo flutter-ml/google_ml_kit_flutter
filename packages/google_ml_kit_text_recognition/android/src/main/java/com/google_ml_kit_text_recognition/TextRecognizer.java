@@ -3,12 +3,9 @@ package com.google_ml_kit_text_recognition;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
@@ -20,7 +17,6 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.google_ml_kit_commons.InputImageConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +31,7 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
 
     private final Context context;
     private com.google.mlkit.vision.text.TextRecognizer textRecognizer;
-    private int scriptLang = -1;
+    private int script = -1;
 
     public TextRecognizer(Context context) {
         this.context = context;
@@ -59,65 +55,57 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        int lang = (int) call.argument("script");
-        if (scriptLang != lang || textRecognizer == null) intitializeDetector(lang);
+        int script = (int) call.argument("script");
+        if (this.script != script || textRecognizer == null) initializeDetector(script);
 
         textRecognizer.process(inputImage)
-                .addOnSuccessListener(new OnSuccessListener<Text>() {
-                    @Override
-                    public void onSuccess(Text text) {
-                        Map<String, Object> textResult = new HashMap<>();
+                .addOnSuccessListener(text -> {
+                    Map<String, Object> textResult = new HashMap<>();
 
-                        textResult.put("text", text.getText());
+                    textResult.put("text", text.getText());
 
-                        List<Map<String, Object>> textBlocks = new ArrayList<>();
-                        for (Text.TextBlock block : text.getTextBlocks()) {
-                            Map<String, Object> blockData = new HashMap<>();
+                    List<Map<String, Object>> textBlocks = new ArrayList<>();
+                    for (Text.TextBlock block : text.getTextBlocks()) {
+                        Map<String, Object> blockData = new HashMap<>();
 
-                            addData(blockData,
-                                    block.getText(),
-                                    block.getBoundingBox(),
-                                    block.getCornerPoints(),
-                                    block.getRecognizedLanguage());
+                        addData(blockData,
+                                block.getText(),
+                                block.getBoundingBox(),
+                                block.getCornerPoints(),
+                                block.getRecognizedLanguage());
 
-                            List<Map<String, Object>> textLines = new ArrayList<>();
-                            for (Text.Line line : block.getLines()) {
-                                Map<String, Object> lineData = new HashMap<>();
+                        List<Map<String, Object>> textLines = new ArrayList<>();
+                        for (Text.Line line : block.getLines()) {
+                            Map<String, Object> lineData = new HashMap<>();
 
-                                addData(lineData,
-                                        line.getText(),
-                                        line.getBoundingBox(),
-                                        line.getCornerPoints(),
-                                        line.getRecognizedLanguage());
+                            addData(lineData,
+                                    line.getText(),
+                                    line.getBoundingBox(),
+                                    line.getCornerPoints(),
+                                    line.getRecognizedLanguage());
 
-                                List<Map<String, Object>> elementsData = new ArrayList<>();
-                                for (Text.Element element : line.getElements()) {
-                                    Map<String, Object> elementData = new HashMap<>();
+                            List<Map<String, Object>> elementsData = new ArrayList<>();
+                            for (Text.Element element : line.getElements()) {
+                                Map<String, Object> elementData = new HashMap<>();
 
-                                    addData(elementData,
-                                            element.getText(),
-                                            element.getBoundingBox(),
-                                            element.getCornerPoints(),
-                                            element.getRecognizedLanguage());
+                                addData(elementData,
+                                        element.getText(),
+                                        element.getBoundingBox(),
+                                        element.getCornerPoints(),
+                                        element.getRecognizedLanguage());
 
-                                    elementsData.add(elementData);
-                                }
-                                lineData.put("elements", elementsData);
-                                textLines.add(lineData);
+                                elementsData.add(elementData);
                             }
-                            blockData.put("lines", textLines);
-                            textBlocks.add(blockData);
+                            lineData.put("elements", elementsData);
+                            textLines.add(lineData);
                         }
-                        textResult.put("blocks", textBlocks);
-                        result.success(textResult);
+                        blockData.put("lines", textLines);
+                        textBlocks.add(blockData);
                     }
+                    textResult.put("blocks", textBlocks);
+                    result.success(textResult);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        result.error("TextRecognizerError", e.toString(), null);
-                    }
-                });
+                .addOnFailureListener(e -> result.error("TextRecognizerError", e.toString(), null));
     }
 
     private void addData(Map<String, Object> addTo,
@@ -159,9 +147,9 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         textRecognizer = null;
     }
 
-    private void intitializeDetector(int script) {
+    private void initializeDetector(int script) {
         closeDetector();
-        scriptLang = script;
+        this.script = script;
         switch (script) {
             case 0:
                 textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);

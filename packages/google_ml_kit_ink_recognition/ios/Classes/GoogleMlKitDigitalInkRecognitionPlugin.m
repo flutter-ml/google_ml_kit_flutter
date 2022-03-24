@@ -2,9 +2,9 @@
 #import "GenericModelManager.h"
 #import <MLKitCommon/MLKitCommon.h>
 #import <MLKitDigitalInkRecognition/MLKitDigitalInkRecognition.h>
-#import <google_ml_kit_commons/GenericModelManager.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_digital_ink_recognizer"
 #define startDigitalInkRecognizer @"vision#startDigitalInkRecognizer"
 #define closeDigitalInkRecognizer @"vision#closeDigitalInkRecognizer"
 #define manageInkModels @"vision#manageInkModels"
@@ -17,7 +17,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_digital_ink_recognizer"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitDigitalInkRecognitionPlugin* instance = [[GoogleMlKitDigitalInkRecognitionPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

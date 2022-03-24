@@ -4,8 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.CustomRemoteModel;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.linkfirebase.FirebaseModelSource;
@@ -18,7 +16,6 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
 import com.google_ml_kit_commons.InputImageConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +23,6 @@ import java.util.Map;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-//Detector to identify the entities present in an image.
-//It's an abstraction over ImageLabeler provided by ml tool kit.
 public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
 
     private static final String START = "vision#startImageLabelDetector";
@@ -83,36 +78,26 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
 
 
         imageLabeler.process(inputImage)
-                .addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
-                    @Override
-                    public void onSuccess(List<ImageLabel> imageLabels) {
-                        List<Map<String, Object>> labels = new ArrayList<>(imageLabels.size());
-                        for (ImageLabel label : imageLabels) {
-                            Map<String, Object> labelData = new HashMap<>();
-                            labelData.put("text", label.getText());
-                            labelData.put("confidence", label.getConfidence());
-                            labelData.put("index", label.getIndex());
-                            labels.add(labelData);
-                        }
+                .addOnSuccessListener(imageLabels -> {
+                    List<Map<String, Object>> labels = new ArrayList<>(imageLabels.size());
+                    for (ImageLabel label : imageLabels) {
+                        Map<String, Object> labelData = new HashMap<>();
+                        labelData.put("text", label.getText());
+                        labelData.put("confidence", label.getConfidence());
+                        labelData.put("index", label.getIndex());
+                        labels.add(labelData);
+                    }
 
-                        result.success(labels);
-                    }
+                    result.success(labels);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        result.error("ImageLabelDetectorError", e.toString(), null);
-                    }
-                });
+                .addOnFailureListener(e -> result.error("ImageLabelDetectorError", e.toString(), null));
     }
 
     //Labeler options that are provided to default image labeler(uses inbuilt model).
     private ImageLabelerOptions getImageLabelerOptions(Map<String, Object> labelerOptions) {
-        final ImageLabelerOptions options =
-                new ImageLabelerOptions.Builder()
-                        .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
-                        .build();
-        return options;
+        return new ImageLabelerOptions.Builder()
+                .setConfidenceThreshold((float) (double) labelerOptions.get("confidenceThreshold"))
+                .build();
     }
 
     //Options for labeler to work with custom model.

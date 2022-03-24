@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class TranslatorModelManager implements ApiDetectorInterface {
+
     private static final String START = "nlp#startLanguageModelManager";
 
     GenericModelManager genericModelManager = new GenericModelManager();
@@ -51,7 +52,7 @@ public class TranslatorModelManager implements ApiDetectorInterface {
                 getDownloadedModels(result);
                 break;
             case "check":
-                TranslateRemoteModel model = 
+                TranslateRemoteModel model =
                         new TranslateRemoteModel.Builder((String) call.argument("model")).build();
                 Boolean downloaded = genericModelManager.isModelDownloaded(model);
                 if (downloaded != null) result.success(downloaded);

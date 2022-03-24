@@ -13,12 +13,14 @@ class ObjectDetectorView extends StatefulWidget {
 class _ObjectDetectorView extends State<ObjectDetectorView> {
   LocalModel model = LocalModel('object_labeler.tflite');
   late ObjectDetector objectDetector;
+  bool useLocalModel = false;
 
   @override
   void initState() {
-    objectDetector = GoogleMlKit.vision.objectDetector(
-        CustomObjectDetectorOptions(model,
-            trackMutipleObjects: true, classifyObjects: true));
+    objectDetector = GoogleMlKit.vision.objectDetector(useLocalModel
+        ? CustomObjectDetectorOptions(model,
+            multipleObjects: true, classifyObjects: true)
+        : ObjectDetectorOptions());
     super.initState();
   }
 
@@ -47,7 +49,6 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     if (isBusy) return;
     isBusy = true;
     final result = await objectDetector.processImage(inputImage);
-    print(result);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null &&
         result.isNotEmpty) {

@@ -67,6 +67,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Language Identification')),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Padding(
           padding: const EdgeInsets.all(15.0),
@@ -98,7 +99,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(
-                      'Language: ${_identifiedLanguages[index].language}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
+                      'Language: ${_identifiedLanguages[index].languageCode}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
                 );
               }),
         )

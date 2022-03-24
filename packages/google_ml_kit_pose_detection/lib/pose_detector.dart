@@ -28,17 +28,17 @@ class PoseDetector {
   Future<List<Pose>> processImage(InputImage inputImage) async {
     _isOpened = true;
 
-    final result = await _channel
-        .invokeMethod('vision#startPoseDetector', <String, dynamic>{
-      'options': poseDetectorOptions._detectorOption(),
-      'imageData': inputImage.getImageData()
+    final result = await _channel.invokeMethod(
+        'vision#startPoseDetector', <String, dynamic>{
+      'options': poseDetectorOptions.toJson(),
+      'imageData': inputImage.toJson()
     });
 
     final List<Pose> poses = [];
     for (final pose in result) {
       final Map<PoseLandmarkType, PoseLandmark> landmarks = {};
       for (final point in pose) {
-        final landmark = PoseLandmark._fromMap(point);
+        final landmark = PoseLandmark.fromJson(point);
         landmarks[landmark.type] = landmark;
       }
       poses.add(Pose(landmarks));
@@ -65,11 +65,11 @@ class PoseDetectorOptions {
 
   PoseDetectorOptions(
       {this.model = PoseDetectionModel.base,
-      this.mode = PoseDetectionMode.streamImage});
+      this.mode = PoseDetectionMode.stream});
 
-  Map<String, dynamic> _detectorOption() => <String, dynamic>{
-        'type': model == PoseDetectionModel.base ? 'base' : 'accurate',
-        'mode': mode == PoseDetectionMode.singleImage ? 'single' : 'stream',
+  Map<String, dynamic> toJson() => {
+        'type': PoseDetectionModel.base.name,
+        'mode': PoseDetectionMode.single.name,
       };
 }
 
@@ -83,8 +83,8 @@ enum PoseDetectionModel {
 // To decide whether you want to process a static image and wait for a future
 // or stream image please note feature to stream image is not yet available and will be implemented in the future
 enum PoseDetectionMode {
-  singleImage,
-  streamImage,
+  single,
+  stream,
 }
 
 enum LandmarkSelectionType {
@@ -159,13 +159,13 @@ class PoseLandmark {
   /// Gives the likelihood of this landmark being in the image frame.
   final double likelihood;
 
-  factory PoseLandmark._fromMap(Map<dynamic, dynamic> data) {
+  factory PoseLandmark.fromJson(Map<dynamic, dynamic> json) {
     return PoseLandmark(
-      PoseLandmarkType.values[data['type']],
-      data['x'],
-      data['y'],
-      data['z'],
-      data['likelihood'] ?? 0.0,
+      PoseLandmarkType.values[json['type']],
+      json['x'],
+      json['y'],
+      json['z'],
+      json['likelihood'] ?? 0.0,
     );
   }
 }

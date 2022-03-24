@@ -59,7 +59,8 @@ class Vision {
   }
 
   /// Returns an instance of [ObjectDetector].
-  ObjectDetector objectDetector(ObjectDetectorOptionsBase options) {
+  ObjectDetector objectDetector(
+      [ObjectDetectorOptions options = const ObjectDetectorOptions()]) {
     return ObjectDetector(options);
   }
 

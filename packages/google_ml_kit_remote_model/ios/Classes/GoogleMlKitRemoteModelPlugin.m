@@ -1,7 +1,8 @@
 #import "GoogleMlKitRemoteModelPlugin.h"
-#import <google_ml_kit_commons/GenericModelManager.h>
 #import <MLKitLinkFirebase/MLKitLinkFirebase.h>
+#import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_remote_model_manager"
 #define manageRemoteModel @"vision#manageRemoteModel"
 
 @implementation GoogleMlKitRemoteModelPlugin {
@@ -10,7 +11,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_remote_model"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitRemoteModelPlugin* instance = [[GoogleMlKitRemoteModelPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

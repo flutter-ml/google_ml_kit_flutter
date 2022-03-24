@@ -19,6 +19,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class OnDeviceTranslator implements ApiDetectorInterface {
+
     private static final String START = "nlp#startLanguageTranslator";
     private static final String CLOSE = "nlp#closeLanguageTranslator";
 

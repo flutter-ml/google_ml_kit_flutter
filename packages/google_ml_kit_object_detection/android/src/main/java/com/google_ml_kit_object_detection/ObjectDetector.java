@@ -2,12 +2,9 @@ package com.google_ml_kit_object_detection;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.common.model.CustomRemoteModel;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.linkfirebase.FirebaseModelSource;
@@ -19,7 +16,6 @@ import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
 import com.google_ml_kit_commons.InputImageConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +28,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startObjectDetector";
     private static final String CLOSE = "vision#closeObjectDetector";
 
-    private boolean customModel;
+    private boolean custom;
     private final Context context;
     private com.google.mlkit.vision.objects.ObjectDetector objectDetector;
 
@@ -42,130 +38,119 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        String methodCall = call.method;
-        if (methodCall.equals(START)) handleDetection(call, result);
-        else close();
+        String method = call.method;
+        if (method.equals(START)) {
+            handleDetection(call, result);
+        } else if (method.equals(CLOSE)) {
+            closeDetector();
+            result.success(null);
+        } else {
+            result.notImplemented();
+        }
     }
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
-
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-
         if (inputImage == null) return;
-        if (objectDetector == null ||
-                customModel != (boolean) ((Map<String, Object>) call.argument("options")).get("custom"))
-            initiateDetector((Map<String, Object>) call.argument("options"));
 
-        objectDetector.process(inputImage).addOnSuccessListener(new OnSuccessListener<List<DetectedObject>>() {
-            @Override
-            public void onSuccess(@NonNull List<DetectedObject> detectedObjects) {
-                Log.e("Object Detection", "success");
-                if (detectedObjects.size() > 0)
-                    Log.e("Detected Objects", detectedObjects.get(0).getLabels().toString());
-                List<Map<String, Object>> objects = new ArrayList<>();
-                for (DetectedObject detectedObject : detectedObjects) {
-                    Map<String, Object> objectMap = new HashMap<>();
+        Map<String, Object> options = (Map<String, Object>) call.argument("options");
+        boolean custom = (boolean) options.get("custom");
 
-                    addData(objectMap,
-                            detectedObject.getTrackingId(),
-                            detectedObject.getBoundingBox(),
-                            detectedObject.getLabels());
+        if (objectDetector == null || this.custom != custom)
+            initiateDetector(options);
 
-                    objects.add(objectMap);
-                }
-                result.success(objects);
+        objectDetector.process(inputImage).addOnSuccessListener(detectedObjects -> {
+            List<Map<String, Object>> objects = new ArrayList<>();
+            for (DetectedObject detectedObject : detectedObjects) {
+                Map<String, Object> objectMap = new HashMap<>();
+                addData(objectMap,
+                        detectedObject.getTrackingId(),
+                        detectedObject.getBoundingBox(),
+                        detectedObject.getLabels());
+                objects.add(objectMap);
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-                result.error("ObjectDetectionError", e.toString(), null);
-            }
+            result.success(objects);
+        }).addOnFailureListener(e -> {
+            e.printStackTrace();
+            result.error("ObjectDetectionError", e.toString(), null);
         });
     }
 
     private void initiateDetector(Map<String, Object> options) {
-        boolean customModelTemp = (boolean) options.get("custom");
-        close();
-        if (customModelTemp) initiateCustomDetector(options);
+        custom = (boolean) options.get("custom");
+        closeDetector();
+        if (custom) initiateCustomDetector(options);
         else initiateBaseDetector(options);
-
-        customModel = customModelTemp;
     }
 
     private void initiateCustomDetector(Map<String, Object> options) {
-        String modelPath = (String) options.get("modelPath");
-        CustomObjectDetectorOptions customObjectDetectorOptions;
-        CustomObjectDetectorOptions.Builder builder;
-
-        if (((String) options.get("modelType")).equals("local")) {
-            LocalModel localModel = new LocalModel.Builder()
-                    .setAssetFilePath(modelPath).build();
-
-            builder = new CustomObjectDetectorOptions.Builder(localModel)
-                    .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE);
-        } else {
-            CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(
-                    new FirebaseModelSource.Builder(modelPath).build()
-            ).build();
-
-            builder = new CustomObjectDetectorOptions.Builder(remoteModel)
-                    .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE);
-        }
-
-
+        int mode = (int) options.get("mode");
+        mode = mode == 0 ?
+                CustomObjectDetectorOptions.STREAM_MODE :
+                CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
         boolean classify = (boolean) options.get("classify");
-        boolean multipleObjects = (boolean) options.get("multiple");
-        double classificationThreshold = (double) options.get("threshold");
+        boolean multiple = (boolean) options.get("multiple");
+        double threshold = (double) options.get("threshold");
         int maxLabels = (int) options.get("maxLabels");
+        String modelType = (String) options.get("modelType");
+        String modelIdentifier = (String) options.get("modelIdentifier");
 
-
-        if (classify) {
-            builder.enableClassification();
-            builder.setMaxPerObjectLabelCount(maxLabels);
+        CustomObjectDetectorOptions.Builder builder;
+        if (modelType.equals("local")) {
+            LocalModel localModel = new LocalModel.Builder()
+                    .setAssetFilePath(modelIdentifier)
+                    .build();
+            builder = new CustomObjectDetectorOptions.Builder(localModel);
+        } else {
+            FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(modelIdentifier)
+                    .build();
+            CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource)
+                    .build();
+            builder = new CustomObjectDetectorOptions.Builder(remoteModel);
         }
-        if (multipleObjects) builder.enableMultipleObjects();
-        builder.setClassificationConfidenceThreshold((float) classificationThreshold);
 
-        customObjectDetectorOptions = builder.build();
-        objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
+        builder.setDetectorMode(mode);
+        if (classify) builder.enableClassification();
+        if (multiple) builder.enableMultipleObjects();
+        builder.setMaxPerObjectLabelCount(maxLabels);
+        builder.setClassificationConfidenceThreshold((float) threshold);
+
+        objectDetector = ObjectDetection.getClient(builder.build());
     }
 
     private void initiateBaseDetector(Map<String, Object> options) {
-        ObjectDetectorOptions objectDetectorOptions;
-        ObjectDetectorOptions.Builder builder = new ObjectDetectorOptions.Builder()
-                .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE);
-
+        int mode = (int) options.get("mode");
+        mode = mode == 0 ?
+                ObjectDetectorOptions.STREAM_MODE :
+                ObjectDetectorOptions.SINGLE_IMAGE_MODE;
         boolean classify = (boolean) options.get("classify");
-        boolean multipleObjects = (boolean) options.get("multiple");
+        boolean multiple = (boolean) options.get("multiple");
 
+        ObjectDetectorOptions.Builder builder = new ObjectDetectorOptions.Builder()
+                .setDetectorMode(mode);
         if (classify) builder.enableClassification();
-        if (multipleObjects) builder.enableMultipleObjects();
+        if (multiple) builder.enableMultipleObjects();
 
-        objectDetectorOptions = builder.build();
-
-        objectDetector = ObjectDetection.getClient(objectDetectorOptions);
+        objectDetector = ObjectDetection.getClient(builder.build());
     }
 
     private void addData(Map<String, Object> addTo,
                          Integer trackingId,
                          Rect rect,
                          List<DetectedObject.Label> labelList) {
-
         List<Map<String, Object>> labels = new ArrayList<>();
         addLabels(labels, labelList);
-
         addTo.put("rect", getBoundingPoints(rect));
         addTo.put("labels", labels);
-        addTo.put("trackingID", trackingId);
+        addTo.put("trackingId", trackingId);
     }
 
     private Map<String, Integer> getBoundingPoints(Rect rect) {
         Map<String, Integer> frame = new HashMap<>();
         frame.put("left", rect.left);
-        frame.put("right", rect.right);
         frame.put("top", rect.top);
+        frame.put("right", rect.right);
         frame.put("bottom", rect.bottom);
         return frame;
     }
@@ -180,7 +165,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
         }
     }
 
-    private void close() {
+    private void closeDetector() {
         if (objectDetector == null) return;
         objectDetector.close();
         objectDetector = null;

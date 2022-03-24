@@ -2,6 +2,7 @@
 #import <MLKitBarcodeScanning/MLKitBarcodeScanning.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_barcode_scanning"
 #define startBarcodeScanner @"vision#startBarcodeScanner"
 #define closeBarcodeScanner @"vision#closeBarcodeScanner"
 
@@ -11,7 +12,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_barcode_scanning"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitBarcodeScanningPlugin* instance = [[GoogleMlKitBarcodeScanningPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

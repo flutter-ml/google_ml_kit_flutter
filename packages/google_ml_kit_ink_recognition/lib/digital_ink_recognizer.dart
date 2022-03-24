@@ -29,8 +29,8 @@ class DigitalInkRecognizer {
         <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
-    for (final dynamic data in result) {
-      final candidate = RecognitionCandidate(data['text'], data['score']);
+    for (final dynamic json in result) {
+      final candidate = RecognitionCandidate(json);
       candidates.add(candidate);
     }
 
@@ -84,5 +84,7 @@ class RecognitionCandidate {
   final String text;
   final double score;
 
-  RecognitionCandidate(this.text, this.score);
+  RecognitionCandidate(dynamic json)
+      : text = json['text'],
+        score = json['score'];
 }

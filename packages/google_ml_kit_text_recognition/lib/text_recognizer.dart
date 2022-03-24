@@ -22,13 +22,10 @@ class TextRecognizer {
     _hasBeenOpened = true;
     final result = await _channel.invokeMethod(
         'vision#startTextRecognizer', <String, dynamic>{
-      'imageData': inputImage.getImageData(),
+      'imageData': inputImage.toJson(),
       'script': script.index
     });
-
-    final recognizedText = RecognizedText.fromMap(result);
-
-    return recognizedText;
+    return RecognizedText.fromJson(result);
   }
 
   Future<void> close() async {
@@ -53,16 +50,16 @@ enum TextRecognitionScript {
 /// TextBlock ---> List<TextLine> (Lines of text present in a certain identified block).
 /// TextLine ---> List<TextElement> (Fundamental part of a block i.e usually a word or sentence)
 class RecognizedText {
-  RecognizedText._(this.text, this.blocks);
+  RecognizedText(this.text, this.blocks);
 
-  factory RecognizedText.fromMap(Map<dynamic, dynamic> map) {
-    final resText = map['text'];
+  factory RecognizedText.fromJson(Map<dynamic, dynamic> json) {
+    final resText = json['text'];
     final textBlocks = <TextBlock>[];
-    for (final block in map['blocks']) {
-      final textBlock = TextBlock.fromMap(block);
+    for (final block in json['blocks']) {
+      final textBlock = TextBlock.fromJson(block);
       textBlocks.add(textBlock);
     }
-    return RecognizedText._(resText, textBlocks);
+    return RecognizedText(resText, textBlocks);
   }
 
   /// String containing all the text identified in a image.
@@ -74,21 +71,21 @@ class RecognizedText {
 
 /// Class that has a block or group of words present in part of image.
 class TextBlock {
-  TextBlock._(this.text, this.lines, this.rect, this.recognizedLanguages,
+  TextBlock(this.text, this.lines, this.rect, this.recognizedLanguages,
       this.cornerPoints);
 
-  factory TextBlock.fromMap(Map<dynamic, dynamic> map) {
-    final text = map['text'];
-    final rect = _mapToRect(map['rect']);
+  factory TextBlock.fromJson(Map<dynamic, dynamic> json) {
+    final text = json['text'];
+    final rect = RectJson.fromJson(json['rect']);
     final recognizedLanguages =
-        _listToRecognizedLanguages(map['recognizedLanguages']);
-    final points = _listToCornerPoints(map['points']);
+        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final points = _listToCornerPoints(json['points']);
     final lines = <TextLine>[];
-    for (final line in map['lines']) {
-      final textLine = TextLine.fromMap(line);
+    for (final line in json['lines']) {
+      final textLine = TextLine.fromJson(line);
       lines.add(textLine);
     }
-    return TextBlock._(text, lines, rect, recognizedLanguages, points);
+    return TextBlock(text, lines, rect, recognizedLanguages, points);
   }
 
   /// Text in the block.
@@ -109,21 +106,21 @@ class TextBlock {
 
 /// Class that represents sentence present in a certain block.
 class TextLine {
-  TextLine._(this.text, this.elements, this.rect, this.recognizedLanguages,
+  TextLine(this.text, this.elements, this.rect, this.recognizedLanguages,
       this.cornerPoints);
 
-  factory TextLine.fromMap(Map<dynamic, dynamic> map) {
-    final text = map['text'];
-    final rect = _mapToRect(map['rect']);
+  factory TextLine.fromJson(Map<dynamic, dynamic> json) {
+    final text = json['text'];
+    final rect = RectJson.fromJson(json['rect']);
     final recognizedLanguages =
-        _listToRecognizedLanguages(map['recognizedLanguages']);
-    final points = _listToCornerPoints(map['points']);
+        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final points = _listToCornerPoints(json['points']);
     final elements = <TextElement>[];
-    for (final element in map['elements']) {
-      final textElement = TextElement.fromMap(element);
+    for (final element in json['elements']) {
+      final textElement = TextElement.fromJson(element);
       elements.add(textElement);
     }
-    return TextLine._(text, elements, rect, recognizedLanguages, points);
+    return TextLine(text, elements, rect, recognizedLanguages, points);
   }
 
   /// Sentence of a block.
@@ -144,13 +141,13 @@ class TextLine {
 
 /// Fundamental part of text detected.
 class TextElement {
-  TextElement._(this.text, this.rect, this.cornerPoints);
+  TextElement(this.text, this.rect, this.cornerPoints);
 
-  factory TextElement.fromMap(Map<dynamic, dynamic> map) {
-    final text = map['text'];
-    final rect = _mapToRect(map['rect']);
-    final points = _listToCornerPoints(map['points']);
-    return TextElement._(text, rect, points);
+  factory TextElement.fromJson(Map<dynamic, dynamic> json) {
+    final text = json['text'];
+    final rect = RectJson.fromJson(json['rect']);
+    final points = _listToCornerPoints(json['points']);
+    return TextElement(text, rect, points);
   }
 
   /// String representation of the text element that was recognized.
@@ -172,13 +169,6 @@ List<String> _listToRecognizedLanguages(List<dynamic> languages) {
     }
   }
   return recognizedLanguages;
-}
-
-/// Convert map to Rect.
-Rect _mapToRect(Map<dynamic, dynamic> rect) {
-  final rec = Rect.fromLTRB((rect['left']).toDouble(), (rect['top']).toDouble(),
-      (rect['right']).toDouble(), (rect['bottom']).toDouble());
-  return rec;
 }
 
 /// Convert list of map to list of offset.

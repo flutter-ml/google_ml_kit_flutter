@@ -2,6 +2,7 @@
 #import <MLKitFaceDetection/MLKitFaceDetection.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_face_detector"
 #define startFaceDetector @"vision#startFaceDetector"
 #define closeFaceDetector @"vision#closeFaceDetector"
 
@@ -11,7 +12,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_face_detector"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitFaceDetectionPlugin* instance = [[GoogleMlKitFaceDetectionPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
@@ -31,16 +32,16 @@
     NSDictionary *dictionary = call.arguments[@"options"];
     
     MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
-    BOOL enableClassification = dictionary[@"enableClassification"];
+    BOOL enableClassification = [[dictionary objectForKey:@"enableClassification"] boolValue];
     options.classificationMode = enableClassification ? MLKFaceDetectorClassificationModeAll : MLKFaceDetectorClassificationModeNone;
     
-    BOOL enableLandmarks = dictionary[@"enableLandmarks"];
+    BOOL enableLandmarks = [[dictionary objectForKey:@"enableLandmarks"] boolValue];
     options.landmarkMode = enableLandmarks ? MLKFaceDetectorLandmarkModeAll : MLKFaceDetectorLandmarkModeNone;
     
-    BOOL enableContours = dictionary[@"enableContours"];
+    BOOL enableContours = [[dictionary objectForKey:@"enableContours"] boolValue];
     options.contourMode = enableContours ? MLKFaceDetectorContourModeAll : MLKFaceDetectorContourModeNone;
     
-    BOOL enableTracking = dictionary[@"enableTracking"];
+    BOOL enableTracking = [[dictionary objectForKey:@"enableTracking"] boolValue];
     options.trackingEnabled = enableTracking;
     
     NSNumber *minFaceSize = dictionary[@"minFaceSize"];
@@ -51,7 +52,8 @@
     
     detector = [MLKFaceDetector faceDetectorWithOptions:options];
     [detector processImage:image
-                completion:^(NSArray<MLKFace *> *_Nullable faces, NSError *_Nullable error) {
+                completion:^(NSArray<MLKFace *> *_Nullable faces,
+                             NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;
@@ -69,10 +71,12 @@
             face.hasRightEyeOpenProbability ? @(face.rightEyeOpenProbability) : [NSNull null];
             
             NSDictionary *data = @{
-                @"left" : @(face.frame.origin.x),
-                @"top" : @(face.frame.origin.y),
-                @"width" : @(face.frame.size.width),
-                @"height" : @(face.frame.size.height),
+                @"rect" : @{
+                    @"left" : @(face.frame.origin.x),
+                    @"top" : @(face.frame.origin.y),
+                    @"right" : @(face.frame.origin.x + face.frame.size.width),
+                    @"bottom" : @(face.frame.origin.y + face.frame.size.height)
+                },
                 @"headEulerAngleY" : face.hasHeadEulerAngleY ? @(face.headEulerAngleY)
                 : [NSNull null],
                 @"headEulerAngleZ" : face.hasHeadEulerAngleZ ? @(face.headEulerAngleZ)
@@ -136,7 +140,6 @@
                                                    contour:MLKFaceContourTypeRightCheek],
                 }
             };
-            
             [faceData addObject:data];
         }
         

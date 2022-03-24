@@ -26,14 +26,14 @@ class FaceDetector {
         'enableContours': options.enableContours,
         'enableTracking': options.enableTracking,
         'minFaceSize': options.minFaceSize,
-        'mode': _enumToString(options.mode),
+        'mode': options.mode.name,
       },
-      'imageData': inputImage.getImageData(),
+      'imageData': inputImage.toJson(),
     });
 
     final List<Face> faces = <Face>[];
-    for (final dynamic data in result!) {
-      faces.add(Face._(data));
+    for (final dynamic json in result!) {
+      faces.add(Face(json));
     }
 
     return faces;
@@ -95,48 +95,40 @@ class FaceDetectorOptions {
 
 /// Represents a face detected by [FaceDetector].
 class Face {
-  Face._(dynamic data)
-      : boundingBox = Rect.fromLTWH(
-          data['left'],
-          data['top'],
-          data['width'],
-          data['height'],
-        ),
-        headEulerAngleY = data['headEulerAngleY'],
-        headEulerAngleZ = data['headEulerAngleZ'],
-        leftEyeOpenProbability = data['leftEyeOpenProbability'],
-        rightEyeOpenProbability = data['rightEyeOpenProbability'],
-        smilingProbability = data['smilingProbability'],
-        trackingId = data['trackingId'],
-        _landmarks = Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
+  Face(dynamic json)
+      : boundingBox = RectJson.fromJson(json['rect']),
+        headEulerAngleY = json['headEulerAngleY'],
+        headEulerAngleZ = json['headEulerAngleZ'],
+        leftEyeOpenProbability = json['leftEyeOpenProbability'],
+        rightEyeOpenProbability = json['rightEyeOpenProbability'],
+        smilingProbability = json['smilingProbability'],
+        trackingId = json['trackingId'],
+        landmarks = Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
             FaceLandmarkType.values,
             FaceLandmarkType.values.map((FaceLandmarkType type) {
-          final List<dynamic>? pos = data['landmarks'][_enumToString(type)];
+          final List<dynamic>? pos = json['landmarks'][type.name];
           return (pos == null)
               ? null
-              : FaceLandmark._(
+              : FaceLandmark(
                   type,
                   Offset(pos[0], pos[1]),
                 );
         })),
-        _contours = Map<FaceContourType, FaceContour?>.fromIterables(
+        contours = Map<FaceContourType, FaceContour?>.fromIterables(
             FaceContourType.values,
             FaceContourType.values.map((FaceContourType type) {
           /// added empty map to pass the tests
           final List<dynamic>? arr =
-              (data['contours'] ?? <String, dynamic>{})[_enumToString(type)];
+              (json['contours'] ?? <String, dynamic>{})[type.name];
           return (arr == null)
               ? null
-              : FaceContour._(
+              : FaceContour(
                   type,
                   arr
                       .map<Offset>((dynamic pos) => Offset(pos[0], pos[1]))
                       .toList(),
                 );
         }));
-
-  final Map<FaceLandmarkType, FaceLandmark?> _landmarks;
-  final Map<FaceContourType, FaceContour?> _contours;
 
   /// The axis-aligned bounding rectangle of the detected face.
   ///
@@ -191,19 +183,19 @@ class Face {
   /// Gets the landmark based on the provided [FaceLandmarkType].
   ///
   /// Null if landmark was not detected.
-  FaceLandmark? getLandmark(FaceLandmarkType landmark) => _landmarks[landmark];
+  final Map<FaceLandmarkType, FaceLandmark?> landmarks;
 
   /// Gets the contour based on the provided [FaceContourType].
   ///
   /// Null if contour was not detected.
-  FaceContour? getContour(FaceContourType contour) => _contours[contour];
+  final Map<FaceContourType, FaceContour?> contours;
 }
 
 /// Represent a face landmark.
 ///
 /// A landmark is a point on a detected face, such as an eye, nose, or mouth.
 class FaceLandmark {
-  FaceLandmark._(this.type, this.position);
+  FaceLandmark(this.type, this.position);
 
   /// The [FaceLandmarkType] of this landmark.
   final FaceLandmarkType type;
@@ -218,7 +210,7 @@ class FaceLandmark {
 ///
 /// Contours of facial features.
 class FaceContour {
-  FaceContour._(this.type, this.positionsList);
+  FaceContour(this.type, this.positionsList);
 
   /// The [FaceContourType] of this contour.
   final FaceContourType type;
@@ -269,9 +261,4 @@ enum FaceContourType {
   noseBottom,
   leftCheek,
   rightCheek
-}
-
-String _enumToString(dynamic enumValue) {
-  final String enumString = enumValue.toString();
-  return enumString.substring(enumString.indexOf('.') + 1);
 }

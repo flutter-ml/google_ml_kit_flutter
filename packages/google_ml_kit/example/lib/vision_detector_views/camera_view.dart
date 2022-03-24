@@ -35,11 +35,13 @@ class _CameraViewState extends State<CameraView> {
   ImagePicker? _imagePicker;
   int _cameraIndex = 0;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
+  bool _allowPicker = true;
 
   @override
   void initState() {
     super.initState();
 
+    _allowPicker = false;
     _imagePicker = ImagePicker();
 
     if (cameras.any(
@@ -75,19 +77,20 @@ class _CameraViewState extends State<CameraView> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: _switchScreenMode,
-              child: Icon(
-                _mode == ScreenMode.liveFeed
-                    ? Icons.photo_library_outlined
-                    : (Platform.isIOS
-                        ? Icons.camera_alt_outlined
-                        : Icons.camera),
+          if (_allowPicker)
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: _switchScreenMode,
+                child: Icon(
+                  _mode == ScreenMode.liveFeed
+                      ? Icons.photo_library_outlined
+                      : (Platform.isIOS
+                          ? Icons.camera_alt_outlined
+                          : Icons.camera),
+                ),
               ),
             ),
-          ),
         ],
       ),
       body: _body(),
@@ -294,11 +297,11 @@ class _CameraViewState extends State<CameraView> {
 
     final camera = cameras[_cameraIndex];
     final imageRotation =
-        InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
+        InputImageRotationValue.fromRawValue(camera.sensorOrientation) ??
             InputImageRotation.rotation0deg;
 
     final inputImageFormat =
-        InputImageFormatMethods.fromRawValue(image.format.raw) ??
+        InputImageFormatValue.fromRawValue(image.format.raw) ??
             InputImageFormat.nv21;
 
     final planeData = image.planes.map(

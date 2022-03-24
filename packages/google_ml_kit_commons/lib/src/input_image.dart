@@ -32,16 +32,12 @@ class InputImage {
   final String imageType;
   final InputImageData? inputImageData;
 
-  Map<String, dynamic> getImageData() {
-    final map = <String, dynamic>{
-      'bytes': bytes,
-      'type': imageType,
-      'path': filePath,
-      'metadata':
-          inputImageData == null ? 'none' : inputImageData!.getMetaData()
-    };
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+        'bytes': bytes,
+        'type': imageType,
+        'path': filePath,
+        'metadata': inputImageData == null ? 'none' : inputImageData!.toJson()
+      };
 }
 
 /// Data of image required when creating image from bytes.
@@ -67,18 +63,15 @@ class InputImageData {
       required this.planeData});
 
   /// Function to get the metadata of image processing purposes
-  Map<String, dynamic> getMetaData() {
-    final map = <String, dynamic>{
-      'width': size.width,
-      'height': size.height,
-      'rotation': imageRotation.rawValue,
-      'imageFormat': inputImageFormat.rawValue,
-      'planeData': planeData
-          ?.map((InputImagePlaneMetadata plane) => plane._serialize())
-          .toList(),
-    };
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+        'width': size.width,
+        'height': size.height,
+        'rotation': imageRotation.rawValue,
+        'imageFormat': inputImageFormat.rawValue,
+        'planeData': planeData
+            ?.map((InputImagePlaneMetadata plane) => plane.toJson())
+            .toList(),
+      };
 }
 
 /// Plane attributes to create the image buffer on iOS.
@@ -101,7 +94,7 @@ class InputImagePlaneMetadata {
   /// Width of the pixel buffer on iOS.
   final int? width;
 
-  Map<String, dynamic> _serialize() => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
         'bytesPerRow': bytesPerRow,
         'height': height,
         'width': width,
@@ -116,19 +109,27 @@ enum InputImageRotation {
   rotation270deg
 }
 
-extension InputImageRotationMethods on InputImageRotation {
-  static Map<InputImageRotation, int> get _values => {
-        InputImageRotation.rotation0deg: 0,
-        InputImageRotation.rotation90deg: 90,
-        InputImageRotation.rotation180deg: 180,
-        InputImageRotation.rotation270deg: 270,
-      };
-
-  int get rawValue => _values[this] ?? 0;
+extension InputImageRotationValue on InputImageRotation {
+  int get rawValue {
+    switch (this) {
+      case InputImageRotation.rotation0deg:
+        return 0;
+      case InputImageRotation.rotation90deg:
+        return 90;
+      case InputImageRotation.rotation180deg:
+        return 180;
+      case InputImageRotation.rotation270deg:
+        return 270;
+    }
+  }
 
   static InputImageRotation? fromRawValue(int rawValue) {
-    return InputImageRotationMethods._values
-        .map((k, v) => MapEntry(v, k))[rawValue];
+    try {
+      return InputImageRotation.values
+          .firstWhere((element) => element.rawValue == rawValue);
+    } catch (_) {
+      return null;
+    }
   }
 }
 
@@ -141,20 +142,29 @@ enum InputImageFormat {
   bgra8888,
 }
 
-extension InputImageFormatMethods on InputImageFormat {
+extension InputImageFormatValue on InputImageFormat {
   // source: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#constants
-  static Map<InputImageFormat, int> get _values => {
-        InputImageFormat.nv21: 17,
-        InputImageFormat.yv12: 842094169,
-        InputImageFormat.yuv_420_888: 35,
-        InputImageFormat.yuv420: 875704438,
-        InputImageFormat.bgra8888: 1111970369,
-      };
-
-  int get rawValue => _values[this] ?? 17;
+  int get rawValue {
+    switch (this) {
+      case InputImageFormat.nv21:
+        return 17;
+      case InputImageFormat.yv12:
+        return 842094169;
+      case InputImageFormat.yuv_420_888:
+        return 35;
+      case InputImageFormat.yuv420:
+        return 875704438;
+      case InputImageFormat.bgra8888:
+        return 1111970369;
+    }
+  }
 
   static InputImageFormat? fromRawValue(int rawValue) {
-    return InputImageFormatMethods._values
-        .map((k, v) => MapEntry(v, k))[rawValue];
+    try {
+      return InputImageFormat.values
+          .firstWhere((element) => element.rawValue == rawValue);
+    } catch (_) {
+      return null;
+    }
   }
 }

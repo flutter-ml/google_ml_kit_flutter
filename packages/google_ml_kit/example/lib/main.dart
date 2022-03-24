@@ -9,7 +9,6 @@ import 'nlp_detector_views/language_translator_view.dart';
 import 'nlp_detector_views/smart_reply_view.dart';
 import 'vision_detector_views/detector_views.dart';
 import 'vision_detector_views/object_detector_view.dart';
-import 'vision_detector_views/text_detectorv2_view.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -78,11 +77,6 @@ class Home extends StatelessWidget {
                       CustomCard(
                         'Text Detector',
                         TextRecognizerView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Text Detector V2',
-                        TextRecognizerV2View(),
                         featureCompleted: true,
                       ),
                       CustomCard(

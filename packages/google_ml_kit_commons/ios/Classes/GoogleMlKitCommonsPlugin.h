@@ -1,5 +1,6 @@
 #import <Flutter/Flutter.h>
 #import <MLKitVision/MLKitVision.h>
+#import "GenericModelManager.h"
 
 @interface GoogleMlKitCommonsPlugin : NSObject<FlutterPlugin>
 @end

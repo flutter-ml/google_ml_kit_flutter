@@ -32,20 +32,20 @@ class ObjectDetectorPainter extends CustomPainter {
       builder.pushStyle(
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
 
-      for (final Label label in detectedObject.getLabels()) {
-        builder.addText('${label.getText()} ${label.getConfidence()}\n');
+      for (final Label label in detectedObject.labels) {
+        builder.addText('${label.text} ${label.confidence}\n');
       }
 
       builder.pop();
 
       final left = translateX(
-          detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
+          detectedObject.boundingBox.left, rotation, size, absoluteSize);
       final top = translateY(
-          detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
+          detectedObject.boundingBox.top, rotation, size, absoluteSize);
       final right = translateX(
-          detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
+          detectedObject.boundingBox.right, rotation, size, absoluteSize);
       final bottom = translateY(
-          detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
+          detectedObject.boundingBox.bottom, rotation, size, absoluteSize);
 
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),

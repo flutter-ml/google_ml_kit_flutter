@@ -20,6 +20,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class SmartReply implements ApiDetectorInterface {
+
     private static final String SUGGEST = "nlp#startSmartReply";
     private static final String ADD = "nlp#addSmartReply";
     private static final String CLOSE = "nlp#closeSmartReply";

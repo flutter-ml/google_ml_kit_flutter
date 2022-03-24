@@ -4,6 +4,7 @@
 #import <MLKitPoseDetectionAccurate/MLKitPoseDetectionAccurate.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_pose_detector"
 #define startPoseDetector @"vision#startPoseDetector"
 #define closePoseDetector @"vision#closePoseDetector"
 
@@ -13,7 +14,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_pose_detector"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitPoseDetectionPlugin* instance = [[GoogleMlKitPoseDetectionPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

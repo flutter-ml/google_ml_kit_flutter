@@ -7,10 +7,6 @@ import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.linkfirebase.FirebaseModelSource;
 import com.google_ml_kit_commons.GenericModelManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 

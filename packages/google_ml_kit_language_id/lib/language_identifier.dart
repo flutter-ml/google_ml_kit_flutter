@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 class LanguageIdentifier {
   static const MethodChannel _channel =
-      MethodChannel('google_ml_kit_language_id');
+      MethodChannel('google_ml_kit_language_identifier');
 
   LanguageIdentifier(this.confidenceThreshold);
 
@@ -22,7 +22,7 @@ class LanguageIdentifier {
     final result = await _channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
       'text': text,
-      'possibleLanguages': 'no',
+      'possibleLanguages': false,
       'confidence': confidenceThreshold
     });
 
@@ -39,15 +39,14 @@ class LanguageIdentifier {
     final result = await _channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
       'text': text,
-      'possibleLanguages': 'yes',
+      'possibleLanguages': true,
       'confidence': confidenceThreshold
     });
 
     final languages = <IdentifiedLanguage>[];
 
-    for (final dynamic languageData in result) {
-      languages.add(IdentifiedLanguage(
-          languageData['language'], languageData['confidence']));
+    for (final dynamic json in result) {
+      languages.add(IdentifiedLanguage(json));
     }
 
     return languages;
@@ -63,127 +62,10 @@ class LanguageIdentifier {
 }
 
 class IdentifiedLanguage {
-  final String _languageTag;
-  final double _confidence;
+  final String languageCode;
+  final double confidence;
 
-  IdentifiedLanguage(this._languageTag, this._confidence);
-
-  String get language => _languageTag;
-  double get confidence => _confidence;
-}
-
-class LanguageInfo {
-  static const Map<String, List> bcpMap = {
-    'af': ['Afrikaans', 'Latin'],
-    'am': ['Amharic', "Ge'ez"],
-    'ar': ['Arabic', 'Arabic'],
-    'ar-Latn': ['Arabic', 'Latin'],
-    'az': ['Azerbaijani', 'Latin'],
-    'be': ['Belarusian', 'Cyrillic'],
-    'bg': ['Bulgarian', 'Cyrillic'],
-    'bg-Latn': ['Bulgarian', 'Latin'],
-    'bn': ['Bengali', 'Bengali'],
-    'bs': ['Bosnian', 'Latin'],
-    'ca': ['Catalan', 'Latin'],
-    'ceb': ['Cebuano', 'Latin'],
-    'co': ['Corsican', 'Latin'],
-    'cs': ['Czech', 'Latin'],
-    'cy': ['Welsh', 'Latin'],
-    'da': ['Danish', 'Latin'],
-    'de': ['German', 'Latin'],
-    'el': ['Greek', 'Greek'],
-    'el-Latn': ['Greek', 'Latin'],
-    'en': ['English', 'Latin'],
-    'eo': ['Esperanto', 'Latin'],
-    'es': ['Spanish', 'Latin'],
-    'et': ['Estonian', 'Latin'],
-    'eu': ['Basque', 'Latin'],
-    'fa': ['Persian', 'Arabic'],
-    'fi': ['Finnish', 'Latin'],
-    'fil': ['Filipino', 'Latin'],
-    'fr': ['French', 'Latin'],
-    'ga': ['Irish', 'Latin'],
-    'gl': ['Galician', 'Latin'],
-    'gu': ['Gujarati', 'Gujarati'],
-    'ha': ['Hausa', 'Latin'],
-    'haw': ['Hawaiian', 'Latin'],
-    'he': ['Hebrew', 'Hebrew'],
-    'hi': ['Hindi', 'Devanagari'],
-    'hi-Latn': ['Hindi', 'Latin'],
-    'hmn': ['Hmong', 'Latin'],
-    'hr': ['Croatian', 'Latin'],
-    'ht': ['Haitian', 'Latin'],
-    'hu': ['Hungarian', 'Latin'],
-    'hy': ['Armenian', 'Armenian'],
-    'id': ['Indonesian', 'Latin'],
-    'ig': ['Igbo', 'Latin'],
-    'is': ['Icelandic', 'Latin'],
-    'it': ['Italian', 'Latin'],
-    'ja': ['Japanese', 'Japanese'],
-    'ja-Latn': ['Japanese', 'Latin'],
-    'jv': ['Javanese', 'Latin'],
-    'ka': ['Georgian', 'Georgian'],
-    'kk': ['Kazakh', 'Cyrillic'],
-    'km': ['Khmer', 'Khmer'],
-    'kn': ['Kannada', 'Kannada'],
-    'ko': ['Korean', 'Korean'],
-    'ku': ['Kurdish', 'Latin'],
-    'ky': ['Kyrgyz', 'Cyrillic'],
-    'la': ['Latin', 'Latin'],
-    'lb': ['Luxembourgish', 'Latin'],
-    'lo': ['Lao', 'Lao'],
-    'lt': ['Lithuanian', 'Latin'],
-    'lv': ['Latvian', 'Latin'],
-    'mg': ['Malagasy', 'Latin'],
-    'mi': ['Maori', 'Latin'],
-    'mk': ['Macedonian', 'Cyrillic'],
-    'ml': ['Malayalam', 'Malayalam'],
-    'mn': ['Mongolian', 'Cyrillic'],
-    'mr': ['Marathi', 'Devanagari'],
-    'ms': ['Malay', 'Latin'],
-    'mt': ['Maltese', 'Latin'],
-    'my': ['Burmese', 'Myanmar'],
-    'ne': ['Nepali', 'Devanagari'],
-    'nl': ['Dutch', 'Latin'],
-    'no': ['Norwegian', 'Latin'],
-    'ny': ['Nyanja', 'Latin'],
-    'pa': ['Punjabi', 'Gurmukhi'],
-    'pl': ['Polish', 'Latin'],
-    'ps': ['Pashto', 'Arabic'],
-    'pt': ['Portuguese', 'Latin'],
-    'ro': ['Romanian', 'Latin'],
-    'ru': ['Russian', 'Cyrillic'],
-    'ru-Latn': ['Russian', 'English'],
-    'sd': ['Sindhi', 'Arabic'],
-    'si': ['Sinhala', 'Sinhala'],
-    'sk': ['Slovak', 'Latin'],
-    'sl': ['Slovenian', 'Latin'],
-    'sm': ['Samoan', 'Latin'],
-    'sn': ['Shona', 'Latin'],
-    'so': ['Somali', 'Latin'],
-    'sq': ['Albanian', 'Latin'],
-    'sr': ['Serbian', 'Cyrillic'],
-    'st': ['Sesotho', 'Latin'],
-    'su': ['Sundanese', 'Latin'],
-    'sv': ['Swedish', 'Latin'],
-    'sw': ['Swahili', 'Latin'],
-    'ta': ['Tamil', 'Tamil'],
-    'te': ['Telugu', 'Telugu'],
-    'tg': ['Tajik', 'Cyrillic'],
-    'th': ['Thai', 'Thai'],
-    'tr': ['Turkish', 'Latin'],
-    'uk': ['Ukrainian', 'Cyrillic'],
-    'ur': ['Urdu', 'Arabic'],
-    'uz': ['Uzbek', 'Latin'],
-    'vi': ['Vietnamese', 'Latin'],
-    'xh': ['Xhosa', 'Latin'],
-    'yi': ['Yiddish', 'Hebrew'],
-    'yo': ['Yoruba', 'Latin'],
-    'zh': ['Chinese', 'Chinese'],
-    'zh-Latn': ['Chinese', 'Latin'],
-    'zu': ['Zulu', 'Latin'],
-    'fy': ['Western-Frisian', 'Latin'],
-    'gd': ['Scots-Gaelic', 'Latin'],
-    'und': ['unknow', 'unknown']
-  };
+  IdentifiedLanguage(dynamic json)
+      : languageCode = json['language'],
+        confidence = json['confidence'];
 }

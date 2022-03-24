@@ -159,10 +159,10 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of detector
+#### 2. Process Image
 
 ```dart
-// vision
+
 final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
 final digitalInkRecognizer = GoogleMlKit.vision.digitalInkRecognizer();
 final faceDetector = GoogleMlKit.vision.faceDetector();
@@ -171,7 +171,7 @@ final poseDetector = GoogleMlKit.vision.poseDetector();
 final textRecognizer = GoogleMlKit.vision.textRecognizer();
 final objectDetector = GoogleMlKit.vision.objectDetector(CustomObjectDetectorOptions or ObjectDetectorOptions);
 
-// nl
+
 final entityExtractor = GoogleMlKit.nlp.entityExtractor();
 final languageIdentifier = GoogleMlKit.nlp.languageIdentifier();
 final onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator();
@@ -186,7 +186,7 @@ final remoteModelManager = GoogleMlKit.vision.remoteModelManager();
 #### 3. Call the corresponding method
 
 ```dart
-// vision
+
 final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
 final List<RecognitionCandidate> canditates = await digitalInkRecognizer.readText(points, languageTag);
 final List<Face> faces = await faceDetector.processImage(inputImage);
@@ -195,7 +195,7 @@ final List<Pose> poses = await poseDetector.processImage(inputImage);
 final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
 final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
 
-// nl
+
 final List<EntityAnnotation> entities = await entityExtractor.extractEntities(text, filters, locale, timezone);
 final bool response = await entityModelManager.downloadModel(modelTag);
 final String response = await entityModelManager.isModelDownloaded(modelTag);
@@ -228,7 +228,7 @@ smartReply.addConversationForLocalUser(text);
 smartReply.addConversationForRemoteUser(text, userID);
 ```
 
-#### 4. Extract data from response.
+#### 4. Extract data from response
 
 a. Extract barcodes.
 
@@ -358,10 +358,10 @@ for(DetectedObject detectedObject in _objects){
 }
 ```
 
-#### 5. Release resources with `close()`.
+#### 5. Release resources with `close()`
 
 ```dart
-// vision
+
 barcodeScanner.close();
 digitalInkRecognizer.close();
 faceDetector.close();
@@ -370,7 +370,7 @@ poseDetector.close();
 textRecognizer.close();
 objectDetector.close();
 
-// nl
+
 entityExtractor.close();
 languageIdentifier.close();
 onDeviceTranslator.close();
@@ -401,7 +401,3 @@ Contributions are welcome.
 In case of any problems open an issue.
 Create a issue before opening a pull request for non trivial fixes.
 In case of trivial fixes open a pull request directly.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)

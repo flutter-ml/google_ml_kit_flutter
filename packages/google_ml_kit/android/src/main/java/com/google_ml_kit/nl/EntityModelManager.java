@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class EntityModelManager implements ApiDetectorInterface {
+
     private static final String START = "nlp#startEntityModelManager";
 
     private final GenericModelManager genericModelManager = new GenericModelManager();

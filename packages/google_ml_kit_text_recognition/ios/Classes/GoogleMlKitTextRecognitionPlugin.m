@@ -1,17 +1,24 @@
 #import "GoogleMlKitTextRecognitionPlugin.h"
 #import <MLKitTextRecognition/MLKitTextRecognition.h>
+#import <MLKitTextRecognitionCommon/MLKitTextRecognitionCommon.h>
+#import <MLKitTextRecognitionChinese/MLKitTextRecognitionChinese.h>
+#import <MLKitTextRecognitionDevanagari/MLKitTextRecognitionDevanagari.h>
+#import <MLKitTextRecognitionJapanese/MLKitTextRecognitionJapanese.h>
+#import <MLKitTextRecognitionKorean/MLKitTextRecognitionKorean.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_text_recognizer"
 #define startTextRecognizer @"vision#startTextRecognizer"
 #define closeTextRecognizer @"vision#closeTextRecognizer"
 
 @implementation GoogleMlKitTextRecognitionPlugin {
     MLKTextRecognizer *textRecognizer;
+    int script;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_text_recognizer"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitTextRecognitionPlugin* instance = [[GoogleMlKitTextRecognitionPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
@@ -28,7 +35,12 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
-    textRecognizer = [MLKTextRecognizer textRecognizer];
+    
+    NSNumber *scriptValue = call.arguments[@"script"];
+    if (textRecognizer == NULL || script != scriptValue.intValue) {
+        [self initiateDetector:scriptValue.intValue];
+    }
+    
     [textRecognizer processImage:image
                       completion:^(MLKText *_Nullable visionText, NSError *_Nullable error) {
         if (error) {
@@ -111,10 +123,44 @@
             @"left" : @(frame.origin.x),
             @"top" : @(frame.origin.y),
             @"right" : @(frame.origin.x + frame.size.width),
-            @"bottom" : @(frame.origin.y + frame.size.height) },
+            @"bottom" : @(frame.origin.y + frame.size.height)
+        },
         @"recognizedLanguages" : allLanguageData,
         @"text" : text,
     }];
+}
+
+- (void)initiateDetector:(int) value {
+    script = value;
+    switch(script) {
+        case 0 : {
+            MLKTextRecognizerOptions *latinOptions = [[MLKTextRecognizerOptions alloc] init];
+            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:latinOptions];
+        }
+            return;
+        case 1 : {
+            MLKChineseTextRecognizerOptions *chineseOptions = [[MLKChineseTextRecognizerOptions alloc] init];
+            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:chineseOptions];
+        }
+            return;
+        case 2 : {
+            MLKDevanagariTextRecognizerOptions *devanagariOptions = [[MLKDevanagariTextRecognizerOptions alloc] init];
+            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:devanagariOptions];
+            
+        }
+            return;
+        case 3 : {
+            MLKJapaneseTextRecognizerOptions *japaneseOptions = [[MLKJapaneseTextRecognizerOptions alloc] init];
+            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:japaneseOptions];
+            
+        }
+            return;
+        case 4 : {
+            MLKKoreanTextRecognizerOptions *koreanOptions = [[MLKKoreanTextRecognizerOptions alloc] init];
+            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:koreanOptions];
+        }
+            return;
+    }
 }
 
 @end

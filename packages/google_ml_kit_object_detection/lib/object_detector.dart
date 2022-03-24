@@ -4,30 +4,26 @@ import 'package:flutter/services.dart';
 import 'package:google_ml_kit_commons/commons.dart';
 
 class ObjectDetector {
-  ObjectDetector(this._objectDetectorOptions);
+  ObjectDetector(this.objectDetectorOptions);
 
   static const MethodChannel _channel =
       MethodChannel('google_ml_kit_object_detector');
 
-  final ObjectDetectorOptionsBase _objectDetectorOptions;
+  final ObjectDetectorOptions objectDetectorOptions;
   bool _hasBeenOpened = false;
   bool _isClosed = false;
 
   ///Detects objects in image.
   Future<List<DetectedObject>> processImage(InputImage inputImage) async {
     _hasBeenOpened = true;
-
     final result = await _channel.invokeMethod(
         'vision#startObjectDetector', <String, dynamic>{
-      'imageData': inputImage.getImageData(),
-      'options': _objectDetectorOptions._map
+      'imageData': inputImage.toJson(),
+      'options': objectDetectorOptions.toJson()
     });
-
-    print(result);
     final objects = <DetectedObject>[];
-
-    for (final dynamic data in result) {
-      objects.add(DetectedObject._fromMap(data));
+    for (final dynamic json in result) {
+      objects.add(DetectedObject.fromJson(json));
     }
     return objects;
   }
@@ -41,40 +37,39 @@ class ObjectDetector {
   }
 }
 
-///Abstract class to serve as a base for [ObjectDetectorOptions] and [CustomObjectDetectorOptions].
-abstract class ObjectDetectorOptionsBase {
-  Map<String, dynamic> get _map => <String, dynamic>{};
+enum DetectionMode {
+  stream,
+  singleImage,
 }
 
 ///Options to configure the detector while using with base model.
-class ObjectDetectorOptions extends ObjectDetectorOptionsBase {
+class ObjectDetectorOptions {
+  ///Determines the detection mode.
+  final DetectionMode mode;
+
   ///Determines whether to coarsely classify detected objects.
   final bool classifyObjects;
 
   ///Determines whether to track objects or not.
-  final bool trackMutipleObjects;
+  final bool multipleObjects;
 
   ///Constructor for [ObjectDetectorOptions]
-  ObjectDetectorOptions(
-      {this.classifyObjects = false, this.trackMutipleObjects = false});
+  const ObjectDetectorOptions(
+      {this.mode = DetectionMode.stream,
+      this.classifyObjects = false,
+      this.multipleObjects = false});
 
-  @override
-  Map<String, dynamic> get _map => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
+        'mode': mode.index,
         'classify': classifyObjects,
-        'multiple': trackMutipleObjects,
+        'multiple': multipleObjects,
         'custom': false
       };
 }
 
 ///Options to configure the detector while using custom models.
-class CustomObjectDetectorOptions extends ObjectDetectorOptionsBase {
-  ///Determines whether to coarsely classify detected objects.
-  final bool classifyObjects;
-
-  ///Determines whether to track objects or not.
-  final bool trackMutipleObjects;
-
-  final CustomModel _customModel;
+class CustomObjectDetectorOptions extends ObjectDetectorOptions {
+  final CustomModel customModel;
 
   ///Maximum number of labels that detector returns per object. Default is 10.
   final int maximumLabelsPerObject;
@@ -83,76 +78,71 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptionsBase {
   final double confidenceThreshold;
 
   ///Constructor for [CustomObjectDetectorOptions].
-  CustomObjectDetectorOptions(this._customModel,
-      {this.classifyObjects = false,
-      this.trackMutipleObjects = false,
+  CustomObjectDetectorOptions(this.customModel,
+      {DetectionMode mode = DetectionMode.stream,
+      bool classifyObjects = false,
+      bool multipleObjects = false,
       this.maximumLabelsPerObject = 10,
-      this.confidenceThreshold = 0.5});
+      this.confidenceThreshold = 0.5})
+      : super(
+            mode: mode,
+            classifyObjects: classifyObjects,
+            multipleObjects: multipleObjects);
 
   @override
-  Map<String, dynamic> get _map => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
+        'mode': mode.index,
         'classify': classifyObjects,
-        'multiple': trackMutipleObjects,
+        'multiple': multipleObjects,
         'custom': true,
-        'modelPath': _customModel.modelIdentifier,
         'threshold': confidenceThreshold,
         'maxLabels': maximumLabelsPerObject,
-        'modelType': _customModel.modelType,
+        'modelType': customModel.modelType,
+        'modelIdentifier': customModel.modelIdentifier,
       };
 }
 
 ///Class that represents an object detected by [ObjectDetector].
 class DetectedObject {
   ///Tracking ID of object. If tracking is disabled it is null.
-  final int? _trackingId;
+  final int? trackingId;
 
   ///Rect within which the object was detected.
-  final Rect _boundingBox;
+  final Rect boundingBox;
 
   ///List of [Label], identified for the object.
-  final List<Label> _labels;
+  final List<Label> labels;
 
   ///Constructor for [DetectedObject].
-  DetectedObject._(this._boundingBox, this._labels, this._trackingId);
+  DetectedObject(this.boundingBox, this.labels, this.trackingId);
 
-  static DetectedObject _fromMap(dynamic data) {
-    final rect = _mapToRect(data['rect']);
-    final trackingId = data['trackingID'];
+  factory DetectedObject.fromJson(Map<dynamic, dynamic> json) {
+    final rect = RectJson.fromJson(json['rect']);
+    final trackingId = json['trackingId'];
     final labels = <Label>[];
-
-    for (final dynamic label in data['labels']) {
-      labels.add(Label._(label['confidence'], label['index'], label['text']));
+    for (final dynamic label in json['labels']) {
+      labels.add(Label.fromJson(label));
     }
-
-    return DetectedObject._(rect, labels, trackingId);
+    return DetectedObject(rect, labels, trackingId);
   }
-
-  ///Returns a list of [Label] when classification is enabled.
-  ///If disabled it returns an empty list.
-  List<Label> getLabels() => _labels;
-
-  ///Gets the axis-aligned bounding rectangle of the detected object.
-  Rect getBoundinBox() => _boundingBox;
-
-  int? getTrackingId() => _trackingId;
 }
 
 ///Represents an image label of a [DetectedObject]
 class Label {
-  Label._(this._confidence, this._index, this._text);
-
-  final double _confidence;
-  final int _index;
-  final String _text;
+  Label(this.confidence, this.index, this.text);
 
   ///Gets the confidence of this label.
-  double getConfidence() => _confidence;
+  final double confidence;
 
   ///Gets the index of this label.
-  int getIndex() => _index;
+  final int index;
 
   ///Gets the text of this label.
-  String getText() => _text;
+  final String text;
+
+  factory Label.fromJson(Map<dynamic, dynamic> json) {
+    return Label(json['confidence'], json['index'], json['text']);
+  }
 }
 
 ///Abstract class to serve as base for [LocalModel] and [RemoteModel].
@@ -180,11 +170,4 @@ class RemoteModel extends CustomModel {
 
   @override
   final String modelType = 'remote';
-}
-
-/// Convert map to Rect.
-Rect _mapToRect(Map<dynamic, dynamic> rect) {
-  final rec = Rect.fromLTRB((rect['left']).toDouble(), (rect['top']).toDouble(),
-      (rect['right']).toDouble(), (rect['bottom']).toDouble());
-  return rec;
 }

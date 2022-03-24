@@ -33,13 +33,13 @@ class ImageLabeler {
 
     final result = await _channel.invokeMethod(
         'vision#startImageLabelDetector', <String, dynamic>{
-      'options': _labelerOptions._map,
-      'imageData': inputImage.getImageData()
+      'options': _labelerOptions.toJson(),
+      'imageData': inputImage.toJson()
     });
     final imageLabels = <ImageLabel>[];
 
-    for (final dynamic data in result) {
-      imageLabels.add(ImageLabel(data));
+    for (final dynamic json in result) {
+      imageLabels.add(ImageLabel(json));
     }
 
     return imageLabels;
@@ -55,7 +55,7 @@ class ImageLabeler {
 }
 
 abstract class ImageLabelerOptionsBase {
-  Map<String, dynamic> get _map => <String, dynamic>{};
+  Map<String, dynamic> toJson();
 }
 
 /// To create [ImageLabeler] that process image considering google's base model
@@ -71,7 +71,7 @@ class ImageLabelerOptions implements ImageLabelerOptionsBase {
   ImageLabelerOptions({this.confidenceThreshold = 0.5});
 
   @override
-  Map<String, dynamic> get _map => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
         'labelerType': labelerType,
       };
@@ -105,7 +105,7 @@ class CustomImageLabelerOptions implements ImageLabelerOptionsBase {
       this.maxCount = 5});
 
   @override
-  Map<String, dynamic> get _map => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
         'labelerType': labelerType,
         'local': true,
@@ -142,7 +142,7 @@ class CustomRemoteLabelerOption implements ImageLabelerOptionsBase {
       this.maxCount = 5});
 
   @override
-  Map<String, dynamic> get _map => <String, dynamic>{
+  Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
         'labelerType': labelerType,
         'local': false,
@@ -153,10 +153,10 @@ class CustomRemoteLabelerOption implements ImageLabelerOptionsBase {
 
 /// This represents a label detected in image.
 class ImageLabel {
-  ImageLabel(dynamic data)
-      : confidence = data['confidence'],
-        label = data['text'],
-        index = data['index'];
+  ImageLabel(dynamic json)
+      : confidence = json['confidence'],
+        label = json['text'],
+        index = json['index'];
 
   /// The confidence(probability) given to label that was identified in image
   final double confidence;

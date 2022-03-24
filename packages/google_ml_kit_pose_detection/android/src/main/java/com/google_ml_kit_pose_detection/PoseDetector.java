@@ -4,10 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseLandmark;
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions;
@@ -22,8 +19,6 @@ import java.util.Map;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-//Detector to the pose landmarks present in a image.
-//Creates an abstraction over PoseDetector provided by ml kit.
 public class PoseDetector implements MethodChannel.MethodCallHandler {
 
     private static final String START = "vision#startPoseDetector";
@@ -80,33 +75,25 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
 
         poseDetector.process(inputImage)
                 .addOnSuccessListener(
-                        new OnSuccessListener<Pose>() {
-                            @Override
-                            public void onSuccess(Pose pose) {
-                                List<List<Map<String, Object>>> array = new ArrayList<>();
-                                if (!pose.getAllPoseLandmarks().isEmpty()) {
-                                    List<Map<String, Object>> landmarks = new ArrayList<>();
-                                    for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
-                                        Map<String, Object> landmarkMap = new HashMap<>();
-                                        landmarkMap.put("type", poseLandmark.getLandmarkType());
-                                        landmarkMap.put("x", poseLandmark.getPosition3D().getX());
-                                        landmarkMap.put("y", poseLandmark.getPosition3D().getY());
-                                        landmarkMap.put("z", poseLandmark.getPosition3D().getZ());
-                                        landmarkMap.put("likelihood",poseLandmark.getInFrameLikelihood());
-                                        landmarks.add(landmarkMap);
-                                    }
-                                    array.add(landmarks);
+                        pose -> {
+                            List<List<Map<String, Object>>> array = new ArrayList<>();
+                            if (!pose.getAllPoseLandmarks().isEmpty()) {
+                                List<Map<String, Object>> landmarks = new ArrayList<>();
+                                for (PoseLandmark poseLandmark : pose.getAllPoseLandmarks()) {
+                                    Map<String, Object> landmarkMap = new HashMap<>();
+                                    landmarkMap.put("type", poseLandmark.getLandmarkType());
+                                    landmarkMap.put("x", poseLandmark.getPosition3D().getX());
+                                    landmarkMap.put("y", poseLandmark.getPosition3D().getY());
+                                    landmarkMap.put("z", poseLandmark.getPosition3D().getZ());
+                                    landmarkMap.put("likelihood", poseLandmark.getInFrameLikelihood());
+                                    landmarks.add(landmarkMap);
                                 }
-                                result.success(array);
+                                array.add(landmarks);
                             }
+                            result.success(array);
                         })
                 .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                result.error("PoseDetectorError", e.toString(), null);
-                            }
-                        });
+                        e -> result.error("PoseDetectorError", e.toString(), null));
     }
 
     private void closeDetector() {

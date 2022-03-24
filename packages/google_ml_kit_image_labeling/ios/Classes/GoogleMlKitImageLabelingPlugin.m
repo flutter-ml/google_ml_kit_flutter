@@ -6,6 +6,7 @@
 #import <MLKitLinkFirebase/MLKitLinkFirebase.h>
 #import <google_ml_kit_commons/GoogleMlKitCommonsPlugin.h>
 
+#define channelName @"google_ml_kit_image_labeler"
 #define startImageLabelDetector @"vision#startImageLabelDetector"
 #define closeImageLabelDetector @"vision#closeImageLabelDetector"
 
@@ -15,7 +16,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"google_ml_kit_image_labeler"
+                                     methodChannelWithName:channelName
                                      binaryMessenger:[registrar messenger]];
     GoogleMlKitImageLabelingPlugin* instance = [[GoogleMlKitImageLabelingPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
@@ -93,7 +94,7 @@
         NSString *modelName = optionsData[@"modelName"];
         MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
         MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
-
+        
         options = [[MLKCustomImageLabelerOptions alloc] initWithRemoteModel:remoteModel];
         MLKModelManager *modelManager = [MLKModelManager modelManager];
         BOOL isModelDownloaded = [modelManager isModelDownloaded:remoteModel];

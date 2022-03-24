@@ -1,7 +1,5 @@
 package com.google_ml_kit;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.google_ml_kit.nl.EntityExtractor;
@@ -23,7 +21,7 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
 
     private final Map<String, ApiDetectorInterface> handlers;
 
-    public MlKitMethodCallHandler(Context context) {
+    public MlKitMethodCallHandler() {
         List<ApiDetectorInterface> detectors = new ArrayList<ApiDetectorInterface>(
                 Arrays.asList(
                         new EntityExtractor(),
