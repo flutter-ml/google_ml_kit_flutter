@@ -3,6 +3,7 @@ include: package:flutter_lints/flutter.yaml
 linter:
   rules:
     prefer_relative_imports: true
+    avoid_print: true
     avoid_renaming_method_parameters: true
     overridden_fields: false
     prefer_typing_uninitialized_variables: true

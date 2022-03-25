@@ -13,19 +13,19 @@ class SmartReply {
   SmartReply._();
 
   /// Adds conversation for local user.
-  Future<void> addConversationForLocalUser(String text) async {
+  Future addConversationForLocalUser(String text) async {
     final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
         <String, dynamic>{'text': text, 'localUser': true});
     _conversationCount++;
-    print(result.toString());
+    return result;
   }
 
   /// Adds conversation for remote user.
-  Future<void> addConversationForRemoteUser(String text, String uID) async {
+  Future addConversationForRemoteUser(String text, String uID) async {
     final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
         <String, dynamic>{'text': text, 'localUser': false, 'uID': uID});
     _conversationCount++;
-    print(result.toString());
+    return result;
   }
 
   ///Suggests possible replies for the conversation.
@@ -36,7 +36,6 @@ class SmartReply {
 
     final suggestions = <SmartReplySuggestion>[];
     if (_conversationCount == 0) {
-      print('No conversations added yet');
       return <String, dynamic>{'status': 2, 'suggestions': suggestions};
     }
 
