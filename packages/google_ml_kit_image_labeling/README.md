@@ -6,7 +6,7 @@ A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.goog
 
 ## Getting Started
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/packages/google_ml_kit).
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
 ## Usage
 
