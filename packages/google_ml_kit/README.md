@@ -1,6 +1,7 @@
 # Google's ML Kit for Flutter
 
-A Flutter plugin to use [Google's standalone ML Kit](https://developers.google.com/ml-kit) for Android and iOS.
+Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/platform-plugins/)
+that enable [Flutter](https://flutter.dev) apps to use [Google's standalone ML Kit](https://developers.google.com/ml-kit).
 
 In versions `0.7.3` and earlier all features were included in a single plugin, but a lot of developers started to get issues with the size of their app, because even thought they needed a single feature, the plugin included all the resources for the rest of the features, that increased the size of the app significantly.
 
@@ -34,8 +35,6 @@ In recent versions we have split the plugin in multiple plugins to allow develop
 ## Getting Started
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
-
-## Usage
 
 Go to the documentation of each plugin to learn how to use it.
 
