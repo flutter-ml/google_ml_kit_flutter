@@ -36,6 +36,7 @@ class _CameraViewState extends State<CameraView> {
   int _cameraIndex = 0;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
   bool _allowPicker = true;
+  bool _changingCameraLens = false;
 
   @override
   void initState() {
@@ -149,7 +150,12 @@ class _CameraViewState extends State<CameraView> {
           Transform.scale(
             scale: scale,
             child: Center(
-              child: CameraPreview(_controller!),
+              child: _changingCameraLens
+                  ? Center(
+                      child:
+                          Container(child: const Text('Changing camera lens')),
+                    )
+                  : CameraPreview(_controller!),
             ),
           ),
           if (widget.customPaint != null) widget.customPaint!,
@@ -263,14 +269,12 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future _switchLiveCamera() async {
-    if (cameras.length > _cameraIndex) {
-      _cameraIndex++;
-    } else {
-      _cameraIndex = 0;
-    }
+    setState(() => _changingCameraLens = true);
+    _cameraIndex = (_cameraIndex + 1) % cameras.length;
 
     await _stopLiveFeed();
     await _startLiveFeed();
+    setState(() => _changingCameraLens = false);
   }
 
   Future _processPickedFile(XFile? pickedFile) async {

@@ -50,7 +50,7 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
-        Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
+        Map<String, Object> imageData = call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 

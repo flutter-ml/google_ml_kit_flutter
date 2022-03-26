@@ -20,7 +20,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     objectDetector = GoogleMlKit.vision.objectDetector(useLocalModel
         ? CustomObjectDetectorOptions(model,
             multipleObjects: true, classifyObjects: true)
-        : ObjectDetectorOptions());
+        : ObjectDetectorOptions(classifyObjects: true, multipleObjects: true)); 
     super.initState();
   }
 

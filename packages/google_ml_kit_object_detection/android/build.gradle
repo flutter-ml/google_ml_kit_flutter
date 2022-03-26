@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:object-detection:16.2.7'
-    implementation 'com.google.mlkit:object-detection-custom:16.3.3'
-    implementation 'com.google.mlkit:linkfirebase:16.1.1'
+    implementation 'com.google.mlkit:object-detection:17.0.0'
+    implementation 'com.google.mlkit:object-detection-custom:17.0.0'
+    implementation 'com.google.mlkit:linkfirebase:17.0.0'
 }

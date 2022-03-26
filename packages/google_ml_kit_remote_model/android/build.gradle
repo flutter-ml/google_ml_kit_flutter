@@ -35,5 +35,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:linkfirebase:16.1.1'
+    implementation 'com.google.mlkit:linkfirebase:17.0.0'
 }
