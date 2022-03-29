@@ -38,9 +38,9 @@ class PoseDetector {
       'imageData': inputImage._getImageData()
     });
 
-    List<Pose> poses = [];
+    final List<Pose> poses = [];
     for (final pose in result) {
-      Map<PoseLandmarkType, PoseLandmark> landmarks = {};
+      final Map<PoseLandmarkType, PoseLandmark> landmarks = {};
       for (final point in pose) {
         final landmark = PoseLandmark._fromMap(point);
         landmarks[landmark.type] = landmark;
@@ -73,7 +73,7 @@ class PoseDetectorOptions {
 
   Map<String, dynamic> _detectorOption() => <String, dynamic>{
         'type': model == PoseDetectionModel.base ? 'base' : 'accurate',
-        'mode': mode == PoseDetectionMode.singleImage ? "single" : "stream",
+        'mode': mode == PoseDetectionMode.singleImage ? 'single' : 'stream',
       };
 }
 

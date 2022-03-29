@@ -31,7 +31,13 @@ class TextDetector {
   }
 }
 
-enum TextRecognitionOptions { DEFAULT, CHINESE, DEVANAGIRI, JAPANESE, KOREAN }
+enum TextRecognitionOptions {
+  english,
+  chinese,
+  devanagiri,
+  japanese,
+  korean,
+}
 
 class TextDetectorV2 {
   TextDetectorV2._();
@@ -41,7 +47,7 @@ class TextDetectorV2 {
 
   /// Function that takes [InputImage] processes it and returns a [RecognisedText] object.
   Future<RecognisedText> processImage(InputImage inputImage,
-      {TextRecognitionOptions script = TextRecognitionOptions.DEFAULT}) async {
+      {TextRecognitionOptions script = TextRecognitionOptions.english}) async {
     _hasBeenOpened = true;
     final result = await Vision.channel.invokeMethod(
         'vision#startTextDetectorV2', <String, dynamic>{
@@ -71,10 +77,10 @@ class RecognisedText {
   RecognisedText._(this.text, this.blocks);
 
   factory RecognisedText.fromMap(Map<dynamic, dynamic> map) {
-    var resText = map["text"];
-    var textBlocks = <TextBlock>[];
-    for (var block in map["blocks"]) {
-      var textBlock = TextBlock.fromMap(block);
+    final resText = map['text'];
+    final textBlocks = <TextBlock>[];
+    for (final block in map['blocks']) {
+      final textBlock = TextBlock.fromMap(block);
       textBlocks.add(textBlock);
     }
     return RecognisedText._(resText, textBlocks);
@@ -99,7 +105,7 @@ class TextBlock {
         _listToRecognizedLanguages(map['recognizedLanguages']);
     final points = _listToCornerPoints(map['points']);
     final lines = <TextLine>[];
-    for (var line in map['lines']) {
+    for (final line in map['lines']) {
       final textLine = TextLine.fromMap(line);
       lines.add(textLine);
     }
@@ -134,7 +140,7 @@ class TextLine {
         _listToRecognizedLanguages(map['recognizedLanguages']);
     final points = _listToCornerPoints(map['points']);
     final elements = <TextElement>[];
-    for (var element in map['elements']) {
+    for (final element in map['elements']) {
       final textElement = TextElement.fromMap(element);
       elements.add(textElement);
     }
@@ -180,8 +186,8 @@ class TextElement {
 
 /// Convert list of Object? to list of Strings.
 List<String> _listToRecognizedLanguages(List<dynamic> languages) {
-  var recognizedLanguages = <String>[];
-  for (var obj in languages) {
+  final recognizedLanguages = <String>[];
+  for (final obj in languages) {
     if (obj != null) {
       recognizedLanguages.add(obj);
     }
@@ -191,15 +197,15 @@ List<String> _listToRecognizedLanguages(List<dynamic> languages) {
 
 /// Convert map to Rect.
 Rect _mapToRect(Map<dynamic, dynamic> rect) {
-  var rec = Rect.fromLTRB((rect["left"]).toDouble(), (rect["top"]).toDouble(),
-      (rect["right"]).toDouble(), (rect["bottom"]).toDouble());
+  final rec = Rect.fromLTRB((rect['left']).toDouble(), (rect['top']).toDouble(),
+      (rect['right']).toDouble(), (rect['bottom']).toDouble());
   return rec;
 }
 
 /// Convert list of map to list of offset.
 List<Offset> _listToCornerPoints(List<dynamic> points) {
-  var p = <Offset>[];
-  for (var point in points) {
+  final p = <Offset>[];
+  for (final point in points) {
     p.add(Offset((point['x']).toDouble(), (point['y']).toDouble()));
   }
   return p;

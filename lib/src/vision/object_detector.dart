@@ -18,9 +18,9 @@ class ObjectDetector {
     });
 
     print(result);
-    var objects = <DetectedObject>[];
+    final objects = <DetectedObject>[];
 
-    for (dynamic data in result) {
+    for (final dynamic data in result) {
       objects.add(DetectedObject._fromMap(data));
     }
     return objects;
@@ -111,10 +111,10 @@ class DetectedObject {
 
   static DetectedObject _fromMap(dynamic data) {
     final rect = _mapToRect(data['rect']);
-    var trackingId = data['trackingID'];
-    var labels = <Label>[];
+    final trackingId = data['trackingID'];
+    final labels = <Label>[];
 
-    for (dynamic label in data['labels']) {
+    for (final dynamic label in data['labels']) {
       labels.add(Label._(label['confidence'], label['index'], label['text']));
     }
 

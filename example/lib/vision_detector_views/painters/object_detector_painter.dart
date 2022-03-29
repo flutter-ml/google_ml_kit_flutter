@@ -6,12 +6,11 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'coordinates_translator.dart';
 
-class TextDetectorPainter extends CustomPainter {
-  TextDetectorPainter(
-      this.recognisedText, this.absoluteImageSize, this.rotation);
+class ObjectDetectorPainter extends CustomPainter {
+  ObjectDetectorPainter(this._objects, this.rotation, this.absoluteSize);
 
-  final RecognisedText recognisedText;
-  final Size absoluteImageSize;
+  final List<DetectedObject> _objects;
+  final Size absoluteSize;
   final InputImageRotation rotation;
 
   @override
@@ -23,7 +22,7 @@ class TextDetectorPainter extends CustomPainter {
 
     final Paint background = Paint()..color = Color(0x99000000);
 
-    for (final textBlock in recognisedText.blocks) {
+    for (final DetectedObject detectedObject in _objects) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
             textAlign: TextAlign.left,
@@ -32,17 +31,21 @@ class TextDetectorPainter extends CustomPainter {
       );
       builder.pushStyle(
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
-      builder.addText('${textBlock.text}');
+
+      for (final Label label in detectedObject.getLabels()) {
+        builder.addText('${label.getText()} ${label.getConfidence()}\n');
+      }
+
       builder.pop();
 
-      final left =
-          translateX(textBlock.rect.left, rotation, size, absoluteImageSize);
-      final top =
-          translateY(textBlock.rect.top, rotation, size, absoluteImageSize);
-      final right =
-          translateX(textBlock.rect.right, rotation, size, absoluteImageSize);
-      final bottom =
-          translateY(textBlock.rect.bottom, rotation, size, absoluteImageSize);
+      final left = translateX(
+          detectedObject.getBoundinBox().left, rotation, size, absoluteSize);
+      final top = translateY(
+          detectedObject.getBoundinBox().top, rotation, size, absoluteSize);
+      final right = translateX(
+          detectedObject.getBoundinBox().right, rotation, size, absoluteSize);
+      final bottom = translateY(
+          detectedObject.getBoundinBox().bottom, rotation, size, absoluteSize);
 
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),
@@ -60,7 +63,7 @@ class TextDetectorPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(TextDetectorPainter oldDelegate) {
-    return oldDelegate.recognisedText != recognisedText;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

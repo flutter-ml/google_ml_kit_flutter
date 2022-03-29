@@ -35,7 +35,7 @@ class _TextDetectorViewV2State extends State<TextDetectorV2View> {
     if (isBusy) return;
     isBusy = true;
     final recognisedText = await textDetector.processImage(inputImage,
-        script: TextRecognitionOptions.DEVANAGIRI);
+        script: TextRecognitionOptions.devanagiri);
     print('Found ${recognisedText.blocks.length} textBlocks');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {

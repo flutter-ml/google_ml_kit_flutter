@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 
-part 'LanguageIdentifier.dart';
-part 'OnDeviceTranslation.dart';
-part 'EntityExtraction.dart';
-part 'SmartReply.dart';
+part 'entity_extraction.dart';
+part 'language_identifier.dart';
+part 'on_device_translation.dart';
+part 'smart_reply.dart';
 
 class NaturalLanguage {
   NaturalLanguage._();
