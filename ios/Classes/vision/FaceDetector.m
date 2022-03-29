@@ -69,6 +69,7 @@
                 @"top" : @(face.frame.origin.y),
                 @"width" : @(face.frame.size.width),
                 @"height" : @(face.frame.size.height),
+                @"headEulerAngleX" : face.hasHeadEulerAngleX ? @(face.headEulerAngleX)
                 @"headEulerAngleY" : face.hasHeadEulerAngleY ? @(face.headEulerAngleY)
                 : [NSNull null],
                 @"headEulerAngleZ" : face.hasHeadEulerAngleZ ? @(face.headEulerAngleZ)

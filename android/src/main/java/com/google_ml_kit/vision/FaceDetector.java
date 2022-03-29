@@ -83,6 +83,7 @@ public class FaceDetector implements ApiDetectorInterface {
                                     faceData.put("width", (double) face.getBoundingBox().width());
                                     faceData.put("height", (double) face.getBoundingBox().height());
 
+                                    faceData.put("headEulerAngleX", face.getHeadEulerAngleX());
                                     faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
                                     faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
 
