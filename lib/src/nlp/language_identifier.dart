@@ -1,10 +1,10 @@
-part of 'NaturalLanguage.dart';
+part of 'natural_language.dart';
 
 class LanguageIdentifier {
   LanguageIdentifier._(this._confidenceThreshold);
 
   /// This error code is used inside a [PlatformException] to signal that no language could be determined.
-  final String errorCodeNoLanguageIdentified = "no language identified";
+  final String errorCodeNoLanguageIdentified = 'no language identified';
 
   final double _confidenceThreshold;
   bool _isOpened = false;
@@ -18,9 +18,9 @@ class LanguageIdentifier {
 
     final result = await NaturalLanguage.channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
-      "text": text,
-      "possibleLanguages": "no",
-      "confidence": _confidenceThreshold
+      'text': text,
+      'possibleLanguages': 'no',
+      'confidence': _confidenceThreshold
     });
 
     return result.toString();
@@ -35,14 +35,14 @@ class LanguageIdentifier {
 
     final result = await NaturalLanguage.channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
-      "text": text,
-      "possibleLanguages": "yes",
-      "confidence": _confidenceThreshold
+      'text': text,
+      'possibleLanguages': 'yes',
+      'confidence': _confidenceThreshold
     });
 
-    var languages = <IdentifiedLanguage>[];
+    final languages = <IdentifiedLanguage>[];
 
-    for (dynamic languageData in result) {
+    for (final dynamic languageData in result) {
       languages.add(IdentifiedLanguage(
           languageData['language'], languageData['confidence']));
     }
@@ -70,7 +70,7 @@ class IdentifiedLanguage {
 }
 
 class LanguageInfo {
-  static const Map<String, List> BcpMap = {
+  static const Map<String, List> bcpMap = {
     'af': ['Afrikaans', 'Latin'],
     'am': ['Amharic', "Ge'ez"],
     'ar': ['Arabic', 'Arabic'],

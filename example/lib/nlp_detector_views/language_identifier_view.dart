@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:flutter/material.dart';
 
 class LanguageIdentifierView extends StatefulWidget {
   @override
@@ -22,11 +22,11 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
       language = await _languageIdentifier.identifyLanguage(_controller.text);
     } on PlatformException catch (pe) {
       if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
-        language = "error: no language identified!";
+        language = 'error: no language identified!';
       }
-      language = "error: ${pe.code}: ${pe.message}";
+      language = 'error: ${pe.code}: ${pe.message}';
     } catch (e) {
-      language = "error: ${e.toString()}";
+      language = 'error: ${e.toString()}';
     }
 
     setState(() {
@@ -46,11 +46,11 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
       return;
     } on PlatformException catch (pe) {
       if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
-        error = "error: no languages identified!";
+        error = 'error: no languages identified!';
       }
-      error = "error: ${pe.code}: ${pe.message}";
+      error = 'error: ${pe.code}: ${pe.message}';
     } catch (e) {
-      error = "error: ${e.toString()}";
+      error = 'error: ${e.toString()}';
     }
     setState(() {
       _identifiedLanguages = [];

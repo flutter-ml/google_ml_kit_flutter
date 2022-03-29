@@ -24,7 +24,7 @@ class BarcodeScanner {
     });
 
     final barcodesList = <Barcode>[];
-    for (dynamic item in result) {
+    for (final dynamic item in result) {
       barcodesList.add(Barcode._fromMap(item));
     }
 
@@ -215,7 +215,7 @@ class Barcode {
   final BarcodeValue value;
 
   factory Barcode._fromMap(Map<dynamic, dynamic> barcodeData) {
-    BarcodeType type = BarcodeType.values[barcodeData['type']];
+    final BarcodeType type = BarcodeType.values[barcodeData['type']];
     switch (type) {
       case BarcodeType.unknown:
       case BarcodeType.isbn:
@@ -590,8 +590,8 @@ class BarcodeAddress {
   BarcodeAddress._(this.addressLines, this.type);
 
   factory BarcodeAddress._fromMap(Map<dynamic, dynamic> address) {
-    var lines = <String>[];
-    for (dynamic line in address['addressLines']) {
+    final lines = <String>[];
+    for (final dynamic line in address['addressLines']) {
       lines.add(line);
     }
     return BarcodeAddress._(
@@ -609,7 +609,7 @@ DateTime? _getDateTime(dynamic barcodeData) {
 }
 
 List<BarcodeAddress> _getBarcodeAddresses(dynamic barcodeData) {
-  var list = <BarcodeAddress>[];
+  final list = <BarcodeAddress>[];
   barcodeData['addresses']?.forEach((address) {
     list.add(BarcodeAddress._fromMap(address));
   });
@@ -617,7 +617,7 @@ List<BarcodeAddress> _getBarcodeAddresses(dynamic barcodeData) {
 }
 
 List<BarcodeEmail> _getBarcodeEmails(dynamic barcodeData) {
-  var list = <BarcodeEmail>[];
+  final list = <BarcodeEmail>[];
   barcodeData['emails']?.forEach((email) {
     email['type'] = BarcodeType.email.index;
     email['format'] = barcodeData['format'];
@@ -627,7 +627,7 @@ List<BarcodeEmail> _getBarcodeEmails(dynamic barcodeData) {
 }
 
 List<BarcodePhone> _getBarcodePhones(dynamic barcodeData) {
-  var list = <BarcodePhone>[];
+  final list = <BarcodePhone>[];
   barcodeData['phones']?.forEach((phone) {
     phone['type'] = BarcodeType.phone.index;
     phone['format'] = barcodeData['format'];
@@ -637,7 +637,7 @@ List<BarcodePhone> _getBarcodePhones(dynamic barcodeData) {
 }
 
 List<String> _getUrls(dynamic urls) {
-  var list = <String>[];
+  final list = <String>[];
   urls.forEach((url) {
     list.add(url.toString());
   });

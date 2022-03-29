@@ -6,30 +6,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 part 'barcode_scanner.dart';
-
 part 'digital_ink_recognizer.dart';
-
 part 'face_detector.dart';
-
 part 'label_detector.dart';
-
+part 'object_detector.dart';
 part 'pose_detector.dart';
-
 part 'text_detector.dart';
 
-part 'object_detector.dart';
-
 // To indicate the format of image while creating input image from bytes
-enum InputImageFormat { NV21, YV12, YUV_420_888, YUV420, BGRA8888 }
+enum InputImageFormat {
+  nv21,
+  yv12,
+  yuv_420_888,
+  yuv420,
+  bgra8888,
+}
 
 extension InputImageFormatMethods on InputImageFormat {
   // source: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#constants
   static Map<InputImageFormat, int> get _values => {
-        InputImageFormat.NV21: 17,
-        InputImageFormat.YV12: 842094169,
-        InputImageFormat.YUV_420_888: 35,
-        InputImageFormat.YUV420: 875704438,
-        InputImageFormat.BGRA8888: 1111970369,
+        InputImageFormat.nv21: 17,
+        InputImageFormat.yv12: 842094169,
+        InputImageFormat.yuv_420_888: 35,
+        InputImageFormat.yuv420: 875704438,
+        InputImageFormat.bgra8888: 1111970369,
       };
 
   int get rawValue => _values[this] ?? 17;
@@ -45,18 +45,18 @@ enum CustomLocalModel { asset, file }
 
 // The camera rotation angle to be specified
 enum InputImageRotation {
-  Rotation_0deg,
-  Rotation_90deg,
-  Rotation_180deg,
-  Rotation_270deg
+  rotation0deg,
+  rotation90deg,
+  rotation180deg,
+  rotation270deg
 }
 
 extension InputImageRotationMethods on InputImageRotation {
   static Map<InputImageRotation, int> get _values => {
-        InputImageRotation.Rotation_0deg: 0,
-        InputImageRotation.Rotation_90deg: 90,
-        InputImageRotation.Rotation_180deg: 180,
-        InputImageRotation.Rotation_270deg: 270,
+        InputImageRotation.rotation0deg: 0,
+        InputImageRotation.rotation90deg: 90,
+        InputImageRotation.rotation180deg: 180,
+        InputImageRotation.rotation270deg: 270,
       };
 
   int get rawValue => _values[this] ?? 0;
@@ -140,14 +140,10 @@ class Vision {
 /// [InputImage] is the format Google' Ml kit takes to process the image
 class InputImage {
   InputImage._(
-      {String? filePath,
-      Uint8List? bytes,
-      required String imageType,
-      InputImageData? inputImageData})
-      : filePath = filePath,
-        bytes = bytes,
-        imageType = imageType,
-        inputImageData = inputImageData;
+      {this.filePath,
+      this.bytes,
+      required this.imageType,
+      this.inputImageData});
 
   /// Create InputImage from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -172,7 +168,7 @@ class InputImage {
   final InputImageData? inputImageData;
 
   Map<String, dynamic> _getImageData() {
-    var map = <String, dynamic>{
+    final map = <String, dynamic>{
       'bytes': bytes,
       'type': imageType,
       'path': filePath,
@@ -207,7 +203,7 @@ class InputImageData {
 
   /// Function to get the metadata of image processing purposes
   Map<String, dynamic> getMetaData() {
-    var map = <String, dynamic>{
+    final map = <String, dynamic>{
       'width': size.width,
       'height': size.height,
       'rotation': imageRotation.rawValue,
@@ -251,7 +247,7 @@ class InputImagePlaneMetadata {
 class RemoteModelManager {
   Future<bool> isModelDownloaded(String modelName) async {
     final result = await Vision.channel.invokeMethod('vision#manageRemoteModel',
-        <String, dynamic>{"task": "check", "model": modelName});
+        <String, dynamic>{'task': 'check', 'model': modelName});
     return result as bool;
   }
 
@@ -261,10 +257,10 @@ class RemoteModelManager {
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await Vision.channel.invokeMethod(
-        "vision#manageRemoteModel", <String, dynamic>{
-      "task": "download",
-      "model": modelTag,
-      "wifi": isWifiRequired
+        'vision#manageRemoteModel', <String, dynamic>{
+      'task': 'download',
+      'model': modelTag,
+      'wifi': isWifiRequired
     });
     return result.toString();
   }
@@ -273,9 +269,9 @@ class RemoteModelManager {
   /// Returns `success` if model is deleted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
     final result = await Vision.channel
-        .invokeMethod("vision#manageRemoteModel", <String, dynamic>{
-      "task": "delete",
-      "model": modelTag,
+        .invokeMethod('vision#manageRemoteModel', <String, dynamic>{
+      'task': 'delete',
+      'model': modelTag,
     });
     return result.toString();
   }

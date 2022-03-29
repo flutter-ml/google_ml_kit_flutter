@@ -288,13 +288,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker/ios"
 
 SPEC CHECKSUMS:
-  camera: 3164201dc344383e62282964016528c4f5a9ad50
+  camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
   FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
   FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   google_ml_kit: a85eefb9ea6156b27ee2fba2b71e461e7b26a4f6
   GoogleAppMeasurement: 6b6a08fd9c71f4dbc89e0e812acca81d797aa342
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
@@ -303,7 +303,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
   GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
-  image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
+  image_picker: 541dcbb3b9cf32d87eacbd957845d8651d6c62c3
   MLImage: 647f3d580c10b3c9a3f6154f5d7baead60c42a0c
   MLKitBarcodeScanning: 6b998bd1cfe471ae407a7f647d649494617787c0
   MLKitCommon: 6d6be0a2e9a6340aad1c1f2b9449c11dee8af70f
@@ -331,4 +331,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: fe8b2255afcb9d09e6120de35c0815e05a905905
 
-COCOAPODS: 1.11.0
+COCOAPODS: 1.11.2
