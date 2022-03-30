@@ -1,4 +1,4 @@
-part of '../natural_language.dart';
+import 'package:flutter/services.dart';
 
 /// Creating an instance of [OnDeviceTranslator]
 /// ```
@@ -9,15 +9,17 @@ part of '../natural_language.dart';
 class OnDeviceTranslator {
   final String _sourceLanguage;
   final String _targetLanguage;
+  static const MethodChannel _channel =
+      MethodChannel('google_ml_kit_translate');
 
-  OnDeviceTranslator._(this._sourceLanguage, this._targetLanguage);
+  OnDeviceTranslator(this._sourceLanguage, this._targetLanguage);
   bool _isOpened = false;
   bool _isClosed = false;
 
   Future<String> translateText(String text) async {
     _isOpened = true;
 
-    final result = await NaturalLanguage.channel.invokeMethod(
+    final result = await _channel.invokeMethod(
         'nlp#startLanguageTranslator', <String, dynamic>{
       'text': text,
       'source': _sourceLanguage,
@@ -29,7 +31,7 @@ class OnDeviceTranslator {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await NaturalLanguage.channel.invokeMethod('nlp#closeLanguageTranslator');
+      await _channel.invokeMethod('nlp#closeLanguageTranslator');
       _isClosed = true;
       _isOpened = false;
     }
@@ -42,12 +44,13 @@ class OnDeviceTranslator {
 ///                               translateLanguageModelManager();;
 /// ```
 class TranslateLanguageModelManager {
-  TranslateLanguageModelManager._();
+  TranslateLanguageModelManager();
+  static const MethodChannel _channel =
+      MethodChannel('google_ml_kit_translate');
 
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String modelTag) async {
-    final result = await NaturalLanguage.channel.invokeMethod(
-        'nlp#startLanguageModelManager',
+    final result = await _channel.invokeMethod('nlp#startLanguageModelManager',
         <String, dynamic>{'task': 'check', 'model': modelTag});
     return result as bool;
   }
@@ -57,7 +60,7 @@ class TranslateLanguageModelManager {
   /// On failing to dowload it throws an error.
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
-    final result = await NaturalLanguage.channel.invokeMethod(
+    final result = await _channel.invokeMethod(
         'nlp#startLanguageModelManager', <String, dynamic>{
       'task': 'download',
       'model': modelTag,
@@ -69,7 +72,7 @@ class TranslateLanguageModelManager {
   /// Deletes a model.
   /// Returns `success` if model is delted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
-    final result = await NaturalLanguage.channel
+    final result = await _channel
         .invokeMethod('nlp#startLanguageModelManager', <String, dynamic>{
       'task': 'delete',
       'model': modelTag,
@@ -80,7 +83,7 @@ class TranslateLanguageModelManager {
   /// Returns a list of all downloaded models.
   /// These are `BCP-47` tags.
   Future<List<String>> getAvailableModels() async {
-    final result = await NaturalLanguage.channel
+    final result = await _channel
         .invokeMethod('nlp#startLanguageModelManager', <String, dynamic>{
       'task': 'getModels',
     });

@@ -1,8 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit_language_id/language_identifier.dart';
-
+import 'package:google_ml_kit_translate/on_device_translator.dart';
 part 'nlp/entity_extraction.dart';
-part 'nlp/on_device_translation.dart';
 part 'nlp/smart_reply.dart';
 
 class NaturalLanguage {
@@ -20,12 +19,12 @@ class NaturalLanguage {
   /// Returns instance of [OnDeviceTranslator].
   OnDeviceTranslator onDeviceTranslator(
       {required String sourceLanguage, required String targetLanguage}) {
-    return OnDeviceTranslator._(sourceLanguage, targetLanguage);
+    return OnDeviceTranslator(sourceLanguage, targetLanguage);
   }
 
   /// Returns instance of [TranslateLanguageModelManager].
   TranslateLanguageModelManager translateLanguageModelManager() {
-    return TranslateLanguageModelManager._();
+    return TranslateLanguageModelManager();
   }
 
   /// Returns instance of [EntityExtractor].

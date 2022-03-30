@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_ml_kit_translate/on_device_translator.dart';
 
 class LanguageTranslatorView extends StatefulWidget {
   @override
@@ -24,16 +25,16 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
 
   Future<void> downloadModel() async {
     var result = await _languageModelManager.downloadModel('en');
-    print('Model downloaded: $result');
+    print('Model en downloaded: $result');
     result = await _languageModelManager.downloadModel('es');
-    print('Model downloaded: $result');
+    print('Model es downloaded: $result');
   }
 
   Future<void> deleteModel() async {
     var result = await _languageModelManager.deleteModel('en');
-    print('Model deleted: $result');
+    print('Model en deleted: $result');
     result = await _languageModelManager.deleteModel('es');
-    print('Model deleted: $result');
+    print('Model es deleted: $result');
   }
 
   Future<void> getAvailableModels() async {
@@ -42,10 +43,10 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   }
 
   Future<void> isModelDownloaded() async {
-    var result = await _languageModelManager.isModelDownloaded('es');
-    print('Is model downloaded: $result');
+    var result = await _languageModelManager.isModelDownloaded('en');
+    print('Is model downloaded (en): $result');
     result = await _languageModelManager.isModelDownloaded('es');
-    print('Is model downloaded: $result');
+    print('Is model downloaded(es): $result');
   }
 
   Future<void> translateText() async {
