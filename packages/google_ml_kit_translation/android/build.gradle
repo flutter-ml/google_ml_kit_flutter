@@ -1,4 +1,4 @@
-group 'com.google_ml_kit_commons'
+group 'com.google_ml_kit_translation'
 version '1.0'
 
 buildscript {
@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:vision-common:17.1.0'
-    implementation 'com.google.mlkit:linkfirebase:17.0.0'
+    dependencies {
+        implementation 'com.google.mlkit:translate:17.0.0'
+    }
+
 }

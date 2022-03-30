@@ -1,10 +1,10 @@
 import 'package:google_ml_kit_barcode_scanning/barcode_scanner.dart';
+import 'package:google_ml_kit_commons/commons.dart';
+import 'package:google_ml_kit_digital_ink_recognition/digital_ink_recognizer.dart';
 import 'package:google_ml_kit_face_detection/face_detector.dart';
 import 'package:google_ml_kit_image_labeling/image_labeler.dart';
-import 'package:google_ml_kit_ink_recognition/digital_ink_recognizer.dart';
 import 'package:google_ml_kit_object_detection/object_detector.dart';
 import 'package:google_ml_kit_pose_detection/pose_detector.dart';
-import 'package:google_ml_kit_remote_model/remote_model_manager.dart';
 import 'package:google_ml_kit_text_recognition/text_recognizer.dart';
 
 /// Get instance of the individual api's using instance of [Vision]

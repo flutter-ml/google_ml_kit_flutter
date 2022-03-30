@@ -76,6 +76,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
                                 frame.put("bottom", rect.bottom);
                                 faceData.put("rect", frame);
 
+                                faceData.put("headEulerAngleX", face.getHeadEulerAngleX());
                                 faceData.put("headEulerAngleY", face.getHeadEulerAngleY());
                                 faceData.put("headEulerAngleZ", face.getHeadEulerAngleZ());
 

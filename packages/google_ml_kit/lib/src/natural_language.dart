@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit_language_id/language_identifier.dart';
-import 'package:google_ml_kit_translate/on_device_translator.dart';
+import 'package:google_ml_kit_translation/on_device_translator.dart';
 part 'nlp/entity_extraction.dart';
 part 'nlp/smart_reply.dart';
 

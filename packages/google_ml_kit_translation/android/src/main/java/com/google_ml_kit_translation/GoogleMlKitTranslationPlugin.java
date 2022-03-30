@@ -1,21 +1,18 @@
-package com.google_ml_kit_commons;
+package com.google_ml_kit_translation;
 
 import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
 
-public class GoogleMlKitCommonsPlugin implements FlutterPlugin {
+public class GoogleMlKitTranslationPlugin implements FlutterPlugin {
     private MethodChannel channel;
-    private static final String channelName = "google_ml_kit_commons";
+    private static final String channelName = "google_ml_kit_on_device_translator";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), channelName);
-        channel.setMethodCallHandler(new CustomRemoteModelManager());
+        channel.setMethodCallHandler(new TextTranslator());
     }
 
     @Override

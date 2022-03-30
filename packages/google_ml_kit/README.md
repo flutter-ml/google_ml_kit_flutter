@@ -2,8 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/platform-plugins/)
-that enable [Flutter](https://flutter.dev) apps to use [Google's standalone ML Kit](https://developers.google.com/ml-kit).
+Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/platform-plugins/) that enable [Flutter](https://flutter.dev) apps to use [Google's standalone ML Kit](https://developers.google.com/ml-kit).
 
 In versions `0.7.3` and earlier all features were included in a single plugin, but a lot of developers started to get issues with the size of their app, because even though they needed a single feature, the plugin included all the resources for the rest of the features, that increased the size of the app significantly.
 
@@ -15,24 +14,24 @@ In recent versions we have split the plugin in multiple plugins to allow develop
 
 | Feature                                                                                       | Plugin | Android | iOS |
 |-----------------------------------------------------------------------------------------------|--------|---------|-----|
-|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | [google\_ml\_kit\_text\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_text_recognition) | ✅      | ✅  |
-|[Text Recognition V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)         | [google\_ml\_kit\_text\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_text_recognition) | ✅      | ✅  |
-|[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | [google\_ml\_kit\_face\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_face_detection) | ✅      | ✅  |
-|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | [google\_ml\_kit\_pose\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_pose_detection) | ✅      | ✅  |
-|[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | | yet     | yet |
-|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | [google\_ml\_kit\_barcode\_scanning](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_barcode_scanning) | ✅      | ✅  |
-|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | [google\_ml\_kit\_image\_labeling](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_image_labeling) | ✅      | ✅  |
-|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | [google\_ml\_kit\_object\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_object_detection) | ✅      | ✅  |
-|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | [google\_ml\_kit\_ink\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_ink_recognition) | ✅      | ✅  |
+|[Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)               | [google\_ml\_kit\_barcode\_scanning](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_barcode_scanning)                | ✅ | ✅ |
+|[Digital Ink Recognition](https://developers.google.com/ml-kit/vision/digital-ink-recognition) | [google\_ml\_kit\_digital\_ink\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_digital_ink_recognition) | ✅ | ✅ |
+|[Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                   | [google\_ml\_kit\_face\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_face_detection)                    | ✅ | ✅ |
+|[Image Labelling](https://developers.google.com/ml-kit/vision/image-labeling)                  | [google\_ml\_kit\_image\_labeling](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_image_labeling)                    | ✅ | ✅ |
+|[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection)  | [google\_ml\_kit\_object\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_object_detection)                | ✅ | ✅ |
+|[Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)                   | [google\_ml\_kit\_pose\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_pose_detection)                    | ✅ | ✅ |
+|[Selfie Segmentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)         | [google\_ml\_kit\_selfie\_segmentation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_selfie_segmentation)          | yet | yet |
+|[Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)               | [google\_ml\_kit\_text\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_text_recognition)                | ✅ | ✅ |
+|[Text Recognition V2](https://developers.google.com/ml-kit/vision/text-recognition/v2)         | [google\_ml\_kit\_text\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_text_recognition)                | ✅ | ✅ |
 
 ### Natural Language
 
 | Feature                                                                                       | Plugin | Android | iOS |
 |-----------------------------------------------------------------------------------------------|--------|---------|-----|
-|[Language Identification](https://developers.google.com/ml-kit/language/identification)        | [google\_ml\_kit\_language\_id](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_language_id) | ✅      | ✅  |
-|[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | | ✅      | yet |
-|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | | ✅      | yet |
-|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | | ✅      | yet |
+|[Entity Extraction](https://developers.google.com/ml-kit/language/entity-extraction)           | [google\_ml\_kit\_entity\_extraction](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_entity_extraction)    | ✅ | yet |
+|[Language Identification](https://developers.google.com/ml-kit/language/identification)        | [google\_ml\_kit\_language\_id](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_language_id)                | ✅ | ✅ |
+|[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | [google\_ml\_kit\_translation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_translation)                 | ✅ | yet |
+|[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | [google\_ml\_kit\_smart\_reply](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit_smart_reply)                | ✅ | yet |
 
 ## Getting Started
 

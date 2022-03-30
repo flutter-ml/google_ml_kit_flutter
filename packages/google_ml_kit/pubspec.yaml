@@ -13,26 +13,34 @@ dependencies:
     sdk: flutter
   google_ml_kit_commons:
     path: ../google_ml_kit_commons
+
+  # Vision APIs
   google_ml_kit_barcode_scanning:
     path: ../google_ml_kit_barcode_scanning
+  google_ml_kit_digital_ink_recognition:
+    path: ../google_ml_kit_digital_ink_recognition
   google_ml_kit_face_detection:
     path: ../google_ml_kit_face_detection
   google_ml_kit_image_labeling:
     path: ../google_ml_kit_image_labeling
-  google_ml_kit_ink_recognition:
-    path: ../google_ml_kit_ink_recognition
-  google_ml_kit_language_id:
-    path: ../google_ml_kit_language_id
   google_ml_kit_object_detection:
     path: ../google_ml_kit_object_detection
   google_ml_kit_pose_detection:
     path: ../google_ml_kit_pose_detection
-  google_ml_kit_remote_model:
-    path: ../google_ml_kit_remote_model
+#  google_ml_kit_selfie_segmentation:
+#    path: ../google_ml_kit_selfie_segmentation
   google_ml_kit_text_recognition:
     path: ../google_ml_kit_text_recognition
-  google_ml_kit_translate:
-    path: ../google_ml_kit_translate
+
+  # Natural Language APIs
+#  google_ml_kit_entity_extraction:
+#    path: ../google_ml_kit_entity_extraction
+  google_ml_kit_language_id:
+    path: ../google_ml_kit_language_id
+  google_ml_kit_translation:
+    path: ../google_ml_kit_translation
+#  google_ml_kit_smart_reply:
+#    path: ../google_ml_kit_smart_reply
 
 dev_dependencies:
   flutter_test:
