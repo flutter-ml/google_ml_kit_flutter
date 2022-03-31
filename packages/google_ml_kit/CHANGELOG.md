@@ -39,7 +39,7 @@
 ## 0.4.0
 
 * Add face detection for iOS
-* Add image labelling for iOS
+* Add image labeling for iOS
 * Add Entity Extraction for Android
 
 ## 0.5.0
@@ -61,7 +61,7 @@
 
 ## 0.7.0
 
-* Add firebase remote model support for image labelling .
+* Add firebase remote model support for image labeling .
 * Change available API's to use unbundled models for Android.
 * Update Pose Detector API version and add z co-ordinate.
 * Fixes for barcode data parsing.

@@ -70,33 +70,33 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Process Image
+#### 2. Create an instance of recognizer
 
 ```dart
-final options = ImageLabelerOptions();
-final imageLabeler = ImageLabeler(options);
+final digitalInkRecognizer = DigitalInkRecognizer();
 ```
 
-#### 3. Call the corresponding method
+#### 3. Process points
 
 ```dart
-final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
+List<Offset?> points; // an array with the points of the stroke
+String languageTag;
+final List<RecognitionCandidate> canditates = await digitalInkRecognizer(points, languageTag);
 ```
 
 #### 4. Extract data from response
 
 ```dart
-for (ImageLabel label in labels) {
-  final String text = label.text;
-  final int index = label.index;
-  final double confidence = label.confidence;
+for (final candidate in candidates) {
+  final text = candidate.text;
+  final score = candidate.score;
 }
 ```
 
 #### 5. Release resources with `close()`
 
 ```dart
-imageLabeler.close();
+digitalInkRecognizer.close();
 ```
 
 ## Example app

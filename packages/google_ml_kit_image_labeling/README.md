@@ -1,8 +1,8 @@
-# Google's ML Kit Text Recognition for Flutter
+# Google's ML Kit Image Labeling for Flutter
 
 [![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
-A Flutter plugin to use [Google's ML Kit Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition/v2).
+A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling).
 
 ## Getting Started
 
@@ -70,41 +70,32 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of recognizer
+#### 2. Create an instance of labeler
 
 ```dart
-final textRecognizer = TextRecognizer();
+final imageLabeler = ImageLabeler();
 ```
 
 #### 3. Process image
 
 ```dart
-final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
+final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
 ```
 
 #### 4. Extract data from response
 
 ```dart
-String text = recognizedText.text;
-for (TextBlock block in recognizedText.blocks) {
-  final Rect rect = block.rect;
-  final List<Offset> cornerPoints = block.cornerPoints;
-  final String text = block.text;
-  final List<String> languages = block.recognizedLanguages;
-
-  for (TextLine line in block.lines) {
-    // Same getters as TextBlock
-    for (TextElement element in line.elements) {
-      // Same getters as TextBlock
-    }
-  }
+for (ImageLabel label in labels) {
+  final String text = label.text;
+  final int index = label.index;
+  final double confidence = label.confidence;
 }
 ```
 
 #### 5. Release resources with `close()`
 
 ```dart
-textRecognizer.close();
+imageLabeler.close();
 ```
 
 ## Example app

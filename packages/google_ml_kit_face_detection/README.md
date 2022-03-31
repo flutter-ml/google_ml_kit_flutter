@@ -77,7 +77,7 @@ final options = FaceDetectorOptions();
 final faceDetector = FaceDetector(options);
 ```
 
-#### 3. Process Image
+#### 3. Process image
 
 ```dart
 final List<Face> faces = await faceDetector.processImage(inputImage);
@@ -111,7 +111,7 @@ for (Face face in faces) {
 }
 ```
 
-#### 5. Release resources with `close()`.
+#### 5. Release resources with `close()`
 
 ```dart
 faceDetector.close();

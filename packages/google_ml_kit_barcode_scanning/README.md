@@ -70,13 +70,13 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of detector
+#### 2. Create an instance of scanner
 
 ```dart
 final barcodeScanner = BarcodeScanner();
 ```
 
-#### 3. Process Image
+#### 3. Process image
 
 ```dart
 final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
