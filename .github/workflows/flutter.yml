@@ -66,7 +66,7 @@ jobs:
       working-directory: ./packages/google_ml_kit_translation
       run: flutter pub get
 
-      name: Install dependencies for google_ml_kit_entity_extraction
+    - name: Install dependencies for google_ml_kit_entity_extraction
       working-directory: ./packages/google_ml_kit_entity_extraction
       run: flutter pub get
 
