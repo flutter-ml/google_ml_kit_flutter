@@ -1,7 +1,8 @@
 import 'package:flutter/services.dart';
+import 'package:google_ml_kit_entity_extraction/entity_extractor.dart';
 import 'package:google_ml_kit_language_id/language_identifier.dart';
 import 'package:google_ml_kit_translation/on_device_translator.dart';
-part 'nlp/entity_extraction.dart';
+
 part 'nlp/smart_reply.dart';
 
 class NaturalLanguage {
@@ -29,12 +30,12 @@ class NaturalLanguage {
 
   /// Returns instance of [EntityExtractor].
   EntityExtractor entityExtractor(String language) {
-    return EntityExtractor._(language);
+    return EntityExtractor(language);
   }
 
   /// Returns instance of [EntityModelManager].
   EntityModelManager entityModelManager() {
-    return EntityModelManager._();
+    return EntityModelManager();
   }
 
   /// Returns instance of [SmartReply].

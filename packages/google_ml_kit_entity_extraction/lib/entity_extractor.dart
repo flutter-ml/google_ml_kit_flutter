@@ -1,17 +1,18 @@
-part of '../natural_language.dart';
+import 'package:flutter/services.dart';
 
 /// Extracts entities from the given text.
 /// Creating an instance.
 /// ```
-/// final _entityExtractor = GoogleMlKit.nlp.
-///                          entityExtractor(EntityExtractorOptions.ENGLISH);
+/// final _entityExtractor = EntityExtractor(EntityExtractorOptions.ENGLISH);
 /// ```
 class EntityExtractor {
   final String _language;
   bool _isOpened = false;
   bool _isClosed = false;
+  static const MethodChannel _channel =
+      MethodChannel('google_ml_kit_entity_extraction');
 
-  EntityExtractor._(this._language);
+  EntityExtractor(this._language);
 
   /// Extracts entities from the given text and returns [List<EntityAnnotation>]
   Future<List<EntityAnnotation>> extractEntities(String text,
@@ -22,7 +23,7 @@ class EntityExtractor {
       'timezone': timeZone,
     };
 
-    final result = await NaturalLanguage.channel.invokeMethod(
+    final result = await _channel.invokeMethod(
         'nlp#startEntityExtractor', <String, dynamic>{
       'parameters': parameters,
       'text': text,
@@ -38,7 +39,7 @@ class EntityExtractor {
 
   Future<void> close() async {
     if (!_isClosed && _isOpened) {
-      await NaturalLanguage.channel.invokeMethod('nlp#closeEntityExtractor');
+      await _channel.invokeMethod('nlp#closeEntityExtractor');
       _isClosed = true;
       _isOpened = false;
     }
@@ -47,17 +48,17 @@ class EntityExtractor {
 
 /// Creating instance of [EntityModelManager]
 /// ```
-/// final _onDeviceTranslator = GoogleMlKit.nlp
-///      .onDeviceTranslator(sourceLanguage: TranslateLanguage.ENGLISH,
-///       targetLanguage: TranslateLanguage.SPANISH);
+/// final entityModelManager = EntityModelManager();
 /// ```
 class EntityModelManager {
-  EntityModelManager._();
+  static const MethodChannel _channel =
+      MethodChannel('google_ml_kit_entity_extraction');
+
+  EntityModelManager();
 
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String modelTag) async {
-    final result = await NaturalLanguage.channel.invokeMethod(
-        'nlp#startEntityModelManager',
+    final result = await _channel.invokeMethod('nlp#startEntityModelManager',
         <String, dynamic>{'task': 'check', 'model': modelTag});
     return result as bool;
   }
@@ -67,7 +68,7 @@ class EntityModelManager {
   /// On failing to dowload it throws an error.
   Future<String> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
-    final result = await NaturalLanguage.channel.invokeMethod(
+    final result = await _channel.invokeMethod(
         'nlp#startEntityModelManager', <String, dynamic>{
       'task': 'download',
       'model': modelTag,
@@ -79,7 +80,7 @@ class EntityModelManager {
   /// Deletes a model.
   /// Returns `success` if model is delted successfully or model is not present.
   Future<String> deleteModel(String modelTag) async {
-    final result = await NaturalLanguage.channel
+    final result = await _channel
         .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
       'task': 'delete',
       'model': modelTag,
@@ -90,7 +91,7 @@ class EntityModelManager {
   /// Returns a list of all downloaded models.
   /// These are `BCP-47` tags.
   Future<List<String>> getAvailableModels() async {
-    final result = await NaturalLanguage.channel
+    final result = await _channel
         .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
       'task': 'getModels',
     });

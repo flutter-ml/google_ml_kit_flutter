@@ -33,8 +33,8 @@ dependencies:
     path: ../google_ml_kit_text_recognition
 
   # Natural Language APIs
-#  google_ml_kit_entity_extraction:
-#    path: ../google_ml_kit_entity_extraction
+  google_ml_kit_entity_extraction:
+    path: ../google_ml_kit_entity_extraction
   google_ml_kit_language_id:
     path: ../google_ml_kit_language_id
   google_ml_kit_translation:
