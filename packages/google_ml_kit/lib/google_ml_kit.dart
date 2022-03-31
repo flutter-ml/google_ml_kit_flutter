@@ -1,6 +1,7 @@
 export 'package:google_ml_kit_barcode_scanning/barcode_scanner.dart';
 export 'package:google_ml_kit_commons/commons.dart';
 export 'package:google_ml_kit_digital_ink_recognition/digital_ink_recognizer.dart';
+export 'package:google_ml_kit_entity_extraction/entity_extractor.dart';
 export 'package:google_ml_kit_face_detection/face_detector.dart';
 export 'package:google_ml_kit_image_labeling/image_labeler.dart';
 export 'package:google_ml_kit_language_id/language_identifier.dart';
