@@ -58,10 +58,6 @@ jobs:
       working-directory: ./packages/google_ml_kit_pose_detection
       run: flutter pub get
 
-    - name: Install dependencies for google_ml_kit_remote_model
-      working-directory: ./packages/google_ml_kit_remote_model
-      run: flutter pub get
-
     - name: Install dependencies for google_ml_kit_text_recognition
       working-directory: ./packages/google_ml_kit_text_recognition
       run: flutter pub get
