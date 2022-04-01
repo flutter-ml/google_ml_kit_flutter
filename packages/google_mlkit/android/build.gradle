@@ -1,0 +1,42 @@
+group 'com.google_mlkit'
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+}
+
+dependencies {
+    implementation 'com.google.mlkit:translate:16.1.2'
+    implementation 'com.google.mlkit:entity-extraction:16.0.0-beta2'
+    implementation 'com.google.mlkit:smart-reply:16.2.0'
+}

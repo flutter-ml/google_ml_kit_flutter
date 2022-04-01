@@ -1,5 +1,7 @@
 # Google's ML Kit for Flutter
 
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit)](https://pub.dev/packages/google_mlkit)
+
 Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/platform-plugins/) that enable [Flutter](https://flutter.dev) apps to use [Google's standalone ML Kit](https://developers.google.com/ml-kit).
 
 In versions `0.7.3` and earlier all features were included in a single plugin, but a lot of developers started to get issues with the size of their app, because even though they needed a single feature, the plugin included all the resources for the rest of the features, that increased the size of the app significantly.
@@ -31,68 +33,15 @@ In recent versions we have split the plugin in multiple plugins to allow develop
 |[On-Device Translation](https://developers.google.com/ml-kit/language/translation)             | [google\_ml\_kit\_translation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_translation)                 | ✅ | yet |
 |[Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                       | [google\_ml\_kit\_smart\_reply](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_smart_reply)                | ✅ | yet |
 
-## Requirements
+## Getting Started
 
-### iOS
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
-- Minimum iOS Deployment Target: 10.0
-- Xcode 12 or newer
-- Swift 5
-- ML Kit only supports 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities.
+Go to the documentation of each plugin to learn how to use it.
 
-Since ML Kit does not support 32-bit architectures (i386 and armv7) ([Read mode](https://developers.google.com/ml-kit/migration/ios)), you need to exclude amrv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`.
+## Example app
 
-Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
-
-![](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/ima/build_settings_01.png)
-
-Then your Podfile should look like this:
-
-```
-# add this line:
-$iOSVersion = '10.0'
-
-post_install do |installer|
-  # add these lines:
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-  end
-  
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    
-    # add these lines:
-    target.build_configurations.each do |config|
-      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-      end
-    end
-    
-  end
-end
-```
-
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to something newer but not older.
-
-### Android
-
-- minSdkVersion: 21
-- targetSdkVersion: 29
-
-## Migrating from ML Kit for Firebase
-
-When Migrating from ML Kit for Firebase read [this guide](https://developers.google.com/ml-kit/migration). For Android details read [this](https://developers.google.com/ml-kit/migration/android). For iOS details read [this](https://developers.google.com/ml-kit/migration/ios).
-
-## Known issues
-
-### Android
-
-To reduce the apk size read more about it in issue [#26](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/26). Also look at [this](https://developers.google.com/ml-kit/tips/reduce-app-size).
-
-### iOS
-
-If you are using this plugin in your app and any other plugin that requires Firebase, there is a known issues you will encounter a dependency error when running `pod install`. To read more about it go to issue [#27](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues/27).
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit/example) to see the plugin in action.
 
 ## Contributing
 

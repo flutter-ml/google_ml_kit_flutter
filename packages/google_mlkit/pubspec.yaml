@@ -1,0 +1,57 @@
+name: google_mlkit
+description: A Flutter plugin to implement google's standalone ml kit made for mobile platform.
+version: 0.7.3
+homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
+publish_to: none # TODO: remove once split is ready
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.20.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_commons:
+    path: ../google_mlkit_commons
+
+  # Vision APIs
+  google_mlkit_barcode_scanning:
+    path: ../google_mlkit_barcode_scanning
+  google_mlkit_digital_ink_recognition:
+    path: ../google_mlkit_digital_ink_recognition
+  google_mlkit_face_detection:
+    path: ../google_mlkit_face_detection
+  google_mlkit_image_labeling:
+    path: ../google_mlkit_image_labeling
+  google_mlkit_object_detection:
+    path: ../google_mlkit_object_detection
+  google_mlkit_pose_detection:
+    path: ../google_mlkit_pose_detection
+#  google_mlkit_selfie_segmentation:
+#    path: ../google_mlkit_selfie_segmentation
+  google_mlkit_text_recognition:
+    path: ../google_mlkit_text_recognition
+
+  # Natural Language APIs
+  google_mlkit_entity_extraction:
+    path: ../google_mlkit_entity_extraction
+  google_mlkit_language_id:
+    path: ../google_mlkit_language_id
+  google_mlkit_translation:
+    path: ../google_mlkit_translation
+#  google_mlkit_smart_reply:
+#    path: ../google_mlkit_smart_reply
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.google_mlkit
+        pluginClass: GoogleMlKitPlugin
+      ios:
+        pluginClass: GoogleMlKitPlugin
