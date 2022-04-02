@@ -2,8 +2,6 @@ package com.google_mlkit;
 
 import androidx.annotation.NonNull;
 
-import com.google_mlkit.nl.EntityExtractor;
-import com.google_mlkit.nl.EntityModelManager;
 import com.google_mlkit.nl.OnDeviceTranslator;
 import com.google_mlkit.nl.SmartReply;
 import com.google_mlkit.nl.TranslatorModelManager;
@@ -24,8 +22,6 @@ public class MlKitMethodCallHandler implements MethodChannel.MethodCallHandler {
     public MlKitMethodCallHandler() {
         List<ApiDetectorInterface> detectors = new ArrayList<ApiDetectorInterface>(
                 Arrays.asList(
-                        new EntityExtractor(),
-                        new EntityModelManager(),
                         new OnDeviceTranslator(),
                         new TranslatorModelManager(),
                         new SmartReply()

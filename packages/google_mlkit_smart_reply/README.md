@@ -1,31 +1,43 @@
-# Google's ML Kit Entity Extraction API for Flutter
+# Google's ML Kit Smart Reply for Flutter
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit)](https://pub.dev/packages/google_mlkit)
 
-A Flutter plugin to use [Google's ML Kit Entity Extractor API](https://developers.google.com/ml-kit/language/entity-extraction).
+A Flutter plugin to use [Google's ML Kit Smart Reply API](https://developers.google.com/ml-kit/language/smart-reply).
 
 ## Getting Started
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
-## Usage
+## Translating Text
 
-#### 1. Create an instance of Entity Extractor
+#### 1. Create an instance of Smart Reply
 
 ```dart
-final entityExtractor = (EntityExtractorOptions.english);
+final onDeviceTranslator = SmartReply();
 ```
 
-#### 2. Process text
+#### 2. Add conversation texts
 
 ```dart
-final List<EntityAnnotation> response = await entityExtractor.extractEntities(text);
+// For local user.
+final String response = await smartReply.addConversationForLocalUser(text);
+
+// For remote user. 
+final String response = await smartReply.addConversationForRemoteUser(_remoteUserController.text, uid);
+    }
 ```
-
-#### 3. Release resources with `close()`
+#### 3. Generate replies.
+```dart
+/// Get status of suggestions by `reponse['status']`.
+/// 0 =  STATUS_SUCCESS.
+/// 1 =  STATUS_NOT_SUPPORTED_LANGUAGE.
+/// 2 =  STATUS_NO_REPLY. 
+final Map<String, dynamic> response= await smartReply.suggestReplies();
+```
+#### 4. Release resources with `close()`
 
 ```dart
-entityExtractor.close();
+smartReply.close();
 ```
 
 ## Example app

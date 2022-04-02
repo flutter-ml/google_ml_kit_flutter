@@ -7,6 +7,7 @@ export 'package:google_mlkit_image_labeling/image_labeler.dart';
 export 'package:google_mlkit_language_id/language_identifier.dart';
 export 'package:google_mlkit_object_detection/object_detector.dart';
 export 'package:google_mlkit_pose_detection/pose_detector.dart';
+export 'package:google_mlkit_smart_reply/smart_reply.dart';
 export 'package:google_mlkit_text_recognition/text_recognizer.dart';
 export 'package:google_mlkit_translation/on_device_translator.dart';
 

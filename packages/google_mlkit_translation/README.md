@@ -27,6 +27,35 @@ final String response = await onDeviceTranslator.translateText(text);
 ```dart
 onDeviceTranslator.close();
 ```
+## Managing language models
+
+#### 1. Create an instance of model manager.
+
+```dart
+final translateLanguageModelManager = TranslateLanguageModelManager();
+```
+
+#### 2. Check if model is downloaded.
+
+```dart
+final String response = await translateLanguageModelManager.isModelDownloaded(TranslateLanguage.english);
+```
+#### 3. Download model.
+
+```dart
+final String response = await translateLanguageModelManager.downloadModel(TranslateLanguage.english);
+```
+#### 4. Delete model.
+
+```dart
+final String response = await translateLanguageModelManager.deleteModel(TranslateLanguage.english);
+```
+
+#### 5. Get all available models.
+
+```dart
+final List<String> response = await translateLanguageModelManager.getAvailableModels();
+```
 
 ## Example app
 

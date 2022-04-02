@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_entity_extraction/entity_extractor.dart';
 import 'package:google_mlkit_language_id/language_identifier.dart';
+import 'package:google_mlkit_smart_reply/smart_reply.dart';
 import 'package:google_mlkit_translation/on_device_translator.dart';
-
-part 'nlp/smart_reply.dart';
 
 class NaturalLanguage {
   NaturalLanguage._();
@@ -40,6 +39,6 @@ class NaturalLanguage {
 
   /// Returns instance of [SmartReply].
   SmartReply smartReply() {
-    return SmartReply._();
+    return SmartReply();
   }
 }

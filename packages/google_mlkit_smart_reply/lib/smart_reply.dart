@@ -1,4 +1,4 @@
-part of '../natural_language.dart';
+import 'package:flutter/services.dart';
 
 ///Generates smart replies based on the conversations list.
 ///Creating an instance of [SmartReply]
@@ -10,11 +10,13 @@ class SmartReply {
   bool _isClosed = false;
   int _conversationCount = 0;
 
-  SmartReply._();
+  static const MethodChannel _channel =
+      MethodChannel('google_mlkit_smart_reply');
+  SmartReply();
 
   /// Adds conversation for local user.
   Future addConversationForLocalUser(String text) async {
-    final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
+    final result = _channel.invokeMethod('nlp#addSmartReply',
         <String, dynamic>{'text': text, 'localUser': true});
     _conversationCount++;
     return result;
@@ -22,14 +24,14 @@ class SmartReply {
 
   /// Adds conversation for remote user.
   Future addConversationForRemoteUser(String text, String uID) async {
-    final result = NaturalLanguage.channel.invokeMethod('nlp#addSmartReply',
+    final result = _channel.invokeMethod('nlp#addSmartReply',
         <String, dynamic>{'text': text, 'localUser': false, 'uID': uID});
     _conversationCount++;
     return result;
   }
 
-  ///Suggests possible replies for the conversation.
-  ///Returns a map having the status of suggestions and all the suggestions.
+  // /Suggests possible replies for the conversation.
+  /// Returns a map having the status of suggestions and all the suggestions.
   Future<Map<String, dynamic>> suggestReplies() async {
     _hasBeenOpened = true;
     _isClosed = false;
@@ -39,8 +41,7 @@ class SmartReply {
       return <String, dynamic>{'status': 2, 'suggestions': suggestions};
     }
 
-    final result =
-        await NaturalLanguage.channel.invokeMethod('nlp#startSmartReply');
+    final result = await _channel.invokeMethod('nlp#startSmartReply');
 
     if (result['suggestions'] != null) {
       for (final dynamic suggestion in result['suggestions']) {
@@ -57,7 +58,7 @@ class SmartReply {
 
   Future<void> close() async {
     if (!_isClosed && _hasBeenOpened) {
-      await NaturalLanguage.channel.invokeMethod('nlp#closeSmartReply');
+      await _channel.invokeMethod('nlp#closeSmartReply');
       _hasBeenOpened = false;
       _isClosed = true;
       _conversationCount = 0;

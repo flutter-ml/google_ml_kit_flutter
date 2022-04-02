@@ -70,6 +70,10 @@ jobs:
       working-directory: ./packages/google_mlkit_entity_extraction
       run: flutter pub get
 
+    - name: Install dependencies for google_mlkit_smart_reply
+      working-directory: ./packages/google_mlkit_smart_reply
+      run: flutter pub get
+
     # Check for any formatting issues in the code.
     - run: flutter format --set-exit-if-changed .
 

@@ -39,8 +39,8 @@ dependencies:
     path: ../google_mlkit_language_id
   google_mlkit_translation:
     path: ../google_mlkit_translation
-#  google_mlkit_smart_reply:
-#    path: ../google_mlkit_smart_reply
+  google_mlkit_smart_reply:
+    path: ../google_mlkit_smart_reply
 
 dev_dependencies:
   flutter_test:
