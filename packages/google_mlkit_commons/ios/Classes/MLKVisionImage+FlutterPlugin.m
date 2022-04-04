@@ -1,4 +1,4 @@
-#import "GoogleMlKitPlugin.h"
+#import "GoogleMlKitCommonsPlugin.h"
 #import <MLKitVision/MLKitVision.h>
 
 @implementation MLKVisionImage(FlutterPlugin)

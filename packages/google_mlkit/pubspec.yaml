@@ -11,8 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_mlkit_commons:
-    path: ../google_mlkit_commons
 
   # Vision APIs
   google_mlkit_barcode_scanning:
@@ -31,6 +29,8 @@ dependencies:
 #    path: ../google_mlkit_selfie_segmentation
   google_mlkit_text_recognition:
     path: ../google_mlkit_text_recognition
+  google_mlkit_remote_model:
+    path: ../google_mlkit_remote_model
 
   # Natural Language APIs
   google_mlkit_entity_extraction:
@@ -46,12 +46,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.4
-
-flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.google_mlkit
-        pluginClass: GoogleMlKitPlugin
-      ios:
-        pluginClass: GoogleMlKitPlugin

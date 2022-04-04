@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:google_mlkit_entity_extraction/entity_extractor.dart';
 import 'package:google_mlkit_language_id/language_identifier.dart';
 import 'package:google_mlkit_smart_reply/smart_reply.dart';
@@ -6,8 +5,6 @@ import 'package:google_mlkit_translation/on_device_translator.dart';
 
 class NaturalLanguage {
   NaturalLanguage._();
-
-  static const MethodChannel channel = MethodChannel('google_mlkit');
 
   static final NaturalLanguage instance = NaturalLanguage._();
 

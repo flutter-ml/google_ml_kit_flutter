@@ -1,12 +1,25 @@
-# google_mlkit_commons
+# google_mlkit_remote_model
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit)](https://pub.dev/packages/google_mlkit)
 
-A Flutter plugin with common methods used in [google_mlkit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+A Flutter plugin using with [google_mlkit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin) to download [Custom Models with ML Kit](https://developers.google.com/ml-kit/custom-models).
 
 ## Getting Started
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+
+## Usage
+
+```dart
+final modelName = '';
+final remoteModelManager = RemoteModelManager();
+
+final isModelDownloaded = await remoteModelManager.isModelDownloaded(modelName);
+
+final success = await remoteModelManager.deleteModel(modelName);
+
+final success = await remoteModelManager.downloadModel(modelName);
+```
 
 ## Example app
 

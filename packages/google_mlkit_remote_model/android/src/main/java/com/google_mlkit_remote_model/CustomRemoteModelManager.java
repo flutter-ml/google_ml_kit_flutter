@@ -1,4 +1,4 @@
-package com.google_mlkit_commons;
+package com.google_mlkit_remote_model;
 
 import androidx.annotation.NonNull;
 

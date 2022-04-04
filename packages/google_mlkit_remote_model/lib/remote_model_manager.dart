@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 
 /// Class to manage firebase remote models.
 class RemoteModelManager {
-  static const MethodChannel _channel = MethodChannel('google_mlkit_commons');
+  static const MethodChannel _channel =
+      MethodChannel('google_mlkit_remote_model_manager');
 
   Future<bool> isModelDownloaded(String modelName) async {
     final result = await _channel.invokeMethod('vision#manageRemoteModel',
