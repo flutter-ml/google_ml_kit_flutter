@@ -25,7 +25,7 @@ class NaturalLanguage {
   }
 
   /// Returns instance of [EntityExtractor].
-  EntityExtractor entityExtractor(String language) {
+  EntityExtractor entityExtractor(EntityExtractorLanguage language) {
     return EntityExtractor(language);
   }
 

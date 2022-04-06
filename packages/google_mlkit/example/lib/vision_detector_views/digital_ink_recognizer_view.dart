@@ -100,24 +100,33 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   }
 
   Future<void> _isModelDownloaded() async {
-    Toast().show('Checking if model is downloaded...', isModelDownloaded(),
-        context, this);
+    Toast().show(
+        'Checking if model is downloaded...',
+        languageModelManager
+            .isModelDownloaded(_language)
+            .then((value) => value ? 'exists' : 'not exists'),
+        context,
+        this);
   }
 
   Future<void> _deleteModel() async {
-    Toast().show('Deleting model...',
-        languageModelManager.deleteModel(_language), context, this);
+    Toast().show(
+        'Deleting model...',
+        languageModelManager
+            .deleteModel(_language)
+            .then((value) => value ? 'success' : 'error'),
+        context,
+        this);
   }
 
   Future<void> _downloadModel() async {
-    Toast().show('Downloading model...',
-        languageModelManager.downloadModel(_language), context, this);
-  }
-
-  Future<String> isModelDownloaded() async {
-    final isModelDownloaded =
-        await languageModelManager.isModelDownloaded(_language);
-    return isModelDownloaded ? 'exists' : 'not exists';
+    Toast().show(
+        'Downloading model...',
+        languageModelManager
+            .downloadModel(_language)
+            .then((value) => value ? 'success' : 'error'),
+        context,
+        this);
   }
 
   Future<void> _recogniseText() async {

@@ -55,28 +55,32 @@ class DigitalInkRecognizer {
 class LanguageModelManager {
   static const MethodChannel _channel = DigitalInkRecognizer._channel;
 
-  ///Check if a particular model is downloaded.Takes the language tag as input.The language should be according to the BCP-47 guidelines.
+  /// Check if a particular model is downloaded.
+  /// Takes the language tag as input.
+  /// The language should be according to the BCP-47 guidelines.
   Future<bool> isModelDownloaded(String modelTag) async {
     final result = await _channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'check', 'modelTag': modelTag});
     return result as bool;
   }
 
-  ///Downloads the model required to process the specified language. If model has been previously downloaded it returns 'exists'.
-  ///Else returns success or failure depending on whether the download completes or not.
+  ///Downloads the model required to process the specified language.
+  ///If model has been previously downloaded it returns true.
+  ///Else returns true or false depending on whether the download completes or not.
   ///To see available models visit [https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models]
-  Future<String> downloadModel(String modelTag) async {
+  Future<bool> downloadModel(String modelTag) async {
     final result = await _channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'download', 'modelTag': modelTag});
-    return result.toString();
+    return result.toString() == 'success';
   }
 
-  ///Delete the model of the language specified in the argument. If model has not been previously downloaded it returns 'not exists'.
+  ///Delete the model of the language specified in the argument.
+  ///If model has not been previously downloaded it returns 'not exists'.
   ///Else returns success or failure depending on whether the deletion completes or not.
-  Future<String> deleteModel(String modelTag) async {
+  Future<bool> deleteModel(String modelTag) async {
     final result = await _channel.invokeMethod('vision#manageInkModels',
         <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
-    return result.toString();
+    return result.toString() == 'success';
   }
 }
 

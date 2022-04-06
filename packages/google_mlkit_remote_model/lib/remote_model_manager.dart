@@ -7,6 +7,7 @@ class RemoteModelManager {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_remote_model_manager');
 
+  /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String modelName) async {
     final result = await _channel.invokeMethod('vision#manageRemoteModel',
         <String, dynamic>{'task': 'check', 'model': modelName});
@@ -14,7 +15,7 @@ class RemoteModelManager {
   }
 
   /// Downloads a model.
-  /// Returns `success` if model downloads successfully or model is already downloaded.
+  /// Returns true if model downloads successfully or model is already downloaded.
   /// On failing to download it throws an error.
   Future<bool> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
@@ -28,7 +29,7 @@ class RemoteModelManager {
   }
 
   /// Deletes a model.
-  /// Returns `success` if model is deleted successfully or model is not present.
+  /// Returns true if model is deleted successfully or model is not present.
   Future<bool> deleteModel(String modelTag) async {
     final result = await _channel
         .invokeMethod('vision#manageRemoteModel', <String, dynamic>{

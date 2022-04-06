@@ -43,33 +43,32 @@ class _RemoteModelViewState extends State<RemoteModelView> {
   }
 
   Future<void> _isModelDownloaded() async {
-    Toast().show('Checking if model is downloaded...', isModelDownloaded(),
-        context, this);
+    Toast().show(
+        'Checking if model is downloaded...',
+        _remoteModelManager
+            .isModelDownloaded(_modelName)
+            .then((value) => value ? 'exists' : 'not exists'),
+        context,
+        this);
   }
 
   Future<void> _deleteModel() async {
-    Toast().show('Deleting model...', deleteModel(), context, this);
+    Toast().show(
+        'Deleting model...',
+        _remoteModelManager
+            .deleteModel(_modelName)
+            .then((value) => value ? 'success' : 'error'),
+        context,
+        this);
   }
 
   Future<void> _downloadModel() async {
-    Toast().show('Downloading model...', downloadModel(), context, this);
-  }
-
-  Future<String> isModelDownloaded() async {
-    final isModelDownloaded =
-        await _remoteModelManager.isModelDownloaded(_modelName);
-    return isModelDownloaded ? 'exists' : 'not exists';
-  }
-
-  Future<String> deleteModel() async {
-    return (await _remoteModelManager.deleteModel(_modelName))
-        ? 'success'
-        : 'error';
-  }
-
-  Future<String> downloadModel() async {
-    return (await _remoteModelManager.downloadModel(_modelName))
-        ? 'success'
-        : 'error';
+    Toast().show(
+        'Downloading model...',
+        _remoteModelManager
+            .downloadModel(_modelName)
+            .then((value) => value ? 'success' : 'error'),
+        context,
+        this);
   }
 }

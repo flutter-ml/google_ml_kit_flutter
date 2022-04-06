@@ -57,9 +57,9 @@ class TranslateLanguageModelManager {
   }
 
   /// Downloads a model.
-  /// Returns `success` if model downloads succesfully or model is already downloaded.
-  /// On failing to dowload it throws an error.
-  Future<String> downloadModel(String modelTag,
+  /// Returns true if model downloads successfully or model is already downloaded.
+  /// On failing to download it throws an error.
+  Future<bool> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await _channel.invokeMethod(
         'nlp#startLanguageModelManager', <String, dynamic>{
@@ -67,18 +67,18 @@ class TranslateLanguageModelManager {
       'model': modelTag,
       'wifi': isWifiRequired
     });
-    return result.toString();
+    return result.toString() == 'success';
   }
 
   /// Deletes a model.
-  /// Returns `success` if model is delted successfully or model is not present.
-  Future<String> deleteModel(String modelTag) async {
+  /// Returns true if model is deleted successfully or model is not present.
+  Future<bool> deleteModel(String modelTag) async {
     final result = await _channel
         .invokeMethod('nlp#startLanguageModelManager', <String, dynamic>{
       'task': 'delete',
       'model': modelTag,
     });
-    return result.toString();
+    return result.toString() == 'success';
   }
 
   /// Returns a list of all downloaded models.

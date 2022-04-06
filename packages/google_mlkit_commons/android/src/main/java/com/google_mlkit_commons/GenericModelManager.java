@@ -18,7 +18,7 @@ public class GenericModelManager {
     public RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
 
     //To avoid downloading models in the main thread as they are around 20MB and may crash the app.
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public void downloadModel(RemoteModel remoteModel, DownloadConditions downloadConditions, final MethodChannel.Result result) {
         if (isModelDownloaded(remoteModel)) {

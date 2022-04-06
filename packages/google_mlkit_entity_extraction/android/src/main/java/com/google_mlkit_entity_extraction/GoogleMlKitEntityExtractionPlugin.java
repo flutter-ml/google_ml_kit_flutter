@@ -7,7 +7,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class GoogleMlKitEntityExtractionPlugin implements FlutterPlugin {
     private MethodChannel channel;
-    private static final String channelName = "google_mlkit_entity_extraction";
+    private static final String channelName = "google_mlkit_entity_extractor";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
