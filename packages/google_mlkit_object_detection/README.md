@@ -1,12 +1,19 @@
 # Google's ML Kit Object Detection and Tracking for Flutter
 
-[![Pub Version](https://img.shields.io/pub/v/google_mlkit)](https://pub.dev/packages/google_mlkit)
+[![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
 
 A Flutter plugin to use [Google's ML Kit Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection).
 
 ## Getting Started
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+
+### Firebase dependency
+
+[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection) could be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app. Custom Models are downloaded from [Firebase](https://firebase.google.com/). Since both model options are handled in this plugin, that requires you to add Firebase to your project even if you are only using the Base Models. To add Firebase to your project follow these steps:
+
+- [Android](https://firebase.google.com/docs/android/setup)
+- [iOS](https://firebase.google.com/docs/ios/setup)
 
 ## Usage
 
