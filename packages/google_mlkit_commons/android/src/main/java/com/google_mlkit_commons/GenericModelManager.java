@@ -12,13 +12,43 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class GenericModelManager {
+    private static final String DOWNLOAD = "download";
+    private static final String DELETE = "delete";
+    private static final String CHECK = "check";
+
     public RemoteModelManager remoteModelManager = RemoteModelManager.getInstance();
 
     //To avoid downloading models in the main thread as they are around 20MB and may crash the app.
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+
+    public void manageModel(final RemoteModel model, final MethodCall call, final MethodChannel.Result result) {
+        String task = call.argument("task");
+        switch (task) {
+            case DOWNLOAD:
+                boolean isWifiReqRequired = call.argument("wifi");
+                DownloadConditions downloadConditions;
+                if (isWifiReqRequired)
+                    downloadConditions = new DownloadConditions.Builder().requireWifi().build();
+                else
+                    downloadConditions = new DownloadConditions.Builder().build();
+                downloadModel(model, downloadConditions, result);
+                break;
+            case DELETE:
+                deleteModel(model, result);
+                break;
+            case CHECK:
+                Boolean downloaded = isModelDownloaded(model);
+                if (downloaded != null) result.success(downloaded);
+                else result.error("error", null, null);
+                break;
+            default:
+                result.notImplemented();
+        }
+    }
 
     public void downloadModel(RemoteModel remoteModel, DownloadConditions downloadConditions, final MethodChannel.Result result) {
         if (isModelDownloaded(remoteModel)) {

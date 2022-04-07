@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModel;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
@@ -22,7 +21,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
-
     private static final String START = "vision#startDigitalInkRecognizer";
     private static final String CLOSE = "vision#closeDigitalInkRecognizer";
     private static final String MANAGE = "vision#manageInkModels";
@@ -33,14 +31,19 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (START.equals(method)) {
-            handleDetection(call, result);
-        } else if (MANAGE.equals(method)) {
-            manageInkModels(call, result);
-        } else if (CLOSE.equals(method)) {
-            closeDetector();
-        } else {
-            result.notImplemented();
+        switch (method) {
+            case START:
+                handleDetection(call, result);
+                break;
+            case CLOSE:
+                closeDetector();
+                break;
+            case MANAGE:
+                manageModel(call, result);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -97,29 +100,18 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
                 .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
     }
 
-    private void manageInkModels(MethodCall call, final MethodChannel.Result result) {
+    private void closeDetector() {
+        if (recognizer == null) return;
+        recognizer.close();
+    }
+
+    private void manageModel(MethodCall call, final MethodChannel.Result result) {
         DigitalInkRecognitionModel model = getModel(call, result);
-        String task = (String) call.argument("task");
-        switch (task) {
-            case "download":
-                DownloadConditions downloadConditions = new DownloadConditions.Builder().build();
-                genericModelManager.downloadModel(model, downloadConditions, result);
-                break;
-            case "delete":
-                genericModelManager.deleteModel(model, result);
-                break;
-            case "check":
-                Boolean downloaded = genericModelManager.isModelDownloaded(model);
-                if (downloaded != null) result.success(downloaded);
-                else result.error("Verify Failed", "Error in running the is DownLoad method", null);
-                break;
-            default:
-                result.notImplemented();
-        }
+        genericModelManager.manageModel(model, call, result);
     }
 
     private DigitalInkRecognitionModel getModel(MethodCall call, final MethodChannel.Result result) {
-        String tag = (String) call.argument("model");
+        String tag = call.argument("model");
         DigitalInkRecognitionModelIdentifier modelIdentifier;
         try {
             modelIdentifier = DigitalInkRecognitionModelIdentifier.fromLanguageTag(tag);
@@ -132,9 +124,5 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
             return null;
         }
         return DigitalInkRecognitionModel.builder(modelIdentifier).build();
-    }
-
-    private void closeDetector() {
-        recognizer.close();
     }
 }

@@ -2,21 +2,16 @@ package com.google_mlkit_translation;
 
 import androidx.annotation.NonNull;
 
-import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.google_mlkit_commons.GenericModelManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class TextTranslator implements MethodChannel.MethodCallHandler {
-
     private static final String START = "nlp#startLanguageTranslator";
     private static final String CLOSE = "nlp#closeLanguageTranslator";
     private static final String MANAGE = "nlp#manageLanguageModelModels";
@@ -27,15 +22,20 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
-            translateText(call, result);
-        } else if (method.equals(CLOSE)) {
-            closeDetector();
-            result.success(null);
-        } else if (method.equals(MANAGE)) {
-            startLanguageModelManager(call, result);
-        } else {
-            result.notImplemented();
+        switch (method) {
+            case START:
+                translateText(call, result);
+                break;
+            case CLOSE:
+                closeDetector();
+                result.success(null);
+                break;
+            case MANAGE:
+                manageModel(call, result);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -68,55 +68,13 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     }
 
     private void closeDetector() {
+        if (translator == null) return;
         translator.close();
     }
 
-    private void startLanguageModelManager(MethodCall call, final MethodChannel.Result result) {
-        String task = call.argument("task");
-        switch (task) {
-            case "download":
-                downloadModel(result, call.argument("model"), call.argument("wifi"));
-                break;
-            case "delete":
-                deleteModel(result, call.argument("model"));
-                break;
-            case "getModels":
-                getDownloadedModels(result);
-                break;
-            case "check":
-                TranslateRemoteModel model =
-                        new TranslateRemoteModel.Builder(call.argument("model")).build();
-                Boolean downloaded = genericModelManager.isModelDownloaded(model);
-                if (downloaded != null) result.success(downloaded);
-                else result.error("error", null, null);
-                break;
-            default:
-                result.notImplemented();
-        }
-    }
-
-    private void getDownloadedModels(final MethodChannel.Result result) {
-        genericModelManager.remoteModelManager.getDownloadedModels(TranslateRemoteModel.class).addOnSuccessListener(translateRemoteModels -> {
-            List<String> downloadedModels = new ArrayList<>();
-            for (TranslateRemoteModel translateRemoteModel : translateRemoteModels) {
-                downloadedModels.add(translateRemoteModel.getLanguage());
-            }
-            result.success(downloadedModels);
-        }).addOnFailureListener(e -> result.error("Error getting downloaded models", e.toString(), null));
-    }
-
-    private void downloadModel(final MethodChannel.Result result, String languageCode, boolean isWifiReqRequired) {
-        TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
-        DownloadConditions downloadConditions;
-        if (isWifiReqRequired)
-            downloadConditions = new DownloadConditions.Builder().requireWifi().build();
-        else
-            downloadConditions = new DownloadConditions.Builder().build();
-        genericModelManager.downloadModel(model, downloadConditions, result);
-    }
-
-    private void deleteModel(final MethodChannel.Result result, String languageCode) {
-        TranslateRemoteModel model = new TranslateRemoteModel.Builder(languageCode).build();
-        genericModelManager.deleteModel(model, result);
+    private void manageModel(MethodCall call, final MethodChannel.Result result) {
+        TranslateRemoteModel model =
+                new TranslateRemoteModel.Builder(call.argument("model")).build();
+        genericModelManager.manageModel(model, call, result);
     }
 }

@@ -22,33 +22,28 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
     super.dispose();
   }
 
-  Future<void> downloadModel() async {
+  Future<void> _downloadModel() async {
     var result = await _languageModelManager.downloadModel('en');
     print('Model en downloaded: $result');
     result = await _languageModelManager.downloadModel('es');
     print('Model es downloaded: $result');
   }
 
-  Future<void> deleteModel() async {
+  Future<void> _deleteModel() async {
     var result = await _languageModelManager.deleteModel('en');
     print('Model en deleted: $result');
     result = await _languageModelManager.deleteModel('es');
     print('Model es deleted: $result');
   }
 
-  Future<void> getAvailableModels() async {
-    final result = await _languageModelManager.getAvailableModels();
-    print('Available models: $result');
-  }
-
-  Future<void> isModelDownloaded() async {
+  Future<void> _isModelDownloaded() async {
     var result = await _languageModelManager.isModelDownloaded('en');
     print('Is model downloaded (en): $result');
     result = await _languageModelManager.isModelDownloaded('es');
     print('Is model downloaded(es): $result');
   }
 
-  Future<void> translateText() async {
+  Future<void> _translateText() async {
     final result = await _onDeviceTranslator.translateText(_controller.text);
     setState(() {
       _translatedText = result;
@@ -100,25 +95,23 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
             ),
             const SizedBox(height: 30),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(onPressed: translateText, child: Text('Translate'))
+              ElevatedButton(
+                  onPressed: _translateText, child: Text('Translate'))
             ]),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    onPressed: downloadModel, child: Text('Download Model')),
+                    onPressed: _downloadModel, child: Text('Download Model')),
                 ElevatedButton(
-                    onPressed: deleteModel, child: Text('Delete Model')),
+                    onPressed: _deleteModel, child: Text('Delete Model')),
               ],
             ),
             SizedBox(height: 20),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               ElevatedButton(
-                  onPressed: getAvailableModels,
-                  child: Text('Get Available models')),
-              ElevatedButton(
-                  onPressed: isModelDownloaded, child: Text('Check download'))
+                  onPressed: _isModelDownloaded, child: Text('Check download'))
             ])
           ],
         ),

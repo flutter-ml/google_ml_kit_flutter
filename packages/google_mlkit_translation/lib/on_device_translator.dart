@@ -80,22 +80,6 @@ class TranslateLanguageModelManager {
     });
     return result.toString() == 'success';
   }
-
-  /// Returns a list of all downloaded models.
-  /// These are `BCP-47` tags.
-  Future<List<String>> getAvailableModels() async {
-    final result = await _channel
-        .invokeMethod('nlp#manageLanguageModelModels', <String, dynamic>{
-      'task': 'getModels',
-    });
-
-    final _languages = <String>[];
-
-    for (final dynamic data in result) {
-      _languages.add(data.toString());
-    }
-    return _languages;
-  }
 }
 
 /// Class containg all supported languages and their BCP-47 tags.

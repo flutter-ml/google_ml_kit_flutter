@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -47,65 +45,40 @@ class Home extends StatelessWidget {
               child: Column(
                 children: [
                   ExpansionTile(
-                    title: const Text('Vision'),
+                    title: const Text('Vision APIs'),
                     children: [
+                      CustomCard('Barcode Scanning', BarcodeScannerView()),
+                      CustomCard('Face Detection', FaceDetectorView()),
+                      CustomCard('Image Labeling', ImageLabelView()),
+                      CustomCard('Object Detection', ObjectDetectorView()),
+                      CustomCard('Text Recognition', TextRecognizerView()),
+                      CustomCard('Digital Ink Recognition', DigitalInkView()),
+                      CustomCard('Pose Detection', PoseDetectorView()),
                       CustomCard(
-                        'Image Label Detector',
-                        ImageLabelView(),
-                        featureCompleted: true,
+                        'Selfie Segmentation',
+                        Container(),
+                        featureCompleted: false,
                       ),
-                      CustomCard(
-                        'Face Detector',
-                        FaceDetectorView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Barcode Scanner',
-                        BarcodeScannerView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Pose Detector',
-                        PoseDetectorView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Digital Ink Recognizer',
-                        DigitalInkView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Text Detector',
-                        TextRecognizerView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Object Detector',
-                        ObjectDetectorView(),
-                        featureCompleted: true,
-                      ),
-                      CustomCard(
-                        'Remote Model Manager',
-                        RemoteModelView(),
-                        featureCompleted: true,
-                      )
                     ],
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   ExpansionTile(
-                    title: const Text('Natural Language'),
+                    title: const Text('Natural Language APIs'),
                     children: [
+                      CustomCard('Language ID', LanguageIdentifierView()),
                       CustomCard(
-                        'Language Identifier',
-                        LanguageIdentifierView(),
-                        featureCompleted: true,
+                        'On-device Translation',
+                        LanguageTranslatorView(),
+                        featureCompleted: false,
                       ),
                       CustomCard(
-                          'Language Translator', LanguageTranslatorView()),
-                      CustomCard('Entity Extractor', EntityExtractionView()),
-                      CustomCard('Smart Reply', SmartReplyView())
+                        'Smart Reply',
+                        SmartReplyView(),
+                        featureCompleted: false,
+                      ),
+                      CustomCard('Entity Extraction', EntityExtractionView()),
                     ],
                   ),
                 ],
@@ -123,8 +96,7 @@ class CustomCard extends StatelessWidget {
   final Widget _viewPage;
   final bool featureCompleted;
 
-  const CustomCard(this._label, this._viewPage,
-      {this.featureCompleted = false});
+  const CustomCard(this._label, this._viewPage, {this.featureCompleted = true});
 
   @override
   Widget build(BuildContext context) {
@@ -138,10 +110,10 @@ class CustomCard extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         onTap: () {
-          if (Platform.isIOS && !featureCompleted) {
+          if (!featureCompleted) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: const Text(
-                    'This feature has not been implemented for iOS yet')));
+                content:
+                    const Text('This feature has not been implemented yet')));
           } else {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => _viewPage));

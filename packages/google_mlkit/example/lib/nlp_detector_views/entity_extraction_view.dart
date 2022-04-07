@@ -76,9 +76,6 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
               SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 ElevatedButton(
-                    onPressed: _getAvailableModels,
-                    child: Text('Get Available models')),
-                ElevatedButton(
                     onPressed: _isModelDownloaded,
                     child: Text('Check download'))
               ]),
@@ -123,16 +120,6 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
         _languageModelManager
             .deleteModel(_language)
             .then((value) => value ? 'success' : 'error'),
-        context,
-        this);
-  }
-
-  Future<void> _getAvailableModels() async {
-    Toast().show(
-        'Getting available models...',
-        _languageModelManager
-            .getAvailableModels()
-            .then((result) => 'Available models: $result'),
         context,
         this);
   }

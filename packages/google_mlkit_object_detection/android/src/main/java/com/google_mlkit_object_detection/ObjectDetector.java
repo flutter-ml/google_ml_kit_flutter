@@ -24,7 +24,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class ObjectDetector implements MethodChannel.MethodCallHandler {
-
     private static final String START = "vision#startObjectDetector";
     private static final String CLOSE = "vision#closeObjectDetector";
 
@@ -39,13 +38,17 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
-            handleDetection(call, result);
-        } else if (method.equals(CLOSE)) {
-            closeDetector();
-            result.success(null);
-        } else {
-            result.notImplemented();
+        switch (method) {
+            case START:
+                handleDetection(call, result);
+                break;
+            case CLOSE:
+                closeDetector();
+                result.success(null);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -168,7 +171,5 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (objectDetector == null) return;
         objectDetector.close();
-        objectDetector = null;
     }
-
 }

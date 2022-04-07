@@ -2,7 +2,6 @@ package com.google_mlkit_entity_extraction;
 
 import androidx.annotation.NonNull;
 
-import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.entityextraction.DateTimeEntity;
 import com.google.mlkit.nl.entityextraction.Entity;
 import com.google.mlkit.nl.entityextraction.EntityAnnotation;
@@ -31,12 +30,11 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class EntityExtractor implements MethodChannel.MethodCallHandler {
-
     private static final String START = "nlp#startEntityExtractor";
     private static final String CLOSE = "nlp#closeEntityExtractor";
     private static final String MANAGE = "nlp#manageEntityExtractionModels";
-    private final GenericModelManager genericModelManager = new GenericModelManager();
 
+    private final GenericModelManager genericModelManager = new GenericModelManager();
     private com.google.mlkit.nl.entityextraction.EntityExtractor entityExtractor;
 
     @Override
@@ -51,7 +49,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                 result.success(null);
                 break;
             case MANAGE:
-                manageEntityModels(call, result);
+                manageModel(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -113,7 +111,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                                     break;
                                 case Entity.TYPE_DATE_TIME:
                                     DateTimeEntity dateTimeEntity = entity.asDateTimeEntity();
-                                    entityData.put("dateTimeGranularity", dateTimeEntity.getDateTimeGranularity());
+                                    entityData.put("dateTimeGranularity", dateTimeEntity.getDateTimeGranularity() + 1);
                                     entityData.put("timestamp", dateTimeEntity.getTimestampMillis());
                                     break;
                                 case Entity.TYPE_FLIGHT_NUMBER:
@@ -160,56 +158,13 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
     }
 
     public void closeDetector() {
+        if (entityExtractor == null) return;
         entityExtractor.close();
     }
 
-    private void manageEntityModels(MethodCall call, final MethodChannel.Result result) {
-        String task = call.argument("task");
-        switch (task) {
-            case "download":
-                downloadModel(result, call.argument("model"), call.argument("wifi"));
-                break;
-            case "delete":
-                deleteModel(result, call.argument("model"));
-                break;
-            case "getModels":
-                getDownloadedModels(result);
-                break;
-            case "check":
-                EntityExtractionRemoteModel model =
-                        new EntityExtractionRemoteModel.Builder(call.argument("model")).build();
-                Boolean downloaded = genericModelManager.isModelDownloaded(model);
-                if (downloaded != null) result.success(downloaded);
-                else result.error("error", null, null);
-                break;
-            default:
-                result.notImplemented();
-        }
-    }
-
-    private void getDownloadedModels(final MethodChannel.Result result) {
-        genericModelManager.remoteModelManager.getDownloadedModels(EntityExtractionRemoteModel.class)
-                .addOnSuccessListener(entityExtractionRemoteModels -> {
-                    List<String> downloadedModels = new ArrayList<>();
-                    for (EntityExtractionRemoteModel entityRemoteModel : entityExtractionRemoteModels) {
-                        downloadedModels.add(entityRemoteModel.getModelIdentifier());
-                    }
-                    result.success(downloadedModels);
-                }).addOnFailureListener(e -> result.error("Error getting downloaded models", e.toString(), null));
-    }
-
-    private void downloadModel(final MethodChannel.Result result, String language, boolean isWifiReqRequired) {
-        EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(language).build();
-        DownloadConditions downloadConditions;
-        if (isWifiReqRequired)
-            downloadConditions = new DownloadConditions.Builder().requireWifi().build();
-        else
-            downloadConditions = new DownloadConditions.Builder().build();
-        genericModelManager.downloadModel(model, downloadConditions, result);
-    }
-
-    private void deleteModel(final MethodChannel.Result result, String language) {
-        EntityExtractionRemoteModel model = new EntityExtractionRemoteModel.Builder(language).build();
-        genericModelManager.deleteModel(model, result);
+    private void manageModel(MethodCall call, final MethodChannel.Result result) {
+        EntityExtractionRemoteModel model =
+                new EntityExtractionRemoteModel.Builder(call.argument("model")).build();
+        genericModelManager.manageModel(model, call, result);
     }
 }

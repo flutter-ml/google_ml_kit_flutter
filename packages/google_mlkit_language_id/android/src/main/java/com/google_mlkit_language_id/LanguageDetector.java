@@ -16,7 +16,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class LanguageDetector implements MethodChannel.MethodCallHandler {
-
     private static final String START = "nlp#startLanguageIdentifier";
     private static final String CLOSE = "nlp#closeLanguageIdentifier";
 
@@ -25,13 +24,17 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         String method = call.method;
-        if (method.equals(START)) {
-            identifyLanguages(call, result);
-        } else if (method.equals(CLOSE)) {
-            closeDetector();
-            result.success(null);
-        } else {
-            result.notImplemented();
+        switch (method) {
+            case START:
+                identifyLanguages(call, result);
+                break;
+            case CLOSE:
+                closeDetector();
+                result.success(null);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
@@ -53,9 +56,7 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
 
     private void identifyLanguage(String text, final MethodChannel.Result result) {
         languageIdentifier.identifyLanguage(text)
-                .addOnSuccessListener(languageCode -> {
-                    result.success(languageCode);
-                })
+                .addOnSuccessListener(result::success)
                 .addOnFailureListener(e -> result.error("Language Identification Error", e.toString(), null));
     }
 
@@ -75,6 +76,7 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void closeDetector() {
+        if (languageIdentifier == null) return;
         languageIdentifier.close();
     }
 }
