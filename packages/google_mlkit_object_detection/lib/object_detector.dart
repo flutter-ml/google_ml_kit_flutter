@@ -139,10 +139,10 @@ class Label {
   }
 }
 
-///Abstract class to serve as base for [LocalModel] and [RemoteModel].
+///Abstract class to serve as base for [LocalModel] and [FirebaseModel].
 abstract class CustomModel {
   ///For [LocalModel] this will refer to the path of local model.
-  ///For [RemoteModel] this will refer to the name of hosted model.
+  ///For [FirebaseModel] this will refer to the name of hosted model.
   final String modelIdentifier;
 
   final String modelType = 'base';
@@ -158,10 +158,17 @@ class LocalModel extends CustomModel {
   final String modelType = 'local';
 }
 
-class RemoteModel extends CustomModel {
-  ///Constructor for [RemoteModel]. Takes the model name.
-  RemoteModel(String modelName) : super(modelName);
+class FirebaseModel extends CustomModel {
+  ///Constructor for [FirebaseModel]. Takes the model name.
+  FirebaseModel(String modelName) : super(modelName);
 
   @override
   final String modelType = 'remote';
+}
+
+class ObjectDetectorFirebaseModelManager extends ModelManager {
+  ObjectDetectorFirebaseModelManager()
+      : super(
+            channel: ObjectDetector._channel,
+            method: 'vision#manageFirebaseModels');
 }

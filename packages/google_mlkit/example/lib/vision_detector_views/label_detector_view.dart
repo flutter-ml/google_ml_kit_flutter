@@ -41,7 +41,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
 
   // Add the tflite model in android/src/main/assets
   Future<void> processImageWithRemoteModel(InputImage inputImage) async {
-    final options = CustomRemoteLabelerOption(
+    final options = FirebaseLabelerOption(
         confidenceThreshold: 0.5, modelName: 'bird-classifier');
     _imageLabeler = ImageLabeler(options: options);
     processImage(inputImage);

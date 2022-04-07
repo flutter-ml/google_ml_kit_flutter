@@ -9,9 +9,11 @@
 #define channelName @"google_mlkit_object_detector"
 #define startObjectDetector @"vision#startObjectDetector"
 #define closeObjectDetector @"vision#closeObjectDetector"
+#define manageFirebaseModels @"vision#manageFirebaseModels"
 
 @implementation GoogleMlKitObjectDetectionPlugin {
     MLKObjectDetector *objectDetector;
+    GenericModelManager *genericModelManager;
     BOOL custom;
 }
 
@@ -27,6 +29,8 @@
     if ([call.method isEqualToString:startObjectDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeObjectDetector]) {
+    } else if ([call.method isEqualToString:manageFirebaseModels]) {
+        [self manageModel:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -131,6 +135,14 @@
     options.shouldEnableMultipleObjects = multiple;
     
     objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
+}
+
+- (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *modelTag = call.arguments[@"model"];
+    MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelTag];
+    MLKCustomRemoteModel *model = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
+    genericModelManager = [[GenericModelManager alloc] init];
+    [genericModelManager manageModel:model call:call result:result];
 }
 
 @end

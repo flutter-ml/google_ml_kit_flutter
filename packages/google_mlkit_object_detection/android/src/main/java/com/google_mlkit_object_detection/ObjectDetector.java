@@ -13,6 +13,7 @@ import com.google.mlkit.vision.objects.DetectedObject;
 import com.google.mlkit.vision.objects.ObjectDetection;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
+import com.google_mlkit_commons.GenericModelManager;
 import com.google_mlkit_commons.InputImageConverter;
 
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ import io.flutter.plugin.common.MethodChannel;
 public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startObjectDetector";
     private static final String CLOSE = "vision#closeObjectDetector";
+    private static final String MANAGE = "vision#manageFirebaseModels";
 
+    private final GenericModelManager genericModelManager = new GenericModelManager();
     private boolean custom;
     private final Context context;
     private com.google.mlkit.vision.objects.ObjectDetector objectDetector;
@@ -45,6 +48,9 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
             case CLOSE:
                 closeDetector();
                 result.success(null);
+                break;
+            case MANAGE:
+                manageModel(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -171,5 +177,13 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (objectDetector == null) return;
         objectDetector.close();
+    }
+
+    private void manageModel(MethodCall call, final MethodChannel.Result result) {
+        FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(call.argument("model"))
+                .build();
+        CustomRemoteModel model = new CustomRemoteModel.Builder(firebaseModelSource)
+                .build();
+        genericModelManager.manageModel(model, call, result);
     }
 }

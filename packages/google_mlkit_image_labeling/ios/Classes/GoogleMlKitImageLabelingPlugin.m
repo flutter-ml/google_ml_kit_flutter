@@ -9,9 +9,11 @@
 #define channelName @"google_mlkit_image_labeler"
 #define startImageLabelDetector @"vision#startImageLabelDetector"
 #define closeImageLabelDetector @"vision#closeImageLabelDetector"
+#define manageFirebaseModels @"vision#manageFirebaseModels"
 
 @implementation GoogleMlKitImageLabelingPlugin {
     MLKImageLabeler *labeler;
+    GenericModelManager *genericModelManager;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -26,6 +28,8 @@
     if ([call.method isEqualToString:startImageLabelDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeImageLabelDetector]) {
+    } else if ([call.method isEqualToString:manageFirebaseModels]) {
+        [self manageModel:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -109,6 +113,14 @@
     }
     options.confidenceThreshold = conf;
     return options;
+}
+
+- (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *modelTag = call.arguments[@"model"];
+    MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelTag];
+    MLKCustomRemoteModel *model = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
+    genericModelManager = [[GenericModelManager alloc] init];
+    [genericModelManager manageModel:model call:call result:result];
 }
 
 @end

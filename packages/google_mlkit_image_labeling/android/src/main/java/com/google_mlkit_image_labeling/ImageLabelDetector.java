@@ -13,6 +13,7 @@ import com.google.mlkit.vision.label.ImageLabeler;
 import com.google.mlkit.vision.label.ImageLabeling;
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.google_mlkit_commons.GenericModelManager;
 import com.google_mlkit_commons.InputImageConverter;
 
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ import io.flutter.plugin.common.MethodChannel;
 public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startImageLabelDetector";
     private static final String CLOSE = "vision#closeImageLabelDetector";
+    private static final String MANAGE = "vision#manageFirebaseModels";
 
+    private final GenericModelManager genericModelManager = new GenericModelManager();
     private String type;
     private final Context context;
     private ImageLabeler imageLabeler;
@@ -45,6 +48,9 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
             case CLOSE:
                 closeDetector();
                 result.success(null);
+                break;
+            case MANAGE:
+                manageModel(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -138,5 +144,13 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (imageLabeler == null) return;
         imageLabeler.close();
+    }
+
+    private void manageModel(MethodCall call, final MethodChannel.Result result) {
+        FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(call.argument("model"))
+                .build();
+        CustomRemoteModel model = new CustomRemoteModel.Builder(firebaseModelSource)
+                .build();
+        genericModelManager.manageModel(model, call, result);
     }
 }
