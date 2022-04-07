@@ -25,3 +25,5 @@ flutter:
       android:
         package: com.google_mlkit_entity_extraction
         pluginClass: GoogleMlKitEntityExtractionPlugin
+      ios:
+        pluginClass: GoogleMlKitEntityExtractionPlugin

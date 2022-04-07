@@ -51,7 +51,7 @@ class TranslateLanguageModelManager {
 
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String modelTag) async {
-    final result = await _channel.invokeMethod('nlp#startLanguageModelManager',
+    final result = await _channel.invokeMethod('nlp#manageLanguageModelModels',
         <String, dynamic>{'task': 'check', 'model': modelTag});
     return result as bool;
   }
@@ -62,7 +62,7 @@ class TranslateLanguageModelManager {
   Future<bool> downloadModel(String modelTag,
       {bool isWifiRequired = true}) async {
     final result = await _channel.invokeMethod(
-        'nlp#startLanguageModelManager', <String, dynamic>{
+        'nlp#manageLanguageModelModels', <String, dynamic>{
       'task': 'download',
       'model': modelTag,
       'wifi': isWifiRequired
@@ -74,7 +74,7 @@ class TranslateLanguageModelManager {
   /// Returns true if model is deleted successfully or model is not present.
   Future<bool> deleteModel(String modelTag) async {
     final result = await _channel
-        .invokeMethod('nlp#startLanguageModelManager', <String, dynamic>{
+        .invokeMethod('nlp#manageLanguageModelModels', <String, dynamic>{
       'task': 'delete',
       'model': modelTag,
     });
@@ -85,7 +85,7 @@ class TranslateLanguageModelManager {
   /// These are `BCP-47` tags.
   Future<List<String>> getAvailableModels() async {
     final result = await _channel
-        .invokeMethod('nlp#startLanguageModelManager', <String, dynamic>{
+        .invokeMethod('nlp#manageLanguageModelModels', <String, dynamic>{
       'task': 'getModels',
     });
 

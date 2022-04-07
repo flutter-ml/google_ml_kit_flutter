@@ -58,7 +58,8 @@ class EntityModelManager {
 
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(EntityExtractorLanguage language) async {
-    final result = await _channel.invokeMethod('nlp#startEntityModelManager',
+    final result = await _channel.invokeMethod(
+        'nlp#manageEntityExtractionModels',
         <String, dynamic>{'task': 'check', 'model': language.name});
     return result as bool;
   }
@@ -69,7 +70,7 @@ class EntityModelManager {
   Future<bool> downloadModel(EntityExtractorLanguage language,
       {bool isWifiRequired = true}) async {
     final result = await _channel.invokeMethod(
-        'nlp#startEntityModelManager', <String, dynamic>{
+        'nlp#manageEntityExtractionModels', <String, dynamic>{
       'task': 'download',
       'model': language.name,
       'wifi': isWifiRequired
@@ -81,7 +82,7 @@ class EntityModelManager {
   /// Returns true if model is deleted successfully or model is not present.
   Future<bool> deleteModel(EntityExtractorLanguage language) async {
     final result = await _channel
-        .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
+        .invokeMethod('nlp#manageEntityExtractionModels', <String, dynamic>{
       'task': 'delete',
       'model': language.name,
     });
@@ -92,7 +93,7 @@ class EntityModelManager {
   /// These are `BCP-47` tags.
   Future<List<String>> getAvailableModels() async {
     final result = await _channel
-        .invokeMethod('nlp#startEntityModelManager', <String, dynamic>{
+        .invokeMethod('nlp#manageEntityExtractionModels', <String, dynamic>{
       'task': 'getModels',
     });
 
@@ -207,12 +208,12 @@ enum EntityType {
 }
 
 abstract class Entity {
-  final String string;
+  final String rawValue;
 
-  Entity(this.string);
+  Entity(this.rawValue);
 
   @override
-  String toString() => string;
+  String toString() => rawValue;
 }
 
 class DateTimeEntity extends Entity {

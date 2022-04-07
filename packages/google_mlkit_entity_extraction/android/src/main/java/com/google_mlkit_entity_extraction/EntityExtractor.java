@@ -34,7 +34,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
 
     private static final String START = "nlp#startEntityExtractor";
     private static final String CLOSE = "nlp#closeEntityExtractor";
-    private static final String MANAGE_MODELS = "nlp#startEntityModelManager";
+    private static final String MANAGE = "nlp#manageEntityExtractionModels";
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     private com.google.mlkit.nl.entityextraction.EntityExtractor entityExtractor;
@@ -50,7 +50,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                 closeDetector();
                 result.success(null);
                 break;
-            case MANAGE_MODELS:
+            case MANAGE:
                 manageEntityModels(call, result);
                 break;
             default:

@@ -19,7 +19,7 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
 
     private static final String START = "nlp#startLanguageTranslator";
     private static final String CLOSE = "nlp#closeLanguageTranslator";
-    private static final String START_MODEL_MANAGER = "nlp#startLanguageModelManager";
+    private static final String MANAGE = "nlp#manageLanguageModelModels";
 
     private final GenericModelManager genericModelManager = new GenericModelManager();
     private Translator translator;
@@ -32,7 +32,7 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
         } else if (method.equals(CLOSE)) {
             closeDetector();
             result.success(null);
-        } else if (method.equals(START_MODEL_MANAGER)) {
+        } else if (method.equals(MANAGE)) {
             startLanguageModelManager(call, result);
         } else {
             result.notImplemented();
