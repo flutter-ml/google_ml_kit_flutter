@@ -36,7 +36,7 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSArray *pointsList = call.arguments[@"points"];
-    NSString *modelTag = call.arguments[@"modelTag"];
+    NSString *modelTag = call.arguments[@"model"];
     
     MLKDigitalInkRecognitionModelIdentifier *identifier =
     [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
@@ -91,7 +91,7 @@
 }
 
 - (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSString *modelTag = call.arguments[@"modelTag"];
+    NSString *modelTag = call.arguments[@"model"];
     MLKDigitalInkRecognitionModelIdentifier *identifier = [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
     MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc] initWithModelIdentifier:identifier];
     genericModelManager = [[GenericModelManager alloc] init];

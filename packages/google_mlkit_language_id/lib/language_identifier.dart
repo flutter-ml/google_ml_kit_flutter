@@ -6,15 +6,15 @@ class LanguageIdentifier {
 
   LanguageIdentifier(this.confidenceThreshold);
 
-  /// This error code is used inside a [PlatformException] to signal that no language could be determined.
-  final String errorCodeNoLanguageIdentified = 'no language identified';
+  /// This error code is used to signal that no language could be determined.
+  final String errorCodeNoLanguageIdentified = 'und';
 
   final double confidenceThreshold;
   bool _isOpened = false;
   bool _isClosed = false;
 
   /// Identifies the language of the given [text].
-  /// In no language could be determined, a [PlatformException] with the [errorCodeNoLanguageIdentified] as error code is thrown.
+  /// In no language could be determined, the [errorCodeNoLanguageIdentified] error code is returned.
   /// More information: https://developers.google.com/ml-kit/language/identification
   Future<String> identifyLanguage(String text) async {
     _isOpened = true;
@@ -30,7 +30,7 @@ class LanguageIdentifier {
   }
 
   /// Identifies the possible languages of the given [text].
-  /// In no language could be determined, a [PlatformException] with the [errorCodeNoLanguageIdentified] as error code is thrown.
+  /// In no language could be determined, the [errorCodeNoLanguageIdentified] as error code is returned.
   /// More information: https://developers.google.com/ml-kit/language/identification
   Future<List<IdentifiedLanguage>> identifyPossibleLanguages(
       String text) async {

@@ -26,7 +26,7 @@ class DigitalInkRecognizer {
     }
     final result = await _channel.invokeMethod(
         'vision#startDigitalInkRecognizer',
-        <String, dynamic>{'points': pointsList, 'modelTag': modelTag});
+        <String, dynamic>{'points': pointsList, 'model': modelTag});
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
     for (final dynamic json in result) {
@@ -60,7 +60,7 @@ class LanguageModelManager {
   /// The language should be according to the BCP-47 guidelines.
   Future<bool> isModelDownloaded(String modelTag) async {
     final result = await _channel.invokeMethod('vision#manageInkModels',
-        <String, dynamic>{'task': 'check', 'modelTag': modelTag});
+        <String, dynamic>{'task': 'check', 'model': modelTag});
     return result as bool;
   }
 
@@ -70,7 +70,7 @@ class LanguageModelManager {
   ///To see available models visit [https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models]
   Future<bool> downloadModel(String modelTag) async {
     final result = await _channel.invokeMethod('vision#manageInkModels',
-        <String, dynamic>{'task': 'download', 'modelTag': modelTag});
+        <String, dynamic>{'task': 'download', 'model': modelTag});
     return result.toString() == 'success';
   }
 
@@ -78,8 +78,11 @@ class LanguageModelManager {
   ///If model has not been previously downloaded it returns 'not exists'.
   ///Else returns success or failure depending on whether the deletion completes or not.
   Future<bool> deleteModel(String modelTag) async {
-    final result = await _channel.invokeMethod('vision#manageInkModels',
-        <String, dynamic>{'task': 'delete', 'modelTag': modelTag});
+    final result =
+        await _channel.invokeMethod('vision#manageInkModels', <String, dynamic>{
+      'task': 'delete',
+      'model': modelTag,
+    });
     return result.toString() == 'success';
   }
 }

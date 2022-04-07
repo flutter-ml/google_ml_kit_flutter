@@ -119,7 +119,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     }
 
     private DigitalInkRecognitionModel getModel(MethodCall call, final MethodChannel.Result result) {
-        String tag = (String) call.argument("modelTag");
+        String tag = (String) call.argument("model");
         DigitalInkRecognitionModelIdentifier modelIdentifier;
         try {
             modelIdentifier = DigitalInkRecognitionModelIdentifier.fromLanguageTag(tag);
