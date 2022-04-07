@@ -65,6 +65,7 @@ PODS:
     - google_mlkit_commons
     - GoogleMLKit/ImageLabeling (~> 2.6.0)
     - GoogleMLKit/ImageLabelingCustom (~> 2.6.0)
+    - GoogleMLKit/LinkFirebase (~> 2.6.0)
   - google_mlkit_language_id (0.0.1):
     - Flutter
     - google_mlkit_commons
@@ -72,6 +73,7 @@ PODS:
   - google_mlkit_object_detection (0.0.1):
     - Flutter
     - google_mlkit_commons
+    - GoogleMLKit/LinkFirebase (~> 2.6.0)
     - GoogleMLKit/ObjectDetection (~> 2.6.0)
     - GoogleMLKit/ObjectDetectionCustom (~> 2.6.0)
   - google_mlkit_pose_detection (0.0.1):
@@ -79,10 +81,6 @@ PODS:
     - google_mlkit_commons
     - GoogleMLKit/PoseDetection (~> 2.6.0)
     - GoogleMLKit/PoseDetectionAccurate (~> 2.6.0)
-  - google_mlkit_remote_model (0.0.1):
-    - Flutter
-    - google_mlkit_commons
-    - GoogleMLKit/LinkFirebase (~> 2.6.0)
   - google_mlkit_text_recognition (0.0.1):
     - Flutter
     - google_mlkit_commons
@@ -342,7 +340,6 @@ DEPENDENCIES:
   - google_mlkit_language_id (from `.symlinks/plugins/google_mlkit_language_id/ios`)
   - google_mlkit_object_detection (from `.symlinks/plugins/google_mlkit_object_detection/ios`)
   - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
-  - google_mlkit_remote_model (from `.symlinks/plugins/google_mlkit_remote_model/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
 
@@ -416,8 +413,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_object_detection/ios"
   google_mlkit_pose_detection:
     :path: ".symlinks/plugins/google_mlkit_pose_detection/ios"
-  google_mlkit_remote_model:
-    :path: ".symlinks/plugins/google_mlkit_remote_model/ios"
   google_mlkit_text_recognition:
     :path: ".symlinks/plugins/google_mlkit_text_recognition/ios"
   image_picker_ios:
@@ -436,11 +431,10 @@ SPEC CHECKSUMS:
   google_mlkit_digital_ink_recognition: 0a2f16af75ef6fda76bc2b91099e14280f11196f
   google_mlkit_entity_extraction: 3dcaa03fc0b5fd4bd47061bb0703acbed3978280
   google_mlkit_face_detection: 6fade7207d5340a57497801a7bcf645ee097a26d
-  google_mlkit_image_labeling: 02a51af17936ee3fe611626690cff9730263d502
+  google_mlkit_image_labeling: fb9e259e8fef3ac9765fd2c31ee943b499daa3e4
   google_mlkit_language_id: 115a362fb56577b7848f5fd3ec39b2fc791b0851
-  google_mlkit_object_detection: 0bbd014fb1404386b44528f7c44283cf3921636c
+  google_mlkit_object_detection: 2e54669c8f912c0c73064c7f1382294db7f3caed
   google_mlkit_pose_detection: fe624e60dab6e5ae111a6c48804f439be60576b6
-  google_mlkit_remote_model: a30ca7c773874c4f9c486b4fe1da285059bf7158
   google_mlkit_text_recognition: 9d47eec7fca229958e157a0916cf16abb6bc6dbd
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940

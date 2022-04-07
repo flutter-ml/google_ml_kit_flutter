@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/ObjectDetection', '~> 2.6.0'
   s.dependency 'GoogleMLKit/ObjectDetectionCustom', '~> 2.6.0'
+  s.dependency 'GoogleMLKit/LinkFirebase', '~> 2.6.0'
   s.dependency 'google_mlkit_commons'
   s.platform = :ios, '10.0'
   s.ios.deployment_target = '10.0'
