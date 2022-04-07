@@ -10,21 +10,21 @@ class TextRecognizerView extends StatefulWidget {
 }
 
 class _TextRecognizerViewState extends State<TextRecognizerView> {
-  TextRecognizer textRecognizer = GoogleMlKit.vision.textRecognizer();
-  bool isBusy = false;
-  CustomPaint? customPaint;
+  final TextRecognizer _textRecognizer = TextRecognizer();
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void dispose() async {
     super.dispose();
-    await textRecognizer.close();
+    await _textRecognizer.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Text Detector',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -32,21 +32,20 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final recognizedText = await textRecognizer.processImage(inputImage);
-    print('Found ${recognizedText.blocks.length} textBlocks');
+    if (_isBusy) return;
+    _isBusy = true;
+    final recognizedText = await _textRecognizer.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = TextRecognizerPainter(
           recognizedText,
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
-      customPaint = CustomPaint(painter: painter);
+      _customPaint = CustomPaint(painter: painter);
     } else {
-      customPaint = null;
+      _customPaint = null;
     }
-    isBusy = false;
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }

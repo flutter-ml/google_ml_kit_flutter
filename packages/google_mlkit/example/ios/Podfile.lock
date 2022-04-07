@@ -204,7 +204,7 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.1)
-  - image_picker (0.0.1):
+  - image_picker_ios (0.0.1):
     - Flutter
   - MLImage (1.0.0-beta2)
   - MLKitBarcodeScanning (1.7.0):
@@ -344,7 +344,7 @@ DEPENDENCIES:
   - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
   - google_mlkit_remote_model (from `.symlinks/plugins/google_mlkit_remote_model/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
-  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -420,8 +420,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_remote_model/ios"
   google_mlkit_text_recognition:
     :path: ".symlinks/plugins/google_mlkit_text_recognition/ios"
-  image_picker:
-    :path: ".symlinks/plugins/image_picker/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
 
 SPEC CHECKSUMS:
   camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
@@ -449,7 +449,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 4577a4cc914a5a07c40a8a0ad0acc22080418c2d
-  image_picker: 541dcbb3b9cf32d87eacbd957845d8651d6c62c3
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   MLImage: a454f9f8ecfd537783a12f9488f5be1a68820829
   MLKitBarcodeScanning: b8257854f6afc1c8443d61ec6b98c28b35625df6
   MLKitCommon: 3bc17c6f7d25ce3660f030350b46ae7ec9ebca6e

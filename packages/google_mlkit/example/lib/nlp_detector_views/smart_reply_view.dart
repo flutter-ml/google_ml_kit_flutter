@@ -11,7 +11,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
   final _remoteUserController = TextEditingController();
   var _suggestions = <SmartReplySuggestion>[];
 
-  final SmartReply _smartReply = GoogleMlKit.nlp.smartReply();
+  final SmartReply _smartReply = SmartReply();
 
   @override
   void dispose() {
@@ -30,7 +30,6 @@ class _SmartReplyViewState extends State<SmartReplyView> {
 
   Future<void> _suggestReplies() async {
     final result = await _smartReply.suggestReplies();
-
     setState(() {
       _suggestions = result['suggestions'];
     });
@@ -117,7 +116,7 @@ class _SmartReplyViewState extends State<SmartReplyView> {
                     shrinkWrap: true,
                     itemCount: _suggestions.length,
                     itemBuilder: (context, index) => ListTile(
-                      title: Text(_suggestions[index].getText()),
+                      title: Text(_suggestions[index].text),
                     ),
                   )
                 : Container()

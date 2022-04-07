@@ -103,7 +103,7 @@ class _CameraViewState extends State<CameraView> {
   Widget? _floatingActionButton() {
     if (_mode == ScreenMode.gallery) return null;
     if (cameras.length == 1) return null;
-    return Container(
+    return SizedBox(
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
@@ -152,8 +152,7 @@ class _CameraViewState extends State<CameraView> {
             child: Center(
               child: _changingCameraLens
                   ? Center(
-                      child:
-                          Container(child: const Text('Changing camera lens')),
+                      child: const Text('Changing camera lens'),
                     )
                   : CameraPreview(_controller!),
             ),
@@ -186,7 +185,7 @@ class _CameraViewState extends State<CameraView> {
   Widget _galleryBody() {
     return ListView(shrinkWrap: true, children: [
       _image != null
-          ? Container(
+          ? SizedBox(
               height: 400,
               width: 400,
               child: Stack(
@@ -222,8 +221,6 @@ class _CameraViewState extends State<CameraView> {
     final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
       _processPickedFile(pickedFile);
-    } else {
-      print('No image selected.');
     }
     setState(() {});
   }

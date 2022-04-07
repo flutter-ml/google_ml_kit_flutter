@@ -10,8 +10,7 @@ class LanguageIdentifierView extends StatefulWidget {
 class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   List<IdentifiedLanguage> _identifiedLanguages = <IdentifiedLanguage>[];
   late TextEditingController _controller;
-  final _languageIdentifier =
-      GoogleMlKit.nlp.languageIdentifier(confidenceThreshold: 0.34);
+  final _languageIdentifier = LanguageIdentifier(confidenceThreshold: 0.34);
   var _identifiedLanguage = '';
 
   Future<void> _identifyLanguage() async {
@@ -92,17 +91,15 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
           child: const Text('Identify possible languages'),
           onPressed: _identifyPossibleLanguages,
         ),
-        Container(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: _identifiedLanguages.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                      'Language: ${_identifiedLanguages[index].languageCode}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
-                );
-              }),
-        )
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: _identifiedLanguages.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                    'Language: ${_identifiedLanguages[index].languageCode}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
+              );
+            })
       ]),
     );
   }

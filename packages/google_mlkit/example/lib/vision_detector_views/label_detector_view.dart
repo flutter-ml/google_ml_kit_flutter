@@ -10,13 +10,13 @@ class ImageLabelView extends StatefulWidget {
 }
 
 class _ImageLabelViewState extends State<ImageLabelView> {
-  ImageLabeler imageLabeler = GoogleMlKit.vision.imageLabeler();
-  bool isBusy = false;
-  CustomPaint? customPaint;
+  ImageLabeler _imageLabeler = ImageLabeler(options: ImageLabelerOptions());
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void dispose() {
-    imageLabeler.close();
+    _imageLabeler.close();
     super.dispose();
   }
 
@@ -24,7 +24,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Image Labeler',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         // comment this line if you want to use custom model
         processImageWithDefaultModel(inputImage);
@@ -35,7 +35,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   }
 
   Future<void> processImageWithDefaultModel(InputImage inputImage) async {
-    imageLabeler = GoogleMlKit.vision.imageLabeler();
+    _imageLabeler = ImageLabeler(options: ImageLabelerOptions());
     processImage(inputImage);
   }
 
@@ -43,18 +43,18 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   Future<void> processImageWithRemoteModel(InputImage inputImage) async {
     final options = CustomRemoteLabelerOption(
         confidenceThreshold: 0.5, modelName: 'bird-classifier');
-    imageLabeler = GoogleMlKit.vision.imageLabeler(options);
+    _imageLabeler = ImageLabeler(options: options);
     processImage(inputImage);
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
+    if (_isBusy) return;
+    _isBusy = true;
     await Future.delayed(Duration(milliseconds: 50));
-    final labels = await imageLabeler.processImage(inputImage);
+    final labels = await _imageLabeler.processImage(inputImage);
     final painter = LabelDetectorPainter(labels);
-    customPaint = CustomPaint(painter: painter);
-    isBusy = false;
+    _customPaint = CustomPaint(painter: painter);
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }

@@ -1,18 +1,10 @@
-include: package:lints/recommended.yaml
+include: ../analysis_options.yaml
 
 linter:
   rules:
-    prefer_relative_imports: true
-    avoid_renaming_method_parameters: true
-    overridden_fields: false
-    prefer_typing_uninitialized_variables: true
-    hash_and_equals: true
-    directives_ordering: true
-    curly_braces_in_flow_control_structures: true
-    prefer_interpolation_to_compose_strings: true
-    prefer_adjacent_string_concatenation: true
-    prefer_collection_literals: true
-    prefer_final_fields: true
-    prefer_final_in_for_each: true
-    prefer_final_locals: true
-    prefer_single_quotes: true
+    avoid_print: false
+    prefer_const_constructors: false
+    prefer_const_constructors_in_immutables: false
+    prefer_const_declarations: false
+    prefer_const_literals_to_create_immutables: false
+    use_key_in_widget_constructors: false

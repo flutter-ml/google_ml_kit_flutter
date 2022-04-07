@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:google_mlkit_commons/commons.dart';
 
 /// Extracts entities from the given text.
 /// Creating an instance.
@@ -11,7 +12,7 @@ class EntityExtractor {
 
   final EntityExtractorLanguage language;
 
-  EntityExtractor(this.language);
+  EntityExtractor({required this.language});
 
   /// Extracts entities from the given text and returns [List<EntityAnnotation>]
   Future<List<EntityAnnotation>> extractEntities(String text,
@@ -43,47 +44,15 @@ class EntityExtractor {
   Future<void> close() => _channel.invokeMethod('nlp#closeEntityExtractor');
 }
 
-/// Creating instance of [EntityModelManager]
+/// Creating instance of [EntityExtractorModelManager]
 /// ```
 /// final entityModelManager = EntityModelManager();
 /// ```
-class EntityModelManager {
-  static const MethodChannel _channel = EntityExtractor._channel;
-
-  EntityModelManager();
-
-  /// Checks whether a model is downloaded or not.
-  Future<bool> isModelDownloaded(EntityExtractorLanguage language) async {
-    final result = await _channel.invokeMethod(
-        'nlp#manageEntityExtractionModels',
-        <String, dynamic>{'task': 'check', 'model': language.name});
-    return result as bool;
-  }
-
-  /// Downloads a model.
-  /// Returns true if model downloads successfully or model is already downloaded.
-  /// On failing to download it throws an error.
-  Future<bool> downloadModel(EntityExtractorLanguage language,
-      {bool isWifiRequired = true}) async {
-    final result = await _channel.invokeMethod(
-        'nlp#manageEntityExtractionModels', <String, dynamic>{
-      'task': 'download',
-      'model': language.name,
-      'wifi': isWifiRequired
-    });
-    return result.toString() == 'success';
-  }
-
-  /// Deletes a model.
-  /// Returns true if model is deleted successfully or model is not present.
-  Future<bool> deleteModel(EntityExtractorLanguage language) async {
-    final result = await _channel
-        .invokeMethod('nlp#manageEntityExtractionModels', <String, dynamic>{
-      'task': 'delete',
-      'model': language.name,
-    });
-    return result.toString() == 'success';
-  }
+class EntityExtractorModelManager extends ModelManager {
+  EntityExtractorModelManager()
+      : super(
+            channel: EntityExtractor._channel,
+            method: 'nlp#manageEntityExtractionModels');
 }
 
 enum EntityExtractorLanguage {

@@ -10,28 +10,19 @@ class NaturalLanguage {
 
   /// Returns instance of [LanguageIdentifier].
   LanguageIdentifier languageIdentifier({double confidenceThreshold = 0.5}) {
-    return LanguageIdentifier(confidenceThreshold);
+    return LanguageIdentifier(confidenceThreshold: confidenceThreshold);
   }
 
   /// Returns instance of [OnDeviceTranslator].
   OnDeviceTranslator onDeviceTranslator(
       {required String sourceLanguage, required String targetLanguage}) {
-    return OnDeviceTranslator(sourceLanguage, targetLanguage);
-  }
-
-  /// Returns instance of [TranslateLanguageModelManager].
-  TranslateLanguageModelManager translateLanguageModelManager() {
-    return TranslateLanguageModelManager();
+    return OnDeviceTranslator(
+        sourceLanguage: sourceLanguage, targetLanguage: targetLanguage);
   }
 
   /// Returns instance of [EntityExtractor].
   EntityExtractor entityExtractor(EntityExtractorLanguage language) {
-    return EntityExtractor(language);
-  }
-
-  /// Returns instance of [EntityModelManager].
-  EntityModelManager entityModelManager() {
-    return EntityModelManager();
+    return EntityExtractor(language: language);
   }
 
   /// Returns instance of [SmartReply].

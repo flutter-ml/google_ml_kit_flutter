@@ -4,37 +4,31 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/commons.dart';
 
 class ObjectDetector {
-  ObjectDetector(this.objectDetectorOptions);
-
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_object_detector');
 
-  final ObjectDetectorOptions objectDetectorOptions;
-  bool _hasBeenOpened = false;
-  bool _isClosed = false;
+  final ObjectDetectorOptions options;
+
+  ObjectDetector({required this.options});
 
   ///Detects objects in image.
   Future<List<DetectedObject>> processImage(InputImage inputImage) async {
-    _hasBeenOpened = true;
     final result = await _channel.invokeMethod(
         'vision#startObjectDetector', <String, dynamic>{
       'imageData': inputImage.toJson(),
-      'options': objectDetectorOptions.toJson()
+      'options': options.toJson()
     });
     final objects = <DetectedObject>[];
     for (final dynamic json in result) {
       objects.add(DetectedObject.fromJson(json));
     }
+
     return objects;
   }
 
   ///Release resources of object detector.
-  Future<void> close() async {
-    if (!_hasBeenOpened) _isClosed = true;
-    if (_isClosed) return Future<void>.value();
-    _isClosed = true;
-    return _channel.invokeMethod<void>('vision#closeObjectDetector');
-  }
+  Future<void> close() =>
+      _channel.invokeMethod<void>('vision#closeObjectDetector');
 }
 
 enum DetectionMode {

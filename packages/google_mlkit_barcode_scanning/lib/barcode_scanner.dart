@@ -9,23 +9,18 @@ import 'package:google_mlkit_commons/commons.dart';
 ///
 /// BarcodeScanner barcodeScanner = GoogleMlKit.instance.barcodeScanner([List of Barcode formats (optional)]);
 class BarcodeScanner {
-  // List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
-  final List<BarcodeFormat> barcodeFormats;
-
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_barcode_scanning');
 
-  BarcodeScanner({List<BarcodeFormat>? formats})
-      : barcodeFormats = formats ?? const [BarcodeFormat.all];
+  // List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
+  final List<BarcodeFormat> formats;
 
-  bool _isOpened = false;
-  bool _isClosed = false;
+  BarcodeScanner({this.formats = const [BarcodeFormat.all]});
 
   /// Function to process the [InputImage] and returns a list of [Barcode]
   Future<List<Barcode>> processImage(InputImage inputImage) async {
-    _isOpened = true;
     final result = await _channel.invokeMethod('vision#startBarcodeScanner', {
-      'formats': barcodeFormats.map((f) => f.rawValue).toList(),
+      'formats': formats.map((f) => f.rawValue).toList(),
       'imageData': inputImage.toJson()
     });
 
@@ -33,17 +28,12 @@ class BarcodeScanner {
     for (final dynamic json in result) {
       barcodesList.add(Barcode.fromJson(json));
     }
+
     return barcodesList;
   }
 
   /// To close the instance of barcodeScanner.
-  Future<void> close() async {
-    if (!_isClosed && _isOpened) {
-      await _channel.invokeMethod('vision#closeBarcodeScanner');
-      _isClosed = true;
-      _isOpened = false;
-    }
-  }
+  Future<void> close() => _channel.invokeMethod('vision#closeBarcodeScanner');
 }
 
 /// Barcode formats supported by the barcode scanner.

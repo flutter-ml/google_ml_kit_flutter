@@ -9,7 +9,7 @@ class RemoteModelView extends StatefulWidget {
 }
 
 class _RemoteModelViewState extends State<RemoteModelView> {
-  final _remoteModelManager = GoogleMlKit.vision.remoteModelManager();
+  final _modelManager = RemoteModelManager();
   final _modelName = 'bird-classifier';
 
   @override
@@ -45,7 +45,7 @@ class _RemoteModelViewState extends State<RemoteModelView> {
   Future<void> _isModelDownloaded() async {
     Toast().show(
         'Checking if model is downloaded...',
-        _remoteModelManager
+        _modelManager
             .isModelDownloaded(_modelName)
             .then((value) => value ? 'exists' : 'not exists'),
         context,
@@ -55,7 +55,7 @@ class _RemoteModelViewState extends State<RemoteModelView> {
   Future<void> _deleteModel() async {
     Toast().show(
         'Deleting model...',
-        _remoteModelManager
+        _modelManager
             .deleteModel(_modelName)
             .then((value) => value ? 'success' : 'error'),
         context,
@@ -65,7 +65,7 @@ class _RemoteModelViewState extends State<RemoteModelView> {
   Future<void> _downloadModel() async {
     Toast().show(
         'Downloading model...',
-        _remoteModelManager
+        _modelManager
             .downloadModel(_modelName)
             .then((value) => value ? 'success' : 'error'),
         context,

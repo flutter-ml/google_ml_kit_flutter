@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:google_mlkit_commons/commons.dart';
 
 /// Creating an instance of [OnDeviceTranslator]
 /// ```
@@ -7,19 +8,16 @@ import 'package:flutter/services.dart';
 ///      targetLanguage: TranslateLanguage.SPANISH);
 /// ```
 class OnDeviceTranslator {
-  final String sourceLanguage;
-  final String targetLanguage;
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_on_device_translator');
 
-  OnDeviceTranslator(this.sourceLanguage, this.targetLanguage);
+  final String sourceLanguage;
+  final String targetLanguage;
 
-  bool _isOpened = false;
-  bool _isClosed = false;
+  OnDeviceTranslator(
+      {required this.sourceLanguage, required this.targetLanguage});
 
   Future<String> translateText(String text) async {
-    _isOpened = true;
-
     final result = await _channel.invokeMethod(
         'nlp#startLanguageTranslator', <String, dynamic>{
       'text': text,
@@ -30,56 +28,19 @@ class OnDeviceTranslator {
     return result.toString();
   }
 
-  Future<void> close() async {
-    if (!_isClosed && _isOpened) {
-      await _channel.invokeMethod('nlp#closeLanguageTranslator');
-      _isClosed = true;
-      _isOpened = false;
-    }
-  }
+  Future<void> close() => _channel.invokeMethod('nlp#closeLanguageTranslator');
 }
 
-/// Creating instance of [TranslateLanguageModelManager]
+/// Creating instance of [OnDeviceTranslatorModelManager]
 /// ```
 /// final _languageModelManager = GoogleMlKit.nlp.
 ///                               translateLanguageModelManager();;
 /// ```
-class TranslateLanguageModelManager {
-  TranslateLanguageModelManager();
-
-  static const MethodChannel _channel = OnDeviceTranslator._channel;
-
-  /// Checks whether a model is downloaded or not.
-  Future<bool> isModelDownloaded(String modelTag) async {
-    final result = await _channel.invokeMethod('nlp#manageLanguageModelModels',
-        <String, dynamic>{'task': 'check', 'model': modelTag});
-    return result as bool;
-  }
-
-  /// Downloads a model.
-  /// Returns true if model downloads successfully or model is already downloaded.
-  /// On failing to download it throws an error.
-  Future<bool> downloadModel(String modelTag,
-      {bool isWifiRequired = true}) async {
-    final result = await _channel.invokeMethod(
-        'nlp#manageLanguageModelModels', <String, dynamic>{
-      'task': 'download',
-      'model': modelTag,
-      'wifi': isWifiRequired
-    });
-    return result.toString() == 'success';
-  }
-
-  /// Deletes a model.
-  /// Returns true if model is deleted successfully or model is not present.
-  Future<bool> deleteModel(String modelTag) async {
-    final result = await _channel
-        .invokeMethod('nlp#manageLanguageModelModels', <String, dynamic>{
-      'task': 'delete',
-      'model': modelTag,
-    });
-    return result.toString() == 'success';
-  }
+class OnDeviceTranslatorModelManager extends ModelManager {
+  OnDeviceTranslatorModelManager()
+      : super(
+            channel: OnDeviceTranslator._channel,
+            method: 'nlp#manageLanguageModelModels');
 }
 
 /// Class containg all supported languages and their BCP-47 tags.

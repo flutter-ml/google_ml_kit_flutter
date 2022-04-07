@@ -10,14 +10,13 @@ class BarcodeScannerView extends StatefulWidget {
 }
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
-  BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner();
-
-  bool isBusy = false;
-  CustomPaint? customPaint;
+  final BarcodeScanner _barcodeScanner = BarcodeScanner();
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void dispose() {
-    barcodeScanner.close();
+    _barcodeScanner.close();
     super.dispose();
   }
 
@@ -25,7 +24,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Barcode Scanner',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -33,21 +32,20 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final barcodes = await barcodeScanner.processImage(inputImage);
-    print('Found ${barcodes.length} barcodes');
+    if (_isBusy) return;
+    _isBusy = true;
+    final barcodes = await _barcodeScanner.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = BarcodeDetectorPainter(
           barcodes,
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
-      customPaint = CustomPaint(painter: painter);
+      _customPaint = CustomPaint(painter: painter);
     } else {
-      customPaint = null;
+      _customPaint = null;
     }
-    isBusy = false;
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }

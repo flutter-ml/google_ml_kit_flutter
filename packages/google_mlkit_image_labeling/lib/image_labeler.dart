@@ -14,26 +14,18 @@ import 'package:google_mlkit_commons/commons.dart';
 /// ImageLabeler imageLabeler = GoogleMlKit.instance.imageLabeler([options]);
 /// The parameter options is optional,it maybe [ImageLabelerOptions],[CustomImageLabelerOptions],[AutoMlImageLabelerOptions
 class ImageLabeler {
-  /// Private constructor to create instance of image labeler
-  ImageLabeler(dynamic options)
-      : assert(options != null),
-        _labelerOptions = options;
-
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_image_labeler');
 
-  final ImageLabelerOptionsBase _labelerOptions;
+  final ImageLabelerOptionsBase options;
 
-  bool _isOpened = false;
-  bool _isClosed = false;
+  ImageLabeler({required this.options});
 
   /// Function that takes [InputImage] processes it and returns a List of [ImageLabel]
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
-    _isOpened = true;
-
     final result = await _channel.invokeMethod(
         'vision#startImageLabelDetector', <String, dynamic>{
-      'options': _labelerOptions.toJson(),
+      'options': options.toJson(),
       'imageData': inputImage.toJson()
     });
     final imageLabels = <ImageLabel>[];
@@ -45,13 +37,8 @@ class ImageLabeler {
     return imageLabels;
   }
 
-  Future<void> close() async {
-    if (!_isClosed && _isOpened) {
-      await _channel.invokeMethod('vision#closeImageLabelDetector');
-      _isClosed = true;
-      _isOpened = false;
-    }
-  }
+  Future<void> close() =>
+      _channel.invokeMethod('vision#closeImageLabelDetector');
 }
 
 abstract class ImageLabelerOptionsBase {

@@ -15,22 +15,18 @@ import 'package:google_mlkit_commons/commons.dart';
 ///   PoseDetector poseDetector = GoogleMlKit.instance.poseDetector();
 /// ```
 class PoseDetector {
-  final PoseDetectorOptions poseDetectorOptions;
-  bool _isOpened = false;
-  bool _isClosed = false;
-
-  PoseDetector(this.poseDetectorOptions);
-
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_pose_detector');
 
+  final PoseDetectorOptions options;
+
+  PoseDetector({required this.options});
+
   /// Process the image and returns a map where key denotes [PoseLandmark] i.e location. Value contains the info of the PoseLandmark i.e
   Future<List<Pose>> processImage(InputImage inputImage) async {
-    _isOpened = true;
-
     final result = await _channel.invokeMethod(
         'vision#startPoseDetector', <String, dynamic>{
-      'options': poseDetectorOptions.toJson(),
+      'options': options.toJson(),
       'imageData': inputImage.toJson()
     });
 
@@ -43,16 +39,11 @@ class PoseDetector {
       }
       poses.add(Pose(landmarks));
     }
+
     return poses;
   }
 
-  Future<void> close() async {
-    if (!_isClosed && _isOpened) {
-      await _channel.invokeMethod('vision#closePoseDetector');
-      _isClosed = true;
-      _isOpened = false;
-    }
-  }
+  Future<void> close() => _channel.invokeMethod('vision#closePoseDetector');
 }
 
 /// [PoseDetectorOptions] determines the parameters on which [PoseDetector] works

@@ -13,13 +13,9 @@ class TextRecognizer {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_text_recognizer');
 
-  bool _hasBeenOpened = false;
-  bool _isClosed = false;
-
   /// Function that takes [InputImage] processes it and returns a [RecognizedText] object.
   Future<RecognizedText> processImage(InputImage inputImage,
       {TextRecognitionScript script = TextRecognitionScript.latin}) async {
-    _hasBeenOpened = true;
     final result = await _channel.invokeMethod(
         'vision#startTextRecognizer', <String, dynamic>{
       'imageData': inputImage.toJson(),
@@ -28,12 +24,7 @@ class TextRecognizer {
     return RecognizedText.fromJson(result);
   }
 
-  Future<void> close() async {
-    if (!_hasBeenOpened) _isClosed = true;
-    if (_isClosed) return Future<void>.value();
-    _isClosed = true;
-    return _channel.invokeMethod('vision#closeTextRecognizer');
-  }
+  Future<void> close() => _channel.invokeMethod('vision#closeTextRecognizer');
 }
 
 enum TextRecognitionScript {

@@ -11,21 +11,22 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  PoseDetector poseDetector = GoogleMlKit.vision.poseDetector();
-  bool isBusy = false;
-  CustomPaint? customPaint;
+  final PoseDetector _poseDetector =
+      PoseDetector(options: PoseDetectorOptions());
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void dispose() async {
     super.dispose();
-    await poseDetector.close();
+    await _poseDetector.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Pose Detector',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -33,19 +34,18 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final poses = await poseDetector.processImage(inputImage);
-    print('Found ${poses.length} poses');
+    if (_isBusy) return;
+    _isBusy = true;
+    final poses = await _poseDetector.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = PosePainter(poses, inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
-      customPaint = CustomPaint(painter: painter);
+      _customPaint = CustomPaint(painter: painter);
     } else {
-      customPaint = null;
+      _customPaint = null;
     }
-    isBusy = false;
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }

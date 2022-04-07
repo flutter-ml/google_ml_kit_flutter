@@ -9,10 +9,8 @@ class LanguageTranslatorView extends StatefulWidget {
 class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   var _translatedText = '';
   final _controller = TextEditingController();
-
-  final _languageModelManager = GoogleMlKit.nlp.translateLanguageModelManager();
-
-  final _onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator(
+  final _modelManager = OnDeviceTranslatorModelManager();
+  final _onDeviceTranslator = OnDeviceTranslator(
       sourceLanguage: TranslateLanguage.english,
       targetLanguage: TranslateLanguage.spanish);
 
@@ -23,23 +21,23 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   }
 
   Future<void> _downloadModel() async {
-    var result = await _languageModelManager.downloadModel('en');
+    var result = await _modelManager.downloadModel('en');
     print('Model en downloaded: $result');
-    result = await _languageModelManager.downloadModel('es');
+    result = await _modelManager.downloadModel('es');
     print('Model es downloaded: $result');
   }
 
   Future<void> _deleteModel() async {
-    var result = await _languageModelManager.deleteModel('en');
+    var result = await _modelManager.deleteModel('en');
     print('Model en deleted: $result');
-    result = await _languageModelManager.deleteModel('es');
+    result = await _modelManager.deleteModel('es');
     print('Model es deleted: $result');
   }
 
   Future<void> _isModelDownloaded() async {
-    var result = await _languageModelManager.isModelDownloaded('en');
+    var result = await _modelManager.isModelDownloaded('en');
     print('Is model downloaded (en): $result');
-    result = await _languageModelManager.isModelDownloaded('es');
+    result = await _modelManager.isModelDownloaded('es');
     print('Is model downloaded(es): $result');
   }
 

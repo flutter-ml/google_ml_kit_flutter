@@ -4,20 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/commons.dart';
 
 class FaceDetector {
-  FaceDetector(this.options);
-
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_face_detector');
 
   /// The options for the face detector.
   final FaceDetectorOptions options;
-  bool _hasBeenOpened = false;
-  bool _isClosed = false;
+
+  FaceDetector({required this.options});
 
   /// Detects faces in the input image.
   Future<List<Face>> processImage(InputImage inputImage) async {
-    _hasBeenOpened = true;
-
     final result = await _channel.invokeListMethod<dynamic>(
         'vision#startFaceDetector', <String, dynamic>{
       'options': <String, dynamic>{
@@ -39,12 +35,8 @@ class FaceDetector {
     return faces;
   }
 
-  Future<void> close() async {
-    if (!_hasBeenOpened) _isClosed = true;
-    if (_isClosed) return Future<void>.value();
-    _isClosed = true;
-    return _channel.invokeMethod<void>('vision#closeFaceDetector');
-  }
+  Future<void> close() =>
+      _channel.invokeMethod<void>('vision#closeFaceDetector');
 }
 
 /// Immutable options for configuring features of [FaceDetector].

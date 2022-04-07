@@ -11,17 +11,18 @@ class FaceDetectorView extends StatefulWidget {
 }
 
 class _FaceDetectorViewState extends State<FaceDetectorView> {
-  FaceDetector faceDetector =
-      GoogleMlKit.vision.faceDetector(FaceDetectorOptions(
-    enableContours: true,
-    enableClassification: true,
-  ));
-  bool isBusy = false;
-  CustomPaint? customPaint;
+  final FaceDetector _faceDetector = FaceDetector(
+    options: FaceDetectorOptions(
+      enableContours: true,
+      enableClassification: true,
+    ),
+  );
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void dispose() {
-    faceDetector.close();
+    _faceDetector.close();
     super.dispose();
   }
 
@@ -29,7 +30,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Face Detector',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -38,21 +39,20 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final faces = await faceDetector.processImage(inputImage);
-    print('Found ${faces.length} faces');
+    if (_isBusy) return;
+    _isBusy = true;
+    final faces = await _faceDetector.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = FaceDetectorPainter(
           faces,
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
-      customPaint = CustomPaint(painter: painter);
+      _customPaint = CustomPaint(painter: painter);
     } else {
-      customPaint = null;
+      _customPaint = null;
     }
-    isBusy = false;
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }

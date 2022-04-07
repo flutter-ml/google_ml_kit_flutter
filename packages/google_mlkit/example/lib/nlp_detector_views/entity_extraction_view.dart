@@ -10,14 +10,10 @@ class EntityExtractionView extends StatefulWidget {
 
 class _EntityExtractionViewState extends State<EntityExtractionView> {
   final _controller = TextEditingController();
-
-  final _languageModelManager = GoogleMlKit.nlp.entityModelManager();
-
+  final _modelManager = EntityExtractorModelManager();
   final _entityExtractor =
-      GoogleMlKit.nlp.entityExtractor(EntityExtractorLanguage.english);
-
+      EntityExtractor(language: EntityExtractorLanguage.english);
   var _entities = <EntityAnnotation>[];
-
   final _language = EntityExtractorLanguage.english;
 
   @override
@@ -107,8 +103,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   Future<void> _downloadModel() async {
     Toast().show(
         'Downloading model...',
-        _languageModelManager
-            .downloadModel(_language, isWifiRequired: false)
+        _modelManager
+            .downloadModel(_language.name, isWifiRequired: false)
             .then((value) => value ? 'success' : 'error'),
         context,
         this);
@@ -117,8 +113,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   Future<void> _deleteModel() async {
     Toast().show(
         'Deleting model...',
-        _languageModelManager
-            .deleteModel(_language)
+        _modelManager
+            .deleteModel(_language.name)
             .then((value) => value ? 'success' : 'error'),
         context,
         this);
@@ -127,8 +123,8 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
   Future<void> _isModelDownloaded() async {
     Toast().show(
         'Checking if model is downloaded...',
-        _languageModelManager
-            .isModelDownloaded(_language)
+        _modelManager
+            .isModelDownloaded(_language.name)
             .then((value) => value ? 'exists' : 'not exists'),
         context,
         this);

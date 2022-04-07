@@ -9,10 +9,9 @@ class DigitalInkView extends StatefulWidget {
 }
 
 class _DigitalInkViewState extends State<DigitalInkView> {
-  LanguageModelManager languageModelManager =
-      GoogleMlKit.vision.languageModelManager();
-  DigitalInkRecognizer digitalInkRecognizer =
-      GoogleMlKit.vision.digitalInkRecognizer();
+  final DigitalInkRecognizerModelManager _modelManager =
+      DigitalInkRecognizerModelManager();
+  final DigitalInkRecognizer _digitalInkRecognizer = DigitalInkRecognizer();
   List<Offset?> _points = <Offset>[];
   String _recognizedText = '';
   final String _language = 'en-US';
@@ -102,7 +101,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Future<void> _isModelDownloaded() async {
     Toast().show(
         'Checking if model is downloaded...',
-        languageModelManager
+        _modelManager
             .isModelDownloaded(_language)
             .then((value) => value ? 'exists' : 'not exists'),
         context,
@@ -112,7 +111,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Future<void> _deleteModel() async {
     Toast().show(
         'Deleting model...',
-        languageModelManager
+        _modelManager
             .deleteModel(_language)
             .then((value) => value ? 'success' : 'error'),
         context,
@@ -122,7 +121,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   Future<void> _downloadModel() async {
     Toast().show(
         'Downloading model...',
-        languageModelManager
+        _modelManager
             .downloadModel(_language)
             .then((value) => value ? 'success' : 'error'),
         context,
@@ -138,7 +137,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         barrierDismissible: true);
     try {
       final candidates =
-          await digitalInkRecognizer.readText(_points, _language);
+          await _digitalInkRecognizer.readText(_points, _language);
       _recognizedText = '';
       for (final candidate in candidates) {
         _recognizedText += '\n${candidate.text}';

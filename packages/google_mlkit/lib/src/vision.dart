@@ -4,7 +4,6 @@ import 'package:google_mlkit_face_detection/face_detector.dart';
 import 'package:google_mlkit_image_labeling/image_labeler.dart';
 import 'package:google_mlkit_object_detection/object_detector.dart';
 import 'package:google_mlkit_pose_detection/pose_detector.dart';
-import 'package:google_mlkit_remote_model/remote_model_manager.dart';
 import 'package:google_mlkit_text_recognition/text_recognizer.dart';
 
 /// Get instance of the individual api's using instance of [Vision]
@@ -21,26 +20,21 @@ class Vision {
   /// [imageLabelerOptions]  if not provided it creates [ImageLabeler] with [ImageLabelerOptions]
   /// You can provide either [CustomImageLabelerOptions] to use a custom tflite model
   /// Or [AutoMLImageLabelerOptions] to use auto ml vision model trained by you
-  ImageLabeler imageLabeler([dynamic imageLabelerOptions]) {
-    return ImageLabeler(imageLabelerOptions ?? ImageLabelerOptions());
+  ImageLabeler imageLabeler([ImageLabelerOptionsBase? imageLabelerOptions]) {
+    return ImageLabeler(options: imageLabelerOptions ?? ImageLabelerOptions());
   }
 
   /// Returns instance of [BarcodeScanner]. By default it searches the input image for all [BarcodeFormat]s.
   /// To limit the search model to specific [BarcodeFormat] pass list of [BarcodeFormat] as argument.
   BarcodeScanner barcodeScanner([List<BarcodeFormat>? formatList]) {
-    return BarcodeScanner(formats: formatList);
+    return BarcodeScanner(formats: formatList ?? [BarcodeFormat.all]);
   }
 
   /// Returns instance of [PoseDetector].By default it returns all [PoseLandmark] available in image
   /// To limit the result to specific [PoseLandmark] pass list of [PoseLandmark]'s a
   /// All the 33 positions have been declared as static constants in [PoseLandmark] class
   PoseDetector poseDetector({PoseDetectorOptions? poseDetectorOptions}) {
-    return PoseDetector(poseDetectorOptions ?? PoseDetectorOptions());
-  }
-
-  /// Creates on instance of [LanguageModelManager].
-  LanguageModelManager languageModelManager() {
-    return LanguageModelManager();
+    return PoseDetector(options: poseDetectorOptions ?? PoseDetectorOptions());
   }
 
   /// Returns an instance of [DigitalInkRecognizer]
@@ -55,17 +49,12 @@ class Vision {
 
   /// Return an instance of [FaceDetector].
   FaceDetector faceDetector([FaceDetectorOptions? options]) {
-    return FaceDetector(options ?? const FaceDetectorOptions());
+    return FaceDetector(options: options ?? const FaceDetectorOptions());
   }
 
   /// Returns an instance of [ObjectDetector].
   ObjectDetector objectDetector(
       [ObjectDetectorOptions options = const ObjectDetectorOptions()]) {
-    return ObjectDetector(options);
-  }
-
-  /// returns an instance of [RemoteModelManager].
-  RemoteModelManager remoteModelManager() {
-    return RemoteModelManager();
+    return ObjectDetector(options: options);
   }
 }

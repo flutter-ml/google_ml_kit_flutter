@@ -11,25 +11,26 @@ class ObjectDetectorView extends StatefulWidget {
 }
 
 class _ObjectDetectorView extends State<ObjectDetectorView> {
-  LocalModel model = LocalModel('object_labeler.tflite');
-  late ObjectDetector objectDetector;
-  bool useLocalModel = false;
+  final LocalModel _model = LocalModel('object_labeler.tflite');
+  late ObjectDetector _objectDetector;
+  final bool _useLocalModel = false;
+  bool _isBusy = false;
+  CustomPaint? _customPaint;
 
   @override
   void initState() {
-    objectDetector = GoogleMlKit.vision.objectDetector(useLocalModel
-        ? CustomObjectDetectorOptions(model,
-            multipleObjects: true, classifyObjects: true)
-        : ObjectDetectorOptions(classifyObjects: true, multipleObjects: true));
+    _objectDetector = ObjectDetector(
+        options: _useLocalModel
+            ? CustomObjectDetectorOptions(_model,
+                multipleObjects: true, classifyObjects: true)
+            : ObjectDetectorOptions(
+                classifyObjects: true, multipleObjects: true));
     super.initState();
   }
 
-  bool isBusy = false;
-  CustomPaint? customPaint;
-
   @override
   void dispose() {
-    objectDetector.close();
+    _objectDetector.close();
     super.dispose();
   }
 
@@ -37,7 +38,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   Widget build(BuildContext context) {
     return CameraView(
       title: 'Object Detector',
-      customPaint: customPaint,
+      customPaint: _customPaint,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -46,9 +47,9 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final result = await objectDetector.processImage(inputImage);
+    if (_isBusy) return;
+    _isBusy = true;
+    final result = await _objectDetector.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null &&
         result.isNotEmpty) {
@@ -56,11 +57,11 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
           result,
           inputImage.inputImageData!.imageRotation,
           inputImage.inputImageData!.size);
-      customPaint = CustomPaint(painter: painter);
+      _customPaint = CustomPaint(painter: painter);
     } else {
-      customPaint = null;
+      _customPaint = null;
     }
-    isBusy = false;
+    _isBusy = false;
     if (mounted) {
       setState(() {});
     }
