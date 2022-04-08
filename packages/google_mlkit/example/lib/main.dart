@@ -69,15 +69,8 @@ class Home extends StatelessWidget {
                     children: [
                       CustomCard('Language ID', LanguageIdentifierView()),
                       CustomCard(
-                        'On-device Translation',
-                        LanguageTranslatorView(),
-                        featureCompleted: false,
-                      ),
-                      CustomCard(
-                        'Smart Reply',
-                        SmartReplyView(),
-                        featureCompleted: false,
-                      ),
+                          'On-device Translation', LanguageTranslatorView()),
+                      CustomCard('Smart Reply', SmartReplyView()),
                       CustomCard('Entity Extraction', EntityExtractionView()),
                     ],
                   ),

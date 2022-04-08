@@ -11,7 +11,6 @@
 
 @implementation GoogleMlKitDigitalInkRecognitionPlugin {
     MLKDigitalInkRecognizer *recognizer;
-    FlutterResult downloadInkResult;
     GenericModelManager *genericModelManager;
 }
 
