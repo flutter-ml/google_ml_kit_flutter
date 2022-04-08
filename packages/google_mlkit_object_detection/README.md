@@ -75,7 +75,7 @@ final bool response = await modelManager.downloadModel(model);
 #### Delete model
 
 ```dart
-final bool = await modelManager.deleteModel(model);
+final bool response = await modelManager.deleteModel(model);
 ```
 
 ## Example app

@@ -54,7 +54,7 @@ final bool response = await modelManager.downloadModel(TranslateLanguage.english
 #### Delete model
 
 ```dart
-final bool = await modelManager.deleteModel(TranslateLanguage.english);
+final bool response = await modelManager.deleteModel(TranslateLanguage.english);
 ```
 
 ## Example app
