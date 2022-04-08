@@ -1,6 +1,6 @@
 # Google's ML Kit Language Identification for Flutter
 
-[![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_language_id)](https://pub.dev/packages/google_mlkit_language_id)
 
 A Flutter plugin to use [Google's ML Kit Language Identification](https://developers.google.com/ml-kit/language/identification).
 

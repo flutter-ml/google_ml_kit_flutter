@@ -1,6 +1,6 @@
 # Google's ML Kit Image Labeling for Flutter
 
-[![Pub Version](https://img.shields.io/pub/v/google_ml_kit)](https://pub.dev/packages/google_ml_kit)
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_image_labeling)](https://pub.dev/packages/google_mlkit_image_labeling)
 
 A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling).
 
