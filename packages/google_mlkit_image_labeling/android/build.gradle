@@ -35,8 +35,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.7'
+    implementation 'com.google.mlkit:image-labeling:17.0.7'
     implementation 'com.google.mlkit:image-labeling-custom:17.0.1'
-    implementation 'com.google.mlkit:image-labeling-automl:16.2.1'
     implementation 'com.google.mlkit:linkfirebase:17.0.0'
 }

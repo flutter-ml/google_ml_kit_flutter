@@ -36,5 +36,4 @@ android {
 
 dependencies {
     implementation 'com.google.mlkit:vision-common:17.1.0'
-    implementation 'com.google.mlkit:linkfirebase:17.0.0'
 }
