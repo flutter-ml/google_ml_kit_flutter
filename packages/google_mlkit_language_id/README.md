@@ -10,13 +10,13 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an instance of identifier
+#### Create an instance of identifier
 
 ```dart
-final languageIdentifier = LanguageIdentifier();
+final languageIdentifier = LanguageIdentifier(confidenceThreshold: 0.5);
 ```
 
-#### 2. Process text
+#### Process text
 
 ```dart
 final String response = await languageIdentifier.identifyLanguage(text);
@@ -24,7 +24,7 @@ final String response = await languageIdentifier.identifyLanguage(text);
 final List<IdentifiedLanguage> possibleLanguages = await languageIdentifier.identifyPossibleLanguages(text);
 ```
 
-#### 3. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 imageLabeler.close();

@@ -8,15 +8,15 @@ A Flutter plugin to use [Google's ML Kit Smart Reply API](https://developers.goo
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
-## Translating Text
+## Usage
 
-#### 1. Create an instance of Smart Reply
+#### Create an instance of Smart Reply
 
 ```dart
 final onDeviceTranslator = SmartReply();
 ```
 
-#### 2. Add conversation texts
+#### Add conversation texts
 
 ```dart
 // For local user.
@@ -26,7 +26,8 @@ final String response = await smartReply.addConversationForLocalUser(text);
 final String response = await smartReply.addConversationForRemoteUser(_remoteUserController.text, uid);
     }
 ```
-#### 3. Generate replies.
+#### Generate replies.
+
 ```dart
 /// Get status of suggestions by `reponse['status']`.
 /// 0 =  STATUS_SUCCESS.
@@ -34,7 +35,8 @@ final String response = await smartReply.addConversationForRemoteUser(_remoteUse
 /// 2 =  STATUS_NO_REPLY. 
 final Map<String, dynamic> response= await smartReply.suggestReplies();
 ```
-#### 4. Release resources with `close()`
+
+#### Release resources with `close()`
 
 ```dart
 smartReply.close();

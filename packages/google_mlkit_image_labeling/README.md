@@ -17,7 +17,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -77,21 +77,18 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of labeler
+#### Create an instance of labeler
 
 ```dart
-final imageLabeler = ImageLabeler();
+final ImageLabelerOptions options = ImageLabelerOptions(confidenceThreshold: 0.5);
+final imageLabeler = ImageLabeler(options: options);
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 for (ImageLabel label in labels) {
   final String text = label.text;
   final int index = label.index;
@@ -99,10 +96,34 @@ for (ImageLabel label in labels) {
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 imageLabeler.close();
+```
+
+### Managing remote models
+
+#### Create an instance of model manager
+
+```dart
+final modelManager = FirebaseImageLabelerModelManager();
+```
+
+#### Check if model is downloaded
+
+```dart
+final bool response = await modelManager.isModelDownloaded(model);
+```
+#### Download model
+
+```dart
+final bool response = await modelManager.downloadModel(model);
+```
+#### Delete model
+
+```dart
+final String bool = await modelManager.deleteModel(model);
 ```
 
 ## Example app

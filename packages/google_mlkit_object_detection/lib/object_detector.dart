@@ -166,8 +166,8 @@ class FirebaseModel extends CustomModel {
   final String modelType = 'remote';
 }
 
-class ObjectDetectorFirebaseModelManager extends ModelManager {
-  ObjectDetectorFirebaseModelManager()
+class FirebaseObjectDetectorModelManager extends ModelManager {
+  FirebaseObjectDetectorModelManager()
       : super(
             channel: ObjectDetector._channel,
             method: 'vision#manageFirebaseModels');

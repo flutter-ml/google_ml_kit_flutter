@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -70,21 +70,18 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of detector
+#### Create an instance of detector
 
 ```dart
-final poseDetector = PoseDetector();
+final options = PoseDetectorOptions();
+final poseDetector = PoseDetector(options: options);
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final List<Pose> poses = await poseDetector.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 for (Pose pose in poses) {
   // to access all landmarks
   pose.landmarks.forEach((_, landmark) {
@@ -98,7 +95,7 @@ for (Pose pose in poses) {
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 poseDetector.close();

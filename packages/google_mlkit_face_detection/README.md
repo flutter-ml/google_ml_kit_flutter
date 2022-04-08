@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -70,22 +70,18 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of detector
+#### Create an instance of detector
 
 ```dart
 final options = FaceDetectorOptions();
-final faceDetector = FaceDetector(options);
+final faceDetector = FaceDetector(options: options);
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final List<Face> faces = await faceDetector.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 for (Face face in faces) {
   final Rect boundingBox = face.boundingBox;
 
@@ -111,7 +107,7 @@ for (Face face in faces) {
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 faceDetector.close();

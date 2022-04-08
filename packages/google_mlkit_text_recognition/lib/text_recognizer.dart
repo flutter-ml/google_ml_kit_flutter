@@ -13,9 +13,12 @@ class TextRecognizer {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_text_recognizer');
 
+  final TextRecognitionScript script;
+
+  TextRecognizer({this.script = TextRecognitionScript.latin});
+
   /// Function that takes [InputImage] processes it and returns a [RecognizedText] object.
-  Future<RecognizedText> processImage(InputImage inputImage,
-      {TextRecognitionScript script = TextRecognitionScript.latin}) async {
+  Future<RecognizedText> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
         'vision#startTextRecognizer', <String, dynamic>{
       'imageData': inputImage.toJson(),

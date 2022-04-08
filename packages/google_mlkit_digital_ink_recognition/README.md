@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -70,33 +70,53 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of recognizer
+#### Create an instance of recognizer
 
 ```dart
 final digitalInkRecognizer = DigitalInkRecognizer();
 ```
 
-#### 3. Process points
+#### Process points
 
 ```dart
-List<Offset?> points; // an array with the points of the stroke
-String languageTag;
-final List<RecognitionCandidate> canditates = await digitalInkRecognizer(points, languageTag);
-```
+List<Offset> points; // an array with the points of the stroke
+String modelCode; // BCP-47 Code from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
+final List<RecognitionCandidate> canditates = await digitalInkRecognizer.readText(points, modelCode);
 
-#### 4. Extract data from response
-
-```dart
 for (final candidate in candidates) {
   final text = candidate.text;
   final score = candidate.score;
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 digitalInkRecognizer.close();
+```
+
+### Managing remote models
+
+#### Create an instance of model manager
+
+```dart
+final modelManager = DigitalInkRecognizerModelManager();
+```
+
+#### Check if model is downloaded
+
+```dart
+final bool response = await modelManager.isModelDownloaded(model);
+```
+#### Download model
+
+```dart
+final bool response = await modelManager.downloadModel(model);
+```
+#### Delete model
+
+```dart
+final String bool = await modelManager.deleteModel(model);
 ```
 
 ## Example app

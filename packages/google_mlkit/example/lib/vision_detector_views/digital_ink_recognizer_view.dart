@@ -12,7 +12,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   final DigitalInkRecognizerModelManager _modelManager =
       DigitalInkRecognizerModelManager();
   final DigitalInkRecognizer _digitalInkRecognizer = DigitalInkRecognizer();
-  List<Offset?> _points = <Offset>[];
+  List<Offset> _points = <Offset>[];
   String _recognizedText = '';
   final String _language = 'en-US';
 
@@ -28,14 +28,14 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                 onPanUpdate: (DragUpdateDetails details) {
                   setState(() {
                     final RenderObject? object = context.findRenderObject();
-                    final _localPosition = (object as RenderBox?)
+                    final localPosition = (object as RenderBox?)
                         ?.globalToLocal(details.localPosition);
-                    _points = List.from(_points)..add(_localPosition);
+                    if (localPosition != null) {
+                      _points = List.from(_points)..add(localPosition);
+                    }
                   });
                 },
-                onPanEnd: (DragEndDetails details) {
-                  _points.add(null);
-                },
+                onPanEnd: (DragEndDetails details) {},
                 child: CustomPaint(
                   painter: Signature(points: _points),
                   size: Size.infinite,

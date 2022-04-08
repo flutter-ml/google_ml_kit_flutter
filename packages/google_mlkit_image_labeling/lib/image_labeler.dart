@@ -138,8 +138,8 @@ class FirebaseLabelerOption implements ImageLabelerOptionsBase {
       };
 }
 
-class ImageLabelerFirebaseModelManager extends ModelManager {
-  ImageLabelerFirebaseModelManager()
+class FirebaseImageLabelerModelManager extends ModelManager {
+  FirebaseImageLabelerModelManager()
       : super(
             channel: ImageLabeler._channel,
             method: 'vision#manageFirebaseModels');

@@ -10,51 +10,49 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an instance of translator
+#### Create an instance of translator
 
 ```dart
-final onDeviceTranslator = OnDeviceTranslator();
+final TranslateLanguage sourceLanguage;
+final TranslateLanguage targetLanguage;
+
+final onDeviceTranslator = OnDeviceTranslator(sourceLanguage: sourceLanguage, targetLanguage: targetLanguage);
 ```
 
-#### 2. Process text
+#### Process text
 
 ```dart
 final String response = await onDeviceTranslator.translateText(text);
 ```
 
-#### 3. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 onDeviceTranslator.close();
 ```
-## Managing language models
 
-#### 1. Create an instance of model manager.
+### Managing remote models
+
+#### Create an instance of model manager
 
 ```dart
-final translateLanguageModelManager = TranslateLanguageModelManager();
+final modelManager = OnDeviceTranslatorModelManager();
 ```
 
-#### 2. Check if model is downloaded.
+#### Check if model is downloaded
 
 ```dart
-final String response = await translateLanguageModelManager.isModelDownloaded(TranslateLanguage.english);
+final bool response = await modelManager.isModelDownloaded(TranslateLanguage.english);
 ```
-#### 3. Download model.
+#### Download model
 
 ```dart
-final String response = await translateLanguageModelManager.downloadModel(TranslateLanguage.english);
+final bool response = await modelManager.downloadModel(TranslateLanguage.english);
 ```
-#### 4. Delete model.
+#### Delete model
 
 ```dart
-final String response = await translateLanguageModelManager.deleteModel(TranslateLanguage.english);
-```
-
-#### 5. Get all available models.
-
-```dart
-final List<String> response = await translateLanguageModelManager.getAvailableModels();
+final String bool = await modelManager.deleteModel(TranslateLanguage.english);
 ```
 
 ## Example app

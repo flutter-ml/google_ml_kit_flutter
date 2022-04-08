@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -70,21 +70,17 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of recognizer
+#### Create an instance of recognizer
 
 ```dart
-final textRecognizer = TextRecognizer();
+final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 String text = recognizedText.text;
 for (TextBlock block in recognizedText.blocks) {
   final Rect rect = block.rect;
@@ -101,7 +97,7 @@ for (TextBlock block in recognizedText.blocks) {
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 textRecognizer.close();

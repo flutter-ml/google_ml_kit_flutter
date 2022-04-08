@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -70,21 +70,18 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of scanner
+#### Create an instance of scanner
 
 ```dart
-final barcodeScanner = BarcodeScanner();
+final List<BarcodeFormat> formats = [BarcodeFormat.all, ...];
+final barcodeScanner = BarcodeScanner(formats: formats);
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 for (Barcode barcode in barcodes) {
   final BarcodeType type = barcode.type;
   final Rect boundingBox = barcode.value.boundingBox;
@@ -103,7 +100,7 @@ for (Barcode barcode in barcodes) {
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 barcodeScanner.close();

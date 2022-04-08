@@ -14,16 +14,19 @@ class DigitalInkRecognizer {
   ///language visit this site [https://tools.ietf.org/html/bcp47] to know more.
   ///It takes [List<Offset>] which refers to the points being written on screen.
   Future<List<RecognitionCandidate>> readText(
-      List<Offset?> points, String modelTag) async {
+      List<Offset> points, String model) async {
     final List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
     for (final point in points) {
-      if (point != null) {
-        pointsList.add(<String, dynamic>{'x': point.dx, 'y': point.dy});
-      }
+      pointsList.add(<String, dynamic>{
+        'x': point.dx,
+        'y': point.dy,
+      });
     }
-    final result = await _channel.invokeMethod(
-        'vision#startDigitalInkRecognizer',
-        <String, dynamic>{'points': pointsList, 'model': modelTag});
+    final result = await _channel
+        .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
+      'points': pointsList,
+      'model': model,
+    });
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
     for (final dynamic json in result) {

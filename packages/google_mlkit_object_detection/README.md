@@ -17,7 +17,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an InputImage
+#### Create an InputImage
 
 From path:
 
@@ -77,21 +77,17 @@ final inputImageData = InputImageData(
 final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 ```
 
-#### 2. Create an instance of detector
+#### Create an instance of detector
 
 ```dart
-final objectDetector = ObjectDetector(CustomObjectDetectorOptions or ObjectDetectorOptions)
+final objectDetector = ObjectDetector(options: CustomObjectDetectorOptions or ObjectDetectorOptions)
 ```
 
-#### 3. Process image
+#### Process image
 
 ```dart
 final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
-```
 
-#### 4. Extract data from response
-
-```dart
 for(DetectedObject detectedObject in _objects){
   final rect = detectedObject.boundingBox;
   final trackingId = detectedObject.trackingId;
@@ -102,10 +98,34 @@ for(DetectedObject detectedObject in _objects){
 }
 ```
 
-#### 5. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 objectDetector.close();
+```
+
+### Managing remote models
+
+#### Create an instance of model manager
+
+```dart
+final modelManager = FirebaseObjectDetectorModelManager();
+```
+
+#### Check if model is downloaded
+
+```dart
+final bool response = await modelManager.isModelDownloaded(model);
+```
+#### Download model
+
+```dart
+final bool response = await modelManager.downloadModel(model);
+```
+#### Delete model
+
+```dart
+final String bool = await modelManager.deleteModel(model);
 ```
 
 ## Example app

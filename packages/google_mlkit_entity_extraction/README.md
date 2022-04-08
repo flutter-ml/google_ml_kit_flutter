@@ -10,22 +10,49 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-#### 1. Create an instance of Entity Extractor
+#### Create an instance of Entity Extractor
 
 ```dart
-final entityExtractor = (EntityExtractorOptions.english);
+final entityExtractor = (language: EntityExtractorOptions.english);
 ```
 
-#### 2. Process text
+#### Process text
 
 ```dart
-final List<EntityAnnotation> response = await entityExtractor.extractEntities(text);
+final List<EntityAnnotation> annotations = await entityExtractor.extractEntities(text);
+
+for (final annotation in annotations) {
+}
 ```
 
-#### 3. Release resources with `close()`
+#### Release resources with `close()`
 
 ```dart
 entityExtractor.close();
+```
+
+### Managing remote models
+
+#### Create an instance of model manager
+
+```dart
+final modelManager = EntityExtractorModelManager();
+```
+
+#### Check if model is downloaded
+
+```dart
+final bool response = await modelManager.isModelDownloaded(model);
+```
+#### Download model
+
+```dart
+final bool response = await modelManager.downloadModel(model);
+```
+#### Delete model
+
+```dart
+final String bool = await modelManager.deleteModel(model);
 ```
 
 ## Example app

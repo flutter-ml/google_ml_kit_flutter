@@ -43,8 +43,8 @@ class Vision {
   }
 
   /// Return an instance of [TextRecognizer].
-  TextRecognizer textRecognizer() {
-    return TextRecognizer();
+  TextRecognizer textRecognizer({script = TextRecognitionScript.latin}) {
+    return TextRecognizer(script: script);
   }
 
   /// Return an instance of [FaceDetector].
