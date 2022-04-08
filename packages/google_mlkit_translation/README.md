@@ -6,11 +6,13 @@ A Flutter plugin to use [Google's ML Kit On-Device Translation](https://develope
 
 ## Getting Started
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
 ## Usage
 
-#### Create an instance of translator
+### On-Device Translation
+
+#### Create an instance of `OnDeviceTranslator`
 
 ```dart
 final TranslateLanguage sourceLanguage;
@@ -52,7 +54,7 @@ final bool response = await modelManager.downloadModel(TranslateLanguage.english
 #### Delete model
 
 ```dart
-final String bool = await modelManager.deleteModel(TranslateLanguage.english);
+final bool = await modelManager.deleteModel(TranslateLanguage.english);
 ```
 
 ## Example app

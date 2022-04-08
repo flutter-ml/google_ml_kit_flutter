@@ -6,11 +6,13 @@ A Flutter plugin to use [Google's ML Kit Language Identification](https://develo
 
 ## Getting Started
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
 ## Usage
 
-#### Create an instance of identifier
+### Language Identification
+
+#### Create an instance of `LanguageIdentifier`
 
 ```dart
 final languageIdentifier = LanguageIdentifier(confidenceThreshold: 0.5);

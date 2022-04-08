@@ -35,7 +35,7 @@ In recent versions we have split the plugin in multiple plugins to allow develop
 
 ## Getting Started
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
 Go to the documentation of each plugin to learn how to use it.
 

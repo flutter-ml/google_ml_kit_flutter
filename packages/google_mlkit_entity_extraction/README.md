@@ -6,14 +6,16 @@ A Flutter plugin to use [Google's ML Kit Entity Extractor API](https://developer
 
 ## Getting Started
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
 ## Usage
 
-#### Create an instance of Entity Extractor
+### Entity Extraction
+
+#### Create an instance of `EntityExtractor`
 
 ```dart
-final entityExtractor = (language: EntityExtractorOptions.english);
+final entityExtractor = EntityExtractor(language: EntityExtractorOptions.english);
 ```
 
 #### Process text
@@ -52,7 +54,7 @@ final bool response = await modelManager.downloadModel(model);
 #### Delete model
 
 ```dart
-final String bool = await modelManager.deleteModel(model);
+final bool = await modelManager.deleteModel(model);
 ```
 
 ## Example app
