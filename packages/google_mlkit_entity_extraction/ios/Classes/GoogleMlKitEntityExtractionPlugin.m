@@ -128,7 +128,7 @@
                     type = 2;
                     entityData[@"dateTimeGranularity"] = @(entity.dateTimeEntity.dateTimeGranularity);
                     entityData[@"timestamp"] = @(entity.dateTimeEntity.dateTime.timeIntervalSince1970);
-                } if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeEmail]) {
+                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeEmail]) {
                     type = 3;
                 } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeFlightNumber]) {
                     type = 4;

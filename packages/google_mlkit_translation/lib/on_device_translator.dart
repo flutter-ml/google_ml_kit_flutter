@@ -32,10 +32,9 @@ class OnDeviceTranslator {
 }
 
 /// Creating instance of [OnDeviceTranslatorModelManager]
-/// ```
-/// final _languageModelManager = GoogleMlKit.nlp.
-///                               translateLanguageModelManager();;
-/// ```
+///
+// Downloading model will always return false,
+// model is downloaded if needed when translating.
 class OnDeviceTranslatorModelManager extends ModelManager {
   OnDeviceTranslatorModelManager()
       : super(
@@ -43,7 +42,7 @@ class OnDeviceTranslatorModelManager extends ModelManager {
             method: 'nlp#manageLanguageModelModels');
 }
 
-/// Class containg all supported languages and their BCP-47 tags.
+/// Class containing all supported languages and their BCP-47 tags.
 enum TranslateLanguage {
   afrikaans,
   albanian,
@@ -230,9 +229,12 @@ extension BCP47Code on TranslateLanguage {
     }
   }
 
-  static TranslateLanguage fromRawValue(String bcpCode) {
-    return TranslateLanguage.values.firstWhere(
-        (element) => element.bcpCode == bcpCode,
-        orElse: () => TranslateLanguage.english);
+  static TranslateLanguage? fromRawValue(String bcpCode) {
+    try {
+      return TranslateLanguage.values
+          .firstWhere((element) => element.bcpCode == bcpCode);
+    } catch (_) {
+      return null;
+    }
   }
 }

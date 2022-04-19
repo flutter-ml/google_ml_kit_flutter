@@ -2,6 +2,7 @@ package com.google_mlkit_translation;
 
 import androidx.annotation.NonNull;
 
+import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
@@ -42,29 +43,32 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     private void translateText(MethodCall call, final MethodChannel.Result result) {
         String sourceLanguage = call.argument("source");
         String targetLanguage = call.argument("target");
-
-        TranslateRemoteModel sourceModel =
-                new TranslateRemoteModel.Builder(sourceLanguage).build();
-
-        TranslateRemoteModel targetModel =
-                new TranslateRemoteModel.Builder(targetLanguage).build();
-
-        if (genericModelManager.isModelDownloaded(sourceModel) &&
-                genericModelManager.isModelDownloaded(targetModel)) {
-            TranslatorOptions translatorOptions = new TranslatorOptions.Builder()
-                    .setSourceLanguage(sourceLanguage)
-                    .setTargetLanguage(targetLanguage)
-                    .build();
-            translator = Translation.getClient(translatorOptions);
-        } else {
-            result.error("Error building translator", "Either source or target models not downloaded", null);
-            return;
-        }
-
         String text = call.argument("text");
-        translator.translate(text)
-                .addOnSuccessListener(result::success)
-                .addOnFailureListener(e -> result.error("error translating", e.toString(), null));
+
+        TranslatorOptions options = new TranslatorOptions.Builder()
+                .setSourceLanguage(sourceLanguage)
+                .setTargetLanguage(targetLanguage)
+                .build();
+        translator = Translation.getClient(options);
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+
+        translator.downloadModelIfNeeded(conditions)
+                .addOnSuccessListener(
+                        (OnSuccessListener) -> {
+                            // Model downloaded successfully. Okay to start translating.
+                            translator.translate(text)
+                                    .addOnSuccessListener(result::success)
+                                    .addOnFailureListener(
+                                            e -> result.error("error translating", e.toString(), null));
+                        })
+                .addOnFailureListener(
+                        e -> {
+                            // Model could not be downloaded or other internal error.
+                            result.error("Error building translator", "Either source or target models not downloaded", null);
+                        });
     }
 
     private void closeDetector() {
@@ -73,6 +77,15 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
+        String task = call.argument("task");
+        switch (task) {
+            case "download":
+                result.success("error");
+                return;
+            default:
+                break;
+        }
+
         TranslateRemoteModel model =
                 new TranslateRemoteModel.Builder(call.argument("model")).build();
         genericModelManager.manageModel(model, call, result);

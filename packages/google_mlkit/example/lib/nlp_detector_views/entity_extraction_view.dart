@@ -104,7 +104,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
     Toast().show(
         'Downloading model...',
         _modelManager
-            .downloadModel(_language.name, isWifiRequired: false)
+            .downloadModel(_language.name)
             .then((value) => value ? 'success' : 'error'),
         context,
         this);

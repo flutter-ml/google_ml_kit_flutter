@@ -8,7 +8,7 @@
 #define manageLanguageModelModels @"nlp#manageLanguageModelModels"
 
 @implementation GoogleMlKitTranslationPlugin {
-    MLKTranslator *translator;
+    MLKTranslator *onDeviceTranslator;
     GenericModelManager *genericModelManager;
 }
 
@@ -23,7 +23,7 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startLanguageTranslator]) {
         [self handleTranslation:call result:result];
-    } if ([call.method isEqualToString:manageLanguageModelModels]) {
+    } else if ([call.method isEqualToString:manageLanguageModelModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeLanguageTranslator]) {
     } else {
@@ -32,9 +32,46 @@
 }
 
 - (void)handleTranslation:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *source = call.arguments[@"source"];
+    NSString *target = call.arguments[@"target"];
+    NSString *text = call.arguments[@"text"];
+    
+    MLKTranslatorOptions *options = [[MLKTranslatorOptions alloc] initWithSourceLanguage:source
+                                                                          targetLanguage:target];
+    MLKTranslator *translator = [MLKTranslator translatorWithOptions:options];
+    onDeviceTranslator = translator;
+    
+    MLKModelDownloadConditions *conditions = [[MLKModelDownloadConditions alloc]
+                                              initWithAllowsCellularAccess:YES
+                                              allowsBackgroundDownloading:YES];
+    
+    [translator downloadModelIfNeededWithConditions:conditions
+                                         completion:^(NSError *_Nullable error) {
+        if (error) {
+            result(getFlutterError(error));
+            return;
+        }
+        // Model downloaded successfully. Okay to start translating.
+        
+        [translator translateText:text
+                       completion:^(NSString *_Nullable translatedText,
+                                    NSError *_Nullable error) {
+            if (error) {
+                result(getFlutterError(error));
+                return;
+            }
+            result(translatedText);
+        }];
+    }];
 }
 
 - (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *task = call.arguments[@"task"];
+    if ([task isEqualToString:@"download"]) {
+        result(@"error");
+        return;
+    }
+    
     NSString *modelTag = call.arguments[@"model"];
     MLKTranslateRemoteModel *model = [MLKTranslateRemoteModel translateRemoteModelWithLanguage:modelTag];
     genericModelManager = [[GenericModelManager alloc] init];

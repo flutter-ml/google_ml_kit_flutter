@@ -12,6 +12,10 @@ Before you get started read about the requirements and known issues of this plug
 
 In order to use Google's on-device Translation API in your application, you need to comply with the following guidelines. These guidelines may change from time to time, and without prior notice from Google. Your continued use of the on-device Translation API is contingent upon your adherence to these guidelines. If you're uncomfortable with any of these branding guidelines, discontinue your use of the API and [contact Google](https://developers.google.com/ml-kit/community) with your concerns. See more about the usage guidelines [here](https://developers.google.com/ml-kit/language/translation/translation-terms).
 
+### Supported languages
+
+ML Kit can translate between the following [languages](https://developers.google.com/ml-kit/language/translation/translation-language-support).
+
 ## Usage
 
 ### On-Device Translation

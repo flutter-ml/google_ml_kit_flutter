@@ -22,7 +22,7 @@
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startSmartReply]) {
         [self handleStartSmartReply:call result:result];
-    } if ([call.method isEqualToString:addSmartReply]) {
+    } else if ([call.method isEqualToString:addSmartReply]) {
         [self handleAddSmartReply:call result:result];
     } else if ([call.method isEqualToString:closeSmartReply]) {
     } else {
