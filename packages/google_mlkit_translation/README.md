@@ -8,6 +8,10 @@ A Flutter plugin to use [Google's ML Kit On-Device Translation](https://develope
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
+### Usage guidelines for ML Kit on-device translation
+
+In order to use Google's on-device Translation API in your application, you need to comply with the following guidelines. These guidelines may change from time to time, and without prior notice from Google. Your continued use of the on-device Translation API is contingent upon your adherence to these guidelines. If you're uncomfortable with any of these branding guidelines, discontinue your use of the API and [contact Google](https://developers.google.com/ml-kit/community) with your concerns. See more about the usage guidelines [here](https://developers.google.com/ml-kit/language/translation/translation-terms).
+
 ## Usage
 
 ### On-Device Translation
@@ -60,12 +64,6 @@ final bool response = await modelManager.deleteModel(TranslateLanguage.english);
 ## Example app
 
 Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit/example) to see the plugin in action.
-
-
-## :warning: on-device translation Restritions and Requirements
-Google enforces API usage guidelines and restrictions on this service of which you are expected to comply with, namely - Attribution requirements and types of devices that this service can be used with. If you feel that these resrictions and requirements are invading, we encourage [letting Google know](https://developers.google.com/ml-kit/community).
-
-See more about the usage guidelines [here](https://developers.google.com/ml-kit/language/translation/translation-terms).
 
 
 ## Contributing
