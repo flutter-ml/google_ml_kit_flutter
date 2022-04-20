@@ -1,5 +1,7 @@
 # google\_mlkit\_commons
 
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_commons)](https://pub.dev/packages/google_mlkit_commons)
+
 A Flutter plugin with common methods used in [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
 ## Getting Started
@@ -70,7 +72,7 @@ final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImage
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit/example) to see the plugin in action.
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
 
 ## Contributing
 
