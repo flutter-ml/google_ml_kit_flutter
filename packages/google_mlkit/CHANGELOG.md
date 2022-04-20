@@ -1,6 +1,6 @@
 ## 0.0.1
 
-* TODO: Initial release
+* Initial release
 
 ## 0.0.1+1
 
@@ -71,8 +71,25 @@
 * Add podspec dependency version constraints
 
 ## 0.7.2
-* Increase android sdk compile version to 30 
+
+* Increase android sdk compile version to 30
 
 ## 0.7.3
+
 * Increase android sdk compile version to 31
-* Add android support for text-recognition v2 
+* Add android support for text-recognition v2
+
+## 0.8.0
+
+* Split google\_ml\_kit in multiple plugins:
+    - [google\_mlkit\_barcode\_scanning](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_barcode_scanning)
+    - [google\_mlkit\_face\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_face_detection)
+    - [google\_mlkit\_image\_labeling](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_image_labeling)
+    - [google\_mlkit\_object\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_object_detection)
+    - [google\_mlkit\_text\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_text_recognition)
+    - [google\_mlkit\_digital\_ink\_recognition](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_digital_ink_recognition)
+    - [google\_mlkit\_pose\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_pose_detection)
+    - [google\_mlkit\_language\_id](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_language_id)
+    - [google\_mlkit\_translation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_translation)
+    - [google\_mlkit\_smart\_reply](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_smart_reply)
+    - [google\_mlkit\_entity\_extraction](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_entity_extraction)
