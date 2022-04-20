@@ -22,8 +22,8 @@ jobs:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1.5.3
 
-    - name: Install dependencies for google_mlkit
-      working-directory: ./packages/google_mlkit
+    - name: Install dependencies for google_ml_kit
+      working-directory: ./packages/google_ml_kit
       run: flutter pub get
 
     - name: Install dependencies for google_mlkit_barcode_scanning
