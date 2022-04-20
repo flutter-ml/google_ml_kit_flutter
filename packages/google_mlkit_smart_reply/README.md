@@ -15,26 +15,26 @@ Before you get started read about the requirements and known issues of this plug
 #### Create an instance of `SmartReply`
 
 ```dart
-final onDeviceTranslator = SmartReply();
+final smartReply = SmartReply();
 ```
 
-#### Add conversation texts
+#### Add messages to the conversation
 
 ```dart
 // For local user.
-final String response = await smartReply.addConversationForLocalUser(text);
+smartReply.addMessageToConversationFromLocalUser(message, timestamp);
 
 // For remote user. 
-final String response = await smartReply.addConversationForRemoteUser(_remoteUserController.text, uid);
+smartReply.addMessageToConversationFromRemoteUser(message, timestamp, userId);
 ```
 #### Generate replies
 
 ```dart
-/// Get status of suggestions by `reponse['status']`.
-/// 0 =  STATUS_SUCCESS.
-/// 1 =  STATUS_NOT_SUPPORTED_LANGUAGE.
-/// 2 =  STATUS_NO_REPLY. 
-final Map<String, dynamic> response= await smartReply.suggestReplies();
+final response = await smartReply.suggestReplies();
+
+for (final suggestion in response.suggestions) {
+  print('suggestion: $suggestion');
+}
 ```
 
 #### Release resources with `close()`

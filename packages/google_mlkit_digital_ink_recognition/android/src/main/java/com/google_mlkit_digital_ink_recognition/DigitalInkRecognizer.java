@@ -55,7 +55,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
             result.error("Model Error", "Model has not been downloaded yet ", null);
             return;
         }
-        List<Map<String, Object>> points = (List<Map<String, Object>>) call.argument("points");
+        List<Map<String, Object>> points = call.argument("points");
         Ink.Builder inkBuilder = Ink.builder();
         Ink.Stroke.Builder strokeBuilder;
         strokeBuilder = Ink.Stroke.builder();

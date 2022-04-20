@@ -2,71 +2,85 @@ import 'package:flutter/services.dart';
 
 ///Generates smart replies based on the conversations list.
 ///Creating an instance of [SmartReply]
-///```
-///final smartReply = GoogleMlKit.nlp.smartReply();
-///```
 class SmartReply {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_smart_reply');
 
-  int _conversationCount = 0;
+  final List<Message> _conversation = [];
 
-  /// Adds conversation for local user.
-  Future addConversationForLocalUser(String text) async {
-    final result = _channel.invokeMethod('nlp#addSmartReply', <String, dynamic>{
-      'text': text,
-      'localUser': true,
-    });
-    _conversationCount++;
-    return result;
+  List<Message> get conversation => _conversation;
+
+  /// Adds a message to the conversation for local user.
+  void addMessageToConversationFromLocalUser(
+      String message, int timestamp) async {
+    _conversation
+        .add(Message(text: message, timestamp: timestamp, userId: 'local'));
   }
 
-  /// Adds conversation for remote user.
-  Future addConversationForRemoteUser(String text, String uID) async {
-    final result = _channel.invokeMethod('nlp#addSmartReply', <String, dynamic>{
-      'text': text,
-      'localUser': false,
-      'uID': uID,
-    });
-    _conversationCount++;
-    return result;
+  /// Adds a message to the conversation for a remote user.
+  void addMessageToConversationFromRemoteUser(
+      String message, int timestamp, String userId) async {
+    _conversation
+        .add(Message(text: message, timestamp: timestamp, userId: userId));
   }
 
-  // /Suggests possible replies for the conversation.
-  /// Returns a map having the status of suggestions and all the suggestions.
-  Future<Map<String, dynamic>> suggestReplies() async {
-    final suggestions = <SmartReplySuggestion>[];
-    if (_conversationCount == 0) {
-      return <String, dynamic>{
-        'status': 2,
-        'suggestions': suggestions,
-      };
+  void clearConversation() {
+    _conversation.clear();
+  }
+
+  /// Suggests possible replies for the conversation.
+  Future<SmartReplySuggestionResult> suggestReplies() async {
+    if (_conversation.isEmpty) {
+      return SmartReplySuggestionResult(
+          SmartReplySuggestionResultStatus.noReply, []);
     }
 
-    final result = await _channel.invokeMethod('nlp#startSmartReply');
+    final result = await _channel.invokeMethod(
+        'nlp#startSmartReply', <String, dynamic>{
+      'conversation': _conversation.map((message) => message.toJson()).toList()
+    });
 
-    if (result['suggestions'] != null) {
-      for (final dynamic suggestion in result['suggestions']) {
-        suggestions.add(
-            SmartReplySuggestion(suggestion['result'], suggestion['toString']));
-      }
-    }
-
-    return <String, dynamic>{
-      'status': result['status'],
-      'suggestions': suggestions
-    };
+    return SmartReplySuggestionResult.fromJson(result);
   }
 
   Future<void> close() => _channel.invokeMethod('nlp#closeSmartReply');
 }
 
-class SmartReplySuggestion {
+class Message {
   final String text;
-  final String _toString;
+  final int timestamp;
+  final String userId;
 
-  SmartReplySuggestion(this.text, this._toString);
+  Message({required this.text, required this.timestamp, required this.userId});
 
-  @override
-  String toString() => _toString;
+  Map<String, dynamic> toJson() =>
+      {'message': text, 'timestamp': timestamp, 'userId': userId};
+}
+
+enum SmartReplySuggestionResultStatus {
+  success,
+  notSupportedLanguage,
+  noReply,
+}
+
+class SmartReplySuggestionResult {
+  SmartReplySuggestionResultStatus status;
+  List<String> suggestions;
+
+  SmartReplySuggestionResult(this.status, this.suggestions);
+
+  factory SmartReplySuggestionResult.fromJson(Map<dynamic, dynamic> json) {
+    final status =
+        SmartReplySuggestionResultStatus.values[json['status'].toInt()];
+    final suggestions = <String>[];
+    if (status == SmartReplySuggestionResultStatus.success) {
+      for (final dynamic line in json['suggestions']) {
+        suggestions.add(line);
+      }
+    }
+    return SmartReplySuggestionResult(status, suggestions);
+  }
+
+  Map<String, dynamic> toJson() =>
+      {'status': status.name, 'suggestions': suggestions};
 }

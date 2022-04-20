@@ -9,7 +9,7 @@ class SmartReplyView extends StatefulWidget {
 class _SmartReplyViewState extends State<SmartReplyView> {
   final _localUserController = TextEditingController();
   final _remoteUserController = TextEditingController();
-  var _suggestions = <SmartReplySuggestion>[];
+  SmartReplySuggestionResult? _suggestions;
 
   final SmartReply _smartReply = SmartReply();
 
@@ -19,22 +19,6 @@ class _SmartReplyViewState extends State<SmartReplyView> {
     super.dispose();
   }
 
-  Future<void> _addConversation(bool localUser) async {
-    if (localUser) {
-      _smartReply.addConversationForLocalUser(_localUserController.text);
-    } else {
-      _smartReply.addConversationForRemoteUser(
-          _remoteUserController.text, 'userZ');
-    }
-  }
-
-  Future<void> _suggestReplies() async {
-    final result = await _smartReply.suggestReplies();
-    setState(() {
-      _suggestions = result['suggestions'];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,87 +26,115 @@ class _SmartReplyViewState extends State<SmartReplyView> {
         appBar: AppBar(
           title: const Text('Smart Reply'),
         ),
-        body: ListView(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            const Center(child: Text('Enter conversation for Local User')),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                  width: 2,
-                )),
-                child: TextField(
-                  controller: _localUserController,
-                  decoration: InputDecoration(border: InputBorder.none),
-                  maxLines: null,
-                ),
-              ),
-            ),
-            Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    if (_localUserController.text.isNotEmpty) {
-                      _addConversation(true);
-                      _localUserController.text = '';
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Can't be empty")));
-                    }
-                  },
-                  child: Text('Add conversation')),
-            ),
-            SizedBox(height: 30),
-            const Center(child: Text('Enter conversation for remote user')),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                  width: 2,
-                )),
-                child: TextField(
-                  controller: _remoteUserController,
-                  decoration: InputDecoration(border: InputBorder.none),
-                  maxLines: null,
-                ),
-              ),
-            ),
-            Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    if (_remoteUserController.text.isNotEmpty) {
-                      _addConversation(false);
-                      _remoteUserController.text = '';
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Can't be empty")));
-                    }
-                  },
-                  child: Text('Add conversation')),
-            ),
-            Center(
-              child: ElevatedButton(
-                  onPressed: _suggestReplies, child: Text('Suggest Replies')),
-            ),
-            _suggestions.isNotEmpty
-                ? ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    shrinkWrap: true,
-                    itemCount: _suggestions.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text(_suggestions[index].text),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              children: [
+                SizedBox(height: 30),
+                Text('Local User:'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      width: 2,
+                    )),
+                    child: TextField(
+                      controller: _localUserController,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      maxLines: null,
                     ),
-                  )
-                : Container()
-          ],
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () => _addMessage(_localUserController, true),
+                      child: Text('Add message to conversation')),
+                ),
+                SizedBox(height: 30),
+                Text('Remote User:'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      width: 2,
+                    )),
+                    child: TextField(
+                      controller: _remoteUserController,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      maxLines: null,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () =>
+                          _addMessage(_remoteUserController, false),
+                      child: Text('Add message to conversation')),
+                ),
+                SizedBox(height: 30),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if (_smartReply.conversation.isNotEmpty)
+                        ElevatedButton(
+                            onPressed: () {
+                              _smartReply.clearConversation();
+                              setState(() {
+                                _suggestions = null;
+                              });
+                            },
+                            child: Text('Clear conversation')),
+                      ElevatedButton(
+                          onPressed: _suggestReplies,
+                          child: Text('Get Suggest Replies')),
+                    ]),
+                SizedBox(height: 30),
+                if (_suggestions != null)
+                  Text('Status: ${_suggestions!.status.name}'),
+                if (_suggestions != null &&
+                    _suggestions!.suggestions.isNotEmpty)
+                  for (final suggestion in _suggestions!.suggestions)
+                    Text('\t $suggestion'),
+              ],
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  void _addMessage(TextEditingController controller, bool localUser) {
+    FocusScope.of(context).unfocus();
+    if (controller.text.isNotEmpty) {
+      if (localUser) {
+        _smartReply.addMessageToConversationFromLocalUser(
+            controller.text, DateTime.now().millisecondsSinceEpoch);
+      } else {
+        _smartReply.addMessageToConversationFromRemoteUser(
+            controller.text, DateTime.now().millisecondsSinceEpoch, 'userZ');
+      }
+      controller.text = '';
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Message added to the conversation')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Message can\'t be empty')));
+    }
+  }
+
+  Future<void> _suggestReplies() async {
+    FocusScope.of(context).unfocus();
+    final result = await _smartReply.suggestReplies();
+    setState(() {
+      _suggestions = result;
+    });
   }
 }

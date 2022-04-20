@@ -56,9 +56,12 @@ final bool response = await modelManager.isModelDownloaded(TranslateLanguage.eng
 ```
 #### Download model
 
+Downloading model always return false, models are downloaded if needed when translating.
+
 ```dart
 final bool response = await modelManager.downloadModel(TranslateLanguage.english);
 ```
+
 #### Delete model
 
 ```dart

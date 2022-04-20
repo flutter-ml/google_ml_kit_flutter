@@ -33,7 +33,7 @@ class OnDeviceTranslator {
 
 /// Creating instance of [OnDeviceTranslatorModelManager]
 ///
-// Downloading model will always return false,
+// Downloading model always return false,
 // model is downloaded if needed when translating.
 class OnDeviceTranslatorModelManager extends ModelManager {
   OnDeviceTranslatorModelManager()
