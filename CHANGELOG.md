@@ -1,78 +1,83 @@
-## 0.0.1
+# Change Log
 
-* TODO: Initial release
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.0.1+1
+## 2022-04-19
 
-* Update readme.md
+### Changes
 
-## 0.0.2
+---
 
-* New : Support for digital ink recognition API added
+Packages with changes:
 
-## 0.0.2+1
+ - [`google_ml_kit` - `v0.8.0`](#google_ml_kit---v080)
+ - [`google_mlkit_barcode_scanning` - `v0.0.1`](#google_mlkit_barcode_scanning---v001)
+ - [`google_mlkit_commons` - `v0.0.1`](#google_mlkit_commons---v001)
+ - [`google_mlkit_face_detection` - `v0.0.1`](#google_mlkit_face_detection---v001)
+ - [`google_mlkit_image_labeling` - `v0.0.1`](#google_mlkit_image_labeling---v001)
+ - [`google_mlkit_object_detection` - `v0.0.1`](#google_mlkit_object_detection---v001)
+ - [`google_mlkit_text_recognition` - `v0.0.1`](#google_mlkit_text_recognition---v001)
+ - [`google_mlkit_digital_ink_recognition` - `v0.0.1`](#google_mlkit_digital_ink_recognition---v001)
+ - [`google_mlkit_pose_detection` - `v0.0.1`](#google_mlkit_pose_detection---v001)
+ - [`google_mlkit_language_id` - `v0.0.1`](#google_mlkit_language_id---v001)
+ - [`google_mlkit_translation` - `v0.0.1`](#google_mlkit_translation---v001)
+ - [`google_mlkit_smart_reply` - `v0.0.1`](#google_mlkit_smart_reply---v001)
+ - [`google_mlkit_entity_extraction` - `v0.0.1`](#google_mlkit_entity_extraction---v001)
 
-* Added documentation
+---
 
-## 0.0.3
+#### `google_ml_kit` - `v0.8.0`
 
-* New : Text Recognition API support
+ - **REFACTOR**: Split plugin in multiple plugins.
 
-## 0.0.3+1
+#### `google_mlkit_barcode_scanning` - `v0.0.1`
+ 
+ - Initial release.
 
-* Update documentation.
+#### `google_mlkit_commons` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.1.0
+#### `google_mlkit_face_detection` - `v0.0.1`
+ 
+ - Initial release.
 
-* NULL SAFETY
+#### `google_mlkit_image_labeling` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.2.0
+#### `google_mlkit_object_detection` - `v0.0.1`
+ 
+ - Initial release.
 
-* Breaking changes in API outline (instance creation of detectors)
-* New : Added language identifier API
+#### `google_mlkit_text_recognition` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.3.0
+#### `google_mlkit_digital_ink_recognition` - `v0.0.1`
+ 
+ - Initial release.
 
-* Add face detection API
-* Add On device translation API
+#### `google_mlkit_pose_detection` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.4.0
+#### `google_mlkit_language_id` - `v0.0.1`
+ 
+ - Initial release.
 
-* Add face detection for iOS
-* Add image labelling for iOS
-* Add Entity Extraction for Android
+#### `google_mlkit_translation` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.5.0
+#### `google_mlkit_smart_reply` - `v0.0.1`
+ 
+ - Initial release.
 
-* Add Barcode Scanning for iOS
-* Add Text Recognition for iOS
-* Add Smart Reply Suggestion for Android
+#### `google_mlkit_entity_extraction` - `v0.0.1`
+ 
+ - Initial release.
 
-## 0.5.1
 
-* Change Minimum iOS Deployment Target: 9.0
-* Set podspecs s.static_framework = true
 
-## 0.6.0
-
-* Add Pose Detection for iOS
-* Add Digital Ink Recognition for iOS
-* Change Minimum iOS Deployment Target: 10.0
-
-## 0.7.0
-
-* Add firebase remote model support for image labelling .
-* Change available API's to use unbundled models for Android.
-* Update Pose Detector API version and add z co-ordinate.
-* Fixes for barcode data parsing.
-
-## 0.7.1
-
-* Add podspec dependency version constraints
-
-## 0.7.2
-* Increase android sdk compile version to 30 
-
-## 0.7.3
-* Increase android sdk compile version to 31
-* Add android support for text-recognition v2 

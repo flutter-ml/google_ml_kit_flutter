@@ -1,0 +1,29 @@
+name: google_mlkit_barcode_scanning
+description: A Flutter Plugin for ML Kit - Barcode scanning.
+version: 0.0.1
+homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
+publish_to: none # TODO: remove once split is ready
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+  flutter: ">=2.5.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_commons:
+    path: ../google_mlkit_commons
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.google_mlkit_barcode_scanning
+        pluginClass: GoogleMlKitBarcodeScanningPlugin
+      ios:
+        pluginClass: GoogleMlKitBarcodeScanningPlugin

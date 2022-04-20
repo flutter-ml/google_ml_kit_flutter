@@ -1,0 +1,68 @@
+# Google's ML Kit Barcode Scanning for Flutter
+
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_barcode_scanning)](https://pub.dev/packages/google_mlkit_barcode_scanning)
+
+A Flutter plugin to use [Google's ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).
+
+## Getting Started
+
+Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
+
+## Usage
+
+### Barcode scanning
+
+#### Create an instance of `InputImage`
+
+Create an instance of `InputImage` as explained [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_commons#creating-an-inputimage).
+
+```dart
+final InputImage inputImage;
+```
+
+#### Create an instance of `BarcodeScanner`
+
+```dart
+final List<BarcodeFormat> formats = [BarcodeFormat.all, ...];
+final barcodeScanner = BarcodeScanner(formats: formats);
+```
+
+#### Process image
+
+```dart
+final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
+
+for (Barcode barcode in barcodes) {
+  final BarcodeType type = barcode.type;
+  final Rect boundingBox = barcode.value.boundingBox;
+  final String displayValue = barcode.value.displayValue;
+  final String rawValue = barcode.value.rawValue;
+
+  // See API reference for complete list of supported types
+  switch (type) {
+    case BarcodeType.wifi:
+      BarcodeWifi barcodeWifi = barcode.value;
+      break;
+    case BarcodeValueType.url:
+      BarcodeUrl barcodeUrl = barcode.value;
+      break;
+  }
+}
+```
+
+#### Release resources with `close()`
+
+```dart
+barcodeScanner.close();
+```
+
+## Example app
+
+Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit/example) to see the plugin in action.
+
+## Contributing
+
+Contributions are welcome.
+In case of any problems look at [existing issues](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/issues), if you cannot find anything related to your problem then open an issue.
+Create an issue before opening a [pull request](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/pulls) for non trivial fixes.
+In case of trivial fixes open a [pull request](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/pulls) directly.

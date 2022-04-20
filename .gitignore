@@ -20,15 +20,20 @@
 .vs/
 .vscode/
 .vscode
+.vscode/*
+!.vscode/tasks.json
+!.vscode/settings.json
+
+.melos_tool/*
 
 # Flutter/Dart/Pub related
 **/doc/api/
-.dart_tool/
 .flutter-plugins
 .packages
 .pub-cache/
 .pub/
 **/build/
+pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -41,6 +46,7 @@
 example/android/app/google-services.json
 
 # iOS/XCode related
+.symlinks/
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
 **/ios/**/*.moved-aside
@@ -65,6 +71,13 @@ example/android/app/google-services.json
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/Flutter/ephemeral/
+**/Flutter/Flutter.podspec
+**/Flutter/App.framework/
+**/Flutter/Flutter.framework/
+**/Flutter/Generated.xcconfig
+**/Flutter/flutter_assets/
+xcuserdata/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

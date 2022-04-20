@@ -21,8 +21,61 @@ jobs:
       with:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1.5.3
-    - run: flutter pub get
+
+    - name: Install dependencies for google_ml_kit
+      working-directory: ./packages/google_ml_kit
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_barcode_scanning
+      working-directory: ./packages/google_mlkit_barcode_scanning
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_commons
+      working-directory: ./packages/google_mlkit_commons
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_face_detection
+      working-directory: ./packages/google_mlkit_face_detection
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_image_labeling
+      working-directory: ./packages/google_mlkit_image_labeling
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_digital_ink_recognition
+      working-directory: ./packages/google_mlkit_digital_ink_recognition
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_language_id
+      working-directory: ./packages/google_mlkit_language_id
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_object_detection
+      working-directory: ./packages/google_mlkit_object_detection
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_pose_detection
+      working-directory: ./packages/google_mlkit_pose_detection
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_text_recognition
+      working-directory: ./packages/google_mlkit_text_recognition
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_translation
+      working-directory: ./packages/google_mlkit_translation
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_entity_extraction
+      working-directory: ./packages/google_mlkit_entity_extraction
+      run: flutter pub get
+
+    - name: Install dependencies for google_mlkit_smart_reply
+      working-directory: ./packages/google_mlkit_smart_reply
+      run: flutter pub get
+
     # Check for any formatting issues in the code.
     - run: flutter format --set-exit-if-changed .
+
     # Statically analyze the Dart code for any errors.
     - run: flutter analyze .
