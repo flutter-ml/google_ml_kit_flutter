@@ -1,5 +1,7 @@
 # google\_mlkit\_commons
 
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_commons)](https://pub.dev/packages/google_mlkit_commons)
+
 A Flutter plugin with common methods used in [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin).
 
 ## Getting Started
