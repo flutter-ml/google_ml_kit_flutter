@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// Extracts entities from the given text.
 /// Creating an instance.

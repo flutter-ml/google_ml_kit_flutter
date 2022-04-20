@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// Class to scan the barcode in [InputImage]
 /// Creating an instance of [BarcodeScanner]

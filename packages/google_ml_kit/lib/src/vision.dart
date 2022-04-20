@@ -1,10 +1,10 @@
-import 'package:google_mlkit_barcode_scanning/barcode_scanner.dart';
-import 'package:google_mlkit_digital_ink_recognition/digital_ink_recognizer.dart';
-import 'package:google_mlkit_face_detection/face_detector.dart';
-import 'package:google_mlkit_image_labeling/image_labeler.dart';
-import 'package:google_mlkit_object_detection/object_detector.dart';
-import 'package:google_mlkit_pose_detection/pose_detector.dart';
-import 'package:google_mlkit_text_recognition/text_recognizer.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
+import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 /// Get instance of the individual api's using instance of [Vision]
 /// For example

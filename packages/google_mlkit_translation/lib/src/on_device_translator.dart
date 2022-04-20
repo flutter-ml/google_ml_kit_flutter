@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// Creating an instance of [OnDeviceTranslator]
 /// ```

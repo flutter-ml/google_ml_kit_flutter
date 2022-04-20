@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A detector that processes the input image and return list of [PoseLandmark].
 ///

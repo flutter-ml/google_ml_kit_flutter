@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// Detector that detects the labels present in the [InputImage] provided
 /// Labels implies the objects,places,people etc.. that were recognized on the image

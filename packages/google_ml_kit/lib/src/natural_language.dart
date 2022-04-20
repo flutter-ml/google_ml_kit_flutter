@@ -1,7 +1,7 @@
-import 'package:google_mlkit_entity_extraction/entity_extractor.dart';
-import 'package:google_mlkit_language_id/language_identifier.dart';
-import 'package:google_mlkit_smart_reply/smart_reply.dart';
-import 'package:google_mlkit_translation/on_device_translator.dart';
+import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
+import 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
+import 'package:google_mlkit_smart_reply/google_mlkit_smart_reply.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
 class NaturalLanguage {
   NaturalLanguage._();

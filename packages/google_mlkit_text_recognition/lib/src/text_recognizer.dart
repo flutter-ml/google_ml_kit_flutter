@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_commons/commons.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// Detector to detect text present in the [InputImage] provided.
 /// It returns [RecognizedText] which contains the info present in the image.
