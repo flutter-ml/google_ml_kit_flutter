@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_face_detection)](https://pub.dev/packages/google_mlkit_face_detection)
 
-A Flutter plugin to use [Google's ML Kit Face Detection](https://developers.google.com/ml-kit/vision/face-detection).
+A Flutter plugin to use [Google's ML Kit Face Detection](https://developers.google.com/ml-kit/vision/face-detection) to detect faces in an image, identify key facial features, and get the contours of detected faces.
 
 ## Getting Started
 
@@ -65,7 +65,7 @@ faceDetector.close();
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
+Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
 
 ## Contributing
 

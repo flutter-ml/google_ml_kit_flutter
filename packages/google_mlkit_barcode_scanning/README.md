@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_barcode_scanning)](https://pub.dev/packages/google_mlkit_barcode_scanning)
 
-A Flutter plugin to use [Google's ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning).
+A Flutter plugin to use [Google's ML Kit Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning) to read data encoded using most standard barcode formats.
 
 ## Getting Started
 
@@ -58,7 +58,7 @@ barcodeScanner.close();
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
+Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
 
 ## Contributing
 

@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_language_id)](https://pub.dev/packages/google_mlkit_language_id)
 
-A Flutter plugin to use [Google's ML Kit Language Identification](https://developers.google.com/ml-kit/language/identification).
+A Flutter plugin to use [Google's ML Kit Language Identification](https://developers.google.com/ml-kit/language/identification) to determine the language of a string of text.
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ imageLabeler.close();
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
+Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
 
 ## Contributing
 
