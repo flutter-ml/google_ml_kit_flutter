@@ -1,5 +1,5 @@
 name: google_ml_kit_example
-description: Demonstrates how to use the google_mlkit plugin.
+description: Demonstrates how to use the google_ml_kit plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

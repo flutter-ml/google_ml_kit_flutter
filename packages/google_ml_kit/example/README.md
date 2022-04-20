@@ -1,6 +1,6 @@
 # google\_ml\_kit example app
 
-Demonstrates how to use the google_mlkit plugin.
+Demonstrates how to use the google_ml_kit plugin.
 
 This example app is not production code, its purpose is to demostrate some of the functionality of all the plugins under `google_ml_kit`. If you find any issue with it fell free to contribute. Pull request are always welcome.
 
