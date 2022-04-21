@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-/// [InputImage] is the format Google' Ml kit takes to process the image
+/// Image format that ML Kit takes to process the image
 class InputImage {
   InputImage._(
       {this.filePath,

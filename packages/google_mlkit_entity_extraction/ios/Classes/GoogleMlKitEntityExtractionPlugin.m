@@ -37,8 +37,7 @@
     NSString *text = call.arguments[@"text"];
     
     MLKEntityExtractorOptions *options = [[MLKEntityExtractorOptions alloc] initWithModelIdentifier:language];
-    entityExtractor =
-    [MLKEntityExtractor entityExtractorWithOptions:options];
+    entityExtractor = [MLKEntityExtractor entityExtractorWithOptions:options];
     
     MLKEntityExtractionParams *params = [[MLKEntityExtractionParams alloc] init];
     
@@ -98,78 +97,87 @@
         params.typesFilter = filters;
     }
     
-    [entityExtractor annotateText:text
-                       withParams:params
-                       completion:^(NSArray *_Nullable annotations, NSError *_Nullable error) {
+    MLKEntityExtractor *extractor = entityExtractor;
+    [entityExtractor downloadModelIfNeededWithCompletion:^(NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;
-        } else if (!annotations) {
-            result(NULL);
-            return;
         }
+        // Model downloaded successfully. Okay to annotate.
         
-        NSMutableArray *allAnnotations = [NSMutableArray array];
-        for (MLKEntityAnnotation *annotation in annotations) {
-            NSMutableDictionary *data = [NSMutableDictionary dictionary];
-            data[@"text"] = [text substringWithRange:annotation.range];
-            data[@"start"] = @((int)annotation.range.location);
-            data[@"end"] = @((int)(annotation.range.location + annotation.range.length));
-            
-            NSMutableArray *allEntities = [NSMutableArray array];
-            NSArray *entities = annotation.entities;
-            for (MLKEntity *entity in entities) {
-                NSMutableDictionary *entityData = [NSMutableDictionary dictionary];
-                int type = 0;
-                
-                if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeAddress]) {
-                    type = 1;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeDateTime]) {
-                    type = 2;
-                    entityData[@"dateTimeGranularity"] = @(entity.dateTimeEntity.dateTimeGranularity);
-                    entityData[@"timestamp"] = @(entity.dateTimeEntity.dateTime.timeIntervalSince1970);
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeEmail]) {
-                    type = 3;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeFlightNumber]) {
-                    type = 4;
-                    entityData[@"code"] = entity.flightNumberEntity.airlineCode;
-                    entityData[@"number"] = entity.flightNumberEntity.flightNumber;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeIBAN]) {
-                    type = 5;
-                    entityData[@"iban"] = entity.IBANEntity.IBAN;
-                    entityData[@"code"] = entity.IBANEntity.countryCode;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeISBN]) {
-                    type = 6;
-                    entityData[@"isbn"] = entity.ISBNEntity.ISBN;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeMoney]) {
-                    type = 7;
-                    entityData[@"fraction"] = @(entity.moneyEntity.fractionalPart);
-                    entityData[@"integer"] = @(entity.moneyEntity.integerPart);
-                    entityData[@"unnormalized"] = entity.moneyEntity.unnormalizedCurrency;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePaymentCard]) {
-                    type = 8;
-                    entityData[@"network"] = @(entity.paymentCardEntity.paymentCardNetwork);
-                    entityData[@"number"] = entity.paymentCardEntity.paymentCardNumber;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePhone]) {
-                    type = 9;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeTrackingNumber]) {
-                    type = 10;
-                    entityData[@"carrier"] = @(entity.trackingNumberEntity.parcelCarrier);
-                    entityData[@"number"] = entity.trackingNumberEntity.parcelTrackingNumber;
-                } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeURL]) {
-                    type = 11;
-                }
-                
-                entityData[@"type"] = @(type);
-                entityData[@"raw"] = [NSString stringWithFormat:@"%@", entity];
-                
-                [allEntities addObject:entityData];
+        [extractor annotateText:text
+                     withParams:params
+                     completion:^(NSArray *_Nullable annotations, NSError *_Nullable error) {
+            if (error) {
+                result(getFlutterError(error));
+                return;
+            } else if (!annotations) {
+                result(NULL);
+                return;
             }
-            data[@"entities"] = allEntities;
-            [allAnnotations addObject:data];
-        }
-        
-        result(allAnnotations);
+            
+            NSMutableArray *allAnnotations = [NSMutableArray array];
+            for (MLKEntityAnnotation *annotation in annotations) {
+                NSMutableDictionary *data = [NSMutableDictionary dictionary];
+                data[@"text"] = [text substringWithRange:annotation.range];
+                data[@"start"] = @((int)annotation.range.location);
+                data[@"end"] = @((int)(annotation.range.location + annotation.range.length));
+                
+                NSMutableArray *allEntities = [NSMutableArray array];
+                NSArray *entities = annotation.entities;
+                for (MLKEntity *entity in entities) {
+                    NSMutableDictionary *entityData = [NSMutableDictionary dictionary];
+                    int type = 0;
+                    
+                    if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeAddress]) {
+                        type = 1;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeDateTime]) {
+                        type = 2;
+                        entityData[@"dateTimeGranularity"] = @(entity.dateTimeEntity.dateTimeGranularity);
+                        entityData[@"timestamp"] = @(entity.dateTimeEntity.dateTime.timeIntervalSince1970);
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeEmail]) {
+                        type = 3;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeFlightNumber]) {
+                        type = 4;
+                        entityData[@"code"] = entity.flightNumberEntity.airlineCode;
+                        entityData[@"number"] = entity.flightNumberEntity.flightNumber;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeIBAN]) {
+                        type = 5;
+                        entityData[@"iban"] = entity.IBANEntity.IBAN;
+                        entityData[@"code"] = entity.IBANEntity.countryCode;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeISBN]) {
+                        type = 6;
+                        entityData[@"isbn"] = entity.ISBNEntity.ISBN;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeMoney]) {
+                        type = 7;
+                        entityData[@"fraction"] = @(entity.moneyEntity.fractionalPart);
+                        entityData[@"integer"] = @(entity.moneyEntity.integerPart);
+                        entityData[@"unnormalized"] = entity.moneyEntity.unnormalizedCurrency;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePaymentCard]) {
+                        type = 8;
+                        entityData[@"network"] = @(entity.paymentCardEntity.paymentCardNetwork);
+                        entityData[@"number"] = entity.paymentCardEntity.paymentCardNumber;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePhone]) {
+                        type = 9;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeTrackingNumber]) {
+                        type = 10;
+                        entityData[@"carrier"] = @(entity.trackingNumberEntity.parcelCarrier);
+                        entityData[@"number"] = entity.trackingNumberEntity.parcelTrackingNumber;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeURL]) {
+                        type = 11;
+                    }
+                    
+                    entityData[@"type"] = @(type);
+                    entityData[@"raw"] = [NSString stringWithFormat:@"%@", entity];
+                    
+                    [allEntities addObject:entityData];
+                }
+                data[@"entities"] = allEntities;
+                [allAnnotations addObject:data];
+            }
+            
+            result(allAnnotations);
+        }];
     }];
 }
 

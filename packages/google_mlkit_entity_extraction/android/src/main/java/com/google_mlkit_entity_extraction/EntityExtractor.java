@@ -68,7 +68,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
 
         Set<Integer> filters = null;
         if (parameters.get("filters") != null) {
-            filters = new HashSet<>(((List<Integer>) parameters.get("filters")));
+            filters = new HashSet<>((List<Integer>) parameters.get("filters"));
         }
 
         Locale locale = null;
@@ -87,74 +87,85 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                 .setReferenceTimeZone(timeZone)
                 .build();
 
-        entityExtractor.annotate(params)
-                .addOnSuccessListener(entityAnnotations -> {
-                    List<Map<String, Object>> allAnnotations = new ArrayList<>(entityAnnotations.size());
+        entityExtractor
+                .downloadModelIfNeeded()
+                .addOnSuccessListener(
+                        aVoid -> {
+                            // Model downloading succeeded, you can call the extraction API here.
+                            entityExtractor.annotate(params)
+                                    .addOnSuccessListener(entityAnnotations -> {
+                                        List<Map<String, Object>> allAnnotations = new ArrayList<>(entityAnnotations.size());
 
-                    for (EntityAnnotation entityAnnotation : entityAnnotations) {
-                        Map<String, Object> annotation = new HashMap<>();
-                        List<Entity> entities = entityAnnotation.getEntities();
-                        annotation.put("text", entityAnnotation.getAnnotatedText());
-                        annotation.put("start", entityAnnotation.getStart());
-                        annotation.put("end", entityAnnotation.getEnd());
+                                        for (EntityAnnotation entityAnnotation : entityAnnotations) {
+                                            Map<String, Object> annotation = new HashMap<>();
+                                            List<Entity> entities = entityAnnotation.getEntities();
+                                            annotation.put("text", entityAnnotation.getAnnotatedText());
+                                            annotation.put("start", entityAnnotation.getStart());
+                                            annotation.put("end", entityAnnotation.getEnd());
 
-                        List<Map<String, Object>> allEntities = new ArrayList<>();
-                        for (Entity entity : entities) {
-                            Map<String, Object> entityData = new HashMap<>();
-                            entityData.put("type", entity.getType());
-                            entityData.put("raw", entity.toString());
-                            switch (entity.getType()) {
-                                case Entity.TYPE_ADDRESS:
-                                case Entity.TYPE_URL:
-                                case Entity.TYPE_PHONE:
-                                case Entity.TYPE_EMAIL:
-                                    break;
-                                case Entity.TYPE_DATE_TIME:
-                                    DateTimeEntity dateTimeEntity = entity.asDateTimeEntity();
-                                    entityData.put("dateTimeGranularity", dateTimeEntity.getDateTimeGranularity() + 1);
-                                    entityData.put("timestamp", dateTimeEntity.getTimestampMillis());
-                                    break;
-                                case Entity.TYPE_FLIGHT_NUMBER:
-                                    FlightNumberEntity flightNumberEntity = entity.asFlightNumberEntity();
-                                    entityData.put("code", flightNumberEntity.getAirlineCode());
-                                    entityData.put("number", flightNumberEntity.getFlightNumber());
-                                    break;
-                                case Entity.TYPE_IBAN:
-                                    IbanEntity ibanEntity = entity.asIbanEntity();
-                                    entityData.put("iban", ibanEntity.getIban());
-                                    entityData.put("code", ibanEntity.getIbanCountryCode());
-                                    break;
-                                case Entity.TYPE_ISBN:
-                                    IsbnEntity isbnEntity = entity.asIsbnEntity();
-                                    entityData.put("isbn", isbnEntity.getIsbn());
-                                    break;
-                                case Entity.TYPE_MONEY:
-                                    MoneyEntity moneyEntity = entity.asMoneyEntity();
-                                    entityData.put("fraction", moneyEntity.getFractionalPart());
-                                    entityData.put("integer", moneyEntity.getIntegerPart());
-                                    entityData.put("unnormalized", moneyEntity.getUnnormalizedCurrency());
-                                    break;
-                                case Entity.TYPE_PAYMENT_CARD:
-                                    PaymentCardEntity paymentCardEntity = entity.asPaymentCardEntity();
-                                    entityData.put("network", paymentCardEntity.getPaymentCardNetwork());
-                                    entityData.put("number", paymentCardEntity.getPaymentCardNumber());
-                                    break;
-                                case Entity.TYPE_TRACKING_NUMBER:
-                                    TrackingNumberEntity trackingNumberEntity = entity.asTrackingNumberEntity();
-                                    entityData.put("carrier", trackingNumberEntity.getParcelCarrier());
-                                    entityData.put("number", trackingNumberEntity.getParcelTrackingNumber());
-                                    break;
-                            }
+                                            List<Map<String, Object>> allEntities = new ArrayList<>();
+                                            for (Entity entity : entities) {
+                                                Map<String, Object> entityData = new HashMap<>();
+                                                entityData.put("type", entity.getType());
+                                                entityData.put("raw", entity.toString());
+                                                switch (entity.getType()) {
+                                                    case Entity.TYPE_ADDRESS:
+                                                    case Entity.TYPE_URL:
+                                                    case Entity.TYPE_PHONE:
+                                                    case Entity.TYPE_EMAIL:
+                                                        break;
+                                                    case Entity.TYPE_DATE_TIME:
+                                                        DateTimeEntity dateTimeEntity = entity.asDateTimeEntity();
+                                                        entityData.put("dateTimeGranularity", dateTimeEntity.getDateTimeGranularity() + 1);
+                                                        entityData.put("timestamp", dateTimeEntity.getTimestampMillis());
+                                                        break;
+                                                    case Entity.TYPE_FLIGHT_NUMBER:
+                                                        FlightNumberEntity flightNumberEntity = entity.asFlightNumberEntity();
+                                                        entityData.put("code", flightNumberEntity.getAirlineCode());
+                                                        entityData.put("number", flightNumberEntity.getFlightNumber());
+                                                        break;
+                                                    case Entity.TYPE_IBAN:
+                                                        IbanEntity ibanEntity = entity.asIbanEntity();
+                                                        entityData.put("iban", ibanEntity.getIban());
+                                                        entityData.put("code", ibanEntity.getIbanCountryCode());
+                                                        break;
+                                                    case Entity.TYPE_ISBN:
+                                                        IsbnEntity isbnEntity = entity.asIsbnEntity();
+                                                        entityData.put("isbn", isbnEntity.getIsbn());
+                                                        break;
+                                                    case Entity.TYPE_MONEY:
+                                                        MoneyEntity moneyEntity = entity.asMoneyEntity();
+                                                        entityData.put("fraction", moneyEntity.getFractionalPart());
+                                                        entityData.put("integer", moneyEntity.getIntegerPart());
+                                                        entityData.put("unnormalized", moneyEntity.getUnnormalizedCurrency());
+                                                        break;
+                                                    case Entity.TYPE_PAYMENT_CARD:
+                                                        PaymentCardEntity paymentCardEntity = entity.asPaymentCardEntity();
+                                                        entityData.put("network", paymentCardEntity.getPaymentCardNetwork());
+                                                        entityData.put("number", paymentCardEntity.getPaymentCardNumber());
+                                                        break;
+                                                    case Entity.TYPE_TRACKING_NUMBER:
+                                                        TrackingNumberEntity trackingNumberEntity = entity.asTrackingNumberEntity();
+                                                        entityData.put("carrier", trackingNumberEntity.getParcelCarrier());
+                                                        entityData.put("number", trackingNumberEntity.getParcelTrackingNumber());
+                                                        break;
+                                                }
 
-                            allEntities.add(entityData);
-                        }
-                        annotation.put("entities", allEntities);
-                        allAnnotations.add(annotation);
-                    }
+                                                allEntities.add(entityData);
+                                            }
+                                            annotation.put("entities", allEntities);
+                                            allAnnotations.add(annotation);
+                                        }
 
-                    result.success(allAnnotations);
-                })
-                .addOnFailureListener(e -> result.error("BarcodeDetectorError", e.toString(), null));
+                                        result.success(allAnnotations);
+                                    })
+                                    .addOnFailureListener(e -> result.error("BarcodeDetectorError", e.toString(), null));
+                        })
+                .addOnFailureListener(
+                        e -> {
+                            // Model could not be downloaded or other internal error.
+                            result.error("Error building extractor", "Model not downloaded", null);
+                        });
     }
 
     public void closeDetector() {

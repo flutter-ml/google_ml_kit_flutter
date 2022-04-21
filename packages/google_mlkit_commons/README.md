@@ -35,7 +35,7 @@ From [CameraImage](https://pub.dev/documentation/camera/latest/camera/CameraImag
 ```dart
 final camera; // your camera instance
 final WriteBuffer allBytes = WriteBuffer();
-for (Plane plane in cameraImage.planes) {
+for (final Plane plane in cameraImage.planes) {
   allBytes.putUint8List(plane.bytes);
 }
 final bytes = allBytes.done().buffer.asUint8List();

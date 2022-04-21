@@ -8,6 +8,26 @@ A Flutter plugin to use [Google's ML Kit Entity Extractor API](https://developer
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
+### Supported languages
+
+Entity extraction supports the following languages:
+
+- Arabic
+- Portuguese
+- English (US, UK)
+- Dutch
+- French
+- German
+- Italian
+- Japanese
+- Korean
+- Polish
+- Russian
+- Chinese (Simplified, Traditional)
+- Spanish
+- Thai
+- Turkish
+
 ## Usage
 
 ### Entity Extraction
@@ -21,9 +41,16 @@ final entityExtractor = EntityExtractor(language: EntityExtractorOptions.english
 #### Process text
 
 ```dart
-final List<EntityAnnotation> annotations = await entityExtractor.extractEntities(text);
+final List<EntityAnnotation> annotations = await entityExtractor.annotateText(text);
 
 for (final annotation in annotations) {
+  annotation.start
+  annotation.end
+  annotation.text
+  for (final entity in annotation.entities) {
+    entity.type
+    entity.rawValue
+  }
 }
 ```
 
