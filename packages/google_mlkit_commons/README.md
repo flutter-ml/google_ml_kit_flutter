@@ -44,7 +44,7 @@ final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toD
 
 final InputImageRotation imageRotation =
     InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
-        InputImageRotation.Rotation_0deg;
+        InputImageRotation.rotation0deg;
 
 final InputImageFormat inputImageFormat =
     InputImageFormatValue.fromRawValue(cameraImage.format.raw) ??
