@@ -40,7 +40,7 @@ for (Face face in faces) {
 
   // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
   // eyes, cheeks, and nose available):
-  final FaceLandmark leftEar = face.getLandmark(FaceLandmarkType.leftEar);
+  final FaceLandmark leftEar = face.landmarks[FaceLandmarkType.leftEar]!;
   if (leftEar != null) {
     final Point<double> leftEarPos = leftEar.position;
   }
