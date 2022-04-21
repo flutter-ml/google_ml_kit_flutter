@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-/// Class to manage remote models.
+/// A class to manage remote models.
 class ModelManager {
   final String method;
   final MethodChannel channel;
