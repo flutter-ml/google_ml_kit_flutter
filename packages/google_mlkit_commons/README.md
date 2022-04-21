@@ -48,7 +48,7 @@ final InputImageRotation imageRotation =
 
 final InputImageFormat inputImageFormat =
     InputImageFormatValue.fromRawValue(cameraImage.format.raw) ??
-        InputImageFormat.NV21;
+        InputImageFormat.nv21;
 
 final planeData = cameraImage.planes.map(
   (Plane plane) {
