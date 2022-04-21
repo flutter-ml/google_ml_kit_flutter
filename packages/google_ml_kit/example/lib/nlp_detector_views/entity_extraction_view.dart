@@ -132,7 +132,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
 
   Future<void> _extractEntities() async {
     FocusScope.of(context).unfocus();
-    final result = await _entityExtractor.extractEntities(_controller.text);
+    final result = await _entityExtractor.annotateText(_controller.text);
     setState(() {
       _entities = result;
     });

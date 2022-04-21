@@ -44,11 +44,11 @@ final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toD
 
 final InputImageRotation imageRotation =
     InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
-        InputImageRotation.Rotation_0deg;
+        InputImageRotation.rotation0deg;
 
 final InputImageFormat inputImageFormat =
-    InputImageFormatMethods.fromRawValue(cameraImage.format.raw) ??
-        InputImageFormat.NV21;
+    InputImageFormatValue.fromRawValue(cameraImage.format.raw) ??
+        InputImageFormat.nv21;
 
 final planeData = cameraImage.planes.map(
   (Plane plane) {
