@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_pose_detection)](https://pub.dev/packages/google_mlkit_pose_detection)
 
-A Flutter plugin to use [Google's ML Kit Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection).
+A Flutter plugin to use [Google's ML Kit Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection) to detect the pose of a subject's body in real time from a continuous video or static image.
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ poseDetector.close();
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
+Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
 
 ## Contributing
 

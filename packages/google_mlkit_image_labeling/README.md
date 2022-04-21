@@ -2,7 +2,7 @@
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_image_labeling)](https://pub.dev/packages/google_mlkit_image_labeling)
 
-A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling).
+A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling) to detect and extract information about entities in an image across a broad group of categories.
 
 ## Getting Started
 
@@ -65,11 +65,13 @@ final modelManager = FirebaseImageLabelerModelManager();
 ```dart
 final bool response = await modelManager.isModelDownloaded(model);
 ```
+
 #### Download model
 
 ```dart
 final bool response = await modelManager.downloadModel(model);
 ```
+
 #### Delete model
 
 ```dart
@@ -78,7 +80,7 @@ final bool response = await modelManager.deleteModel(model);
 
 ## Example app
 
-Look at this [example](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example) to see the plugin in action.
+Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
 
 ## Contributing
 
