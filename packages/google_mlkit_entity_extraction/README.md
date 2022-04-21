@@ -46,11 +46,13 @@ final modelManager = EntityExtractorModelManager();
 ```dart
 final bool response = await modelManager.isModelDownloaded(model);
 ```
+
 #### Download model
 
 ```dart
 final bool response = await modelManager.downloadModel(model);
 ```
+
 #### Delete model
 
 ```dart

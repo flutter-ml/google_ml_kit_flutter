@@ -54,6 +54,7 @@ final modelManager = OnDeviceTranslatorModelManager();
 ```dart
 final bool response = await modelManager.isModelDownloaded(TranslateLanguage.english);
 ```
+
 #### Download model
 
 Downloading model always return false, models are downloaded if needed when translating.
@@ -71,7 +72,6 @@ final bool response = await modelManager.deleteModel(TranslateLanguage.english);
 ## Example app
 
 Find the example app [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit/example).
-
 
 ## Contributing
                          
