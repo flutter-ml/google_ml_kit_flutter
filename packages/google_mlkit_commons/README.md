@@ -36,6 +36,8 @@ final inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImage
 From [CameraImage](https://pub.dev/documentation/camera/latest/camera/CameraImage-class.html) (if you are using the [Camera plugin](https://pub.dev/packages/camera)):
 
 ```dart
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+
 final camera; // your camera instance
 final WriteBuffer allBytes = WriteBuffer();
 for (final Plane plane in cameraImage.planes) {
