@@ -12,6 +12,7 @@
 @implementation GoogleMlKitDigitalInkRecognitionPlugin {
     MLKDigitalInkRecognizer *recognizer;
     GenericModelManager *genericModelManager;
+    NSString *tag;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -28,6 +29,7 @@
     } else if ([call.method isEqualToString:manageInkModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeDigitalInkRecognizer]) {
+        recognizer = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -37,11 +39,8 @@
     NSArray *pointsList = call.arguments[@"points"];
     NSString *modelTag = call.arguments[@"model"];
     
-    MLKDigitalInkRecognitionModelIdentifier *identifier =
-    [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
-    MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc]
-                                            initWithModelIdentifier:identifier];
-    
+    MLKDigitalInkRecognitionModelIdentifier *identifier = [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
+    MLKDigitalInkRecognitionModel *model = [[MLKDigitalInkRecognitionModel alloc] initWithModelIdentifier:identifier];
     MLKModelManager *modelManager = [MLKModelManager modelManager];
     
     BOOL isModelDownloaded = [modelManager isModelDownloaded:model];
@@ -54,8 +53,11 @@
         return;
     }
     
-    MLKDigitalInkRecognizerOptions *options = [[MLKDigitalInkRecognizerOptions alloc] initWithModel:model];
-    recognizer = [MLKDigitalInkRecognizer digitalInkRecognizerWithOptions:options];
+    if (recognizer == NULL || ![tag isEqualToString:modelTag]) {
+        tag = modelTag;
+        MLKDigitalInkRecognizerOptions *options = [[MLKDigitalInkRecognizerOptions alloc] initWithModel:model];
+        recognizer = [MLKDigitalInkRecognizer digitalInkRecognizerWithOptions:options];
+    }
     
     NSMutableArray *points = [NSMutableArray array];
     for (NSDictionary *pointMap in pointsList) {

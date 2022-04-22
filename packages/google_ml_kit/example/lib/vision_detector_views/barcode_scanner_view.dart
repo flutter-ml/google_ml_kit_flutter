@@ -11,13 +11,13 @@ class BarcodeScannerView extends StatefulWidget {
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   final BarcodeScanner _barcodeScanner = BarcodeScanner();
-  bool _canProces = true;
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
   @override
   void dispose() {
-    _canProces = false;
+    _canProcess = false;
     _barcodeScanner.close();
     super.dispose();
   }
@@ -34,7 +34,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    if (!_canProces) return;
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     final barcodes = await _barcodeScanner.processImage(inputImage);
