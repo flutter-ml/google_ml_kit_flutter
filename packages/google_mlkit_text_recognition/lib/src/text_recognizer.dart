@@ -3,21 +3,17 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
-/// Detector to detect text present in the [InputImage] provided.
-/// It returns [RecognizedText] which contains the info present in the image.
-///
-/// Creating an instance of [TextRecognizer].
-/// TextRecognizer textRecognizer = GoogleMlKit.instance.textRecognizer();
-/// Call the [processImage()] to process the image.
+/// A text recognizer that recognizes text from a given [InputImage].
 class TextRecognizer {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_text_recognizer');
 
+  /// Configurations for the language to be detected.
   final TextRecognitionScript script;
 
   TextRecognizer({this.script = TextRecognitionScript.latin});
 
-  /// Function that takes [InputImage] processes it and returns a [RecognizedText] object.
+  /// Processes the given [InputImage]  for text recognition and returns a [RecognizedText] object.
   Future<RecognizedText> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
         'vision#startTextRecognizer', <String, dynamic>{
@@ -27,9 +23,11 @@ class TextRecognizer {
     return RecognizedText.fromJson(result);
   }
 
+  /// Closes the detector and releases its resources.
   Future<void> close() => _channel.invokeMethod('vision#closeTextRecognizer');
 }
 
+/// Configurations for [TextRecognizer] for different languages.
 enum TextRecognitionScript {
   latin,
   chinese,
@@ -38,12 +36,14 @@ enum TextRecognitionScript {
   korean,
 }
 
-/// Class that gives the detected text.
-/// Recognized text hierarchy.
-/// Recognized Text ---> List<TextBlock> (Blocks of text identified in the image).
-/// TextBlock ---> List<TextLine> (Lines of text present in a certain identified block).
-/// TextLine ---> List<TextElement> (Fundamental part of a block i.e usually a word or sentence)
+/// Recognized text in an image.
 class RecognizedText {
+  /// String containing all the text identified in an image. The string is empty if no text was recognized.
+  final String text;
+
+  /// All the blocks of text present in image.
+  final List<TextBlock> blocks;
+
   RecognizedText(this.text, this.blocks);
 
   factory RecognizedText.fromJson(Map<dynamic, dynamic> json) {
@@ -55,16 +55,25 @@ class RecognizedText {
     }
     return RecognizedText(resText, textBlocks);
   }
-
-  /// String containing all the text identified in a image.
-  final String text;
-
-  /// All the blocks of text present in image.
-  final List<TextBlock> blocks;
 }
 
-/// Class that has a block or group of words present in part of image.
+/// A text block recognized in an image that consists of a list of text lines.
 class TextBlock {
+  /// String representation of the text block that was recognized.
+  final String text;
+
+  /// List of text lines that make up the block.
+  final List<TextLine> lines;
+
+  /// Rect outlining boundary of block.
+  final Rect rect;
+
+  /// List of recognized languages in the text block. If no languages were recognized, the list is empty.
+  final List<String> recognizedLanguages;
+
+  /// List of corner points of the text block in clockwise order starting with the top left point relative to the image in the default coordinate space.
+  final List<Offset> cornerPoints;
+
   TextBlock(this.text, this.lines, this.rect, this.recognizedLanguages,
       this.cornerPoints);
 
@@ -81,25 +90,25 @@ class TextBlock {
     }
     return TextBlock(text, lines, rect, recognizedLanguages, points);
   }
-
-  /// Text in the block.
-  final String text;
-
-  /// List of sentences.
-  final List<TextLine> lines;
-
-  /// Rect outlining boundary of block.
-  final Rect rect;
-
-  /// List of recognized Latin-based languages in the text block.
-  final List<String> recognizedLanguages;
-
-  /// List of corner points of the rect.
-  final List<Offset> cornerPoints;
 }
 
-/// Class that represents sentence present in a certain block.
+/// A text line recognized in an image that consists of a list of elements.
 class TextLine {
+  /// String representation of the text line that was recognized.
+  final String text;
+
+  /// List of text elements that make up the line.
+  final List<TextElement> elements;
+
+  /// Rect outlining the the text line.
+  final Rect rect;
+
+  /// List of recognized languages in the text line. If no languages were recognized, the list is empty.
+  final List<String> recognizedLanguages;
+
+  /// The corner points of the text line in clockwise order starting with the top left point relative to the image in the default coordinate space.
+  final List<Offset> cornerPoints;
+
   TextLine(this.text, this.elements, this.rect, this.recognizedLanguages,
       this.cornerPoints);
 
@@ -116,25 +125,19 @@ class TextLine {
     }
     return TextLine(text, elements, rect, recognizedLanguages, points);
   }
-
-  /// Sentence of a block.
-  final String text;
-
-  /// List of text element.
-  final List<TextElement> elements;
-
-  /// Rect outlining the the text line.
-  final Rect rect;
-
-  /// List of recognized Latin-based languages in the text block.
-  final List<String> recognizedLanguages;
-
-  /// Corner points of the text line.
-  final List<Offset> cornerPoints;
 }
 
-/// Fundamental part of text detected.
+/// A text element recognized in an image. A text element is roughly equivalent to a space-separated word in most languages.
 class TextElement {
+  /// String representation of the text element that was recognized.
+  final String text;
+
+  /// Rect that contains the text element.
+  final Rect rect;
+
+  /// List of corner points of the text element in clockwise order starting with the top left point relative to the image in the default coordinate space.
+  final List<Offset> cornerPoints;
+
   TextElement(this.text, this.rect, this.cornerPoints);
 
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
@@ -143,15 +146,6 @@ class TextElement {
     final points = _listToCornerPoints(json['points']);
     return TextElement(text, rect, points);
   }
-
-  /// String representation of the text element that was recognized.
-  final String text;
-
-  /// Rect outlining the boundary of element.
-  final Rect rect;
-
-  /// List of corner points of the element.
-  final List<Offset> cornerPoints;
 }
 
 /// Convert list of Object? to list of Strings.
