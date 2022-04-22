@@ -28,6 +28,7 @@
     if ([call.method isEqualToString:startTextRecognizer]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeTextRecognizer]) {
+        textRecognizer = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -146,13 +147,11 @@
         case 2 : {
             MLKDevanagariTextRecognizerOptions *devanagariOptions = [[MLKDevanagariTextRecognizerOptions alloc] init];
             textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:devanagariOptions];
-            
         }
             return;
         case 3 : {
             MLKJapaneseTextRecognizerOptions *japaneseOptions = [[MLKJapaneseTextRecognizerOptions alloc] init];
             textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:japaneseOptions];
-            
         }
             return;
         case 4 : {

@@ -11,11 +11,13 @@ class TextRecognizerView extends StatefulWidget {
 
 class _TextRecognizerViewState extends State<TextRecognizerView> {
   final TextRecognizer _textRecognizer = TextRecognizer();
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
   @override
   void dispose() async {
+    _canProcess = false;
     super.dispose();
     await _textRecognizer.close();
   }
@@ -32,6 +34,7 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     final recognizedText = await _textRecognizer.processImage(inputImage);

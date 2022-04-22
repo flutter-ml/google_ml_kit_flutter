@@ -8,6 +8,10 @@ A Flutter plugin to use [Google's ML Kit Text Recognition](https://developers.go
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
+### Supported languages
+
+The ML Kit Text Recognition API can recognize text in any Chinese, Devanagari, Japanese, Korean and Latin character set. Supported languages are [here](https://developers.google.com/ml-kit/vision/text-recognition/v2/languages).
+
 ## Usage
 
 ### Text Recognition
