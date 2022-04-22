@@ -34,9 +34,9 @@ final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
 
 for (Barcode barcode in barcodes) {
   final BarcodeType type = barcode.type;
-  final Rect boundingBox = barcode.value.boundingBox;
-  final String displayValue = barcode.value.displayValue;
-  final String rawValue = barcode.value.rawValue;
+  final Rect boundingBox = barcode.boundingBox;
+  final String displayValue = barcode.displayValue;
+  final String rawValue = barcode.rawValue;
 
   // See API reference for complete list of supported types
   switch (type) {

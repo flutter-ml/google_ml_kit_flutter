@@ -1,23 +1,22 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
-/// Class to scan the barcode in [InputImage]
-/// Creating an instance of [BarcodeScanner]
-///
-/// BarcodeScanner barcodeScanner = GoogleMlKit.instance.barcodeScanner([List of Barcode formats (optional)]);
+/// A barcode scanner that scans and decodes barcodes from a given [InputImage].
 class BarcodeScanner {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_barcode_scanning');
 
-  // List of barcode formats that can be provided to the instance to restrict search to specific barcode formats.
+  /// List that restrict the scan to specific barcode formats.
   final List<BarcodeFormat> formats;
 
+  /// Returns a barcode scanner with the given format options.
   BarcodeScanner({this.formats = const [BarcodeFormat.all]});
 
-  /// Function to process the [InputImage] and returns a list of [Barcode]
+  /// Processes the given [InputImage] for barcode scanning. Returns a list of [Barcode]
   Future<List<Barcode>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod('vision#startBarcodeScanner', {
       'formats': formats.map((f) => f.rawValue).toList(),
@@ -32,11 +31,12 @@ class BarcodeScanner {
     return barcodesList;
   }
 
-  /// To close the instance of barcodeScanner.
+  /// Closes the scanner and releases its resources.
   Future<void> close() => _channel.invokeMethod('vision#closeBarcodeScanner');
 }
 
 /// Barcode formats supported by the barcode scanner.
+/// Options for specifying the barcode formats that the library can detect.
 enum BarcodeFormat {
   /// Barcode format representing all supported formats.
   all,
@@ -127,7 +127,7 @@ extension BarcodeFormatValue on BarcodeFormat {
   }
 }
 
-/// All supported Barcode Types.
+/// [Barcode] types returned by [BarcodeScanner].
 enum BarcodeType {
   /// Unknown Barcode value types.
   unknown,
@@ -159,8 +159,8 @@ enum BarcodeType {
   /// Barcode value type for Wi-Fi access point details.
   wifi,
 
-  /// Barcode value type for geographic coordinates.
-  geographicCoordinates,
+  /// Barcode value type for geo coordinates.
+  geoCoordinates,
 
   /// Barcode value type for calendar events.
   calendarEvent,
@@ -169,52 +169,8 @@ enum BarcodeType {
   driverLicense,
 }
 
-/// Class to represent the contents of barcode.
+/// A class to represent the contents of a barcode in an [InputImage].
 class Barcode {
-  /// Type([BarcodeType]) of the barcode detected.
-  final BarcodeType type;
-  final BarcodeValue value;
-
-  Barcode({
-    required this.type,
-    required this.value,
-  });
-
-  factory Barcode.fromJson(Map<dynamic, dynamic> json) {
-    final BarcodeType type = BarcodeType.values[json['type']];
-    switch (type) {
-      case BarcodeType.unknown:
-      case BarcodeType.isbn:
-      case BarcodeType.text:
-      case BarcodeType.product:
-        return Barcode(value: BarcodeValue(json), type: type);
-      case BarcodeType.wifi:
-        return Barcode(value: BarcodeWifi(json), type: type);
-      case BarcodeType.url:
-        return Barcode(value: BarcodeUrl(json), type: type);
-      case BarcodeType.email:
-        return Barcode(value: BarcodeEmail(json), type: type);
-      case BarcodeType.phone:
-        return Barcode(value: BarcodePhone(json), type: type);
-      case BarcodeType.sms:
-        return Barcode(value: BarcodeSMS(json), type: type);
-      case BarcodeType.geographicCoordinates:
-        return Barcode(value: BarcodeGeo(json), type: type);
-      case BarcodeType.driverLicense:
-        return Barcode(value: BarcodeDriverLicense(json), type: type);
-      case BarcodeType.contactInfo:
-        return Barcode(value: BarcodeContactInfo(json), type: type);
-      case BarcodeType.calendarEvent:
-        return Barcode(value: BarcodeCalenderEvent(json), type: type);
-      default:
-        return Barcode(value: BarcodeValue(json), type: type);
-    }
-  }
-}
-
-/// Base for storing barcode data.
-/// Any type of barcode has at least these three parameters.
-class BarcodeValue {
   /// The format type of the barcode value.
   ///
   /// For example, [BarcodeType.text], [BarcodeType.product], [BarcodeType.url], etc.
@@ -226,7 +182,17 @@ class BarcodeValue {
   /// For example, [BarcodeFormat.upca], [BarcodeFormat.code128], [BarcodeFormat.dataMatrix]
   final BarcodeFormat format;
 
-  /// Barcode value as it was encoded in the barcode.
+  /// A barcode value depending on the [BarcodeType] type set.
+  final BarcodeValue? value;
+
+  /// A barcode value in a user-friendly format.
+  /// This value may be multiline, for example, when line breaks are encoded into the original TEXT barcode value.
+  /// May include the supplement value.
+  ///
+  /// Null if nothing found.
+  final String? displayValue;
+
+  /// A barcode value as it was encoded in the barcode.
   ///
   /// Null if nothing found.
   final String? rawValue;
@@ -236,34 +202,97 @@ class BarcodeValue {
   /// Null if nothing found.
   final Uint8List? rawBytes;
 
-  /// Barcode value in a user-friendly format.
-  /// This value may be multiline, for example, when line breaks are encoded into the original TEXT barcode value.
-  /// May include the supplement value.
-  ///
-  /// Null if nothing found.
-  final String? displayValue;
-
-  /// The bounding rectangle of the detected barcode.
+  /// The rectangle that holds the discovered barcode relative to the detected image in the view coordinate system.
   ///
   /// Could be null if the bounding rectangle can not be determined.
   final Rect? boundingBox;
 
-  BarcodeValue(Map<dynamic, dynamic> json)
-      : type = BarcodeType.values[json['type']],
-        format = BarcodeFormatValue.fromRawValue(json['format']),
-        rawValue = json['rawValue'],
-        rawBytes = json['rawBytes'],
-        displayValue = json['displayValue'],
-        boundingBox = json['boundingBoxLeft'] != null
-            ? Rect.fromLTRB(
-                (json['boundingBoxLeft']).toDouble(),
-                (json['boundingBoxTop']).toDouble(),
-                (json['boundingBoxRight']).toDouble(),
-                (json['boundingBoxBottom']).toDouble())
-            : null;
+  /// The four corner points of the barcode, in clockwise order starting with the top left relative to the detected image in the view coordinate system.
+  ///
+  /// Due to the possible perspective distortions, this is not necessarily a rectangle.
+  final List<Point>? cornerPoints;
+
+  Barcode({
+    required this.type,
+    required this.format,
+    required this.displayValue,
+    required this.rawValue,
+    required this.rawBytes,
+    required this.boundingBox,
+    required this.cornerPoints,
+    required this.value,
+  });
+
+  factory Barcode.fromJson(Map<dynamic, dynamic> json) {
+    final type = BarcodeType.values[json['type'].toInt()];
+    final format = BarcodeFormatValue.fromRawValue(json['format']);
+    final displayValue = json['displayValue'];
+    final rawValue = json['rawValue'];
+    final rawBytes = json['rawBytes'];
+    final boundingBox = json['boundingBoxLeft'] != null
+        ? Rect.fromLTRB(
+            (json['boundingBoxLeft']).toDouble(),
+            (json['boundingBoxTop']).toDouble(),
+            (json['boundingBoxRight']).toDouble(),
+            (json['boundingBoxBottom']).toDouble())
+        : null;
+    BarcodeValue? value;
+    final points = json['cornerPoints'];
+    final List<Point> cornerPoints = [];
+    for (final point in points) {
+      final cornerPoint = Point<int>(point['x'].toInt(), point['y'].toInt());
+      cornerPoints.add(cornerPoint);
+    }
+
+    switch (type) {
+      case BarcodeType.wifi:
+        value = BarcodeWifi.fromJson(json);
+        break;
+      case BarcodeType.url:
+        value = BarcodeUrl.fromJson(json);
+        break;
+      case BarcodeType.email:
+        value = BarcodeEmail.fromJson(json);
+        break;
+      case BarcodeType.phone:
+        value = BarcodePhone.fromJson(json);
+        break;
+      case BarcodeType.sms:
+        value = BarcodeSMS.fromJson(json);
+        break;
+      case BarcodeType.geoCoordinates:
+        value = BarcodeGeoPoint.fromJson(json);
+        break;
+      case BarcodeType.driverLicense:
+        value = BarcodeDriverLicense.fromJson(json);
+        break;
+      case BarcodeType.contactInfo:
+        value = BarcodeContactInfo.fromJson(json);
+        break;
+      case BarcodeType.calendarEvent:
+        value = BarcodeCalenderEvent.fromJson(json);
+        break;
+      default:
+        break;
+    }
+
+    return Barcode(
+      type: type,
+      format: format,
+      value: value,
+      displayValue: displayValue,
+      rawValue: rawValue,
+      rawBytes: rawBytes,
+      boundingBox: boundingBox,
+      cornerPoints: cornerPoints.isEmpty ? null : cornerPoints,
+    );
+  }
 }
 
-/// Class to store wifi info obtained from a barcode.
+/// Stores info obtained from a barcode.
+abstract class BarcodeValue {}
+
+/// Stores wifi info obtained from a barcode.
 class BarcodeWifi extends BarcodeValue {
   /// SSID of the wifi.
   final String? ssid;
@@ -274,14 +303,16 @@ class BarcodeWifi extends BarcodeValue {
   /// Encryption type of wifi.
   final int? encryptionType;
 
-  BarcodeWifi(Map<dynamic, dynamic> json)
-      : ssid = json['ssid'],
-        password = json['password'],
-        encryptionType = json['encryption'],
-        super(json);
+  BarcodeWifi({this.ssid, this.password, this.encryptionType});
+
+  factory BarcodeWifi.fromJson(Map<dynamic, dynamic> json) => BarcodeWifi(
+        ssid: json['ssid'],
+        password: json['password'],
+        encryptionType: json['encryption'],
+      );
 }
 
-/// Class to store url info of the bookmark obtained from a barcode.
+/// Stores url info of the bookmark obtained from a barcode.
 class BarcodeUrl extends BarcodeValue {
   /// String having the url address of bookmark.
   final String? url;
@@ -289,10 +320,12 @@ class BarcodeUrl extends BarcodeValue {
   /// Title of the bookmark.
   final String? title;
 
-  BarcodeUrl(Map<dynamic, dynamic> json)
-      : url = json['url'],
-        title = json['title'],
-        super(json);
+  BarcodeUrl({this.url, this.title});
+
+  factory BarcodeUrl.fromJson(Map<dynamic, dynamic> json) => BarcodeUrl(
+        url: json['url'],
+        title: json['title'],
+      );
 }
 
 /// The type of email for [BarcodeEmail.type].
@@ -307,10 +340,10 @@ enum BarcodeEmailType {
   home,
 }
 
-/// A email message.
+/// Stores an email message obtained from a barcode.
 class BarcodeEmail extends BarcodeValue {
   /// Type of the email sent.
-  final BarcodeEmailType? emailType;
+  final BarcodeEmailType? type;
 
   /// Email address of sender.
   final String? address;
@@ -321,12 +354,14 @@ class BarcodeEmail extends BarcodeValue {
   /// Subject of email.
   final String? subject;
 
-  BarcodeEmail(Map<dynamic, dynamic> json)
-      : emailType = BarcodeEmailType.values[json['emailType']],
-        address = json['address'],
-        body = json['body'],
-        subject = json['subject'],
-        super(json);
+  BarcodeEmail({this.type, this.address, this.body, this.subject});
+
+  factory BarcodeEmail.fromJson(Map<dynamic, dynamic> json) => BarcodeEmail(
+        type: BarcodeEmailType.values[json['emailType']],
+        address: json['address'],
+        body: json['body'],
+        subject: json['subject'],
+      );
 }
 
 /// The type of phone number for [BarcodePhone.type].
@@ -347,21 +382,23 @@ enum BarcodePhoneType {
   mobile,
 }
 
-/// A phone number.
+/// Stores a phone number obtained from a barcode.
 class BarcodePhone extends BarcodeValue {
   /// Type of the phone number.
-  final BarcodePhoneType? phoneType;
+  final BarcodePhoneType? type;
 
   /// Phone number.
   final String? number;
 
-  BarcodePhone(Map<dynamic, dynamic> json)
-      : phoneType = BarcodePhoneType.values[json['phoneType']],
-        number = json['number'],
-        super(json);
+  BarcodePhone({this.type, this.number});
+
+  factory BarcodePhone.fromJson(Map<dynamic, dynamic> json) => BarcodePhone(
+        type: BarcodePhoneType.values[json['phoneType']],
+        number: json['number'],
+      );
 }
 
-/// Class extending over [BarcodeValue] to store a SMS.
+/// Stores an SMS message obtained from a barcode.
 class BarcodeSMS extends BarcodeValue {
   /// Message present in the SMS.
   final String? message;
@@ -369,27 +406,32 @@ class BarcodeSMS extends BarcodeValue {
   /// Phone number of the sender.
   final String? phoneNumber;
 
-  BarcodeSMS(Map<dynamic, dynamic> json)
-      : message = json['message'],
-        phoneNumber = json['number'],
-        super(json);
+  BarcodeSMS({this.message, this.phoneNumber});
+
+  factory BarcodeSMS.fromJson(Map<dynamic, dynamic> json) => BarcodeSMS(
+        message: json['message'],
+        phoneNumber: json['number'],
+      );
 }
 
-/// Class extending over [BarcodeValue] that represents a geolocation.
-class BarcodeGeo extends BarcodeValue {
+/// Stores GPS coordinates obtained from a barcode.
+class BarcodeGeoPoint extends BarcodeValue {
   /// Latitude co-ordinates of the location.
   final double? latitude;
 
   //// Longitude co-ordinates of the location.
   final double? longitude;
 
-  BarcodeGeo(Map<dynamic, dynamic> json)
-      : latitude = json['latitude'],
-        longitude = json['longitude'],
-        super(json);
+  BarcodeGeoPoint({this.latitude, this.longitude});
+
+  factory BarcodeGeoPoint.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeGeoPoint(
+        latitude: json['latitude'],
+        longitude: json['longitude'],
+      );
 }
 
-///Class extending over [BarcodeValue] that models a driver's licence cars.
+/// Stores driver’s license or ID card data representation obtained from a barcode.
 class BarcodeDriverLicense extends BarcodeValue {
   /// City of holder's address.
   final String? addressCity;
@@ -427,23 +469,39 @@ class BarcodeDriverLicense extends BarcodeValue {
   /// Country of the holder.
   final String? country;
 
-  BarcodeDriverLicense(Map<dynamic, dynamic> json)
-      : addressCity = json['addressCity'],
-        addressState = json['addressState'],
-        addressZip = json['addressZip'],
-        addressStreet = json['addressStreet'],
-        issueDate = json['issueDate'],
-        birthDate = json['birthDate'],
-        expiryDate = json['expiryDate'],
-        gender = json['gender'],
-        licenseNumber = json['licenseNumber'],
-        firstName = json['firstName'],
-        lastName = json['lastName'],
-        country = json['country'],
-        super(json);
+  BarcodeDriverLicense({
+    this.addressCity,
+    this.addressState,
+    this.addressZip,
+    this.addressStreet,
+    this.issueDate,
+    this.birthDate,
+    this.expiryDate,
+    this.gender,
+    this.licenseNumber,
+    this.firstName,
+    this.lastName,
+    this.country,
+  });
+
+  factory BarcodeDriverLicense.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeDriverLicense(
+        addressCity: json['addressCity'],
+        addressState: json['addressState'],
+        addressZip: json['addressZip'],
+        addressStreet: json['addressStreet'],
+        issueDate: json['issueDate'],
+        birthDate: json['birthDate'],
+        expiryDate: json['expiryDate'],
+        gender: json['gender'],
+        licenseNumber: json['licenseNumber'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        country: json['country'],
+      );
 }
 
-/// Class extending over [BarcodeValue] that models a contact info.
+/// Stores a person’s or organization’s business card obtained from a barcode.
 class BarcodeContactInfo extends BarcodeValue {
   /// Contact person's addresses.
   final List<BarcodeAddress> addresses;
@@ -481,23 +539,39 @@ class BarcodeContactInfo extends BarcodeValue {
   /// Url's of contact person.
   final List<String> urls;
 
-  BarcodeContactInfo(Map<dynamic, dynamic> json)
-      : addresses = _getBarcodeAddresses(json),
-        emails = _getBarcodeEmails(json),
-        phoneNumbers = _getBarcodePhones(json),
-        firstName = json['firstName'],
-        middleName = json['middleName'],
-        lastName = json['lastName'],
-        formattedName = json['formattedName'],
-        prefix = json['prefix'],
-        pronunciation = json['pronunciation'],
-        jobTitle = json['jobTitle'],
-        organizationName = json['organization'],
-        urls = _getUrls(json['urls']),
-        super(json);
+  BarcodeContactInfo({
+    required this.addresses,
+    required this.emails,
+    required this.phoneNumbers,
+    required this.urls,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.formattedName,
+    this.prefix,
+    this.pronunciation,
+    this.jobTitle,
+    this.organizationName,
+  });
+
+  factory BarcodeContactInfo.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeContactInfo(
+        addresses: _getBarcodeAddresses(json),
+        emails: _getBarcodeEmails(json),
+        phoneNumbers: _getBarcodePhones(json),
+        firstName: json['firstName'],
+        middleName: json['middleName'],
+        lastName: json['lastName'],
+        formattedName: json['formattedName'],
+        prefix: json['prefix'],
+        pronunciation: json['pronunciation'],
+        jobTitle: json['jobTitle'],
+        organizationName: json['organization'],
+        urls: _getUrls(json['urls']),
+      );
 }
 
-/// Class extending over [BarcodeValue] that models a calender event.
+/// Stores a calendar event obtained from a barcode.
 class BarcodeCalenderEvent extends BarcodeValue {
   /// Description of the event.
   final String? description;
@@ -520,15 +594,26 @@ class BarcodeCalenderEvent extends BarcodeValue {
   /// End DateTime of the calender event.
   final DateTime? end;
 
-  BarcodeCalenderEvent(Map<dynamic, dynamic> json)
-      : description = json['description'],
-        location = json['location'],
-        status = json['status'],
-        summary = json['summary'],
-        organizer = json['organizer'],
-        start = _getDateTime(json['start']),
-        end = _getDateTime(json['end']),
-        super(json);
+  BarcodeCalenderEvent({
+    this.description,
+    this.location,
+    this.status,
+    this.summary,
+    this.organizer,
+    this.start,
+    this.end,
+  });
+
+  factory BarcodeCalenderEvent.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeCalenderEvent(
+        description: json['description'],
+        location: json['location'],
+        status: json['status'],
+        summary: json['summary'],
+        organizer: json['organizer'],
+        start: _getDateTime(json['start']),
+        end: _getDateTime(json['end']),
+      );
 }
 
 /// Address type constants for [BarcodeAddress.type]
@@ -543,7 +628,7 @@ enum BarcodeAddressType {
   home,
 }
 
-/// Class to store the information of address type barcode detected in a [InputImage].
+/// Stores an address obtained from a barcode.
 class BarcodeAddress {
   /// Address lines found.
   final List<String> addressLines;
@@ -551,7 +636,7 @@ class BarcodeAddress {
   /// Denoted the address type -> Home, Work or Unknown.
   final BarcodeAddressType? type;
 
-  BarcodeAddress(this.addressLines, this.type);
+  BarcodeAddress({required this.addressLines, this.type});
 
   factory BarcodeAddress.fromJson(Map<dynamic, dynamic> json) {
     final lines = <String>[];
@@ -559,7 +644,9 @@ class BarcodeAddress {
       lines.add(line);
     }
     return BarcodeAddress(
-        lines, BarcodeAddressType.values[json['addressType']]);
+      addressLines: lines,
+      type: BarcodeAddressType.values[json['addressType']],
+    );
   }
 }
 
@@ -585,7 +672,7 @@ List<BarcodeEmail> _getBarcodeEmails(dynamic json) {
   json['emails']?.forEach((email) {
     email['type'] = BarcodeType.email.index;
     email['format'] = json['format'];
-    list.add(BarcodeEmail(email));
+    list.add(BarcodeEmail.fromJson(email));
   });
   return list;
 }
@@ -595,7 +682,7 @@ List<BarcodePhone> _getBarcodePhones(dynamic json) {
   json['phones']?.forEach((phone) {
     phone['type'] = BarcodeType.phone.index;
     phone['format'] = json['format'];
-    list.add(BarcodePhone(phone));
+    list.add(BarcodePhone.fromJson(phone));
   });
   return list;
 }

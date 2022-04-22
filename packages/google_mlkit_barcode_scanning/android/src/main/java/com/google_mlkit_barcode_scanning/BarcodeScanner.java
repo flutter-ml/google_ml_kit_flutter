@@ -1,6 +1,7 @@
 package com.google_mlkit_barcode_scanning;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
@@ -49,28 +50,30 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
     }
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
-        Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
+        Map<String, Object> imageData = call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        List<Integer> formatList = (List<Integer>) call.argument("formats");
-        if (formatList == null) {
-            result.error("BarcodeDetectorError", "Invalid barcode formats", null);
-            return;
-        }
-
-        BarcodeScannerOptions barcodeScannerOptions;
-        if (formatList.size() > 1) {
-            int[] array = new int[formatList.size()];
-            for (int i = 1; i < formatList.size(); i++) {
-                array[i] = formatList.get(i);
+        if (barcodeScanner == null) {
+            List<Integer> formatList = call.argument("formats");
+            if (formatList == null) {
+                result.error("BarcodeDetectorError", "Invalid barcode formats", null);
+                return;
             }
-            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();
-        } else {
-            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0)).build();
+
+            BarcodeScannerOptions barcodeScannerOptions;
+            if (formatList.size() > 1) {
+                int[] array = new int[formatList.size()];
+                for (int i = 1; i < formatList.size(); i++) {
+                    array[i] = formatList.get(i);
+                }
+                barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();
+            } else {
+                barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0)).build();
+            }
+            barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
         }
 
-        barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
         barcodeScanner.process(inputImage)
                 .addOnSuccessListener(barcodes -> {
                     List<Map<String, Object>> barcodeList = new ArrayList<>(barcodes.size());
@@ -89,6 +92,18 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                             barcodeMap.put("boundingBoxLeft", bb.left);
                             barcodeMap.put("boundingBoxRight", bb.right);
                             barcodeMap.put("boundingBoxTop", bb.top);
+                        }
+
+                        Point[] points = barcode.getCornerPoints();
+                        if (points != null) {
+                            List<Map<String, Object>> cornerPoints = new ArrayList<>();
+                            for (Point point : points) {
+                                Map<String, Object> cornerPoint = new HashMap<>();
+                                cornerPoint.put("x", point.x);
+                                cornerPoint.put("y", point.y);
+                                cornerPoints.add(cornerPoint);
+                            }
+                            barcodeMap.put("cornerPoints", cornerPoints);
                         }
                         switch (valueType) {
                             case Barcode.TYPE_UNKNOWN:
@@ -196,5 +211,6 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (barcodeScanner == null) return;
         barcodeScanner.close();
+        barcodeScanner = null;
     }
 }

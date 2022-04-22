@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 #import "GoogleMlKitBarcodeScanningPlugin.h"
 #import <MLKitBarcodeScanning/MLKitBarcodeScanning.h>
 #import <google_mlkit_commons/GoogleMlKitCommonsPlugin.h>
@@ -22,6 +23,7 @@
     if ([call.method isEqualToString:startBarcodeScanner]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeBarcodeScanner]) {
+        barcodeScanner = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -29,15 +31,16 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
-    NSArray *array = call.arguments[@"formats"];
     
-    NSInteger formats = 0;
-    for (NSNumber *num in array) {
-        formats += [num intValue];
+    if (barcodeScanner == NULL) {
+        NSArray *array = call.arguments[@"formats"];
+        NSInteger formats = 0;
+        for (NSNumber *num in array) {
+            formats += [num intValue];
+        }
+        MLKBarcodeScannerOptions *options = [[MLKBarcodeScannerOptions alloc] initWithFormats: formats];
+        barcodeScanner = [MLKBarcodeScanner barcodeScannerWithOptions:options];
     }
-    
-    MLKBarcodeScannerOptions *options = [[MLKBarcodeScannerOptions alloc] initWithFormats: formats];
-    barcodeScanner = [MLKBarcodeScanner barcodeScannerWithOptions:options];
     
     [barcodeScanner processImage:image
                       completion:^(NSArray<MLKBarcode *> *barcodes, NSError *error) {
@@ -70,6 +73,16 @@
         @"boundingBoxBottom" : @(barcode.frame.origin.y + barcode.frame.size.height),
         @"boundingBoxRight" : @(barcode.frame.origin.x + barcode.frame.size.width)
     }];
+    
+    NSMutableArray *cornerPoints = [NSMutableArray array];
+    for (NSValue * point in barcode.cornerPoints) {
+        CGPoint newPoint = [point CGPointValue];
+        [cornerPoints addObject: @{
+            @"x": @(newPoint.x),
+            @"y": @(newPoint.y),
+        }];
+    }
+    dictionary[@"cornerPoints"] = cornerPoints;
     
     switch (barcode.valueType) {
         case MLKBarcodeValueTypeUnknown:
