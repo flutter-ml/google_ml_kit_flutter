@@ -23,7 +23,7 @@ final digitalInkRecognizer = DigitalInkRecognizer();
 ```dart
 List<Offset> points; // an array with the points of the stroke
 String modelCode; // BCP-47 Code from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
-final List<RecognitionCandidate> canditates = await digitalInkRecognizer.readText(points, modelCode);
+final List<RecognitionCandidate> canditates = await digitalInkRecognizer.recognize(points, modelCode);
 
 for (final candidate in candidates) {
   final text = candidate.text;

@@ -147,6 +147,7 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (textRecognizer == null) return;
         textRecognizer.close();
+        textRecognizer = null;
     }
 
     private void initializeDetector(int script) {

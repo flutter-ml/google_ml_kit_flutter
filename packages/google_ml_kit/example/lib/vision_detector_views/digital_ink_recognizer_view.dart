@@ -17,6 +17,12 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   final String _language = 'en-US';
 
   @override
+  void dispose() {
+    _digitalInkRecognizer.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Digital Ink Recognition')),
@@ -137,7 +143,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         barrierDismissible: true);
     try {
       final candidates =
-          await _digitalInkRecognizer.readText(_points, _language);
+          await _digitalInkRecognizer.recognize(_points, _language);
       _recognizedText = '';
       for (final candidate in candidates) {
         _recognizedText += '\n${candidate.text}';

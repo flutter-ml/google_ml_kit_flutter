@@ -27,6 +27,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
 
     private com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer;
     private final GenericModelManager genericModelManager = new GenericModelManager();
+    private String tag = "";
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -48,9 +49,14 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     }
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
-        DigitalInkRecognitionModel model = getModel(call, result);
+        String tag = call.argument("model");
+        DigitalInkRecognitionModel model = getModel(tag, result);
         if (genericModelManager.isModelDownloaded(model)) {
-            recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
+            if (recognizer == null || this.tag != tag) {
+                this.tag = tag;
+                closeDetector();
+                recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
+            }
         } else {
             result.error("Model Error", "Model has not been downloaded yet ", null);
             return;
@@ -103,15 +109,16 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (recognizer == null) return;
         recognizer.close();
+        recognizer = null;
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
-        DigitalInkRecognitionModel model = getModel(call, result);
+        String tag = call.argument("model");
+        DigitalInkRecognitionModel model = getModel(tag, result);
         genericModelManager.manageModel(model, call, result);
     }
 
-    private DigitalInkRecognitionModel getModel(MethodCall call, final MethodChannel.Result result) {
-        String tag = call.argument("model");
+    private DigitalInkRecognitionModel getModel(String tag, final MethodChannel.Result result) {
         DigitalInkRecognitionModelIdentifier modelIdentifier;
         try {
             modelIdentifier = DigitalInkRecognitionModelIdentifier.fromLanguageTag(tag);
