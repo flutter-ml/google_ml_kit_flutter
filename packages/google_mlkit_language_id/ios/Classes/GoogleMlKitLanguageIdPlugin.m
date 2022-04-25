@@ -6,7 +6,9 @@
 #define startLanguageIdentifier @"nlp#startLanguageIdentifier"
 #define closeLanguageIdentifier @"nlp#closeLanguageIdentifier"
 
-@implementation GoogleMlKitLanguageIdPlugin
+@implementation GoogleMlKitLanguageIdPlugin {
+    MLKLanguageIdentification *languageId;
+}
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -20,21 +22,24 @@
     if ([call.method isEqualToString:startLanguageIdentifier]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeLanguageIdentifier]) {
+        languageId = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
+    if (languageId == NULL) {
+        NSNumber *confidence = call.arguments[@"confidence"];
+        languageId = [self getLanguageIdentifier:confidence.floatValue];
+    }
+    
     BOOL possibleLanguages = [call.arguments[@"possibleLanguages"] boolValue];
     NSString *text = call.arguments[@"text"];
-    NSNumber *confidence = call.arguments[@"confidence"];
-    MLKLanguageIdentification *languageId = [self getLanguageIdentifier:confidence.floatValue];
-    
     if(possibleLanguages) {
-        [self identifyPossibleLanguagesInText:text languageId:languageId result:result];
+        [self identifyPossibleLanguagesInText:text result:result];
     } else {
-        [self identifyLanguageInText:text languageId:languageId result:result];
+        [self identifyLanguageInText:text result:result];
     }
 }
 
@@ -42,7 +47,6 @@
 // For each identified langauge a confidence value is returned as well.
 // Read more here: https://developers.google.com/ml-kit/language/identification/ios
 - (void)identifyPossibleLanguagesInText:(NSString *)text
-                             languageId:(MLKLanguageIdentification *)languageId
                                  result:(FlutterResult)result {
     [languageId identifyPossibleLanguagesForText:text
                                       completion:^(NSArray * _Nonnull identifiedLanguages,
@@ -66,7 +70,6 @@
 // Identify the language for a given text.
 // Read more here: https://developers.google.com/ml-kit/language/identification/ios
 - (void)identifyLanguageInText:(NSString *)text
-                    languageId:(MLKLanguageIdentification *)languageId
                         result:(FlutterResult)result {
     [languageId identifyLanguageForText:text
                              completion:^(NSString * _Nonnull languageTag,

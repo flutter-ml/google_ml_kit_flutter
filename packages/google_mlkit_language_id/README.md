@@ -8,6 +8,10 @@ A Flutter plugin to use [Google's ML Kit Language Identification](https://develo
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
+### Supported languages
+
+Language identification supports the following [languages](https://developers.google.com/ml-kit/language/identification/langid-support).
+
 ## Usage
 
 ### Language Identification

@@ -10,7 +10,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ### Supported languages
 
-The ML Kit Text Recognition API can recognize text in any Chinese, Devanagari, Japanese, Korean and Latin character set. Supported languages are [here](https://developers.google.com/ml-kit/vision/text-recognition/v2/languages).
+The ML Kit Text Recognition API can recognize text in any Chinese, Devanagari, Japanese, Korean and Latin character set. Supported languages can be found [here](https://developers.google.com/ml-kit/vision/text-recognition/v2/languages).
 
 ## Usage
 

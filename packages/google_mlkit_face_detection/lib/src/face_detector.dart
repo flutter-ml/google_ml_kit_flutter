@@ -171,7 +171,7 @@ class Face {
     this.trackingId,
   });
 
-  factory Face.fromJson(dynamic json) => Face(
+  factory Face.fromJson(Map<dynamic, dynamic> json) => Face(
         boundingBox: RectJson.fromJson(json['rect']),
         headEulerAngleX: json['headEulerAngleX'],
         headEulerAngleY: json['headEulerAngleY'],
