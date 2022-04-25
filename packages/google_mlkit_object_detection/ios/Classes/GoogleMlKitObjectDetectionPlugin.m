@@ -14,7 +14,6 @@
 @implementation GoogleMlKitObjectDetectionPlugin {
     MLKObjectDetector *objectDetector;
     GenericModelManager *genericModelManager;
-    BOOL custom;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -29,6 +28,7 @@
     if ([call.method isEqualToString:startObjectDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeObjectDetector]) {
+        objectDetector = NULL;
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
         [self manageModel:call result:result];
     } else {
@@ -39,10 +39,8 @@
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
-    NSDictionary *dictionary = call.arguments[@"options"];
-    BOOL isCustom = [[dictionary objectForKey:@"custom"] boolValue];
-    
-    if (objectDetector == NULL || custom != isCustom) {
+    if (objectDetector == NULL) {
+        NSDictionary *dictionary = call.arguments[@"options"];
         [self initiateDetector: dictionary];
     }
     
@@ -87,7 +85,7 @@
 }
 
 - (void)initiateDetector:(NSDictionary *) dictionary {
-    custom = [[dictionary objectForKey:@"custom"] boolValue];
+    BOOL custom = [[dictionary objectForKey:@"custom"] boolValue];
     if (custom) {
         [self  initiateCustomDetector: dictionary];
     } else {

@@ -71,7 +71,7 @@ class LocalLabelerOptions extends ImageLabelerOptions {
   /// Default value is set to 5
   final int maxCount;
 
-  /// Constructor to create an instance of [LocalLabelerOptions]
+  /// Constructor to create an instance of [LocalLabelerOptions].
   LocalLabelerOptions(
       {double confidenceThreshold = 0.5,
       required this.type,

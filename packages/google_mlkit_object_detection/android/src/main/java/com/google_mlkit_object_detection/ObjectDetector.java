@@ -30,7 +30,6 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private static final String MANAGE = "vision#manageFirebaseModels";
 
     private final GenericModelManager genericModelManager = new GenericModelManager();
-    private boolean custom;
     private final Context context;
     private com.google.mlkit.vision.objects.ObjectDetector objectDetector;
 
@@ -63,11 +62,10 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        Map<String, Object> options = (Map<String, Object>) call.argument("options");
-        boolean custom = (boolean) options.get("custom");
-
-        if (objectDetector == null || this.custom != custom)
+        if (objectDetector == null) {
+            Map<String, Object> options = (Map<String, Object>) call.argument("options");
             initiateDetector(options);
+        }
 
         objectDetector.process(inputImage).addOnSuccessListener(detectedObjects -> {
             List<Map<String, Object>> objects = new ArrayList<>();
@@ -87,8 +85,8 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void initiateDetector(Map<String, Object> options) {
-        custom = (boolean) options.get("custom");
         closeDetector();
+        boolean custom = (boolean) options.get("custom");
         if (custom) initiateCustomDetector(options);
         else initiateBaseDetector(options);
     }
@@ -177,6 +175,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (objectDetector == null) return;
         objectDetector.close();
+        objectDetector = null;
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {

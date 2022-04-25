@@ -50,7 +50,7 @@ class FaceDetectorOptions {
   /// Constructor for [FaceDetectorOptions].
   ///
   /// The parameter [minFaceSize] must be between 0.0 and 1.0, inclusive.
-  const FaceDetectorOptions({
+  FaceDetectorOptions({
     this.enableClassification = false,
     this.enableLandmarks = false,
     this.enableContours = false,
