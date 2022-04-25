@@ -210,7 +210,7 @@ class Barcode {
   /// The four corner points of the barcode, in clockwise order starting with the top left relative to the detected image in the view coordinate system.
   ///
   /// Due to the possible perspective distortions, this is not necessarily a rectangle.
-  final List<Point>? cornerPoints;
+  final List<Point<int>>? cornerPoints;
 
   Barcode({
     required this.type,
@@ -238,7 +238,7 @@ class Barcode {
         : null;
     BarcodeValue? value;
     final points = json['cornerPoints'];
-    final List<Point> cornerPoints = [];
+    final List<Point<int>> cornerPoints = [];
     for (final point in points) {
       final cornerPoint = Point<int>(point['x'].toInt(), point['y'].toInt());
       cornerPoints.add(cornerPoint);

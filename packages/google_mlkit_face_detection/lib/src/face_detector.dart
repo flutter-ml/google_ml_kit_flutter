@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
+/// A face detector that detects faces in a given [InputImage].
 class FaceDetector {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_face_detector');
@@ -12,7 +14,7 @@ class FaceDetector {
 
   FaceDetector({required this.options});
 
-  /// Detects faces in the input image.
+  /// Processes the given image for face detection.
   Future<List<Face>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeListMethod<dynamic>(
         'vision#startFaceDetector', <String, dynamic>{
@@ -22,19 +24,20 @@ class FaceDetector {
         'enableContours': options.enableContours,
         'enableTracking': options.enableTracking,
         'minFaceSize': options.minFaceSize,
-        'mode': options.mode.name,
+        'mode': options.performanceMode.name,
       },
       'imageData': inputImage.toJson(),
     });
 
     final List<Face> faces = <Face>[];
     for (final dynamic json in result!) {
-      faces.add(Face(json));
+      faces.add(Face.fromJson(json));
     }
 
     return faces;
   }
 
+  /// Closes the detector and releases its resources.
   Future<void> close() =>
       _channel.invokeMethod<void>('vision#closeFaceDetector');
 }
@@ -46,14 +49,14 @@ class FaceDetector {
 class FaceDetectorOptions {
   /// Constructor for [FaceDetectorOptions].
   ///
-  /// The parameter minFaceValue must be between 0.0 and 1.0, inclusive.
+  /// The parameter [minFaceSize] must be between 0.0 and 1.0, inclusive.
   const FaceDetectorOptions({
     this.enableClassification = false,
     this.enableLandmarks = false,
     this.enableContours = false,
     this.enableTracking = false,
     this.minFaceSize = 0.1,
-    this.mode = FaceDetectorMode.fast,
+    this.performanceMode = FaceDetectorMode.fast,
   })  : assert(minFaceSize >= 0.0),
         assert(minFaceSize <= 1.0);
 
@@ -82,47 +85,11 @@ class FaceDetectorOptions {
   final double minFaceSize;
 
   /// Option for controlling additional accuracy / speed trade-offs.
-  final FaceDetectorMode mode;
+  final FaceDetectorMode performanceMode;
 }
 
-/// Represents a face detected by [FaceDetector].
+/// A human face detected in an image.
 class Face {
-  Face(dynamic json)
-      : boundingBox = RectJson.fromJson(json['rect']),
-        headEulerAngleX = json['headEulerAngleX'],
-        headEulerAngleY = json['headEulerAngleY'],
-        headEulerAngleZ = json['headEulerAngleZ'],
-        leftEyeOpenProbability = json['leftEyeOpenProbability'],
-        rightEyeOpenProbability = json['rightEyeOpenProbability'],
-        smilingProbability = json['smilingProbability'],
-        trackingId = json['trackingId'],
-        landmarks = Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
-            FaceLandmarkType.values,
-            FaceLandmarkType.values.map((FaceLandmarkType type) {
-          final List<dynamic>? pos = json['landmarks'][type.name];
-          return (pos == null)
-              ? null
-              : FaceLandmark(
-                  type,
-                  Offset(pos[0], pos[1]),
-                );
-        })),
-        contours = Map<FaceContourType, FaceContour?>.fromIterables(
-            FaceContourType.values,
-            FaceContourType.values.map((FaceContourType type) {
-          /// added empty map to pass the tests
-          final List<dynamic>? arr =
-              (json['contours'] ?? <String, dynamic>{})[type.name];
-          return (arr == null)
-              ? null
-              : FaceContour(
-                  type,
-                  arr
-                      .map<Offset>((dynamic pos) => Offset(pos[0], pos[1]))
-                      .toList(),
-                );
-        }));
-
   /// The axis-aligned bounding rectangle of the detected face.
   ///
   /// The point (0, 0) is defined as the upper-left corner of the image.
@@ -190,36 +157,87 @@ class Face {
   ///
   /// Null if contour was not detected.
   final Map<FaceContourType, FaceContour?> contours;
+
+  Face({
+    required this.boundingBox,
+    required this.landmarks,
+    required this.contours,
+    this.headEulerAngleX,
+    this.headEulerAngleY,
+    this.headEulerAngleZ,
+    this.leftEyeOpenProbability,
+    this.rightEyeOpenProbability,
+    this.smilingProbability,
+    this.trackingId,
+  });
+
+  factory Face.fromJson(dynamic json) => Face(
+        boundingBox: RectJson.fromJson(json['rect']),
+        headEulerAngleX: json['headEulerAngleX'],
+        headEulerAngleY: json['headEulerAngleY'],
+        headEulerAngleZ: json['headEulerAngleZ'],
+        leftEyeOpenProbability: json['leftEyeOpenProbability'],
+        rightEyeOpenProbability: json['rightEyeOpenProbability'],
+        smilingProbability: json['smilingProbability'],
+        trackingId: json['trackingId'],
+        landmarks: Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
+            FaceLandmarkType.values,
+            FaceLandmarkType.values.map((FaceLandmarkType type) {
+          final List<dynamic>? pos = json['landmarks'][type.name];
+          return (pos == null)
+              ? null
+              : FaceLandmark(
+                  type: type,
+                  position: Point<int>(pos[0].toInt(), pos[1].toInt()),
+                );
+        })),
+        contours: Map<FaceContourType, FaceContour?>.fromIterables(
+            FaceContourType.values,
+            FaceContourType.values.map((FaceContourType type) {
+          /// added empty map to pass the tests
+          final List<dynamic>? arr =
+              (json['contours'] ?? <String, dynamic>{})[type.name];
+          return (arr == null)
+              ? null
+              : FaceContour(
+                  type: type,
+                  points: arr
+                      .map<Point<int>>((dynamic pos) =>
+                          Point<int>(pos[0].toInt(), pos[1].toInt()))
+                      .toList(),
+                );
+        })),
+      );
 }
 
-/// Represent a face landmark.
+/// A landmark on a human face detected in an image.
 ///
 /// A landmark is a point on a detected face, such as an eye, nose, or mouth.
 class FaceLandmark {
-  FaceLandmark(this.type, this.position);
-
   /// The [FaceLandmarkType] of this landmark.
   final FaceLandmarkType type;
 
   /// Gets a 2D point for landmark position.
   ///
   /// The point (0, 0) is defined as the upper-left corner of the image.
-  final Offset position;
+  final Point<int> position;
+
+  FaceLandmark({required this.type, required this.position});
 }
 
-/// Represent a face contour.
+/// A contour on a human face detected in an image.
 ///
 /// Contours of facial features.
 class FaceContour {
-  FaceContour(this.type, this.positionsList);
-
   /// The [FaceContourType] of this contour.
   final FaceContourType type;
 
   /// Gets a 2D point [List] for contour positions.
   ///
   /// The point (0, 0) is defined as the upper-left corner of the image.
-  final List<Offset> positionsList;
+  final List<Point<int>> points;
+
+  FaceContour({required this.type, required this.points});
 }
 
 /// Option for controlling additional trade-offs in performing face detection.

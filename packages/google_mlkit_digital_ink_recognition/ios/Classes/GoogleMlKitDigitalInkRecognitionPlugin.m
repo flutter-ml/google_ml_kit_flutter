@@ -1,5 +1,4 @@
 #import "GoogleMlKitDigitalInkRecognitionPlugin.h"
-#import "GenericModelManager.h"
 #import <MLKitCommon/MLKitCommon.h>
 #import <MLKitDigitalInkRecognition/MLKitDigitalInkRecognition.h>
 #import <google_mlkit_commons/GoogleMlKitCommonsPlugin.h>
