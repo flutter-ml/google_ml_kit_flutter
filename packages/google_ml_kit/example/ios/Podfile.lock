@@ -60,7 +60,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 2.6.0)
-  - google_mlkit_image_labeling (0.0.1):
+  - google_mlkit_image_labeling (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ImageLabeling (~> 2.6.0)
@@ -459,7 +459,7 @@ SPEC CHECKSUMS:
   google_mlkit_digital_ink_recognition: 5720ef9efd4df22ed47e016dbbaa7d52450ec269
   google_mlkit_entity_extraction: b7941ac1d939e6a72f89798e4915ecd4b20467e2
   google_mlkit_face_detection: cb98c56e2387ab5f8ede76b620bc61eb9e9e14be
-  google_mlkit_image_labeling: dcd941be233723232b449f9753d6abecc30ef2ec
+  google_mlkit_image_labeling: bc38c2e06fd100330760aface7a3a3b9c1f701a5
   google_mlkit_language_id: 8fafaa209432c707ce75a73d7e046c00bf4e5495
   google_mlkit_object_detection: 7e0a16d44f2ae926437a72b96aa17628aff3f33b
   google_mlkit_pose_detection: 702982a77a847e4011c69ebe11e6b4ef54887e46

@@ -20,7 +20,7 @@ class Vision {
   /// [imageLabelerOptions]  if not provided it creates [ImageLabeler] with [ImageLabelerOptions]
   /// You can provide either [LocalLabelerOptions] to use a custom tflite model
   /// Or [AutoMLImageLabelerOptions] to use auto ml vision model trained by you
-  ImageLabeler imageLabeler([ImageLabelerOptionsBase? imageLabelerOptions]) {
+  ImageLabeler imageLabeler([ImageLabelerOptions? imageLabelerOptions]) {
     return ImageLabeler(options: imageLabelerOptions ?? ImageLabelerOptions());
   }
 

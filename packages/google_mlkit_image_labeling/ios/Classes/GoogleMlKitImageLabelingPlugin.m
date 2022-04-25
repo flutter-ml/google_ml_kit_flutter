@@ -13,6 +13,7 @@
 
 @implementation GoogleMlKitImageLabelingPlugin {
     MLKImageLabeler *labeler;
+    NSString *type;
     GenericModelManager *genericModelManager;
 }
 
@@ -28,6 +29,7 @@
     if ([call.method isEqualToString:startImageLabelDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeImageLabelDetector]) {
+        labeler = NULL;
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
         [self manageModel:call result:result];
     } else {
@@ -37,22 +39,25 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
-    NSDictionary *dictionary = call.arguments[@"options"];
-    NSString *type = dictionary[@"labelerType"];
     
-    if ([@"default" isEqualToString:type]) {
-        MLKImageLabelerOptions *options = [self getImageLabelerOptions:dictionary];
-        labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-    } else if ([@"customLocal" isEqualToString:type] || [@"customRemote" isEqualToString:type]) {
-        MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary result:result];
-        if (options == NULL) return;
-        labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-    } else {
-        NSString *reason =
-        [NSString stringWithFormat:@"Invalid model type: %@", type];
-        @throw [[NSException alloc] initWithName:NSInvalidArgumentException
-                                          reason:reason
-                                        userInfo:nil];
+    NSDictionary *dictionary = call.arguments[@"options"];
+    NSString *labelerType = dictionary[@"labelerType"];
+    if (labeler == NULL || type == NULL || ![labelerType isEqualToString:type]) {
+        type = labelerType;
+        if ([@"default" isEqualToString:labelerType]) {
+            MLKImageLabelerOptions *options = [self getImageLabelerOptions:dictionary];
+            labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+        } else if ([@"customLocal" isEqualToString:labelerType] || [@"customRemote" isEqualToString:labelerType]) {
+            MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary result:result];
+            if (options == NULL) return;
+            labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+        } else {
+            NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", labelerType];
+            result([FlutterError errorWithCode:labelerType
+                                       message:error
+                                       details:error]);
+            return;
+        }
     }
     
     [labeler processImage:image

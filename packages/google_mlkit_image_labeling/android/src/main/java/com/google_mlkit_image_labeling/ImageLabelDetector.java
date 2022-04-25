@@ -70,21 +70,19 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
         }
 
         String labelerType = (String) options.get("labelerType");
-
         if (imageLabeler == null || type == null ||
                 !type.equals(labelerType)) {
             type = labelerType;
-
             if (labelerType.equals("default")) {
                 imageLabeler = ImageLabeling.getClient(getImageLabelerOptions(options));
             } else if (labelerType.equals("customLocal") || labelerType.equals("customRemote")) {
                 imageLabeler = ImageLabeling.getClient(getCustomLabelerOptions(options));
             } else {
-                imageLabeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+                String error = "Invalid model type: " + labelerType;
+                result.error(labelerType, error, error);
+                return;
             }
-
         }
-
 
         imageLabeler.process(inputImage)
                 .addOnSuccessListener(imageLabels -> {
@@ -144,6 +142,7 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (imageLabeler == null) return;
         imageLabeler.close();
+        imageLabeler = null;
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
