@@ -81,7 +81,7 @@ PODS:
     - google_mlkit_commons
     - GoogleMLKit/PoseDetection (~> 2.6.0)
     - GoogleMLKit/PoseDetectionAccurate (~> 2.6.0)
-  - google_mlkit_smart_reply (0.0.1):
+  - google_mlkit_smart_reply (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 2.6.0)
@@ -463,7 +463,7 @@ SPEC CHECKSUMS:
   google_mlkit_language_id: 8fafaa209432c707ce75a73d7e046c00bf4e5495
   google_mlkit_object_detection: 90830577b457e8365354f2ded7fc9ff5185a7642
   google_mlkit_pose_detection: 702982a77a847e4011c69ebe11e6b4ef54887e46
-  google_mlkit_smart_reply: 96917faeb2f43a948891dfca8d8b9daea11f8897
+  google_mlkit_smart_reply: e9d39446d43ab3b224b35aed5bbbcbc1e0b45602
   google_mlkit_text_recognition: 28196e53a078cb97a80157d068ef8dcc4b5f2e79
   google_mlkit_translation: e25602d76c94889babe0d5776ace071c2262896f
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730

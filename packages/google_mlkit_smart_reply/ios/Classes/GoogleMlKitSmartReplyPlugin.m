@@ -22,6 +22,7 @@
     if ([call.method isEqualToString:startSmartReply]) {
         [self handleStartSmartReply:call result:result];
     } else if ([call.method isEqualToString:closeSmartReply]) {
+        smartReply = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -44,7 +45,9 @@
         [conversation addObject:message];
     }
     
-    smartReply = [MLKSmartReply smartReply];
+    if (smartReply == NULL)
+        smartReply = [MLKSmartReply smartReply];
+    
     [smartReply suggestRepliesForMessages:conversation
                                completion:^(MLKSmartReplySuggestionResult * _Nullable smartReplySuggestionResult,
                                             NSError * _Nullable error) {
