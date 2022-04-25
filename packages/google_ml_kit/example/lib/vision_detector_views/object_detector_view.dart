@@ -14,6 +14,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   final LocalModel _model = LocalModel('object_labeler.tflite');
   late ObjectDetector _objectDetector;
   final bool _useLocalModel = false;
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
@@ -30,6 +31,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
 
   @override
   void dispose() {
+    _canProcess = false;
     _objectDetector.close();
     super.dispose();
   }
@@ -47,6 +49,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     final result = await _objectDetector.processImage(inputImage);
