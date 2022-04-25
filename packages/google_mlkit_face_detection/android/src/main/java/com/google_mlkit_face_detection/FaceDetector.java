@@ -55,14 +55,16 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        Map<String, Object> options = call.argument("options");
-        if (options == null) {
-            result.error("FaceDetectorError", "Invalid options", null);
-            return;
-        }
+        if (detector == null) {
+            Map<String, Object> options = call.argument("options");
+            if (options == null) {
+                result.error("FaceDetectorError", "Invalid options", null);
+                return;
+            }
 
-        FaceDetectorOptions detectorOptions = parseOptions(options);
-        detector = FaceDetection.getClient(detectorOptions);
+            FaceDetectorOptions detectorOptions = parseOptions(options);
+            detector = FaceDetection.getClient(detectorOptions);
+        }
 
         detector.process(inputImage)
                 .addOnSuccessListener(
@@ -227,5 +229,6 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (detector == null) return;
         detector.close();
+        detector = null;
     }
 }

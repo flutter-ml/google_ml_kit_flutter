@@ -1,6 +1,6 @@
 name: google_mlkit_face_detection
 description: A Flutter plugin to use Google's ML Kit Face Detection to detect faces in an image, identify key facial features, and get the contours of detected faces.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:

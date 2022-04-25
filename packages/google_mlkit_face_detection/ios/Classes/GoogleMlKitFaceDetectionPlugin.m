@@ -22,6 +22,7 @@
     if ([call.method isEqualToString:startFaceDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeFaceDetector]) {
+        detector = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -29,28 +30,32 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
-    NSDictionary *dictionary = call.arguments[@"options"];
     
-    MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
-    BOOL enableClassification = [[dictionary objectForKey:@"enableClassification"] boolValue];
-    options.classificationMode = enableClassification ? MLKFaceDetectorClassificationModeAll : MLKFaceDetectorClassificationModeNone;
+    if (detector == NULL) {
+        NSDictionary *dictionary = call.arguments[@"options"];
+        
+        MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
+        BOOL enableClassification = [[dictionary objectForKey:@"enableClassification"] boolValue];
+        options.classificationMode = enableClassification ? MLKFaceDetectorClassificationModeAll : MLKFaceDetectorClassificationModeNone;
+        
+        BOOL enableLandmarks = [[dictionary objectForKey:@"enableLandmarks"] boolValue];
+        options.landmarkMode = enableLandmarks ? MLKFaceDetectorLandmarkModeAll : MLKFaceDetectorLandmarkModeNone;
+        
+        BOOL enableContours = [[dictionary objectForKey:@"enableContours"] boolValue];
+        options.contourMode = enableContours ? MLKFaceDetectorContourModeAll : MLKFaceDetectorContourModeNone;
+        
+        BOOL enableTracking = [[dictionary objectForKey:@"enableTracking"] boolValue];
+        options.trackingEnabled = enableTracking;
+        
+        NSNumber *minFaceSize = dictionary[@"minFaceSize"];
+        options.minFaceSize = minFaceSize.floatValue;
+        
+        NSString *mode = dictionary[@"mode"];
+        options.performanceMode = [mode isEqualToString:@"accurate"] ? MLKFaceDetectorPerformanceModeAccurate : MLKFaceDetectorPerformanceModeFast;
+        
+        detector = [MLKFaceDetector faceDetectorWithOptions:options];
+    }
     
-    BOOL enableLandmarks = [[dictionary objectForKey:@"enableLandmarks"] boolValue];
-    options.landmarkMode = enableLandmarks ? MLKFaceDetectorLandmarkModeAll : MLKFaceDetectorLandmarkModeNone;
-    
-    BOOL enableContours = [[dictionary objectForKey:@"enableContours"] boolValue];
-    options.contourMode = enableContours ? MLKFaceDetectorContourModeAll : MLKFaceDetectorContourModeNone;
-    
-    BOOL enableTracking = [[dictionary objectForKey:@"enableTracking"] boolValue];
-    options.trackingEnabled = enableTracking;
-    
-    NSNumber *minFaceSize = dictionary[@"minFaceSize"];
-    options.minFaceSize = minFaceSize.floatValue;
-    
-    NSString *mode = dictionary[@"mode"];
-    options.performanceMode = [mode isEqualToString:@"accurate"] ? MLKFaceDetectorPerformanceModeAccurate : MLKFaceDetectorPerformanceModeFast;
-    
-    detector = [MLKFaceDetector faceDetectorWithOptions:options];
     [detector processImage:image
                 completion:^(NSArray<MLKFace *> *_Nullable faces,
                              NSError *_Nullable error) {

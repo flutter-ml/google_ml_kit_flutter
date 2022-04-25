@@ -17,11 +17,13 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
       enableClassification: true,
     ),
   );
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
   @override
   void dispose() {
+    _canProcess = false;
     _faceDetector.close();
     super.dispose();
   }
@@ -39,6 +41,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     final faces = await _faceDetector.processImage(inputImage);

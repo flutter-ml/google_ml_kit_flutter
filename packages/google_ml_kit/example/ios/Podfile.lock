@@ -48,7 +48,7 @@ PODS:
   - google_mlkit_commons (0.0.1-1):
     - Flutter
     - GoogleMLKit/MLKitCore (~> 2.6.0)
-  - google_mlkit_digital_ink_recognition (0.0.1-1):
+  - google_mlkit_digital_ink_recognition (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 2.6.0)
@@ -56,7 +56,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/EntityExtraction (~> 2.6.0)
-  - google_mlkit_face_detection (0.0.1):
+  - google_mlkit_face_detection (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 2.6.0)
@@ -85,7 +85,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 2.6.0)
-  - google_mlkit_text_recognition (0.0.1):
+  - google_mlkit_text_recognition (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/TextRecognition (~> 2.6.0)
@@ -456,15 +456,15 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   google_mlkit_barcode_scanning: 0f763529195b1e826e60f2b4cfd937c354ef72eb
   google_mlkit_commons: 6ef06409c2d9e435015eedf68602e5a5a9db9a57
-  google_mlkit_digital_ink_recognition: 5aed4bb21617714e9f0f11021285aa61af95230d
+  google_mlkit_digital_ink_recognition: 5720ef9efd4df22ed47e016dbbaa7d52450ec269
   google_mlkit_entity_extraction: 227c7207c3ec6f9e1bc480831c403bf21d06da29
-  google_mlkit_face_detection: 5e6da45ba342e87358ee4d065d8d0f07848e7eb8
+  google_mlkit_face_detection: cb98c56e2387ab5f8ede76b620bc61eb9e9e14be
   google_mlkit_image_labeling: dcd941be233723232b449f9753d6abecc30ef2ec
   google_mlkit_language_id: 8fafaa209432c707ce75a73d7e046c00bf4e5495
   google_mlkit_object_detection: 7e0a16d44f2ae926437a72b96aa17628aff3f33b
   google_mlkit_pose_detection: 702982a77a847e4011c69ebe11e6b4ef54887e46
   google_mlkit_smart_reply: 96917faeb2f43a948891dfca8d8b9daea11f8897
-  google_mlkit_text_recognition: 81ecaac8060fb866345acffe7afdd7e8313bf960
+  google_mlkit_text_recognition: 28196e53a078cb97a80157d068ef8dcc4b5f2e79
   google_mlkit_translation: e25602d76c94889babe0d5776ace071c2262896f
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
