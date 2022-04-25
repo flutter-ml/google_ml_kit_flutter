@@ -11,11 +11,13 @@ class ImageLabelView extends StatefulWidget {
 
 class _ImageLabelViewState extends State<ImageLabelView> {
   ImageLabeler _imageLabeler = ImageLabeler(options: ImageLabelerOptions());
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
   @override
   void dispose() {
+    _canProcess = false;
     _imageLabeler.close();
     super.dispose();
   }
@@ -48,9 +50,9 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
-    await Future.delayed(Duration(milliseconds: 50));
     final labels = await _imageLabeler.processImage(inputImage);
     final painter = LabelDetectorPainter(labels);
     _customPaint = CustomPaint(painter: painter);
