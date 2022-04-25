@@ -58,14 +58,16 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
     }
 
     private void extractEntities(MethodCall call, final MethodChannel.Result result) {
-        String language = call.argument("language");
-        Map<String, Object> parameters = call.argument("parameters");
         String text = call.argument("text");
 
-        entityExtractor = EntityExtraction.getClient(
-                new EntityExtractorOptions.Builder(language)
-                        .build());
+        if (entityExtractor == null) {
+            String language = call.argument("language");
+            entityExtractor = EntityExtraction.getClient(
+                    new EntityExtractorOptions.Builder(language)
+                            .build());
+        }
 
+        Map<String, Object> parameters = call.argument("parameters");
         Set<Integer> filters = null;
         if (parameters.get("filters") != null) {
             filters = new HashSet<>((List<Integer>) parameters.get("filters"));
@@ -171,6 +173,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
     public void closeDetector() {
         if (entityExtractor == null) return;
         entityExtractor.close();
+        entityExtractor = null;
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {

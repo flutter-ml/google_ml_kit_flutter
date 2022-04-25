@@ -26,20 +26,23 @@
     } else if ([call.method isEqualToString:manageEntityExtractionModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeEntityExtractor]) {
+        entityExtractor = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSString *language = call.arguments[@"language"];
-    NSDictionary *parameters = call.arguments[@"parameters"];
     NSString *text = call.arguments[@"text"];
     
-    MLKEntityExtractorOptions *options = [[MLKEntityExtractorOptions alloc] initWithModelIdentifier:language];
-    entityExtractor = [MLKEntityExtractor entityExtractorWithOptions:options];
+    if (entityExtractor == NULL) {
+        NSString *language = call.arguments[@"language"];
+        MLKEntityExtractorOptions *options = [[MLKEntityExtractorOptions alloc] initWithModelIdentifier:language];
+        entityExtractor = [MLKEntityExtractor entityExtractorWithOptions:options];
+    }
     
     MLKEntityExtractionParams *params = [[MLKEntityExtractionParams alloc] init];
+    NSDictionary *parameters = call.arguments[@"parameters"];
     
     NSString *timezone = parameters[@"timezone"];
     if ([timezone isKindOfClass: [NSString class]] && timezone.length > 0) {
