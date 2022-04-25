@@ -47,7 +47,7 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
             String message = (String) object.get("message");
             long timestamp = (long) object.get("timestamp");
             String userId = (String) object.get("userId");
-            if (userId == "local") {
+            if (userId.equals("local")) {
                 conversation.add(TextMessage.createForLocalUser(message,
                         timestamp));
             } else {
@@ -79,5 +79,6 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (smartReplyGenerator == null) return;
         smartReplyGenerator.close();
+        smartReplyGenerator = null;
     }
 }
