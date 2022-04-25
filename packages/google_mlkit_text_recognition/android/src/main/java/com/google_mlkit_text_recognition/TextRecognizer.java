@@ -59,7 +59,7 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         if (inputImage == null) return;
 
         int script = (int) call.argument("script");
-        if (this.script != script || textRecognizer == null) {
+        if (textRecognizer == null || this.script != script) {
             initializeDetector(script);
         }
 

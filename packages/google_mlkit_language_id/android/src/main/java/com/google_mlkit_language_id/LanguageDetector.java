@@ -39,11 +39,13 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void identifyLanguages(MethodCall call, final MethodChannel.Result result) {
-        double confidence = (double) call.argument("confidence");
-        languageIdentifier = LanguageIdentification.getClient(
-                new LanguageIdentificationOptions.Builder()
-                        .setConfidenceThreshold((float) confidence)
-                        .build());
+        if (languageIdentifier == null) {
+            double confidence = (double) call.argument("confidence");
+            languageIdentifier = LanguageIdentification.getClient(
+                    new LanguageIdentificationOptions.Builder()
+                            .setConfidenceThreshold((float) confidence)
+                            .build());
+        }
 
         boolean possibleLanguages = (boolean) call.argument("possibleLanguages");
         String text = (String) call.argument("text");
@@ -78,5 +80,6 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (languageIdentifier == null) return;
         languageIdentifier.close();
+        languageIdentifier = null;
     }
 }

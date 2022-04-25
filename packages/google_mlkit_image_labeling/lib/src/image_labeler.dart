@@ -148,7 +148,7 @@ class ImageLabel {
   ImageLabel(
       {required this.confidence, required this.label, required this.index});
 
-  factory ImageLabel.fromJson(dynamic json) => ImageLabel(
+  factory ImageLabel.fromJson(Map<dynamic, dynamic> json) => ImageLabel(
         confidence: json['confidence'],
         label: json['text'],
         index: json['index'],

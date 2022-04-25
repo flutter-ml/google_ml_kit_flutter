@@ -20,7 +20,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
     try {
       language = await _languageIdentifier.identifyLanguage(_controller.text);
     } on PlatformException catch (pe) {
-      if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
+      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
         language = 'error: no language identified!';
       }
       language = 'error: ${pe.code}: ${pe.message}';
@@ -44,7 +44,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
       });
       return;
     } on PlatformException catch (pe) {
-      if (pe.code == _languageIdentifier.errorCodeNoLanguageIdentified) {
+      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
         error = 'error: no languages identified!';
       }
       error = 'error: ${pe.code}: ${pe.message}';
@@ -97,7 +97,7 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(
-                    'Language: ${_identifiedLanguages[index].languageCode}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
+                    'Language: ${_identifiedLanguages[index].languageTag}  Confidence: ${_identifiedLanguages[index].confidence.toString()}'),
               );
             })
       ]),
