@@ -2,42 +2,55 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-/// Image format that ML Kit takes to process the image
+/// Image format that ML Kit takes to process the image.
 class InputImage {
+  /// The file path to the image.
+  final String? filePath;
+
+  /// The bytes of the image.
+  final Uint8List? bytes;
+
+  /// The type of image.
+  final InputImageType type;
+
+  /// The image data when creating an image of type = [InputImageType.bytes].
+  final InputImageData? inputImageData;
+
   InputImage._(
-      {this.filePath,
-      this.bytes,
-      required this.imageType,
-      this.inputImageData});
+      {this.filePath, this.bytes, required this.type, this.inputImageData});
 
-  /// Create InputImage from path of image stored in device.
+  /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
-    return InputImage._(filePath: path, imageType: 'file');
+    return InputImage._(filePath: path, type: InputImageType.file);
   }
 
-  /// Create InputImage by passing a file.
+  /// Creates an instance of [InputImage] by passing a file.
   factory InputImage.fromFile(File file) {
-    return InputImage._(filePath: file.path, imageType: 'file');
+    return InputImage._(filePath: file.path, type: InputImageType.file);
   }
 
-  /// Create InputImage using bytes.
+  /// Creates an instance of [InputImage] using bytes.
   factory InputImage.fromBytes(
       {required Uint8List bytes, required InputImageData inputImageData}) {
     return InputImage._(
-        bytes: bytes, imageType: 'bytes', inputImageData: inputImageData);
+        bytes: bytes,
+        type: InputImageType.bytes,
+        inputImageData: inputImageData);
   }
 
-  final String? filePath;
-  final Uint8List? bytes;
-  final String imageType;
-  final InputImageData? inputImageData;
-
+  /// Returns a json representation of an instance of [InputImage].
   Map<String, dynamic> toJson() => {
         'bytes': bytes,
-        'type': imageType,
+        'type': type.name,
         'path': filePath,
         'metadata': inputImageData == null ? 'none' : inputImageData!.toJson()
       };
+}
+
+/// The type of [InputImage].
+enum InputImageType {
+  file,
+  bytes,
 }
 
 /// Data of image required when creating image from bytes.
@@ -56,13 +69,14 @@ class InputImageData {
   /// Not used on Android.
   final List<InputImagePlaneMetadata>? planeData;
 
+  /// Constructor to create an instance of [InputImageData].
   InputImageData(
       {required this.size,
       required this.imageRotation,
       required this.inputImageFormat,
       required this.planeData});
 
-  /// Function to get the metadata of image processing purposes
+  /// Returns a json representation of an instance of [InputImageData].
   Map<String, dynamic> toJson() => {
         'width': size.width,
         'height': size.height,
@@ -79,12 +93,6 @@ class InputImageData {
 /// When using iOS, [height], and [width] throw [AssertionError]
 /// if `null`.
 class InputImagePlaneMetadata {
-  InputImagePlaneMetadata({
-    required this.bytesPerRow,
-    this.height,
-    this.width,
-  });
-
   /// The row stride for this color plane, in bytes.
   final int bytesPerRow;
 
@@ -94,6 +102,14 @@ class InputImagePlaneMetadata {
   /// Width of the pixel buffer on iOS.
   final int? width;
 
+  /// Constructor to create an instance of [InputImagePlaneMetadata].
+  InputImagePlaneMetadata({
+    required this.bytesPerRow,
+    this.height,
+    this.width,
+  });
+
+  /// Returns a json representation of an instance of [InputImagePlaneMetadata].
   Map<String, dynamic> toJson() => {
         'bytesPerRow': bytesPerRow,
         'height': height,
@@ -101,7 +117,7 @@ class InputImagePlaneMetadata {
       };
 }
 
-// The camera rotation angle to be specified
+/// The camera rotation angle to be specified
 enum InputImageRotation {
   rotation0deg,
   rotation90deg,
@@ -133,7 +149,7 @@ extension InputImageRotationValue on InputImageRotation {
   }
 }
 
-// To indicate the format of image while creating input image from bytes
+/// To indicate the format of image while creating input image from bytes
 enum InputImageFormat {
   nv21,
   yv12,

@@ -1,6 +1,6 @@
 name: google_mlkit_smart_reply
 description: A Flutter plugin to use Google's ML Kit Smart Reply API to automatically generate relevant replies to messages.
-version: 0.0.2
+version: 0.1.0
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_mlkit_commons: ^0.0.1+1
+  google_mlkit_commons: ^0.1.0
 
 dev_dependencies:
   flutter_test:

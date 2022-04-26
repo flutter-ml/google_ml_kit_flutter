@@ -62,6 +62,7 @@ class Message {
   /// Constructor to create an instance of [Message].
   Message({required this.text, required this.timestamp, required this.userId});
 
+  /// Returns a json representation of an instance of [Message].
   Map<String, dynamic> toJson() => {
         'message': text,
         'timestamp': timestamp,
@@ -87,6 +88,7 @@ class SmartReplySuggestionResult {
   /// Constructor to create an instance of [SmartReplySuggestionResult].
   SmartReplySuggestionResult({required this.status, required this.suggestions});
 
+  /// Returns an instance of [SmartReplySuggestionResult] from a given [json].
   factory SmartReplySuggestionResult.fromJson(Map<dynamic, dynamic> json) {
     final status =
         SmartReplySuggestionResultStatus.values[json['status'].toInt()];
@@ -99,6 +101,9 @@ class SmartReplySuggestionResult {
     return SmartReplySuggestionResult(status: status, suggestions: suggestions);
   }
 
-  Map<String, dynamic> toJson() =>
-      {'status': status.name, 'suggestions': suggestions};
+  /// Returns a json representation of an instance of [SmartReplySuggestionResult].
+  Map<String, dynamic> toJson() => {
+        'status': status.name,
+        'suggestions': suggestions,
+      };
 }

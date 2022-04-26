@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ class TextRecognizer {
   /// Configurations for the language to be detected.
   final TextRecognitionScript script;
 
+  /// Constructor to create an instance of [TextRecognizer].
   TextRecognizer({this.script = TextRecognitionScript.latin});
 
   /// Processes the given [InputImage]  for text recognition and returns a [RecognizedText] object.
@@ -23,7 +25,7 @@ class TextRecognizer {
     return RecognizedText.fromJson(result);
   }
 
-  /// Closes the detector and releases its resources.
+  /// Closes the recognizer and releases its resources.
   Future<void> close() => _channel.invokeMethod('vision#closeTextRecognizer');
 }
 
@@ -44,8 +46,10 @@ class RecognizedText {
   /// All the blocks of text present in image.
   final List<TextBlock> blocks;
 
-  RecognizedText(this.text, this.blocks);
+  /// Constructor to create an instance of [RecognizedText].
+  RecognizedText({required this.text, required this.blocks});
 
+  /// Returns an instance of [RecognizedText] from a given [json].
   factory RecognizedText.fromJson(Map<dynamic, dynamic> json) {
     final resText = json['text'];
     final textBlocks = <TextBlock>[];
@@ -53,7 +57,7 @@ class RecognizedText {
       final textBlock = TextBlock.fromJson(block);
       textBlocks.add(textBlock);
     }
-    return RecognizedText(resText, textBlocks);
+    return RecognizedText(text: resText, blocks: textBlocks);
   }
 }
 
@@ -65,18 +69,24 @@ class TextBlock {
   /// List of text lines that make up the block.
   final List<TextLine> lines;
 
-  /// Rect outlining boundary of block.
-  final Rect rect;
+  /// Rect that contains the text block.
+  final Rect boundingBox;
 
   /// List of recognized languages in the text block. If no languages were recognized, the list is empty.
   final List<String> recognizedLanguages;
 
   /// List of corner points of the text block in clockwise order starting with the top left point relative to the image in the default coordinate space.
-  final List<Offset> cornerPoints;
+  final List<Point<int>> cornerPoints;
 
-  TextBlock(this.text, this.lines, this.rect, this.recognizedLanguages,
-      this.cornerPoints);
+  /// Constructor to create an instance of [TextBlock].
+  TextBlock(
+      {required this.text,
+      required this.lines,
+      required this.boundingBox,
+      required this.recognizedLanguages,
+      required this.cornerPoints});
 
+  /// Returns an instance of [TextBlock] from a given [json].
   factory TextBlock.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
@@ -88,7 +98,12 @@ class TextBlock {
       final textLine = TextLine.fromJson(line);
       lines.add(textLine);
     }
-    return TextBlock(text, lines, rect, recognizedLanguages, points);
+    return TextBlock(
+        text: text,
+        lines: lines,
+        boundingBox: rect,
+        recognizedLanguages: recognizedLanguages,
+        cornerPoints: points);
   }
 }
 
@@ -100,18 +115,24 @@ class TextLine {
   /// List of text elements that make up the line.
   final List<TextElement> elements;
 
-  /// Rect outlining the the text line.
-  final Rect rect;
+  /// Rect that contains the text line.
+  final Rect boundingBox;
 
   /// List of recognized languages in the text line. If no languages were recognized, the list is empty.
   final List<String> recognizedLanguages;
 
   /// The corner points of the text line in clockwise order starting with the top left point relative to the image in the default coordinate space.
-  final List<Offset> cornerPoints;
+  final List<Point<int>> cornerPoints;
 
-  TextLine(this.text, this.elements, this.rect, this.recognizedLanguages,
-      this.cornerPoints);
+  /// Constructor to create an instance of [TextLine].
+  TextLine(
+      {required this.text,
+      required this.elements,
+      required this.boundingBox,
+      required this.recognizedLanguages,
+      required this.cornerPoints});
 
+  /// Returns an instance of [TextLine] from a given [json].
   factory TextLine.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
@@ -123,7 +144,12 @@ class TextLine {
       final textElement = TextElement.fromJson(element);
       elements.add(textElement);
     }
-    return TextLine(text, elements, rect, recognizedLanguages, points);
+    return TextLine(
+        text: text,
+        elements: elements,
+        boundingBox: rect,
+        recognizedLanguages: recognizedLanguages,
+        cornerPoints: points);
   }
 }
 
@@ -133,18 +159,23 @@ class TextElement {
   final String text;
 
   /// Rect that contains the text element.
-  final Rect rect;
+  final Rect boundingBox;
 
   /// List of corner points of the text element in clockwise order starting with the top left point relative to the image in the default coordinate space.
-  final List<Offset> cornerPoints;
+  final List<Point<int>> cornerPoints;
 
-  TextElement(this.text, this.rect, this.cornerPoints);
+  /// Constructor to create an instance of [TextElement].
+  TextElement(
+      {required this.text,
+      required this.boundingBox,
+      required this.cornerPoints});
 
+  /// Returns an instance of [TextElement] from a given [json].
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
     final points = _listToCornerPoints(json['points']);
-    return TextElement(text, rect, points);
+    return TextElement(text: text, boundingBox: rect, cornerPoints: points);
   }
 }
 
@@ -159,11 +190,11 @@ List<String> _listToRecognizedLanguages(List<dynamic> languages) {
   return recognizedLanguages;
 }
 
-/// Convert list of map to list of offset.
-List<Offset> _listToCornerPoints(List<dynamic> points) {
-  final p = <Offset>[];
+/// Convert list of map to list of [Point].
+List<Point<int>> _listToCornerPoints(List<dynamic> points) {
+  final p = <Point<int>>[];
   for (final point in points) {
-    p.add(Offset((point['x']).toDouble(), (point['y']).toDouble()));
+    p.add(Point<int>(point['x'].toInt(), point['y'].toInt()));
   }
   return p;
 }

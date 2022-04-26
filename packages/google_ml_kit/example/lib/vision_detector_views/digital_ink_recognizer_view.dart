@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -12,7 +14,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   final DigitalInkRecognizerModelManager _modelManager =
       DigitalInkRecognizerModelManager();
   final DigitalInkRecognizer _digitalInkRecognizer = DigitalInkRecognizer();
-  List<Offset> _points = <Offset>[];
+  List<Point<int>> _points = [];
   String _recognizedText = '';
   final String _language = 'en-US';
 
@@ -37,13 +39,18 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                     final localPosition = (object as RenderBox?)
                         ?.globalToLocal(details.localPosition);
                     if (localPosition != null) {
-                      _points = List.from(_points)..add(localPosition);
+                      _points = List.from(_points)
+                        ..add(Point(localPosition.dx.toInt(),
+                            localPosition.dy.toInt()));
                     }
                   });
                 },
                 onPanEnd: (DragEndDetails details) {},
                 child: CustomPaint(
-                  painter: Signature(points: _points),
+                  painter: Signature(
+                      points: _points
+                          .map((e) => Offset(e.x.toDouble(), e.y.toDouble()))
+                          .toList()),
                   size: Size.infinite,
                 ),
               ),

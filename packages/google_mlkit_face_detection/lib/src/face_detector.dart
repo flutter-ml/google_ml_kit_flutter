@@ -171,6 +171,7 @@ class Face {
     this.trackingId,
   });
 
+  /// Returns an instance of [Face] from a given [json].
   factory Face.fromJson(Map<dynamic, dynamic> json) => Face(
         boundingBox: RectJson.fromJson(json['rect']),
         headEulerAngleX: json['headEulerAngleX'],

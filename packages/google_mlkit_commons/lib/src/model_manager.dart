@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 
 /// A class to manage remote models.
 class ModelManager {
+  /// The method name to be called.
   final String method;
+
+  /// The channel used to manage the remote model.
   final MethodChannel channel;
 
+  /// Constructor to create an instance of [ModelManager].
   ModelManager({required this.channel, required this.method});
 
   /// Checks whether a model is downloaded or not.

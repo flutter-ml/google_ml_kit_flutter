@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 extension RectJson on Rect {
-  /// Convert map to Rect.
+  /// Returns an instance of [Rect] from a given [json].
   static Rect fromJson(Map<dynamic, dynamic> json) {
     return Rect.fromLTRB(
       json['left']?.toDouble() ?? 0,

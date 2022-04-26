@@ -78,7 +78,33 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to 
 
 ## Migrating from ML Kit for Firebase
 
-When Migrating from ML Kit for Firebase read [this guide](https://developers.google.com/ml-kit/migration). For Android details read [this](https://developers.google.com/ml-kit/migration/android). For iOS details read [this](https://developers.google.com/ml-kit/migration/ios).
+When Migrating from ML Kit for Firebase read [this guide](https://developers.google.com/ml-kit/migration). 
+
+For Android details read [this](https://developers.google.com/ml-kit/migration/android). 
+
+For iOS details read [this](https://developers.google.com/ml-kit/migration/ios).
+
+## Firebase dependency: Custom Models
+
+Google's standalone ML Kit library does have any direct dependency with Firebase. As designed by Google, you do not need to include Firebase in your project in order to use ML Kit. However, some ML Kit APIs have the possibility to be used with [Custom Models](https://developers.google.com/ml-kit/custom-models), that means that the default models can be replaced with custom TensorFlow Lite models.
+
+The plugins that allow Custom Models are:
+
+- [google\_mlkit\_image\_labeling](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_image_labeling)
+- [google\_mlkit\_object\_detection](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_object_detection)
+
+When creating these plugins we tried to remove the Firebase dependency as much as possible. However, when wrapping them for Flutter, we realized that Firebase is needed in order to download the model, pass it to the detector and expose its functionality to be used in Flutter.
+
+A Flutter plugin includes all of its dependencies in your project even thought you are only consuming some APIs of the plugin. For that reason those plugins always require you to configure Firebase even though you are not using Custom Models in your project.
+
+We could remove the Custom Models and do not expose that functionality in Flutter, but that will deprive some developers the opportunity to use them. If you find a way to manage those dependencies feel free to contribute with your [pull request](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/pulls).
+
+To setup Firebase for your project check this links:
+
+- [Add Firebase to your Android project](https://firebase.google.com/docs/android/setup)
+- [Add Firebase to your iOS project](https://firebase.google.com/docs/ios/setup)
+
+Also please note that in last versions, [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit) has become an umbrella plugin including all the plugin listed in [Features](#features). For that reason you will need to configure Firebase in your project if using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit). We recommend you start using the plugins listed in [Features](#features) rather than using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit), otherwise you will be including unnecessary dependencies in your project.
 
 ## Example app
 

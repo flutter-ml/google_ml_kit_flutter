@@ -1,3 +1,7 @@
+## 0.1.0
+
+* Update documentation.
+
 ## 0.0.3
 
 * Fix: Close detector.
