@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-04-27
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_barcode_scanning` - `v0.2.0`](#google_mlkit_barcode_scanning---v020)
+- [`google_mlkit_digital_ink_recognition` - `v0.2.0`](#google_mlkit_digital_ink_recognition---v020)
+- [`google_mlkit_entity_extraction` - `v0.2.0`](#google_mlkit_entity_extraction---v020)
+- [`google_mlkit_face_detection` - `v0.2.0`](#google_mlkit_face_detection---v020)
+- [`google_mlkit_image_labeling` - `v0.2.0`](#google_mlkit_image_labeling---v020)
+- [`google_mlkit_language_id` - `v0.2.0`](#google_mlkit_language_id---v020)
+- [`google_mlkit_object_detection` - `v0.2.0`](#google_mlkit_object_detection---v020)
+- [`google_mlkit_pose_detection` - `v0.2.0`](#google_mlkit_pose_detection---v020)
+- [`google_mlkit_smart_reply` - `v0.2.0`](#google_mlkit_smart_reply---v020)
+- [`google_mlkit_text_recognition` - `v0.2.0`](#google_mlkit_text_recognition---v020)
+- [`google_mlkit_translation` - `v0.2.0`](#google_mlkit_translation---v020)
+
+---
+
+#### `google_mlkit_barcode_scanning` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_entity_extraction` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_face_detection` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_image_labeling` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_language_id` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_object_detection` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_pose_detection` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_smart_reply` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_text_recognition` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
+#### `google_mlkit_translation` - `v0.2.0`
+
+* Fix: return after closing detector in iOS.
+
 ## 2022-04-26
 
 ### Changes

@@ -23,6 +23,7 @@
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeFaceDetector]) {
         detector = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

@@ -29,6 +29,7 @@
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeDigitalInkRecognizer]) {
         recognizer = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

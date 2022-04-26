@@ -27,6 +27,7 @@
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeEntityExtractor]) {
         entityExtractor = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

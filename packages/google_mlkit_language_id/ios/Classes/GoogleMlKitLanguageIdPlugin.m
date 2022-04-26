@@ -23,6 +23,7 @@
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeLanguageIdentifier]) {
         languageId = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

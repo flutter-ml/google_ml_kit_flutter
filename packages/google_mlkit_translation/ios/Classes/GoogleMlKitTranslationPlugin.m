@@ -27,6 +27,7 @@
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeLanguageTranslator]) {
         onDeviceTranslator = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

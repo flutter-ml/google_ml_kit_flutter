@@ -25,6 +25,7 @@
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closePoseDetector]) {
         detector = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
