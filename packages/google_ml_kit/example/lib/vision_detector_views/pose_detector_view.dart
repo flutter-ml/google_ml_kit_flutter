@@ -13,13 +13,15 @@ class PoseDetectorView extends StatefulWidget {
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
+  bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
 
   @override
   void dispose() async {
+    _canProcess = false;
+    _poseDetector.close();
     super.dispose();
-    await _poseDetector.close();
   }
 
   @override
@@ -34,6 +36,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     final poses = await _poseDetector.processImage(inputImage);
