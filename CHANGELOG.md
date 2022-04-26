@@ -202,48 +202,48 @@ Packages with changes:
 
 #### `google_mlkit_barcode_scanning` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_commons` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_digital_ink_recognition` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_entity_extraction` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_face_detection` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_image_labeling` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_language_id` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_object_detection` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_pose_detection` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_smart_reply` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_text_recognition` - `v0.0.1`
 
-- Initial release.
+* Initial release.
 
 #### `google_mlkit_translation` - `v0.0.1`
 
-- Initial release.
+* Initial release.
