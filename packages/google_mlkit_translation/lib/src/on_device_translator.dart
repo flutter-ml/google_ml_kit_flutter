@@ -1,22 +1,22 @@
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
-/// Creating an instance of [OnDeviceTranslator]
-/// ```
-/// final _onDeviceTranslator = GoogleMlKit.nlp.onDeviceTranslator(
-///      sourceLanguage: TranslateLanguage.ENGLISH,
-///      targetLanguage: TranslateLanguage.SPANISH);
-/// ```
+/// A class that translates on device the given input text.
 class OnDeviceTranslator {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_on_device_translator');
 
+  /// The source language of the input.
   final TranslateLanguage sourceLanguage;
+
+  /// The target language to translate the input into.
   final TranslateLanguage targetLanguage;
 
+  /// Constructor to create instance of [OnDeviceTranslator]
   OnDeviceTranslator(
       {required this.sourceLanguage, required this.targetLanguage});
 
+  /// Translates the given [text] from the source language into the target language.
   Future<String> translateText(String text) async {
     final result = await _channel.invokeMethod(
         'nlp#startLanguageTranslator', <String, dynamic>{
@@ -28,10 +28,11 @@ class OnDeviceTranslator {
     return result.toString();
   }
 
+  /// Closes the translator and releases its resources.
   Future<void> close() => _channel.invokeMethod('nlp#closeLanguageTranslator');
 }
 
-/// Creating instance of [OnDeviceTranslatorModelManager]
+/// A subclass of [ModelManager] that manages [TranslateRemoteModel] required to process the image.
 ///
 // Downloading model always return false,
 // model is downloaded if needed when translating.
@@ -42,70 +43,189 @@ class OnDeviceTranslatorModelManager extends ModelManager {
             method: 'nlp#manageLanguageModelModels');
 }
 
-/// Class containing all supported languages and their BCP-47 tags.
+/// All supported languages by on-device translation.
+/// More information: https://developers.google.com/ml-kit/language/translation/translation-language-support
 enum TranslateLanguage {
+  /// Afrikaans
   afrikaans,
+
+  /// Albanian
   albanian,
+
+  /// Arabic
   arabic,
+
+  /// Belarusian
   belarusian,
+
+  /// Bengali
   bengali,
+
+  /// Bulgarian
   bulgarian,
+
+  /// Catalan
   catalan,
+
+  /// Chinese
   chinese,
+
+  /// Croatian
   croatian,
+
+  /// Czech
   czech,
+
+  /// Danish
   danish,
+
+  /// Dutch
   dutch,
+
+  /// English
   english,
+
+  /// Esperanto
   esperanto,
+
+  /// Estonian
   estonian,
+
+  /// Finnish
   finnish,
+
+  /// French
   french,
+
+  /// Galician
   galician,
+
+  /// Georgian
   georgian,
+
+  /// German
   german,
+
+  /// Greek
   greek,
+
+  /// Gujarati
   gujarati,
-  haitianCreole,
+
+  /// Haitian
+  haitian,
+
+  /// Hebrew
   hebrew,
+
+  /// Hindi
   hindi,
+
+  /// Hungarian
   hungarian,
+
+  /// Icelandic
   icelandic,
+
+  /// Indonesian
   indonesian,
+
+  /// Irish
   irish,
+
+  /// Italian
   italian,
+
+  /// Japanese
   japanese,
+
+  /// Kannada
   kannada,
+
+  /// Korean
   korean,
+
+  /// Latvian
   latvian,
+
+  /// Lithuanian
   lithuanian,
+
+  /// Macedonian
   macedonian,
+
+  /// Malay
   malay,
+
+  /// Maltese
   maltese,
+
+  /// Marathi
   marathi,
+
+  /// Norwegian
   norwegian,
+
+  /// Persian
   persian,
+
+  /// Polish
   polish,
+
+  /// Portuguese
   portuguese,
+
+  /// Romanian
   romanian,
+
+  /// Russian
   russian,
+
+  /// Slovak
   slovak,
+
+  /// Slovenian
   slovenian,
+
+  /// Spanish
   spanish,
+
+  /// Swahili
   swahili,
+
+  /// Swedish
   swedish,
+
+  /// Tagalog
   tagalog,
+
+  /// Tamil
   tamil,
+
+  /// Telugu
   telugu,
+
+  /// Thai
   thai,
+
+  /// Turkish
   turkish,
+
+  /// Ukrainian
   ukrainian,
+
+  /// Urdu
   urdu,
+
+  /// Vietnamese
   vietnamese,
+
+  /// Welsh
   welsh,
 }
 
 extension BCP47Code on TranslateLanguage {
+  /// Returns BCP-47 tag of the language.
   String get bcpCode {
     switch (this) {
       case TranslateLanguage.afrikaans:
@@ -152,7 +272,7 @@ extension BCP47Code on TranslateLanguage {
         return 'el';
       case TranslateLanguage.gujarati:
         return 'gu';
-      case TranslateLanguage.haitianCreole:
+      case TranslateLanguage.haitian:
         return 'ht';
       case TranslateLanguage.hebrew:
         return 'he';

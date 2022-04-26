@@ -18,8 +18,8 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
   @override
   void dispose() async {
     _canProcess = false;
+    _textRecognizer.close();
     super.dispose();
-    await _textRecognizer.close();
   }
 
   @override

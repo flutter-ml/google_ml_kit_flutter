@@ -39,7 +39,7 @@ dependencies:
   # Natural Language APIs
   google_mlkit_entity_extraction: ^0.0.3
   google_mlkit_language_id: ^0.0.2
-  google_mlkit_translation: ^0.0.1
+  google_mlkit_translation: ^0.0.2
   google_mlkit_smart_reply: ^0.0.2
 
   # uncomment these lines when working on the local plugins
