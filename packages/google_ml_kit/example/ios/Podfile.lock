@@ -76,7 +76,7 @@ PODS:
     - GoogleMLKit/LinkFirebase (~> 2.6.0)
     - GoogleMLKit/ObjectDetection (~> 2.6.0)
     - GoogleMLKit/ObjectDetectionCustom (~> 2.6.0)
-  - google_mlkit_pose_detection (0.0.1):
+  - google_mlkit_pose_detection (0.0.2):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/PoseDetection (~> 2.6.0)
@@ -462,7 +462,7 @@ SPEC CHECKSUMS:
   google_mlkit_image_labeling: bc38c2e06fd100330760aface7a3a3b9c1f701a5
   google_mlkit_language_id: fdc9ef7a1c12225018d02f215e63d56e711db44a
   google_mlkit_object_detection: 90830577b457e8365354f2ded7fc9ff5185a7642
-  google_mlkit_pose_detection: 702982a77a847e4011c69ebe11e6b4ef54887e46
+  google_mlkit_pose_detection: 6fb027eae9eeb97338506e8abbd1140201f9660b
   google_mlkit_smart_reply: e9d39446d43ab3b224b35aed5bbbcbc1e0b45602
   google_mlkit_text_recognition: 28196e53a078cb97a80157d068ef8dcc4b5f2e79
   google_mlkit_translation: 9b2fde26fcdf256c79f3f3c8344b5f9d6a5e0a11

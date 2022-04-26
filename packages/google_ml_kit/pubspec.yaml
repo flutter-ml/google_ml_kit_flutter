@@ -17,7 +17,7 @@ dependencies:
   google_mlkit_face_detection: ^0.0.2
   google_mlkit_image_labeling: ^0.0.2
   google_mlkit_object_detection: ^0.0.2
-  google_mlkit_pose_detection: ^0.0.1
+  google_mlkit_pose_detection: ^0.0.2
   google_mlkit_text_recognition: ^0.0.2
 
   # uncomment these lines when working on the local plugins

@@ -52,28 +52,31 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        Map<String, Object> options = call.argument("options");
-        if (options == null) {
-            result.error("PoseDetectorError", "Invalid options", null);
-            return;
-        }
+        if (poseDetector == null) {
+            Map<String, Object> options = call.argument("options");
+            if (options == null) {
+                result.error("PoseDetectorError", "Invalid options", null);
+                return;
+            }
 
-        String model = (String) options.get("type");
-        String mode = (String) options.get("mode");
-        int detectorMode = PoseDetectorOptions.STREAM_MODE;
-        if (mode.equals("single")) {
-            detectorMode = PoseDetectorOptions.SINGLE_IMAGE_MODE;
-        }
-        if (model.equals("base")) {
-            PoseDetectorOptions detectorOptions = new PoseDetectorOptions.Builder()
-                    .setDetectorMode(detectorMode)
-                    .build();
-            poseDetector = PoseDetection.getClient(detectorOptions);
-        } else {
-            AccuratePoseDetectorOptions detectorOptions = new AccuratePoseDetectorOptions.Builder()
-                    .setDetectorMode(detectorMode)
-                    .build();
-            poseDetector = PoseDetection.getClient(detectorOptions);
+            String mode = (String) options.get("mode");
+            int detectorMode = PoseDetectorOptions.STREAM_MODE;
+            if (mode.equals("single")) {
+                detectorMode = PoseDetectorOptions.SINGLE_IMAGE_MODE;
+            }
+
+            String model = (String) options.get("model");
+            if (model.equals("base")) {
+                PoseDetectorOptions detectorOptions = new PoseDetectorOptions.Builder()
+                        .setDetectorMode(detectorMode)
+                        .build();
+                poseDetector = PoseDetection.getClient(detectorOptions);
+            } else {
+                AccuratePoseDetectorOptions detectorOptions = new AccuratePoseDetectorOptions.Builder()
+                        .setDetectorMode(detectorMode)
+                        .build();
+                poseDetector = PoseDetection.getClient(detectorOptions);
+            }
         }
 
         poseDetector.process(inputImage)
@@ -102,5 +105,6 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (poseDetector == null) return;
         poseDetector.close();
+        poseDetector = null;
     }
 }

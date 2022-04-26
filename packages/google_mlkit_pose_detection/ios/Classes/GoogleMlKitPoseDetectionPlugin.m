@@ -24,6 +24,7 @@
     if ([call.method isEqualToString:startPoseDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closePoseDetector]) {
+        detector = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -31,25 +32,26 @@
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
-    NSDictionary *dictionary = call.arguments[@"options"];
     
-    NSString *type = dictionary[@"type"];
-    
-    NSString *mode = dictionary[@"mode"];
-    MLKPoseDetectorMode detectorMode = MLKPoseDetectorModeStream;
-    if ([mode isEqualToString:@"single"]) {
-        detectorMode = MLKPoseDetectorModeSingleImage;
-    }
-    
-    if ([type isEqualToString:@"base"]) {
-        MLKPoseDetectorOptions *options = [[MLKPoseDetectorOptions alloc] init];
-        options.detectorMode = detectorMode;
-        detector = [MLKPoseDetector poseDetectorWithOptions:options];
-    } else {
-        MLKAccuratePoseDetectorOptions *options =
-        [[MLKAccuratePoseDetectorOptions alloc] init];
-        options.detectorMode = detectorMode;
-        detector = [MLKPoseDetector poseDetectorWithOptions:options];
+    if (detector == NULL) {
+        NSDictionary *options = call.arguments[@"options"];
+        NSString *mode = options[@"mode"];
+        MLKPoseDetectorMode detectorMode = MLKPoseDetectorModeStream;
+        if ([mode isEqualToString:@"single"]) {
+            detectorMode = MLKPoseDetectorModeSingleImage;
+        }
+        
+        NSString *model = options[@"model"];
+        if ([model isEqualToString:@"base"]) {
+            MLKPoseDetectorOptions *options = [[MLKPoseDetectorOptions alloc] init];
+            options.detectorMode = detectorMode;
+            detector = [MLKPoseDetector poseDetectorWithOptions:options];
+        } else {
+            MLKAccuratePoseDetectorOptions *options =
+            [[MLKAccuratePoseDetectorOptions alloc] init];
+            options.detectorMode = detectorMode;
+            detector = [MLKPoseDetector poseDetectorWithOptions:options];
+        }
     }
     
     [detector processImage:image
