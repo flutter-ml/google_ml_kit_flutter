@@ -24,6 +24,7 @@
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeBarcodeScanner]) {
         barcodeScanner = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }

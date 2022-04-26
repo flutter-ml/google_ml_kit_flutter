@@ -30,6 +30,7 @@
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeImageLabelDetector]) {
         labeler = NULL;
+        result(NULL);
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
         [self manageModel:call result:result];
     } else {

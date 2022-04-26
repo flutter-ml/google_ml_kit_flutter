@@ -23,6 +23,7 @@
         [self handleStartSmartReply:call result:result];
     } else if ([call.method isEqualToString:closeSmartReply]) {
         smartReply = NULL;
+        result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
