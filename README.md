@@ -36,7 +36,7 @@ Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/pla
 - Swift 5
 - ML Kit only supports 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities.
 
-Since ML Kit does not support 32-bit architectures (i386 and armv7) ([Read mode](https://developers.google.com/ml-kit/migration/ios)), you need to exclude amrv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`.
+Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude amrv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
 Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 
@@ -104,7 +104,7 @@ To setup Firebase for your project check this links:
 - [Add Firebase to your Android project](https://firebase.google.com/docs/android/setup)
 - [Add Firebase to your iOS project](https://firebase.google.com/docs/ios/setup)
 
-Also please note that in last versions, [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit) has become an umbrella plugin including all the plugin listed in [Features](#features). For that reason you will need to configure Firebase in your project if using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit). We recommend you start using the plugins listed in [Features](#features) rather than using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit), otherwise you will be including unnecessary dependencies in your project.
+Also please note that in latest [versions](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/blob/master/packages/google_ml_kit/CHANGELOG.md), [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit) has become an umbrella plugin including all the plugin listed in [Features](#features). For that reason you will need to configure Firebase in your project if using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit). We recommend you start using the plugins listed in [Features](#features) rather than using [google\_ml\_kit](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_ml_kit), otherwise you will be including unnecessary dependencies in your project.
 
 ## Example app
 

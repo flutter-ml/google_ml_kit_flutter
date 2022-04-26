@@ -6,7 +6,7 @@ This example app is not production code, its purpose is to demonstrate some of t
 
 ## Getting Started
 
-Since the example app includes demo code for all the ML Kit APIs, some of them allow [Custom Models](https://developers.google.com/ml-kit/custom-models). If you need more details go [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#firebase-dependency-custom-models).
+Since the example app includes demo code for all the ML Kit APIs, some of them allow [Custom Models](https://developers.google.com/ml-kit/custom-models). If you need more details go [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master#firebase-dependency-custom-models).
 
 For that reason, in order to run the example app you will need to add a `GoogleService-Info.plist` to your local copy of the iOS project, and a `google-services.json` to your local copy of the Android project. For more details how to do that go to:
 
