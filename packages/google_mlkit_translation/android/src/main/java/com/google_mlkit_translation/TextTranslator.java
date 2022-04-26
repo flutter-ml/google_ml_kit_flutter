@@ -2,7 +2,6 @@ package com.google_mlkit_translation;
 
 import androidx.annotation.NonNull;
 
-import com.google.mlkit.common.model.DownloadConditions;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
@@ -41,21 +40,19 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     }
 
     private void translateText(MethodCall call, final MethodChannel.Result result) {
-        String sourceLanguage = call.argument("source");
-        String targetLanguage = call.argument("target");
         String text = call.argument("text");
 
-        TranslatorOptions options = new TranslatorOptions.Builder()
-                .setSourceLanguage(sourceLanguage)
-                .setTargetLanguage(targetLanguage)
-                .build();
-        translator = Translation.getClient(options);
+        if (translator == null) {
+            String sourceLanguage = call.argument("source");
+            String targetLanguage = call.argument("target");
+            TranslatorOptions options = new TranslatorOptions.Builder()
+                    .setSourceLanguage(sourceLanguage)
+                    .setTargetLanguage(targetLanguage)
+                    .build();
+            translator = Translation.getClient(options);
+        }
 
-        DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
-                .build();
-
-        translator.downloadModelIfNeeded(conditions)
+        translator.downloadModelIfNeeded()
                 .addOnSuccessListener(
                         (OnSuccessListener) -> {
                             // Model downloaded successfully. Okay to start translating.
@@ -74,20 +71,17 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     private void closeDetector() {
         if (translator == null) return;
         translator.close();
+        translator = null;
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
         String task = call.argument("task");
-        switch (task) {
-            case "download":
-                result.success("error");
-                return;
-            default:
-                break;
+        if (task.equals("download")) {
+            result.success("error");
+            return;
         }
 
-        TranslateRemoteModel model =
-                new TranslateRemoteModel.Builder(call.argument("model")).build();
+        TranslateRemoteModel model = new TranslateRemoteModel.Builder(call.argument("model")).build();
         genericModelManager.manageModel(model, call, result);
     }
 }

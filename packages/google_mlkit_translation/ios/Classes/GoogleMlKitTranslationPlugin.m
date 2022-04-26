@@ -26,27 +26,25 @@
     } else if ([call.method isEqualToString:manageLanguageModelModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeLanguageTranslator]) {
+        onDeviceTranslator = NULL;
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
 - (void)handleTranslation:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSString *source = call.arguments[@"source"];
-    NSString *target = call.arguments[@"target"];
     NSString *text = call.arguments[@"text"];
     
-    MLKTranslatorOptions *options = [[MLKTranslatorOptions alloc] initWithSourceLanguage:source
-                                                                          targetLanguage:target];
-    MLKTranslator *translator = [MLKTranslator translatorWithOptions:options];
-    onDeviceTranslator = translator;
+    if (onDeviceTranslator == NULL) {
+        NSString *source = call.arguments[@"source"];
+        NSString *target = call.arguments[@"target"];
+        MLKTranslatorOptions *options = [[MLKTranslatorOptions alloc] initWithSourceLanguage:source
+                                                                              targetLanguage:target];
+        onDeviceTranslator = [MLKTranslator translatorWithOptions:options];
+    }
     
-    MLKModelDownloadConditions *conditions = [[MLKModelDownloadConditions alloc]
-                                              initWithAllowsCellularAccess:YES
-                                              allowsBackgroundDownloading:YES];
-    
-    [translator downloadModelIfNeededWithConditions:conditions
-                                         completion:^(NSError *_Nullable error) {
+    MLKTranslator *translator = onDeviceTranslator;
+    [translator downloadModelIfNeededWithCompletion:^(NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;

@@ -9,58 +9,14 @@ class LanguageIdentifierView extends StatefulWidget {
 
 class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
   List<IdentifiedLanguage> _identifiedLanguages = <IdentifiedLanguage>[];
-  late TextEditingController _controller;
-  final _languageIdentifier = LanguageIdentifier(confidenceThreshold: 0.34);
+  final TextEditingController _controller = TextEditingController();
+  final _languageIdentifier = LanguageIdentifier(confidenceThreshold: 0.5);
   var _identifiedLanguage = '';
 
-  Future<void> _identifyLanguage() async {
-    if (_controller.text == '') return;
-
-    String language;
-    try {
-      language = await _languageIdentifier.identifyLanguage(_controller.text);
-    } on PlatformException catch (pe) {
-      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
-        language = 'error: no language identified!';
-      }
-      language = 'error: ${pe.code}: ${pe.message}';
-    } catch (e) {
-      language = 'error: ${e.toString()}';
-    }
-
-    setState(() {
-      _identifiedLanguage = language;
-    });
-  }
-
-  Future<void> _identifyPossibleLanguages() async {
-    if (_controller.text == '') return;
-    String error;
-    try {
-      final possibleLanguages =
-          await _languageIdentifier.identifyPossibleLanguages(_controller.text);
-      setState(() {
-        _identifiedLanguages = possibleLanguages;
-      });
-      return;
-    } on PlatformException catch (pe) {
-      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
-        error = 'error: no languages identified!';
-      }
-      error = 'error: ${pe.code}: ${pe.message}';
-    } catch (e) {
-      error = 'error: ${e.toString()}';
-    }
-    setState(() {
-      _identifiedLanguages = [];
-      _identifiedLanguage = error;
-    });
-  }
-
   @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
+  void dispose() {
+    _languageIdentifier.close();
+    super.dispose();
   }
 
   @override
@@ -104,9 +60,45 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
     );
   }
 
-  @override
-  void dispose() async {
-    super.dispose();
-    await _languageIdentifier.close();
+  Future<void> _identifyLanguage() async {
+    if (_controller.text == '') return;
+    String language;
+    try {
+      language = await _languageIdentifier.identifyLanguage(_controller.text);
+    } on PlatformException catch (pe) {
+      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
+        language = 'error: no language identified!';
+      }
+      language = 'error: ${pe.code}: ${pe.message}';
+    } catch (e) {
+      language = 'error: ${e.toString()}';
+    }
+    setState(() {
+      _identifiedLanguage = language;
+    });
+  }
+
+  Future<void> _identifyPossibleLanguages() async {
+    if (_controller.text == '') return;
+    String error;
+    try {
+      final possibleLanguages =
+          await _languageIdentifier.identifyPossibleLanguages(_controller.text);
+      setState(() {
+        _identifiedLanguages = possibleLanguages;
+      });
+      return;
+    } on PlatformException catch (pe) {
+      if (pe.code == _languageIdentifier.undeterminedLanguageCode) {
+        error = 'error: no languages identified!';
+      }
+      error = 'error: ${pe.code}: ${pe.message}';
+    } catch (e) {
+      error = 'error: ${e.toString()}';
+    }
+    setState(() {
+      _identifiedLanguages = [];
+      _identifiedLanguage = error;
+    });
   }
 }
