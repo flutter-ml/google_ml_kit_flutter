@@ -42,15 +42,24 @@
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
     NSDictionary *dictionary = call.arguments[@"options"];
-    NSString *labelerType = dictionary[@"labelerType"];
+    NSString *labelerType = dictionary[@"type"];
     if (labeler == NULL || type == NULL || ![labelerType isEqualToString:type]) {
         type = labelerType;
-        if ([@"default" isEqualToString:labelerType]) {
-            MLKImageLabelerOptions *options = [self getImageLabelerOptions:dictionary];
+        if ([@"base" isEqualToString:labelerType]) {
+            MLKImageLabelerOptions *options = [self getDefaultOptions:dictionary];
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-        } else if ([@"customLocal" isEqualToString:labelerType] || [@"customRemote" isEqualToString:labelerType]) {
-            MLKCustomImageLabelerOptions *options = [self getCustomLabelerOptions:dictionary result:result];
-            if (options == NULL) return;
+        } else if ([@"local" isEqualToString:labelerType] || [@"customRemote" isEqualToString:labelerType]) {
+            MLKCustomImageLabelerOptions *options = [self getLocalOptions:dictionary];
+            labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+        } else if ([@"remote" isEqualToString:labelerType]) {
+            MLKCustomImageLabelerOptions *options = [self getRemoteOptions:dictionary];
+            if (options == NULL) {
+                FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
+                                                          message:@"Model has not been downloaded yet"
+                                                          details:@"Model has not been downloaded yet"];
+                result(error);
+                return;
+            }
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
         } else {
             NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", labelerType];
@@ -84,40 +93,42 @@
     }];
 }
 
-- (MLKImageLabelerOptions *)getImageLabelerOptions:(NSDictionary *)optionsData {
+- (MLKImageLabelerOptions *)getDefaultOptions:(NSDictionary *)optionsData {
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     MLKImageLabelerOptions *options = [MLKImageLabelerOptions new];
     options.confidenceThreshold = conf;
     return options;
 }
 
-- (MLKCustomImageLabelerOptions *)getCustomLabelerOptions:(NSDictionary *)optionsData result:(FlutterResult)result {
-    NSNumber *local = optionsData[@"local"];
+- (MLKCustomImageLabelerOptions *)getLocalOptions:(NSDictionary *)optionsData {
     NSNumber *conf = optionsData[@"confidenceThreshold"];
-    MLKLocalModel *localModel;
-    MLKCustomImageLabelerOptions *options;
-    if (local.boolValue) {
-        NSString *path = optionsData[@"path"];
-        localModel = [[MLKLocalModel alloc] initWithPath:path];
-        options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
-    } else {
-        NSString *modelName = optionsData[@"modelName"];
-        MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
-        MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
-        
-        options = [[MLKCustomImageLabelerOptions alloc] initWithRemoteModel:remoteModel];
-        MLKModelManager *modelManager = [MLKModelManager modelManager];
-        BOOL isModelDownloaded = [modelManager isModelDownloaded:remoteModel];
-        
-        if (!isModelDownloaded) {
-            FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
-                                                      message:@"Model has not been downloaded yet"
-                                                      details:@"Model has not been downloaded yet"];
-            result(error);
-            return NULL;
-        }
-    }
+    NSNumber *maxCount = optionsData[@"maxCount"];
+    NSString *path = optionsData[@"path"];
+    
+    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:path];
+    MLKCustomImageLabelerOptions *options = [[MLKCustomImageLabelerOptions alloc] initWithLocalModel:localModel];
     options.confidenceThreshold = conf;
+    options.maxResultCount = maxCount.intValue;
+    return options;
+}
+
+- (MLKCustomImageLabelerOptions *)getRemoteOptions:(NSDictionary *)optionsData {
+    NSNumber *conf = optionsData[@"confidenceThreshold"];
+    NSNumber *maxCount = optionsData[@"maxCount"];
+    NSString *modelName = optionsData[@"modelName"];
+    
+    MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
+    MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
+    
+    MLKModelManager *modelManager = [MLKModelManager modelManager];
+    BOOL isModelDownloaded = [modelManager isModelDownloaded:remoteModel];
+    if (!isModelDownloaded) {
+        return NULL;
+    }
+    
+    MLKCustomImageLabelerOptions *options = [[MLKCustomImageLabelerOptions alloc] initWithRemoteModel:remoteModel];
+    options.confidenceThreshold = conf;
+    options.maxResultCount = maxCount.intValue;
     return options;
 }
 

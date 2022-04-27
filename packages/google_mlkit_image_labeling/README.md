@@ -54,6 +54,45 @@ for (ImageLabel label in labels) {
 imageLabeler.close();
 ```
 
+### Load local custom model
+
+This is an example how you can load a local custom model. Add model to you `pubspec.yaml`:
+
+```yaml
+assets:
+- assets/ml/
+```
+
+Add this method:
+
+```dart
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+Future<String> _getModel(String assetPath) async {
+  if (io.Platform.isAndroid) {
+    return 'flutter_assets/$assetPath';
+  }
+  final path = '${(await getApplicationSupportDirectory()).path}/$assetPath';
+  await io.Directory(dirname(path)).create(recursive: true);
+  final file = io.File(path);
+  if (!await file.exists()) {
+    final byteData = await rootBundle.load(assetPath);
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  }
+  return file.path;
+}
+```
+
+Create instance of [ImageLabeler]:
+```dart
+final customModelPath = await _getModel('assets/ml/object_labeler.tflite');
+imageLabeler = ImageLabeler(options: LocalLabelerOptions(customModelPath: customModelPath));
+```
+
 ### Managing remote models
 
 #### Create an instance of model manager

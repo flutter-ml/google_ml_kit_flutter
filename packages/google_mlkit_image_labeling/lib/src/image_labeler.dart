@@ -33,6 +33,13 @@ class ImageLabeler {
       _channel.invokeMethod('vision#closeImageLabelDetector');
 }
 
+/// Type of [ImageLabeler].
+enum ImageLabelerType {
+  base,
+  local,
+  remote,
+}
+
 /// Base options for [ImageLabeler].
 class ImageLabelerOptions {
   /// The confidence threshold for labels returned by the image labeler.
@@ -42,7 +49,7 @@ class ImageLabelerOptions {
   final double confidenceThreshold;
 
   /// Indicates that it uses google's base model to process images.
-  final String labelerType = 'default';
+  final ImageLabelerType type = ImageLabelerType.base;
 
   /// Constructor to create an instance of [ImageLabelerOptions].
   ImageLabelerOptions({this.confidenceThreshold = 0.5});
@@ -50,53 +57,38 @@ class ImageLabelerOptions {
   /// Returns a json representation of an instance of [ImageLabelerOptions].
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
-        'labelerType': labelerType,
+        'type': type.name,
       };
 }
 
 /// Options for [ImageLabeler] using a custom local model.
 class LocalLabelerOptions extends ImageLabelerOptions {
-  /// Indicates the location of the custom local model.
-  /// [LocalModelType.asset] implies the model is stored in assets folder of android module.
-  /// This is ignored in iOS.
-  final LocalModelType type;
-
   /// Path where your custom local model is stored.
   final String customModelPath;
 
+  /// Max number of results detector will return.
+  /// Default value is set to 10.
+  final int maxCount;
+
   /// Indicates that it uses a custom local model to process images.
   @override
-  final String labelerType = 'customLocal';
-
-  /// Max number of results detector will return.
-  /// This is ignored in iOS.
-  /// Default value is set to 5.
-  final int maxCount;
+  final ImageLabelerType type = ImageLabelerType.local;
 
   /// Constructor to create an instance of [LocalLabelerOptions].
   LocalLabelerOptions(
       {double confidenceThreshold = 0.5,
-      required this.type,
       required this.customModelPath,
-      this.maxCount = 5})
+      this.maxCount = 10})
       : super(confidenceThreshold: confidenceThreshold);
 
   /// Returns a json representation of an instance of [LocalLabelerOptions].
   @override
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
-        'labelerType': labelerType,
-        'local': true,
         'type': type.name,
         'path': customModelPath,
         'maxCount': maxCount
       };
-}
-
-// To specify whether tflite models are stored in asset directory or file stored in device.
-enum LocalModelType {
-  asset,
-  file,
 }
 
 /// Options for [ImageLabeler] using a Firebase model.
@@ -104,27 +96,26 @@ class FirebaseLabelerOption extends ImageLabelerOptions {
   /// Name of the firebase model.
   final String modelName;
 
+  /// Max number of results detector will return.
+  /// Default value is set to 10.
+  final int maxCount;
+
   /// Indicates that it uses a Firebase model to process images.
   @override
-  final String labelerType = 'customRemote';
-
-  /// Max number of results detector will return.
-  /// This is ignored in iOS.
-  final int maxCount;
+  final ImageLabelerType type = ImageLabelerType.remote;
 
   /// Constructor to create an instance of [FirebaseLabelerOption].
   FirebaseLabelerOption(
       {double confidenceThreshold = 0.5,
       required this.modelName,
-      this.maxCount = 5})
+      this.maxCount = 10})
       : super(confidenceThreshold: confidenceThreshold);
 
   /// Returns a json representation of an instance of [FirebaseLabelerOption].
   @override
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
-        'labelerType': labelerType,
-        'local': false,
+        'type': type.name,
         'modelName': modelName,
         'maxCount': maxCount
       };
