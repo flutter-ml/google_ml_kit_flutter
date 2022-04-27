@@ -13,7 +13,6 @@
 
 @implementation GoogleMlKitImageLabelingPlugin {
     MLKImageLabeler *labeler;
-    NSString *type;
     GenericModelManager *genericModelManager;
 }
 
@@ -41,17 +40,16 @@
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
-    NSDictionary *dictionary = call.arguments[@"options"];
-    NSString *labelerType = dictionary[@"type"];
-    if (labeler == NULL || type == NULL || ![labelerType isEqualToString:type]) {
-        type = labelerType;
-        if ([@"base" isEqualToString:labelerType]) {
+    if (labeler == NULL) {
+        NSDictionary *dictionary = call.arguments[@"options"];
+        NSString *type = dictionary[@"type"];
+        if ([@"base" isEqualToString:type]) {
             MLKImageLabelerOptions *options = [self getDefaultOptions:dictionary];
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-        } else if ([@"local" isEqualToString:labelerType] || [@"customRemote" isEqualToString:labelerType]) {
+        } else if ([@"local" isEqualToString:type]) {
             MLKCustomImageLabelerOptions *options = [self getLocalOptions:dictionary];
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
-        } else if ([@"remote" isEqualToString:labelerType]) {
+        } else if ([@"remote" isEqualToString:type]) {
             MLKCustomImageLabelerOptions *options = [self getRemoteOptions:dictionary];
             if (options == NULL) {
                 FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
@@ -62,8 +60,8 @@
             }
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
         } else {
-            NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", labelerType];
-            result([FlutterError errorWithCode:labelerType
+            NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", type];
+            result([FlutterError errorWithCode:type
                                        message:error
                                        details:error]);
             return;

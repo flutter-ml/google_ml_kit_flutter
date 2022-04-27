@@ -34,10 +34,17 @@ class ObjectDetector {
       _channel.invokeMethod<void>('vision#closeObjectDetector');
 }
 
-/// The mode for the object detector.
+/// The mode for [ObjectDetector].
 enum DetectionMode {
   stream,
   singleImage,
+}
+
+/// Type of [ObjectDetector].
+enum ObjectDetectorType {
+  base,
+  local,
+  remote,
 }
 
 /// Options to configure the detector while using with base model.
@@ -45,6 +52,9 @@ class ObjectDetectorOptions {
   /// Determines the detection mode.
   /// The default value is [DetectionMode.stream].
   final DetectionMode mode;
+
+  /// Indicates that it uses Google's base model to process images.
+  final ObjectDetectorType type = ObjectDetectorType.base;
 
   /// Indicates whether the object classification feature is enabled.
   /// The default value is false.
@@ -64,16 +74,17 @@ class ObjectDetectorOptions {
   /// Returns a json representation of an instance of [ObjectDetectorOptions].
   Map<String, dynamic> toJson() => {
         'mode': mode.index,
+        'type': type.name,
         'classify': classifyObjects,
         'multiple': multipleObjects,
-        'custom': false
       };
 }
 
-/// Options to configure the detector while using a custom model.
-class CustomObjectDetectorOptions extends ObjectDetectorOptions {
-  /// A reference to the custom model used by [ObjectDetector].
-  final CustomModel customModel;
+/// Options to configure the detector while using a local custom model.
+class LocalObjectDetectorOptions extends ObjectDetectorOptions {
+  /// Indicates that it uses a custom local model to process images.
+  @override
+  final ObjectDetectorType type = ObjectDetectorType.local;
 
   /// Maximum number of labels that detector returns per object.
   /// Must be positive.
@@ -86,9 +97,13 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptions {
   /// Default is 0.5.
   final double confidenceThreshold;
 
-  /// Constructor to create an instance of [CustomObjectDetectorOptions].
-  CustomObjectDetectorOptions(this.customModel,
+  /// Path where the local custom model is stored.
+  final String modelPath;
+
+  /// Constructor to create an instance of [LocalObjectDetectorOptions].
+  LocalObjectDetectorOptions(
       {DetectionMode mode = DetectionMode.stream,
+      required this.modelPath,
       bool classifyObjects = false,
       bool multipleObjects = false,
       this.maximumLabelsPerObject = 10,
@@ -98,17 +113,62 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptions {
             classifyObjects: classifyObjects,
             multipleObjects: multipleObjects);
 
-  /// Returns a json representation of an instance of [CustomObjectDetectorOptions].
+  /// Returns a json representation of an instance of [LocalObjectDetectorOptions].
   @override
   Map<String, dynamic> toJson() => {
         'mode': mode.index,
+        'type': type.name,
         'classify': classifyObjects,
         'multiple': multipleObjects,
-        'custom': true,
+        'path': modelPath,
         'threshold': confidenceThreshold,
         'maxLabels': maximumLabelsPerObject,
-        'modelType': customModel.modelType,
-        'modelIdentifier': customModel.modelIdentifier,
+      };
+}
+
+/// Options to configure the detector while using a Firebase model.
+class FirebaseObjectDetectorOptions extends ObjectDetectorOptions {
+  /// Indicates that it uses a Firebase model to process images.
+  @override
+  final ObjectDetectorType type = ObjectDetectorType.remote;
+
+  /// Maximum number of labels that detector returns per object.
+  /// Must be positive.
+  /// Default is 10.
+  final int maximumLabelsPerObject;
+
+  /// The confidence threshold for labels returned by the object detector.
+  /// Labels returned by the object detector will have a confidence level higher or equal to the given threshold.
+  /// The threshold is a floating-point value and must be in range [0, 1].
+  /// Default is 0.5.
+  final double confidenceThreshold;
+
+  /// Name of the firebase model.
+  final String modelName;
+
+  /// Constructor to create an instance of [FirebaseObjectDetectorOptions].
+  FirebaseObjectDetectorOptions(
+      {DetectionMode mode = DetectionMode.stream,
+      required this.modelName,
+      bool classifyObjects = false,
+      bool multipleObjects = false,
+      this.maximumLabelsPerObject = 10,
+      this.confidenceThreshold = 0.5})
+      : super(
+            mode: mode,
+            classifyObjects: classifyObjects,
+            multipleObjects: multipleObjects);
+
+  /// Returns a json representation of an instance of [FirebaseObjectDetectorOptions].
+  @override
+  Map<String, dynamic> toJson() => {
+        'mode': mode.index,
+        'type': type.name,
+        'classify': classifyObjects,
+        'multiple': multipleObjects,
+        'modelName': modelName,
+        'threshold': confidenceThreshold,
+        'maxLabels': maximumLabelsPerObject,
       };
 }
 
@@ -166,41 +226,6 @@ class Label {
         index: json['index'],
         text: json['text'],
       );
-}
-
-/// Abstract class to refer to the custom model used by [ObjectDetector].
-abstract class CustomModel {
-  /// For [LocalModel] this will refer to the path of local model.
-  /// For [FirebaseModel] this will refer to the name of hosted model.
-  final String modelIdentifier;
-
-  // Type of custom model.
-  final String modelType = 'base';
-
-  /// Constructor to create an instance of [CustomModel].
-  CustomModel(this.modelIdentifier);
-}
-
-/// A reference to a local custom model used by [ObjectDetector].
-class LocalModel extends CustomModel {
-  // Type of custom model. Set to 'local'.
-  @override
-  final String modelType = 'local';
-
-  /// Constructor to create an instance of [LocalModel].
-  /// Takes the model path relative to assets path(Android).
-  LocalModel(String modelPath) : super(modelPath);
-}
-
-/// A reference to a Firebase model used by [ObjectDetector].
-class FirebaseModel extends CustomModel {
-  // Type of custom model. Set to 'remote'.
-  @override
-  final String modelType = 'remote';
-
-  /// Constructor to create an instance of [FirebaseModel].
-  /// Takes the model name.
-  FirebaseModel(String modelName) : super(modelName);
 }
 
 /// A subclass of [ModelManager] that manages [FirebaseModelSource] required to process the image.

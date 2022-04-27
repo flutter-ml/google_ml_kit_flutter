@@ -63,8 +63,31 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
         if (inputImage == null) return;
 
         if (objectDetector == null) {
-            Map<String, Object> options = (Map<String, Object>) call.argument("options");
-            initiateDetector(options);
+            Map<String, Object> options = call.argument("options");
+            if (options == null) {
+                result.error("ImageLabelDetectorError", "Invalid options", null);
+                return;
+            }
+
+            String type = (String) options.get("type");
+            if (type.equals("base")) {
+                ObjectDetectorOptions detectorOptions = getDefaultOptions(options);
+                objectDetector = ObjectDetection.getClient(detectorOptions);
+            } else if (type.equals("local")) {
+                CustomObjectDetectorOptions detectorOptions = getLocalOptions(options);
+                objectDetector = ObjectDetection.getClient(detectorOptions);
+            } else if (type.equals("remote")) {
+                CustomObjectDetectorOptions detectorOptions = getRemoteOptions(options);
+                if (detectorOptions == null) {
+                    result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
+                    return;
+                }
+                objectDetector = ObjectDetection.getClient(detectorOptions);
+            } else {
+                String error = "Invalid model type: " + type;
+                result.error(type, error, error);
+                return;
+            }
         }
 
         objectDetector.process(inputImage).addOnSuccessListener(detectedObjects -> {
@@ -84,49 +107,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
         });
     }
 
-    private void initiateDetector(Map<String, Object> options) {
-        closeDetector();
-        boolean custom = (boolean) options.get("custom");
-        if (custom) initiateCustomDetector(options);
-        else initiateBaseDetector(options);
-    }
-
-    private void initiateCustomDetector(Map<String, Object> options) {
-        int mode = (int) options.get("mode");
-        mode = mode == 0 ?
-                CustomObjectDetectorOptions.STREAM_MODE :
-                CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
-        boolean classify = (boolean) options.get("classify");
-        boolean multiple = (boolean) options.get("multiple");
-        double threshold = (double) options.get("threshold");
-        int maxLabels = (int) options.get("maxLabels");
-        String modelType = (String) options.get("modelType");
-        String modelIdentifier = (String) options.get("modelIdentifier");
-
-        CustomObjectDetectorOptions.Builder builder;
-        if (modelType.equals("local")) {
-            LocalModel localModel = new LocalModel.Builder()
-                    .setAssetFilePath(modelIdentifier)
-                    .build();
-            builder = new CustomObjectDetectorOptions.Builder(localModel);
-        } else {
-            FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(modelIdentifier)
-                    .build();
-            CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource)
-                    .build();
-            builder = new CustomObjectDetectorOptions.Builder(remoteModel);
-        }
-
-        builder.setDetectorMode(mode);
-        if (classify) builder.enableClassification();
-        if (multiple) builder.enableMultipleObjects();
-        builder.setMaxPerObjectLabelCount(maxLabels);
-        builder.setClassificationConfidenceThreshold((float) threshold);
-
-        objectDetector = ObjectDetection.getClient(builder.build());
-    }
-
-    private void initiateBaseDetector(Map<String, Object> options) {
+    private ObjectDetectorOptions getDefaultOptions(Map<String, Object> options) {
         int mode = (int) options.get("mode");
         mode = mode == 0 ?
                 ObjectDetectorOptions.STREAM_MODE :
@@ -138,8 +119,59 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
                 .setDetectorMode(mode);
         if (classify) builder.enableClassification();
         if (multiple) builder.enableMultipleObjects();
+        return builder.build();
+    }
 
-        objectDetector = ObjectDetection.getClient(builder.build());
+    private CustomObjectDetectorOptions getLocalOptions(Map<String, Object> options) {
+        int mode = (int) options.get("mode");
+        mode = mode == 0 ?
+                CustomObjectDetectorOptions.STREAM_MODE :
+                CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
+        boolean classify = (boolean) options.get("classify");
+        boolean multiple = (boolean) options.get("multiple");
+        double threshold = (double) options.get("threshold");
+        int maxLabels = (int) options.get("maxLabels");
+        String path = (String) options.get("path");
+
+        LocalModel localModel = new LocalModel.Builder()
+                .setAssetFilePath(path)
+                .build();
+
+        CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(localModel);
+        builder.setDetectorMode(mode);
+        if (classify) builder.enableClassification();
+        if (multiple) builder.enableMultipleObjects();
+        builder.setMaxPerObjectLabelCount(maxLabels);
+        builder.setClassificationConfidenceThreshold((float) threshold);
+        return builder.build();
+    }
+
+    private CustomObjectDetectorOptions getRemoteOptions(Map<String, Object> options) {
+        int mode = (int) options.get("mode");
+        mode = mode == 0 ?
+                CustomObjectDetectorOptions.STREAM_MODE :
+                CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
+        boolean classify = (boolean) options.get("classify");
+        boolean multiple = (boolean) options.get("multiple");
+        double threshold = (double) options.get("threshold");
+        int maxLabels = (int) options.get("maxLabels");
+        String name = (String) options.get("modelName");
+
+        FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(name)
+                .build();
+        CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource)
+                .build();
+        if (!genericModelManager.isModelDownloaded(remoteModel)) {
+            return null;
+        }
+
+        CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(remoteModel);
+        builder.setDetectorMode(mode);
+        if (classify) builder.enableClassification();
+        if (multiple) builder.enableMultipleObjects();
+        builder.setMaxPerObjectLabelCount(maxLabels);
+        builder.setClassificationConfidenceThreshold((float) threshold);
+        return builder.build();
     }
 
     private void addData(Map<String, Object> addTo,

@@ -48,7 +48,7 @@ class ImageLabelerOptions {
   /// Default value is set 0.5.
   final double confidenceThreshold;
 
-  /// Indicates that it uses google's base model to process images.
+  /// Indicates that it uses Google's base model to process images.
   final ImageLabelerType type = ImageLabelerType.base;
 
   /// Constructor to create an instance of [ImageLabelerOptions].
@@ -63,8 +63,8 @@ class ImageLabelerOptions {
 
 /// Options for [ImageLabeler] using a custom local model.
 class LocalLabelerOptions extends ImageLabelerOptions {
-  /// Path where your custom local model is stored.
-  final String customModelPath;
+  /// Path where the local custom model is stored.
+  final String modelPath;
 
   /// Max number of results detector will return.
   /// Default value is set to 10.
@@ -77,7 +77,7 @@ class LocalLabelerOptions extends ImageLabelerOptions {
   /// Constructor to create an instance of [LocalLabelerOptions].
   LocalLabelerOptions(
       {double confidenceThreshold = 0.5,
-      required this.customModelPath,
+      required this.modelPath,
       this.maxCount = 10})
       : super(confidenceThreshold: confidenceThreshold);
 
@@ -86,7 +86,7 @@ class LocalLabelerOptions extends ImageLabelerOptions {
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
         'type': type.name,
-        'path': customModelPath,
+        'path': modelPath,
         'maxCount': maxCount
       };
 }

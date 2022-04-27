@@ -15,8 +15,8 @@ class ImageLabelView extends StatefulWidget {
 }
 
 class _ImageLabelViewState extends State<ImageLabelView> {
-  ImageLabeler _imageLabeler = ImageLabeler(options: ImageLabelerOptions());
-  bool _canProcess = true;
+  late ImageLabeler _imageLabeler;
+  bool _canProcess = false;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
@@ -53,9 +53,9 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     // make sure to add tflite model to assets/ml
     // final path = 'assets/ml/lite-model_aiy_vision_classifier_birds_V1_3.tflite';
     final path = 'assets/ml/object_labeler.tflite';
-    final customModelPath = await _getModel(path);
-    _imageLabeler = ImageLabeler(
-        options: LocalLabelerOptions(customModelPath: customModelPath));
+    final modelPath = await _getModel(path);
+    final options = LocalLabelerOptions(modelPath: modelPath);
+    _imageLabeler = ImageLabeler(options: options);
 
     // uncomment next lines if you want to use a remote model
     // make sure to add model to firebase
@@ -66,6 +66,8 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     // final options =
     //     FirebaseLabelerOption(confidenceThreshold: 0.5, modelName: modelName);
     // _imageLabeler = ImageLabeler(options: options);
+
+    _canProcess = true;
   }
 
   Future<void> processImage(InputImage inputImage) async {
