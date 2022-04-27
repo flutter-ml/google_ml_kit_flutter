@@ -56,7 +56,7 @@ imageLabeler.close();
 
 ### Load local custom model
 
-This is an example how you can load a local custom model. Add model to you `pubspec.yaml`:
+To use a local custom model add the [tflite model](https://www.tensorflow.org/lite) to your `pubspec.yaml`:
 
 ```yaml
 assets:
@@ -87,10 +87,12 @@ Future<String> _getModel(String assetPath) async {
 }
 ```
 
-Create instance of [ImageLabeler]:
+Create an instance of [ImageLabeler]:
+
 ```dart
-final customModelPath = await _getModel('assets/ml/object_labeler.tflite');
-imageLabeler = ImageLabeler(options: LocalLabelerOptions(customModelPath: customModelPath));
+final modelPath = await _getModel('assets/ml/object_labeler.tflite');
+final options = LocalLabelerOptions(modelPath: modelPath);
+final imageLabeler = ImageLabeler(options: options);
 ```
 
 ### Managing remote models

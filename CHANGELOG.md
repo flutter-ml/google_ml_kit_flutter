@@ -60,6 +60,8 @@ Packages with changes:
 #### `google_mlkit_object_detection` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
+* Refactor [ObjectDetectorOptions] and subclasses.
+* Add example for loading local custom model.
 
 #### `google_mlkit_pose_detection` - `v0.2.0`
 

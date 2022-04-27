@@ -42,7 +42,30 @@
     
     if (objectDetector == NULL) {
         NSDictionary *dictionary = call.arguments[@"options"];
-        [self initiateDetector: dictionary];
+        NSString *type = dictionary[@"type"];
+        if ([@"base" isEqualToString:type]) {
+            MLKObjectDetectorOptions *options = [self getDefaultOptions:dictionary];
+            objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
+        } else if ([@"local" isEqualToString:type]) {
+            MLKCustomObjectDetectorOptions *options = [self getLocalOptions:dictionary];
+            objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
+        } else if ([@"remote" isEqualToString:type]) {
+            MLKCustomObjectDetectorOptions *options = [self getRemoteOptions:dictionary];
+            if (options == NULL) {
+                FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
+                                                          message:@"Model has not been downloaded yet"
+                                                          details:@"Model has not been downloaded yet"];
+                result(error);
+                return;
+            }
+            objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
+        } else {
+            NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", type];
+            result([FlutterError errorWithCode:type
+                                       message:error
+                                       details:error]);
+            return;
+        }
     }
     
     [objectDetector
@@ -85,45 +108,7 @@
     }];
 }
 
-- (void)initiateDetector:(NSDictionary *) dictionary {
-    BOOL custom = [[dictionary objectForKey:@"custom"] boolValue];
-    if (custom) {
-        [self  initiateCustomDetector: dictionary];
-    } else {
-        [self  initiateBaseDetector: dictionary];
-    }
-}
-
-- (void)initiateCustomDetector:(NSDictionary *) dictionary {
-    NSNumber *mode = dictionary[@"mode"];
-    BOOL classify = [[dictionary objectForKey:@"classify"] boolValue];
-    BOOL multiple = [[dictionary objectForKey:@"multiple"] boolValue];
-    NSNumber *threshold = dictionary[@"threshold"];
-    NSNumber *maxLabels = dictionary[@"maxLabels"];
-    NSString *modelType = dictionary[@"modelType"];
-    NSString *modelIdentifier = dictionary[@"modelIdentifier"];
-    
-    MLKCustomObjectDetectorOptions *options;
-    if ([modelType isEqualToString:@"local"]) {
-        MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:modelIdentifier];
-        options =  [[MLKCustomObjectDetectorOptions alloc] initWithLocalModel:localModel];
-    } else {
-        MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc]
-                                                       initWithName:modelIdentifier];
-        MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc]
-                                             initWithRemoteModelSource:firebaseModelSource];
-        options = [[MLKCustomObjectDetectorOptions alloc] initWithRemoteModel:remoteModel];
-    }
-    options.detectorMode = mode.intValue == 0 ? MLKObjectDetectorModeStream : MLKObjectDetectorModeSingleImage;
-    options.shouldEnableClassification = classify;
-    options.shouldEnableMultipleObjects = multiple;
-    options.classificationConfidenceThreshold = threshold;
-    options.maxPerObjectLabelCount = maxLabels.integerValue;
-    
-    objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
-}
-
-- (void)initiateBaseDetector:(NSDictionary *) dictionary {
+- (MLKObjectDetectorOptions *)getDefaultOptions:(NSDictionary *)dictionary {
     NSNumber *mode = dictionary[@"mode"];
     BOOL classify = [[dictionary objectForKey:@"classify"] boolValue];
     BOOL multiple = [[dictionary objectForKey:@"multiple"] boolValue];
@@ -132,8 +117,51 @@
     options.detectorMode = mode.intValue == 0 ? MLKObjectDetectorModeStream : MLKObjectDetectorModeSingleImage;
     options.shouldEnableClassification = classify;
     options.shouldEnableMultipleObjects = multiple;
+    return options;
+}
+
+- (MLKCustomObjectDetectorOptions *)getLocalOptions:(NSDictionary *)dictionary {
+    NSNumber *mode = dictionary[@"mode"];
+    BOOL classify = [[dictionary objectForKey:@"classify"] boolValue];
+    BOOL multiple = [[dictionary objectForKey:@"multiple"] boolValue];
+    NSNumber *threshold = dictionary[@"threshold"];
+    NSNumber *maxLabels = dictionary[@"maxLabels"];
+    NSString *path = dictionary[@"path"];
     
-    objectDetector = [MLKObjectDetector objectDetectorWithOptions:options];
+    MLKLocalModel *localModel = [[MLKLocalModel alloc] initWithPath:path];
+    MLKCustomObjectDetectorOptions *options =  [[MLKCustomObjectDetectorOptions alloc] initWithLocalModel:localModel];
+    options.detectorMode = mode.intValue == 0 ? MLKObjectDetectorModeStream : MLKObjectDetectorModeSingleImage;
+    options.shouldEnableClassification = classify;
+    options.shouldEnableMultipleObjects = multiple;
+    options.classificationConfidenceThreshold = threshold;
+    options.maxPerObjectLabelCount = maxLabels.integerValue;
+    return options;
+}
+
+- (MLKCustomObjectDetectorOptions *)getRemoteOptions:(NSDictionary *)dictionary {
+    NSNumber *mode = dictionary[@"mode"];
+    BOOL classify = [[dictionary objectForKey:@"classify"] boolValue];
+    BOOL multiple = [[dictionary objectForKey:@"multiple"] boolValue];
+    NSNumber *threshold = dictionary[@"threshold"];
+    NSNumber *maxLabels = dictionary[@"maxLabels"];
+    NSString *modelName = dictionary[@"modelName"];
+    
+    MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
+    MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
+    
+    MLKModelManager *modelManager = [MLKModelManager modelManager];
+    BOOL isModelDownloaded = [modelManager isModelDownloaded:remoteModel];
+    if (!isModelDownloaded) {
+        return NULL;
+    }
+    
+    MLKCustomObjectDetectorOptions *options = [[MLKCustomObjectDetectorOptions alloc] initWithRemoteModel:remoteModel];
+    options.detectorMode = mode.intValue == 0 ? MLKObjectDetectorModeStream : MLKObjectDetectorModeSingleImage;
+    options.shouldEnableClassification = classify;
+    options.shouldEnableMultipleObjects = multiple;
+    options.classificationConfidenceThreshold = threshold;
+    options.maxPerObjectLabelCount = maxLabels.integerValue;
+    return options;
 }
 
 - (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {

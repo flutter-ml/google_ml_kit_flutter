@@ -30,7 +30,6 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private static final String MANAGE = "vision#manageFirebaseModels";
 
     private final GenericModelManager genericModelManager = new GenericModelManager();
-    private String type;
     private final Context context;
     private ImageLabeler imageLabeler;
 
@@ -63,23 +62,21 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        Map<String, Object> options = call.argument("options");
-        if (options == null) {
-            result.error("ImageLabelDetectorError", "Invalid options", null);
-            return;
-        }
+        if (imageLabeler == null) {
+            Map<String, Object> options = call.argument("options");
+            if (options == null) {
+                result.error("ImageLabelDetectorError", "Invalid options", null);
+                return;
+            }
 
-        String labelerType = (String) options.get("type");
-        if (imageLabeler == null || type == null ||
-                !type.equals(labelerType)) {
-            type = labelerType;
-            if (labelerType.equals("base")) {
+            String type = (String) options.get("type");
+            if (type.equals("base")) {
                 ImageLabelerOptions labelerOptions = getDefaultOptions(options);
                 imageLabeler = ImageLabeling.getClient(labelerOptions);
-            } else if (labelerType.equals("local")) {
+            } else if (type.equals("local")) {
                 CustomImageLabelerOptions labelerOptions = getLocalOptions(options);
                 imageLabeler = ImageLabeling.getClient(labelerOptions);
-            } else if (labelerType.equals("remote")) {
+            } else if (type.equals("remote")) {
                 CustomImageLabelerOptions labelerOptions = getRemoteOptions(options);
                 if (labelerOptions == null) {
                     result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
@@ -87,8 +84,8 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 }
                 imageLabeler = ImageLabeling.getClient(labelerOptions);
             } else {
-                String error = "Invalid model type: " + labelerType;
-                result.error(labelerType, error, error);
+                String error = "Invalid model type: " + type;
+                result.error(type, error, error);
                 return;
             }
         }
