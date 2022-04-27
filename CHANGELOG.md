@@ -11,6 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
+- [`google_mlkit_commons` - `v0.2.0`](#google_mlkit_commons---v020)
 - [`google_mlkit_barcode_scanning` - `v0.2.0`](#google_mlkit_barcode_scanning---v020)
 - [`google_mlkit_digital_ink_recognition` - `v0.2.0`](#google_mlkit_digital_ink_recognition---v020)
 - [`google_mlkit_entity_extraction` - `v0.2.0`](#google_mlkit_entity_extraction---v020)
@@ -28,6 +29,10 @@ Packages with changes:
 #### `google_mlkit_barcode_scanning` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
+
+#### `google_mlkit_commons` - `v0.2.0`
+
+* Fix: InputImage from file path.
 
 #### `google_mlkit_digital_ink_recognition` - `v0.2.0`
 

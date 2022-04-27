@@ -21,6 +21,8 @@ dependencies:
   google_mlkit_text_recognition: ^0.1.0
 
   # uncomment these lines when working on the local plugins
+#  google_mlkit_commons:
+#    path: ../google_mlkit_commons
 #  google_mlkit_barcode_scanning:
 #    path: ../google_mlkit_barcode_scanning
 #  google_mlkit_digital_ink_recognition:
