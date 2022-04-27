@@ -12,22 +12,14 @@ class DigitalInkRecognizer {
       MethodChannel('google_mlkit_digital_ink_recognizer');
 
   /// Performs a recognition of the text written on screen.
-  /// It takes a list of [Point] which refers to the points being written on screen.
+  /// It takes an instance of [Ink] which refers to the user input as a list of [Stroke].
   /// It takes the [model] that refers to language that is being processed.
   /// Note that [model] should be a BCP 47 language tag.
   /// Visit this site [https://tools.ietf.org/html/bcp47] to learn more.
-  Future<List<RecognitionCandidate>> recognize(
-      List<Point<int>> points, String model) async {
-    final List<Map<String, dynamic>> pointsList = <Map<String, dynamic>>[];
-    for (final point in points) {
-      pointsList.add(<String, dynamic>{
-        'x': point.x,
-        'y': point.y,
-      });
-    }
+  Future<List<RecognitionCandidate>> recognize(Ink ink, String model) async {
     final result = await _channel
         .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
-      'points': pointsList,
+      'ink': ink.toJson(),
       'model': model,
     });
 
@@ -43,6 +35,50 @@ class DigitalInkRecognizer {
   /// Closes the recognizer and releases its resources.
   Future<void> close() =>
       _channel.invokeMethod('vision#closeDigitalInkRecognizer');
+}
+
+/// Represents the user input as a collection of [Stroke] and serves as input for the handwriting recognition task.
+class Ink {
+  /// List of strokes composing the ink.
+  List<Stroke> strokes = [];
+
+  /// Returns a json representation of an instance of [Ink].
+  Map<String, dynamic> toJson() => {
+        'strokes': strokes.map((stroke) => stroke.toJson()).toList(),
+      };
+}
+
+/// Represents a sequence of touch points between a pen (resp. touch) down and pen (resp. touch) up event.
+class Stroke {
+  /// List of touch points as [Point].
+  List<StrokePoint> points = [];
+
+  /// Returns a json representation of an instance of [Stroke].
+  Map<String, dynamic> toJson() => {
+        'points': points.map((point) => point.toJson()).toList(),
+      };
+}
+
+/// A single touch point from the user.
+class StrokePoint {
+  /// Horizontal coordinate. Increases to the right.
+  final double x;
+
+  /// Vertical coordinate. Increases downward.
+  final double y;
+
+  /// Time when the point was recorded, in milliseconds.
+  final int t;
+
+  /// Constructor to create an instance of [StrokePoint].
+  StrokePoint({required this.x, required this.y, required this.t});
+
+  /// Returns a json representation of an instance of [StrokePoint].
+  Map<String, dynamic> toJson() => {
+        'x': x,
+        'y': y,
+        't': t,
+      };
 }
 
 /// A subclass of [ModelManager] that manages [DigitalInkRecognitionModel] required to process the image.

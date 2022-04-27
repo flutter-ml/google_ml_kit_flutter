@@ -1,7 +1,6 @@
 package com.google_mlkit_digital_ink_recognition;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
@@ -61,32 +60,22 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
             result.error("Model Error", "Model has not been downloaded yet ", null);
             return;
         }
-        List<Map<String, Object>> points = call.argument("points");
+
+        Map<String, Object> inkMap = call.argument("ink");
+        List<Map<String, Object>> strokeList = (List<Map<String, Object>>) inkMap.get("strokes");
         Ink.Builder inkBuilder = Ink.builder();
-        Ink.Stroke.Builder strokeBuilder;
-        strokeBuilder = Ink.Stroke.builder();
-
-        for (final Map<String, Object> point : points) {
-            Ink.Point inkPoint = new Ink.Point() {
-                @Override
-                public float getX() {
-                    return (float) (double) point.get("x");
-                }
-
-                @Override
-                public float getY() {
-                    return (float) (double) point.get("y");
-                }
-
-                @Nullable
-                @Override
-                public Long getTimestamp() {
-                    return null;
-                }
-            };
-            strokeBuilder.addPoint(inkPoint);
+        for (final Map<String, Object> strokeMap : strokeList) {
+            Ink.Stroke.Builder strokeBuilder = Ink.Stroke.builder();
+            List<Map<String, Object>> pointsList = (List<Map<String, Object>>) strokeMap.get("points");
+            for (final Map<String, Object> point : pointsList) {
+                float x = (float) (double) point.get("x");
+                float y = (float) (double) point.get("y");
+                long t = (long) point.get("t");
+                Ink.Point strokePoint = Ink.Point.create(x, y, t);
+                strokeBuilder.addPoint(strokePoint);
+            }
+            inkBuilder.addStroke(strokeBuilder.build());
         }
-        inkBuilder.addStroke(strokeBuilder.build());
         Ink ink = inkBuilder.build();
 
         recognizer.recognize(ink)

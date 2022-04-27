@@ -1,6 +1,7 @@
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.
+* Allow multiple strokes.
 
 ## 0.1.0
 
