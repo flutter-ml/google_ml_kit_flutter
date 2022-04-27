@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 
 import 'camera_view.dart';
 import 'painters/label_detector_painter.dart';
@@ -14,6 +14,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
+  String? _text;
 
   @override
   void dispose() {
@@ -27,6 +28,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     return CameraView(
       title: 'Image Labeler',
       customPaint: _customPaint,
+      text: _text,
       onImage: (inputImage) {
         // comment this line if you want to use custom model
         processImageWithDefaultModel(inputImage);
@@ -53,9 +55,23 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
+    setState(() {
+      _text = '';
+    });
     final labels = await _imageLabeler.processImage(inputImage);
-    final painter = LabelDetectorPainter(labels);
-    _customPaint = CustomPaint(painter: painter);
+    if (inputImage.inputImageData?.size != null &&
+        inputImage.inputImageData?.imageRotation != null) {
+      final painter = LabelDetectorPainter(labels);
+      _customPaint = CustomPaint(painter: painter);
+    } else {
+      String text = 'Labels found: ${labels.length}\n\n';
+      for (final label in labels) {
+        text += 'Label: ${label.label}, '
+            'Confidence: ${label.confidence.toStringAsFixed(2)}\n\n';
+      }
+      _text = text;
+      _customPaint = null;
+    }
     _isBusy = false;
     if (mounted) {
       setState(() {});
