@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Fix: InputImage from file path.
+
 ## 0.1.0
 
 * Update iOS dependencies.
