@@ -49,7 +49,7 @@ class Vision {
 
   /// Return an instance of [FaceDetector].
   FaceDetector faceDetector([FaceDetectorOptions? options]) {
-    return FaceDetector(options: options ?? const FaceDetectorOptions());
+    return FaceDetector(options: options ?? FaceDetectorOptions());
   }
 
   /// Returns an instance of [ObjectDetector].

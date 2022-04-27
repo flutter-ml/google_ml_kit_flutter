@@ -12,7 +12,7 @@ class OnDeviceTranslator {
   /// The target language to translate the input into.
   final TranslateLanguage targetLanguage;
 
-  /// Constructor to create instance of [OnDeviceTranslator]
+  /// Constructor to create an instance of [OnDeviceTranslator].
   OnDeviceTranslator(
       {required this.sourceLanguage, required this.targetLanguage});
 
@@ -37,6 +37,7 @@ class OnDeviceTranslator {
 // Downloading model always return false,
 // model is downloaded if needed when translating.
 class OnDeviceTranslatorModelManager extends ModelManager {
+  /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
   OnDeviceTranslatorModelManager()
       : super(
             channel: OnDeviceTranslator._channel,

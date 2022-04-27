@@ -9,7 +9,7 @@ class PoseDetector {
   /// The options for the pose detector.
   final PoseDetectorOptions options;
 
-  /// Constructor to create instance of [PoseDetector].
+  /// Constructor to create an instance of [PoseDetector].
   PoseDetector({required this.options});
 
   /// Processes the given [InputImage] for pose detection.
@@ -28,7 +28,7 @@ class PoseDetector {
         final landmark = PoseLandmark.fromJson(point);
         landmarks[landmark.type] = landmark;
       }
-      poses.add(Pose(landmarks));
+      poses.add(Pose(landmarks: landmarks));
     }
 
     return poses;
@@ -46,11 +46,12 @@ class PoseDetectorOptions {
   /// The mode for the pose detector.
   final PoseDetectionMode mode;
 
-  /// Constructor to create instance of [PoseDetectorOptions].
+  /// Constructor to create an instance of [PoseDetectorOptions].
   PoseDetectorOptions(
       {this.model = PoseDetectionModel.base,
       this.mode = PoseDetectionMode.stream});
 
+  /// Returns a json representation of an instance of [PoseDetectorOptions].
   Map<String, dynamic> toJson() => {
         'model': model.name,
         'mode': mode.name,
@@ -117,8 +118,8 @@ class Pose {
   /// A map of all the landmarks in the detected pose.
   final Map<PoseLandmarkType, PoseLandmark> landmarks;
 
-  /// Constructor to create instance of [Pose].
-  Pose(this.landmarks);
+  /// Constructor to create an instance of [Pose].
+  Pose({required this.landmarks});
 }
 
 /// A landmark in a pose detection result.
@@ -138,7 +139,7 @@ class PoseLandmark {
   /// Gives the likelihood of this landmark being in the image frame.
   final double likelihood;
 
-  /// Constructor to create instance of [PoseLandmark].
+  /// Constructor to create an instance of [PoseLandmark].
   PoseLandmark({
     required this.type,
     required this.x,
@@ -147,6 +148,7 @@ class PoseLandmark {
     required this.likelihood,
   });
 
+  /// Returns an instance of [PoseLandmark] from a given [json].
   factory PoseLandmark.fromJson(Map<dynamic, dynamic> json) {
     return PoseLandmark(
       type: PoseLandmarkType.values[json['type'].toInt()],

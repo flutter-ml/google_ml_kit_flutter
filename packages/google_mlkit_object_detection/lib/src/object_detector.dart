@@ -61,6 +61,7 @@ class ObjectDetectorOptions {
       this.classifyObjects = false,
       this.multipleObjects = false});
 
+  /// Returns a json representation of an instance of [ObjectDetectorOptions].
   Map<String, dynamic> toJson() => {
         'mode': mode.index,
         'classify': classifyObjects,
@@ -74,7 +75,9 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptions {
   /// A reference to the custom model used by [ObjectDetector].
   final CustomModel customModel;
 
-  /// Maximum number of labels that detector returns per object. Must be positive. Default is 10.
+  /// Maximum number of labels that detector returns per object.
+  /// Must be positive.
+  /// Default is 10.
   final int maximumLabelsPerObject;
 
   /// The confidence threshold for labels returned by the object detector.
@@ -95,6 +98,7 @@ class CustomObjectDetectorOptions extends ObjectDetectorOptions {
             classifyObjects: classifyObjects,
             multipleObjects: multipleObjects);
 
+  /// Returns a json representation of an instance of [CustomObjectDetectorOptions].
   @override
   Map<String, dynamic> toJson() => {
         'mode': mode.index,
@@ -113,7 +117,7 @@ class DetectedObject {
   /// Tracking ID of object. If tracking is disabled it is null.
   final int? trackingId;
 
-  /// Rect within which the object was detected.
+  /// Rect that contains the detected object.
   final Rect boundingBox;
 
   /// List of [Label], identified for the object.
@@ -125,6 +129,7 @@ class DetectedObject {
       required this.labels,
       required this.trackingId});
 
+  /// Returns an instance of [DetectedObject] from a given [json].
   factory DetectedObject.fromJson(Map<dynamic, dynamic> json) {
     final rect = RectJson.fromJson(json['rect']);
     final trackingId = json['trackingId'];
@@ -152,9 +157,10 @@ class Label {
   /// Gets the text of this label.
   final String text;
 
-  /// Constructor to create an instance of [Label]
+  /// Constructor to create an instance of [Label].
   Label({required this.confidence, required this.index, required this.text});
 
+  /// Returns an instance of [Label] from a given [json].
   factory Label.fromJson(Map<dynamic, dynamic> json) => Label(
         confidence: json['confidence'],
         index: json['index'],
@@ -199,6 +205,7 @@ class FirebaseModel extends CustomModel {
 
 /// A subclass of [ModelManager] that manages [FirebaseModelSource] required to process the image.
 class FirebaseObjectDetectorModelManager extends ModelManager {
+  /// Constructor to create an instance of [FirebaseObjectDetectorModelManager].
   FirebaseObjectDetectorModelManager()
       : super(
             channel: ObjectDetector._channel,

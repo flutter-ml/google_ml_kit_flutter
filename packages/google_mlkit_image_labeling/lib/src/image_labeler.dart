@@ -9,9 +9,10 @@ class ImageLabeler {
   /// The options for the image labeler.
   final ImageLabelerOptions options;
 
+  /// Constructor to create an instance of [ImageLabeler].
   ImageLabeler({required this.options});
 
-  /// Processes the given image for image labeling, it returns a List of [ImageLabel]
+  /// Processes the given image for image labeling, it returns a List of [ImageLabel].
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
         'vision#startImageLabelDetector', <String, dynamic>{
@@ -27,7 +28,7 @@ class ImageLabeler {
     return imageLabels;
   }
 
-  /// Closes the detector and releases its resources.
+  /// Closes the labeler and releases its resources.
   Future<void> close() =>
       _channel.invokeMethod('vision#closeImageLabelDetector');
 }
@@ -37,15 +38,16 @@ class ImageLabelerOptions {
   /// The confidence threshold for labels returned by the image labeler.
   /// Labels returned by the image labeler will have a confidence level higher or equal to the given threshold.
   /// The value must be a floating-point value in the range [0, 1].
-  /// Default value is set 0.5
+  /// Default value is set 0.5.
   final double confidenceThreshold;
 
   /// Indicates that it uses google's base model to process images.
   final String labelerType = 'default';
 
-  /// Constructor to create instance of [ImageLabelerOptions]
+  /// Constructor to create an instance of [ImageLabelerOptions].
   ImageLabelerOptions({this.confidenceThreshold = 0.5});
 
+  /// Returns a json representation of an instance of [ImageLabelerOptions].
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
         'labelerType': labelerType,
@@ -66,9 +68,9 @@ class LocalLabelerOptions extends ImageLabelerOptions {
   @override
   final String labelerType = 'customLocal';
 
-  /// Max number of results detector will return
+  /// Max number of results detector will return.
   /// This is ignored in iOS.
-  /// Default value is set to 5
+  /// Default value is set to 5.
   final int maxCount;
 
   /// Constructor to create an instance of [LocalLabelerOptions].
@@ -79,6 +81,7 @@ class LocalLabelerOptions extends ImageLabelerOptions {
       this.maxCount = 5})
       : super(confidenceThreshold: confidenceThreshold);
 
+  /// Returns a json representation of an instance of [LocalLabelerOptions].
   @override
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
@@ -105,17 +108,18 @@ class FirebaseLabelerOption extends ImageLabelerOptions {
   @override
   final String labelerType = 'customRemote';
 
-  /// Max number of results detector will return
-  /// This is ignored in iOS
+  /// Max number of results detector will return.
+  /// This is ignored in iOS.
   final int maxCount;
 
-  /// Constructor to create an instance of [FirebaseLabelerOption]
+  /// Constructor to create an instance of [FirebaseLabelerOption].
   FirebaseLabelerOption(
       {double confidenceThreshold = 0.5,
       required this.modelName,
       this.maxCount = 5})
       : super(confidenceThreshold: confidenceThreshold);
 
+  /// Returns a json representation of an instance of [FirebaseLabelerOption].
   @override
   Map<String, dynamic> toJson() => {
         'confidenceThreshold': confidenceThreshold,
@@ -128,6 +132,7 @@ class FirebaseLabelerOption extends ImageLabelerOptions {
 
 /// A subclass of [ModelManager] that manages [FirebaseModelSource] required to process the image.
 class FirebaseImageLabelerModelManager extends ModelManager {
+  /// Constructor to create an instance of [FirebaseImageLabelerModelManager].
   FirebaseImageLabelerModelManager()
       : super(
             channel: ImageLabeler._channel,
@@ -136,18 +141,20 @@ class FirebaseImageLabelerModelManager extends ModelManager {
 
 /// Represents a label detected in an image.
 class ImageLabel {
-  /// The confidence(probability) given to label that was identified in image
+  /// The confidence(probability) given to label that was identified in image.
   final double confidence;
 
-  /// Label or title given for detected entity in image
+  /// Label or title given for detected entity in image.
   final String label;
 
-  /// Index of label according to google's label map [https://developers.google.com/ml-kit/vision/image-labeling/label-map]
+  /// Index of label according to google's label map: https://developers.google.com/ml-kit/vision/image-labeling/label-map
   final int index;
 
+  /// Constructor to create an instance of [ImageLabel].
   ImageLabel(
       {required this.confidence, required this.label, required this.index});
 
+  /// Returns an instance of [ImageLabel] from a given [json].
   factory ImageLabel.fromJson(Map<dynamic, dynamic> json) => ImageLabel(
         confidence: json['confidence'],
         label: json['text'],

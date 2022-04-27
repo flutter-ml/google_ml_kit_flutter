@@ -66,6 +66,7 @@ class IdentifiedLanguage {
   /// Constructor to create an instance of [IdentifiedLanguage].
   IdentifiedLanguage({required this.languageTag, required this.confidence});
 
+  /// Returns an instance of [IdentifiedLanguage] from a given [json].
   factory IdentifiedLanguage.fromJson(Map<dynamic, dynamic> json) =>
       IdentifiedLanguage(
         languageTag: json['language'],

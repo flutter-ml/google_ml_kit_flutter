@@ -35,14 +35,14 @@ class TextRecognizerPainter extends CustomPainter {
       builder.addText(textBlock.text);
       builder.pop();
 
-      final left =
-          translateX(textBlock.rect.left, rotation, size, absoluteImageSize);
-      final top =
-          translateY(textBlock.rect.top, rotation, size, absoluteImageSize);
-      final right =
-          translateX(textBlock.rect.right, rotation, size, absoluteImageSize);
-      final bottom =
-          translateY(textBlock.rect.bottom, rotation, size, absoluteImageSize);
+      final left = translateX(
+          textBlock.boundingBox.left, rotation, size, absoluteImageSize);
+      final top = translateY(
+          textBlock.boundingBox.top, rotation, size, absoluteImageSize);
+      final right = translateX(
+          textBlock.boundingBox.right, rotation, size, absoluteImageSize);
+      final bottom = translateY(
+          textBlock.boundingBox.bottom, rotation, size, absoluteImageSize);
 
       canvas.drawRect(
         Rect.fromLTRB(left, top, right, bottom),

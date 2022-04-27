@@ -13,10 +13,11 @@ class BarcodeScanner {
   /// List that restrict the scan to specific barcode formats.
   final List<BarcodeFormat> formats;
 
-  /// Returns a barcode scanner with the given format options.
+  /// Constructor to create an instance of [BarcodeScanner].
+  /// Returns a barcode scanner with the given [formats] options.
   BarcodeScanner({this.formats = const [BarcodeFormat.all]});
 
-  /// Processes the given [InputImage] for barcode scanning. Returns a list of [Barcode]
+  /// Processes the given [InputImage] for barcode scanning. Returns a list of [Barcode].
   Future<List<Barcode>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod('vision#startBarcodeScanner', {
       'formats': formats.map((f) => f.rawValue).toList(),
@@ -212,6 +213,7 @@ class Barcode {
   /// Due to the possible perspective distortions, this is not necessarily a rectangle.
   final List<Point<int>>? cornerPoints;
 
+  /// Constructor to create an instance of [Barcode].
   Barcode({
     required this.type,
     required this.format,
@@ -223,6 +225,7 @@ class Barcode {
     required this.value,
   });
 
+  /// Returns an instance of [Barcode] from a given [json].
   factory Barcode.fromJson(Map<dynamic, dynamic> json) {
     final type = BarcodeType.values[json['type'].toInt()];
     final format = BarcodeFormatValue.fromRawValue(json['format']);
@@ -303,8 +306,10 @@ class BarcodeWifi extends BarcodeValue {
   /// Encryption type of wifi.
   final int? encryptionType;
 
+  /// Constructor to create an instance of [BarcodeWifi].
   BarcodeWifi({this.ssid, this.password, this.encryptionType});
 
+  /// Returns an instance of [BarcodeWifi] from a given [json].
   factory BarcodeWifi.fromJson(Map<dynamic, dynamic> json) => BarcodeWifi(
         ssid: json['ssid'],
         password: json['password'],
@@ -320,8 +325,10 @@ class BarcodeUrl extends BarcodeValue {
   /// Title of the bookmark.
   final String? title;
 
+  /// Constructor to create an instance of [BarcodeUrl].
   BarcodeUrl({this.url, this.title});
 
+  /// Returns an instance of [BarcodeUrl] from a given [json].
   factory BarcodeUrl.fromJson(Map<dynamic, dynamic> json) => BarcodeUrl(
         url: json['url'],
         title: json['title'],
@@ -354,8 +361,10 @@ class BarcodeEmail extends BarcodeValue {
   /// Subject of email.
   final String? subject;
 
+  /// Constructor to create an instance of [BarcodeEmail].
   BarcodeEmail({this.type, this.address, this.body, this.subject});
 
+  /// Returns an instance of [BarcodeEmail] from a given [json].
   factory BarcodeEmail.fromJson(Map<dynamic, dynamic> json) => BarcodeEmail(
         type: BarcodeEmailType.values[json['emailType']],
         address: json['address'],
@@ -390,8 +399,10 @@ class BarcodePhone extends BarcodeValue {
   /// Phone number.
   final String? number;
 
+  /// Constructor to create an instance of [BarcodePhone].
   BarcodePhone({this.type, this.number});
 
+  /// Returns an instance of [BarcodePhone] from a given [json].
   factory BarcodePhone.fromJson(Map<dynamic, dynamic> json) => BarcodePhone(
         type: BarcodePhoneType.values[json['phoneType']],
         number: json['number'],
@@ -406,8 +417,10 @@ class BarcodeSMS extends BarcodeValue {
   /// Phone number of the sender.
   final String? phoneNumber;
 
+  /// Constructor to create an instance of [BarcodeSMS].
   BarcodeSMS({this.message, this.phoneNumber});
 
+  /// Returns an instance of [BarcodeSMS] from a given [json].
   factory BarcodeSMS.fromJson(Map<dynamic, dynamic> json) => BarcodeSMS(
         message: json['message'],
         phoneNumber: json['number'],
@@ -422,8 +435,10 @@ class BarcodeGeoPoint extends BarcodeValue {
   //// Longitude co-ordinates of the location.
   final double? longitude;
 
+  /// Constructor to create an instance of [BarcodeGeoPoint].
   BarcodeGeoPoint({this.latitude, this.longitude});
 
+  /// Returns an instance of [BarcodeGeoPoint] from a given [json].
   factory BarcodeGeoPoint.fromJson(Map<dynamic, dynamic> json) =>
       BarcodeGeoPoint(
         latitude: json['latitude'],
@@ -469,6 +484,7 @@ class BarcodeDriverLicense extends BarcodeValue {
   /// Country of the holder.
   final String? country;
 
+  /// Constructor to create an instance of [BarcodeDriverLicense].
   BarcodeDriverLicense({
     this.addressCity,
     this.addressState,
@@ -484,6 +500,7 @@ class BarcodeDriverLicense extends BarcodeValue {
     this.country,
   });
 
+  /// Returns an instance of [BarcodeDriverLicense] from a given [json].
   factory BarcodeDriverLicense.fromJson(Map<dynamic, dynamic> json) =>
       BarcodeDriverLicense(
         addressCity: json['addressCity'],
@@ -524,13 +541,13 @@ class BarcodeContactInfo extends BarcodeValue {
   /// Properly formatted name of the person.
   final String? formattedName;
 
-  /// Name prefix
+  /// Name prefix.
   final String? prefix;
 
-  /// Name pronunciation
+  /// Name pronunciation.
   final String? pronunciation;
 
-  /// Job title
+  /// Job title.
   final String? jobTitle;
 
   /// Organization of the contact person.
@@ -539,6 +556,7 @@ class BarcodeContactInfo extends BarcodeValue {
   /// Url's of contact person.
   final List<String> urls;
 
+  /// Constructor to create an instance of [BarcodeContactInfo].
   BarcodeContactInfo({
     required this.addresses,
     required this.emails,
@@ -554,6 +572,7 @@ class BarcodeContactInfo extends BarcodeValue {
     this.organizationName,
   });
 
+  /// Returns an instance of [BarcodeContactInfo] from a given [json].
   factory BarcodeContactInfo.fromJson(Map<dynamic, dynamic> json) =>
       BarcodeContactInfo(
         addresses: _getBarcodeAddresses(json),
@@ -594,6 +613,7 @@ class BarcodeCalenderEvent extends BarcodeValue {
   /// End DateTime of the calender event.
   final DateTime? end;
 
+  /// Constructor to create an instance of [BarcodeCalenderEvent].
   BarcodeCalenderEvent({
     this.description,
     this.location,
@@ -604,6 +624,7 @@ class BarcodeCalenderEvent extends BarcodeValue {
     this.end,
   });
 
+  /// Returns an instance of [BarcodeCalenderEvent] from a given [json].
   factory BarcodeCalenderEvent.fromJson(Map<dynamic, dynamic> json) =>
       BarcodeCalenderEvent(
         description: json['description'],
@@ -633,11 +654,13 @@ class BarcodeAddress {
   /// Address lines found.
   final List<String> addressLines;
 
-  /// Denoted the address type -> Home, Work or Unknown.
+  /// The address type.
   final BarcodeAddressType? type;
 
+  /// Constructor to create an instance of [BarcodeAddress].
   BarcodeAddress({required this.addressLines, this.type});
 
+  /// Returns an instance of [BarcodeAddress] from a given [json].
   factory BarcodeAddress.fromJson(Map<dynamic, dynamic> json) {
     final lines = <String>[];
     for (final dynamic line in json['addressLines']) {
