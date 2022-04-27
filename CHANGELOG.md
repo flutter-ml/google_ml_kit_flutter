@@ -32,6 +32,7 @@ Packages with changes:
 #### `google_mlkit_digital_ink_recognition` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
+* Allow multiple strokes.
 
 #### `google_mlkit_entity_extraction` - `v0.2.0`
 

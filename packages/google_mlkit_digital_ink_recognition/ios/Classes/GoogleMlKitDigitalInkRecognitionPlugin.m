@@ -36,7 +36,6 @@
 }
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSArray *pointsList = call.arguments[@"points"];
     NSString *modelTag = call.arguments[@"model"];
     
     MLKDigitalInkRecognitionModelIdentifier *identifier = [MLKDigitalInkRecognitionModelIdentifier modelIdentifierForLanguageTag:modelTag];
@@ -59,17 +58,20 @@
         recognizer = [MLKDigitalInkRecognizer digitalInkRecognizerWithOptions:options];
     }
     
-    NSMutableArray *points = [NSMutableArray array];
-    for (NSDictionary *pointMap in pointsList) {
-        NSNumber *x = pointMap[@"x"];
-        NSNumber *y = pointMap[@"y"];
-        MLKStrokePoint *strokePoint = [[MLKStrokePoint alloc] initWithX:x.floatValue y:y.floatValue];
-        [points addObject:strokePoint];
-    }
-    
     NSMutableArray *strokes = [NSMutableArray array];
-    [strokes addObject:[[MLKStroke alloc] initWithPoints:points]];
-    
+    NSArray *strokeList = call.arguments[@"ink"][@"strokes"];
+    for (NSDictionary *strokeMap in strokeList) {
+        NSMutableArray *stroke = [NSMutableArray array];
+        NSArray *pointsList = strokeMap[@"points"];
+        for (NSDictionary *pointMap in pointsList) {
+            NSNumber *x = pointMap[@"x"];
+            NSNumber *y = pointMap[@"y"];
+            NSNumber *t = pointMap[@"t"];
+            MLKStrokePoint *strokePoint = [[MLKStrokePoint alloc] initWithX:x.floatValue y:y.floatValue t:t.longValue];
+            [stroke addObject:strokePoint];
+        }
+        [strokes addObject:[[MLKStroke alloc] initWithPoints:stroke]];
+    }
     MLKInk *ink = [[MLKInk alloc] initWithStrokes:strokes];
     
     [recognizer recognizeInk:ink

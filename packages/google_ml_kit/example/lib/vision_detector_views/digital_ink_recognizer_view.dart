@@ -1,6 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Ink;
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 import 'toast.dart';
@@ -14,7 +12,8 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   final DigitalInkRecognizerModelManager _modelManager =
       DigitalInkRecognizerModelManager();
   final DigitalInkRecognizer _digitalInkRecognizer = DigitalInkRecognizer();
-  List<Point<int>> _points = [];
+  final Ink _ink = Ink();
+  List<StrokePoint> _points = [];
   String _recognizedText = '';
   final String _language = 'en-US';
 
@@ -33,6 +32,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
           children: [
             Expanded(
               child: GestureDetector(
+                onPanStart: (DragStartDetails details) {
+                  _ink.strokes.add(Stroke());
+                },
                 onPanUpdate: (DragUpdateDetails details) {
                   setState(() {
                     final RenderObject? object = context.findRenderObject();
@@ -40,17 +42,23 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                         ?.globalToLocal(details.localPosition);
                     if (localPosition != null) {
                       _points = List.from(_points)
-                        ..add(Point(localPosition.dx.toInt(),
-                            localPosition.dy.toInt()));
+                        ..add(StrokePoint(
+                          x: localPosition.dx,
+                          y: localPosition.dy,
+                          t: DateTime.now().millisecondsSinceEpoch,
+                        ));
+                    }
+                    if (_ink.strokes.isNotEmpty) {
+                      _ink.strokes.last.points = _points.toList();
                     }
                   });
                 },
-                onPanEnd: (DragEndDetails details) {},
+                onPanEnd: (DragEndDetails details) {
+                  _points.clear();
+                  setState(() {});
+                },
                 child: CustomPaint(
-                  painter: Signature(
-                      points: _points
-                          .map((e) => Offset(e.x.toDouble(), e.y.toDouble()))
-                          .toList()),
+                  painter: Signature(ink: _ink),
                   size: Size.infinite,
                 ),
               ),
@@ -106,6 +114,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
 
   void _clearPad() {
     setState(() {
+      _ink.strokes.clear();
       _points.clear();
       _recognizedText = '';
     });
@@ -145,12 +154,11 @@ class _DigitalInkViewState extends State<DigitalInkView> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text('Recognising'),
+              title: Text('Recognizing'),
             ),
         barrierDismissible: true);
     try {
-      final candidates =
-          await _digitalInkRecognizer.recognize(_points, _language);
+      final candidates = await _digitalInkRecognizer.recognize(_ink, _language);
       _recognizedText = '';
       for (final candidate in candidates) {
         _recognizedText += '\n${candidate.text}';
@@ -166,9 +174,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
 }
 
 class Signature extends CustomPainter {
-  List<Offset?> points;
+  Ink ink;
 
-  Signature({this.points = const []});
+  Signature({required this.ink});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -177,15 +185,16 @@ class Signature extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 4.0;
 
-    for (int i = 0; i < points.length - 1; i++) {
-      final p1 = points[i];
-      final p2 = points[i + 1];
-      if (p1 != null && p2 != null) {
-        canvas.drawLine(p1, p2, paint);
+    for (final stroke in ink.strokes) {
+      for (int i = 0; i < stroke.points.length - 1; i++) {
+        final p1 = stroke.points[i];
+        final p2 = stroke.points[i + 1];
+        canvas.drawLine(Offset(p1.x.toDouble(), p1.y.toDouble()),
+            Offset(p2.x.toDouble(), p2.y.toDouble()), paint);
       }
     }
   }
 
   @override
-  bool shouldRepaint(Signature oldDelegate) => oldDelegate.points != points;
+  bool shouldRepaint(Signature oldDelegate) => true;
 }
