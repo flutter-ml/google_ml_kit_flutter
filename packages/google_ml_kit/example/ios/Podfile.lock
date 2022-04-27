@@ -45,7 +45,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/BarcodeScanning (~> 2.6.0)
-  - google_mlkit_commons (0.1.0):
+  - google_mlkit_commons (0.2.0):
     - Flutter
     - MLKitVision
   - google_mlkit_digital_ink_recognition (0.2.0):
@@ -343,6 +343,8 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - path_provider_ios (0.0.1):
+    - Flutter
   - PromisesObjC (2.1.0)
   - Protobuf (3.20.0)
   - SSZipArchive (2.4.3)
@@ -364,6 +366,7 @@ DEPENDENCIES:
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -445,6 +448,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_translation/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
 
 SPEC CHECKSUMS:
   camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
@@ -455,7 +460,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 7d1d967a307c12f1aadd76844fc321cef699b1ce
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   google_mlkit_barcode_scanning: 7960ae06f85f1371d3fb561ed14bc40f2ca62a66
-  google_mlkit_commons: 18acb21452524d149756faeacfcf9711d25a4258
+  google_mlkit_commons: e9070f57232c3a3e4bd42fdfa621bb1f4bb3e709
   google_mlkit_digital_ink_recognition: c401d07bf8f23f7f672993c29871aae038896489
   google_mlkit_entity_extraction: c71fe5f5fd7776e9b180a1c3c03ee626bf3ad3a2
   google_mlkit_face_detection: e918c74eca47a06d3882e224966d4149becf2ddd
@@ -505,6 +510,7 @@ SPEC CHECKSUMS:
   MLKitVisionKit: 68c122ceb9b2fe1a05ffe09341c750d566c77170
   MLKitXenoCommon: 849f10d93d3fda1ee034cab23863e4abb4c24f10
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   Protobuf: 66e2f3b26a35e4cc379831f4ced538274ee4b923
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef

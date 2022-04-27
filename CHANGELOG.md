@@ -50,6 +50,8 @@ Packages with changes:
 #### `google_mlkit_image_labeling` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
+* Refactor [ImageLabelerOptions] and subclasses.
+* Add example for loading local custom model.
 
 #### `google_mlkit_language_id` - `v0.2.0`
 
