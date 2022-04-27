@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 import 'camera_view.dart';
 import 'painters/barcode_detector_painter.dart';
@@ -14,6 +14,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
+  String? _text;
 
   @override
   void dispose() {
@@ -27,6 +28,7 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
     return CameraView(
       title: 'Barcode Scanner',
       customPaint: _customPaint,
+      text: _text,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -37,6 +39,9 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
+    setState(() {
+      _text = '';
+    });
     final barcodes = await _barcodeScanner.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
@@ -46,6 +51,12 @@ class _BarcodeScannerViewState extends State<BarcodeScannerView> {
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
     } else {
+      String text = 'Barcodes found: ${barcodes.length}\n\n';
+      for (final barcode in barcodes) {
+        text += 'Barcode: ${barcode.rawValue}\n\n';
+      }
+      _text = text;
+      // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;
     }
     _isBusy = false;

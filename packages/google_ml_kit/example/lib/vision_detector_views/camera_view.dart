@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
@@ -15,12 +15,14 @@ class CameraView extends StatefulWidget {
       {Key? key,
       required this.title,
       required this.customPaint,
+      this.text,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back})
       : super(key: key);
 
   final String title;
   final CustomPaint? customPaint;
+  final String? text;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
 
@@ -32,17 +34,17 @@ class _CameraViewState extends State<CameraView> {
   ScreenMode _mode = ScreenMode.liveFeed;
   CameraController? _controller;
   File? _image;
+  String? _path;
   ImagePicker? _imagePicker;
   int _cameraIndex = 0;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
-  bool _allowPicker = true;
+  final bool _allowPicker = true;
   bool _changingCameraLens = false;
 
   @override
   void initState() {
     super.initState();
 
-    _allowPicker = false;
     _imagePicker = ImagePicker();
 
     if (cameras.any(
@@ -214,10 +216,20 @@ class _CameraViewState extends State<CameraView> {
           onPressed: () => _getImage(ImageSource.camera),
         ),
       ),
+      if (_image != null)
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+              '${_path == null ? '' : 'Image path: $_path'}\n\n${widget.text ?? ''}'),
+        ),
     ]);
   }
 
   Future _getImage(ImageSource source) async {
+    setState(() {
+      _image = null;
+      _path = null;
+    });
     final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
       _processPickedFile(pickedFile);
@@ -225,13 +237,14 @@ class _CameraViewState extends State<CameraView> {
     setState(() {});
   }
 
-  void _switchScreenMode() async {
+  void _switchScreenMode() {
+    _image = null;
     if (_mode == ScreenMode.liveFeed) {
       _mode = ScreenMode.gallery;
-      await _stopLiveFeed();
+      _stopLiveFeed();
     } else {
       _mode = ScreenMode.liveFeed;
-      await _startLiveFeed();
+      _startLiveFeed();
     }
     setState(() {});
   }
@@ -282,6 +295,7 @@ class _CameraViewState extends State<CameraView> {
     setState(() {
       _image = File(path);
     });
+    _path = path;
     final inputImage = InputImage.fromFilePath(path);
     widget.onImage(inputImage);
   }

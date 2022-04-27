@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide Ink;
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 
 import 'toast.dart';
 

@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 
 import 'camera_view.dart';
 import 'painters/object_detector_painter.dart';
@@ -17,6 +17,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
+  String? _text;
 
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     return CameraView(
       title: 'Object Detector',
       customPaint: _customPaint,
+      text: _text,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -52,16 +54,25 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
-    final result = await _objectDetector.processImage(inputImage);
+    setState(() {
+      _text = '';
+    });
+    final objects = await _objectDetector.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null &&
-        result.isNotEmpty) {
+        inputImage.inputImageData?.imageRotation != null) {
       final painter = ObjectDetectorPainter(
-          result,
+          objects,
           inputImage.inputImageData!.imageRotation,
           inputImage.inputImageData!.size);
       _customPaint = CustomPaint(painter: painter);
     } else {
+      String text = 'Objects found: ${objects.length}\n\n';
+      for (final object in objects) {
+        text +=
+            'Object:  trackingId: ${object.trackingId} - ${object.labels.map((e) => e.text)}\n\n';
+      }
+      _text = text;
+      // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;
     }
     _isBusy = false;
