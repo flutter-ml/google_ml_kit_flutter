@@ -11,11 +11,12 @@ class DigitalInkView extends StatefulWidget {
 class _DigitalInkViewState extends State<DigitalInkView> {
   final DigitalInkRecognizerModelManager _modelManager =
       DigitalInkRecognizerModelManager();
-  final DigitalInkRecognizer _digitalInkRecognizer = DigitalInkRecognizer();
+  final String _language = 'en-US';
+  late final DigitalInkRecognizer _digitalInkRecognizer =
+      DigitalInkRecognizer(languageCode: _language);
   final Ink _ink = Ink();
   List<StrokePoint> _points = [];
   String _recognizedText = '';
-  final String _language = 'en-US';
 
   @override
   void dispose() {
@@ -125,7 +126,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         'Checking if model is downloaded...',
         _modelManager
             .isModelDownloaded(_language)
-            .then((value) => value ? 'exists' : 'not exists'),
+            .then((value) => value ? 'downloaded' : 'not downloaded'),
         context,
         this);
   }
@@ -135,7 +136,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         'Deleting model...',
         _modelManager
             .deleteModel(_language)
-            .then((value) => value ? 'success' : 'error'),
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
@@ -145,7 +146,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
         'Downloading model...',
         _modelManager
             .downloadModel(_language)
-            .then((value) => value ? 'success' : 'error'),
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
@@ -158,7 +159,7 @@ class _DigitalInkViewState extends State<DigitalInkView> {
             ),
         barrierDismissible: true);
     try {
-      final candidates = await _digitalInkRecognizer.recognize(_ink, _language);
+      final candidates = await _digitalInkRecognizer.recognize(_ink);
       _recognizedText = '';
       for (final candidate in candidates) {
         _recognizedText += '\n${candidate.text}';

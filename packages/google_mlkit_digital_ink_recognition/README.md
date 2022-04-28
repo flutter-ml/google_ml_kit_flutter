@@ -15,21 +15,28 @@ Before you get started read about the requirements and known issues of this plug
 #### Create an instance of `DigitalInkRecognizer`
 
 ```dart
-final digitalInkRecognizer = DigitalInkRecognizer();
+String languageCode; // BCP-47 Code from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
+final digitalInkRecognizer = DigitalInkRecognizer(languageCode: languageCode);
 ```
 
-#### Process points
+#### Process ink
 
 ```dart
-List<Offset> points; // an array with the points of the stroke
-String modelCode; // BCP-47 Code from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
-final List<RecognitionCandidate> canditates = await digitalInkRecognizer.recognize(points, modelCode);
+Stroke stroke1 = Stroke(); // it contains all of the StrokePoint
+stroke1.point = [StrokePoint(x: x1, y: y1, t: t1), StrokePoint(x: x2, y: y2, t: t2), ...]
+
+Ink ink = Ink(); // it contains all of the Stroke
+ink.strokes = [stroke1, stroke2, ...];
+
+final List<RecognitionCandidate> candidates = await digitalInkRecognizer.recognize(ink);
 
 for (final candidate in candidates) {
   final text = candidate.text;
   final score = candidate.score;
 }
 ```
+
+Make sure you download the language model before processing any `Ink`.
 
 #### Release resources with `close()`
 

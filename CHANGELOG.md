@@ -11,10 +11,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
+- [`google_mlkit_digital_ink_recognition` - `v0.2.1`](#google_mlkit_digital_ink_recognition---v021)
 - [`google_mlkit_entity_extraction` - `v0.2.1`](#google_mlkit_entity_extraction---v021)
 - [`google_mlkit_translation` - `v0.2.1`](#google_mlkit_translation---v021)
 
 ---
+
+#### `google_mlkit_digital_ink_recognition` - `v0.2.1`
+
+* Update `DigitalInkRecognizer` constructor.
+* Update README.
 
 #### `google_mlkit_entity_extraction` - `v0.2.1`
 
@@ -72,7 +78,7 @@ Packages with changes:
 #### `google_mlkit_image_labeling` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
-* Refactor [ImageLabelerOptions] and subclasses.
+* Refactor `ImageLabelerOptions` and subclasses.
 * Add example for loading local custom model.
 
 #### `google_mlkit_language_id` - `v0.2.0`
@@ -82,7 +88,7 @@ Packages with changes:
 #### `google_mlkit_object_detection` - `v0.2.0`
 
 * Fix: return after closing detector in iOS.
-* Refactor [ObjectDetectorOptions] and subclasses.
+* Refactor `ObjectDetectorOptions` and subclasses.
 * Add example for loading local custom model.
 
 #### `google_mlkit_pose_detection` - `v0.2.0`

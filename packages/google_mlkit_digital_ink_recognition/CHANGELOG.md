@@ -1,3 +1,8 @@
+## 0.2.1
+
+* Update `DigitalInkRecognizer` constructor.
+* Update README.
+
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.
