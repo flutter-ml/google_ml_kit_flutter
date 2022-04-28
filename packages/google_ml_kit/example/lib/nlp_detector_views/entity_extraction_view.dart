@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 
-import '../vision_detector_views/toast.dart';
+import '../activity_indicator/activity_indicator.dart';
 
 class EntityExtractionView extends StatefulWidget {
   @override

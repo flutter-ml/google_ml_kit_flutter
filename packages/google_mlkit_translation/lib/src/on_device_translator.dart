@@ -33,9 +33,6 @@ class OnDeviceTranslator {
 }
 
 /// A subclass of [ModelManager] that manages [TranslateRemoteModel] required to process the image.
-///
-// Downloading model always return false,
-// model is downloaded if needed when translating.
 class OnDeviceTranslatorModelManager extends ModelManager {
   /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
   OnDeviceTranslatorModelManager()
