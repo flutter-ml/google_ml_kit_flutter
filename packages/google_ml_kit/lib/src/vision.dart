@@ -38,8 +38,8 @@ class Vision {
   }
 
   /// Returns an instance of [DigitalInkRecognizer]
-  DigitalInkRecognizer digitalInkRecognizer() {
-    return DigitalInkRecognizer();
+  DigitalInkRecognizer digitalInkRecognizer({required String languageCode}) {
+    return DigitalInkRecognizer(languageCode: languageCode);
   }
 
   /// Return an instance of [TextRecognizer].
