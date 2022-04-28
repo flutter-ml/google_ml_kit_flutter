@@ -11,11 +11,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
+- [`google_ml_kit` - `v0.10.0`](#google_ml_kit---v0100)
 - [`google_mlkit_digital_ink_recognition` - `v0.2.1`](#google_mlkit_digital_ink_recognition---v021)
 - [`google_mlkit_entity_extraction` - `v0.2.1`](#google_mlkit_entity_extraction---v021)
 - [`google_mlkit_translation` - `v0.2.1`](#google_mlkit_translation---v021)
 
 ---
+
+#### `google_ml_kit` - `v0.10.0`
+
+* Update dependencies.
 
 #### `google_mlkit_digital_ink_recognition` - `v0.2.1`
 
