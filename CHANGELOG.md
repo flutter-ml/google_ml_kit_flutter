@@ -11,9 +11,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
+- [`google_mlkit_entity_extraction` - `v0.2.1`](#google_mlkit_entity_extraction---v021)
 - [`google_mlkit_translation` - `v0.2.1`](#google_mlkit_translation---v021)
 
 ---
+
+#### `google_mlkit_entity_extraction` - `v0.2.1`
+
+* Update README and documentation.
 
 #### `google_mlkit_translation` - `v0.2.1`
 
