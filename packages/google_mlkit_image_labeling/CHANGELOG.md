@@ -1,7 +1,7 @@
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.
-* Refactor [ImageLabelerOptions] and subclasses.
+* Refactor `ImageLabelerOptions` and subclasses.
 * Add example for loading local custom model.
 
 ## 0.1.0

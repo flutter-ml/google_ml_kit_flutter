@@ -11,16 +11,21 @@ class DigitalInkRecognizer {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_digital_ink_recognizer');
 
+  /// Refers to language that is being processed.
+  //  Note that model should be a BCP 47 language tag from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
+  //  Visit this site [https://tools.ietf.org/html/bcp47] to learn more.
+  final String languageCode;
+
+  /// Constructor to create an instance of [DigitalInkRecognizer].
+  DigitalInkRecognizer({required this.languageCode});
+
   /// Performs a recognition of the text written on screen.
   /// It takes an instance of [Ink] which refers to the user input as a list of [Stroke].
-  /// It takes the [model] that refers to language that is being processed.
-  /// Note that [model] should be a BCP 47 language tag.
-  /// Visit this site [https://tools.ietf.org/html/bcp47] to learn more.
-  Future<List<RecognitionCandidate>> recognize(Ink ink, String model) async {
+  Future<List<RecognitionCandidate>> recognize(Ink ink) async {
     final result = await _channel
         .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
       'ink': ink.toJson(),
-      'model': model,
+      'model': languageCode,
     });
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
