@@ -93,7 +93,7 @@ PODS:
     - GoogleMLKit/TextRecognitionDevanagari (~> 2.6.0)
     - GoogleMLKit/TextRecognitionJapanese (~> 2.6.0)
     - GoogleMLKit/TextRecognitionKorean (~> 2.6.0)
-  - google_mlkit_translation (0.2.0):
+  - google_mlkit_translation (0.2.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/Translate (~> 2.6.0)
@@ -470,7 +470,7 @@ SPEC CHECKSUMS:
   google_mlkit_pose_detection: 7a0edd19d24a7f1d672afdb4289a8d23fc9d2a26
   google_mlkit_smart_reply: 96e5955cc53000336ffb690a9fd1f3e4953b34cb
   google_mlkit_text_recognition: 31c36ac7571c5e67add28cee8bfd0cb2d3115e36
-  google_mlkit_translation: a7c591c640e337d86dc801780b0a2e2fc77ab90c
+  google_mlkit_translation: b58a8305854cf8ca8746458ca73136face09ecea
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMLKit: 755661c46990a85e42278015f26400286d98ad95

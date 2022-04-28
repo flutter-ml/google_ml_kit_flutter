@@ -1,3 +1,8 @@
+## 0.2.1
+
+* Fix: downloading models.
+* Update README.
+
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.

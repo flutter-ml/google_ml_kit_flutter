@@ -65,12 +65,6 @@
 }
 
 - (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSString *task = call.arguments[@"task"];
-    if ([task isEqualToString:@"download"]) {
-        result(@"error");
-        return;
-    }
-    
     NSString *modelTag = call.arguments[@"model"];
     MLKTranslateRemoteModel *model = [MLKTranslateRemoteModel translateRemoteModelWithLanguage:modelTag];
     genericModelManager = [[GenericModelManager alloc] init];

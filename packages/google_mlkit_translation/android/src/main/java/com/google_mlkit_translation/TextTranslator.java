@@ -75,12 +75,6 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
-        String task = call.argument("task");
-        if (task.equals("download")) {
-            result.success("error");
-            return;
-        }
-
         TranslateRemoteModel model = new TranslateRemoteModel.Builder(call.argument("model")).build();
         genericModelManager.manageModel(model, call, result);
     }

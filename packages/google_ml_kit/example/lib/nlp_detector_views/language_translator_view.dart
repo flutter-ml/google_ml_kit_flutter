@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 
-import '../vision_detector_views/toast.dart';
+import '../activity_indicator/activity_indicator.dart';
 
 class LanguageTranslatorView extends StatefulWidget {
   @override
@@ -12,9 +12,9 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   String? _translatedText;
   final _controller = TextEditingController();
   final _modelManager = OnDeviceTranslatorModelManager();
-  static final _sourceLanguage = TranslateLanguage.english;
-  static final _targetLanguage = TranslateLanguage.spanish;
-  final _onDeviceTranslator = OnDeviceTranslator(
+  final _sourceLanguage = TranslateLanguage.english;
+  final _targetLanguage = TranslateLanguage.spanish;
+  late final _onDeviceTranslator = OnDeviceTranslator(
       sourceLanguage: _sourceLanguage, targetLanguage: _targetLanguage);
 
   @override
@@ -37,7 +37,8 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
           child: ListView(
             children: [
               SizedBox(height: 30),
-              Center(child: Text('Enter text (${_sourceLanguage.name})')),
+              Center(
+                  child: Text('Enter text (source: ${_sourceLanguage.name})')),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
@@ -53,7 +54,9 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
                   ),
                 ),
               ),
-              Center(child: Text('Translated Text (${_targetLanguage.name})')),
+              Center(
+                  child: Text(
+                      'Translated Text (target: ${_targetLanguage.name})')),
               SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -76,17 +79,37 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                      onPressed: _downloadModel, child: Text('Download Model')),
+                      onPressed: _downloadSourceModel,
+                      child: Text('Download Source Model')),
                   ElevatedButton(
-                      onPressed: _deleteModel, child: Text('Delete Model')),
+                      onPressed: _downloadTargetModel,
+                      child: Text('Download Target Model')),
                 ],
               ),
               SizedBox(height: 20),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                ElevatedButton(
-                    onPressed: _isModelDownloaded,
-                    child: Text('Check download'))
-              ])
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: _deleteSourceModel,
+                      child: Text('Delete Source Model')),
+                  ElevatedButton(
+                      onPressed: _deleteTargetModel,
+                      child: Text('Delete Target Model')),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: _isSourceModelDownloaded,
+                      child: Text('Source Downloaded?')),
+                  ElevatedButton(
+                      onPressed: _isTargetModelDownloaded,
+                      child: Text('Target Downloaded?')),
+                ],
+              ),
             ],
           ),
         ),
@@ -94,33 +117,62 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
     );
   }
 
-  Future<void> _downloadModel() async {
-    // download model will always return false,
-    // model is downloaded if needed when translating
+  Future<void> _downloadSourceModel() async {
     Toast().show(
-        'Downloading model (${_targetLanguage.name})...',
-        _modelManager.downloadModel(_targetLanguage.bcpCode).then((value) =>
-            value ? 'success' : 'error, model is downloaded when translating.'),
+        'Downloading model (${_sourceLanguage.name})...',
+        _modelManager
+            .downloadModel(_sourceLanguage.bcpCode)
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
 
-  Future<void> _deleteModel() async {
+  Future<void> _downloadTargetModel() async {
+    Toast().show(
+        'Downloading model (${_targetLanguage.name})...',
+        _modelManager
+            .downloadModel(_targetLanguage.bcpCode)
+            .then((value) => value ? 'success' : 'failed'),
+        context,
+        this);
+  }
+
+  Future<void> _deleteSourceModel() async {
+    Toast().show(
+        'Deleting model (${_sourceLanguage.name})...',
+        _modelManager
+            .deleteModel(_sourceLanguage.bcpCode)
+            .then((value) => value ? 'success' : 'failed'),
+        context,
+        this);
+  }
+
+  Future<void> _deleteTargetModel() async {
     Toast().show(
         'Deleting model (${_targetLanguage.name})...',
         _modelManager
             .deleteModel(_targetLanguage.bcpCode)
-            .then((value) => value ? 'success' : 'error'),
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
 
-  Future<void> _isModelDownloaded() async {
+  Future<void> _isSourceModelDownloaded() async {
+    Toast().show(
+        'Checking if model (${_sourceLanguage.name}) is downloaded...',
+        _modelManager
+            .isModelDownloaded(_sourceLanguage.bcpCode)
+            .then((value) => value ? 'downloaded' : 'not downloaded'),
+        context,
+        this);
+  }
+
+  Future<void> _isTargetModelDownloaded() async {
     Toast().show(
         'Checking if model (${_targetLanguage.name}) is downloaded...',
         _modelManager
             .isModelDownloaded(_targetLanguage.bcpCode)
-            .then((value) => value ? 'exists' : 'not exists'),
+            .then((value) => value ? 'downloaded' : 'not downloaded'),
         context,
         this);
   }

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-04-28
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_translation` - `v0.2.1`](#google_mlkit_translation---v021)
+
+---
+
+#### `google_mlkit_translation` - `v0.2.1`
+
+* Fix: downloading models.
+* Update README.
+
 ## 2022-04-27
 
 ### Changes

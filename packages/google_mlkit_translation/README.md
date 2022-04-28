@@ -35,6 +35,8 @@ final onDeviceTranslator = OnDeviceTranslator(sourceLanguage: sourceLanguage, ta
 final String response = await onDeviceTranslator.translateText(text);
 ```
 
+Make sure you download both source and target language models before translating any text.
+
 #### Release resources with `close()`
 
 ```dart
@@ -52,21 +54,19 @@ final modelManager = OnDeviceTranslatorModelManager();
 #### Check if model is downloaded
 
 ```dart
-final bool response = await modelManager.isModelDownloaded(TranslateLanguage.english);
+final bool response = await modelManager.isModelDownloaded(TranslateLanguage.english.bcpCode);
 ```
 
 #### Download model
 
-Downloading model always return false, models are downloaded if needed when translating.
-
 ```dart
-final bool response = await modelManager.downloadModel(TranslateLanguage.english);
+final bool response = await modelManager.downloadModel(TranslateLanguage.english.bcpCode);
 ```
 
 #### Delete model
 
 ```dart
-final bool response = await modelManager.deleteModel(TranslateLanguage.english);
+final bool response = await modelManager.deleteModel(TranslateLanguage.english.bcpCode);
 ```
 
 ## Example app
