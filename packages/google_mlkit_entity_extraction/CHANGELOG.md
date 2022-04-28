@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Update README and documentation.
+
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.

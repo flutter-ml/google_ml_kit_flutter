@@ -105,7 +105,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
         'Downloading model...',
         _modelManager
             .downloadModel(_language.name)
-            .then((value) => value ? 'success' : 'error'),
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
@@ -115,7 +115,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
         'Deleting model...',
         _modelManager
             .deleteModel(_language.name)
-            .then((value) => value ? 'success' : 'error'),
+            .then((value) => value ? 'success' : 'failed'),
         context,
         this);
   }
@@ -125,7 +125,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
         'Checking if model is downloaded...',
         _modelManager
             .isModelDownloaded(_language.name)
-            .then((value) => value ? 'exists' : 'not exists'),
+            .then((value) => value ? 'downloaded' : 'not downloaded'),
         context,
         this);
   }

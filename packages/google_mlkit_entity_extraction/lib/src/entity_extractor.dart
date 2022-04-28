@@ -49,7 +49,6 @@ class EntityExtractor {
 }
 
 /// A subclass of [ModelManager] that manages [EntityExtractorRemoteModel].
-/// Calling download model always return false, model is downloaded if needed when annotating text.
 class EntityExtractorModelManager extends ModelManager {
   /// Constructor to create an instance of [EntityExtractorModelManager].
   EntityExtractorModelManager()

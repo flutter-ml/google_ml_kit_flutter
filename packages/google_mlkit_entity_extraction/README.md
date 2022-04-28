@@ -54,6 +54,8 @@ for (final annotation in annotations) {
 }
 ```
 
+Make sure you download the language model before annotating any text.
+
 #### Release resources with `close()`
 
 ```dart
