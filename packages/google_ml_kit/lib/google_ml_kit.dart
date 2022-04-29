@@ -6,6 +6,7 @@ export 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 export 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
 export 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 export 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+export 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 export 'package:google_mlkit_smart_reply/google_mlkit_smart_reply.dart';
 export 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 export 'package:google_mlkit_translation/google_mlkit_translation.dart';

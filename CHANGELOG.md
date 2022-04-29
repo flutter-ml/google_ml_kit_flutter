@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-04-29
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_selfie_segmentation` - `v0.0.1`](#google_mlkit_selfie_segmentation---v001)
+
+---
+
+#### `google_mlkit_selfie_segmentation` - `v0.0.1`
+
+* Initial release.
+
 ## 2022-04-28
 
 ### Changes

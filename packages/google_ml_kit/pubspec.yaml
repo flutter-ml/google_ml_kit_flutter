@@ -1,6 +1,6 @@
 name: google_ml_kit
 description: A Flutter plugin to use all APIs from Google's standalone ML Kit for mobile platforms.
-version: 0.10.0
+version: 0.11.0
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:
@@ -18,6 +18,7 @@ dependencies:
   google_mlkit_image_labeling: ^0.2.0
   google_mlkit_object_detection: ^0.2.0
   google_mlkit_pose_detection: ^0.2.0
+  google_mlkit_selfie_segmentation: ^0.0.1
   google_mlkit_text_recognition: ^0.2.0
 
   # uncomment these lines when working on the local plugins
@@ -35,6 +36,8 @@ dependencies:
 #    path: ../google_mlkit_object_detection
 #  google_mlkit_pose_detection:
 #    path: ../google_mlkit_pose_detection
+#  google_mlkit_selfie_segmentation:
+#    path: ../../google_mlkit_selfie_segmentation
 #  google_mlkit_text_recognition:
 #    path: ../google_mlkit_text_recognition
 

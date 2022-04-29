@@ -81,6 +81,10 @@ PODS:
     - google_mlkit_commons
     - GoogleMLKit/PoseDetection (~> 2.6.0)
     - GoogleMLKit/PoseDetectionAccurate (~> 2.6.0)
+  - google_mlkit_selfie_segmentation (0.0.1):
+    - Flutter
+    - google_mlkit_commons
+    - GoogleMLKit/SegmentationSelfie (~> 2.6.0)
   - google_mlkit_smart_reply (0.2.0):
     - Flutter
     - google_mlkit_commons
@@ -159,6 +163,9 @@ PODS:
   - GoogleMLKit/PoseDetectionAccurate (2.6.0):
     - GoogleMLKit/MLKitCore
     - MLKitPoseDetectionAccurate (~> 1.0.0-beta7)
+  - GoogleMLKit/SegmentationSelfie (2.6.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitSegmentationSelfie (~> 1.0.0-beta5)
   - GoogleMLKit/SmartReply (2.6.0):
     - GoogleMLKit/MLKitCore
     - MLKitSmartReply (~> 1.5.0)
@@ -294,6 +301,11 @@ PODS:
   - MLKitPoseDetectionCommon (1.0.0-beta7):
     - MLKitCommon (~> 5.0)
     - MLKitXenoCommon (= 1.0.0-beta7)
+  - MLKitSegmentationCommon (1.0.0-beta5):
+    - MLKitCommon (~> 5.0)
+    - MLKitXenoCommon (= 1.0.0-beta7)
+  - MLKitSegmentationSelfie (1.0.0-beta5):
+    - MLKitSegmentationCommon (= 1.0.0-beta5)
   - MLKitSmartReply (1.5.0):
     - MLKitLanguageID (~> 2.0)
     - MLKitNaturalLanguage (~> 3.0)
@@ -362,6 +374,7 @@ DEPENDENCIES:
   - google_mlkit_language_id (from `.symlinks/plugins/google_mlkit_language_id/ios`)
   - google_mlkit_object_detection (from `.symlinks/plugins/google_mlkit_object_detection/ios`)
   - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
+  - google_mlkit_selfie_segmentation (from `.symlinks/plugins/google_mlkit_selfie_segmentation/ios`)
   - google_mlkit_smart_reply (from `.symlinks/plugins/google_mlkit_smart_reply/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
@@ -401,6 +414,8 @@ SPEC REPOS:
     - MLKitPoseDetection
     - MLKitPoseDetectionAccurate
     - MLKitPoseDetectionCommon
+    - MLKitSegmentationCommon
+    - MLKitSegmentationSelfie
     - MLKitSmartReply
     - MLKitTextRecognition
     - MLKitTextRecognitionChinese
@@ -440,6 +455,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_object_detection/ios"
   google_mlkit_pose_detection:
     :path: ".symlinks/plugins/google_mlkit_pose_detection/ios"
+  google_mlkit_selfie_segmentation:
+    :path: ".symlinks/plugins/google_mlkit_selfie_segmentation/ios"
   google_mlkit_smart_reply:
     :path: ".symlinks/plugins/google_mlkit_smart_reply/ios"
   google_mlkit_text_recognition:
@@ -468,6 +485,7 @@ SPEC CHECKSUMS:
   google_mlkit_language_id: c56136f644e19ceb89919faa597ecb1ba93f535f
   google_mlkit_object_detection: c9f6b2c0867e883999fe52b149b2500113cf36c1
   google_mlkit_pose_detection: 7a0edd19d24a7f1d672afdb4289a8d23fc9d2a26
+  google_mlkit_selfie_segmentation: 4ef4c843f0ff4857c238e916df8c95ddc74c7eed
   google_mlkit_smart_reply: 96e5955cc53000336ffb690a9fd1f3e4953b34cb
   google_mlkit_text_recognition: 31c36ac7571c5e67add28cee8bfd0cb2d3115e36
   google_mlkit_translation: b58a8305854cf8ca8746458ca73136face09ecea
@@ -498,6 +516,8 @@ SPEC CHECKSUMS:
   MLKitPoseDetection: 3f4763b14d3c31a6a09ce16eb2b11e0628a53868
   MLKitPoseDetectionAccurate: d796e67a98dc2bfd24f029d3b551929b2874bdf3
   MLKitPoseDetectionCommon: 7049a27c6c3054cedf5e18d3bd6901d0c9c2b4b3
+  MLKitSegmentationCommon: 4c9b364bf6ba308985e2d495cd7c580c8227c5b5
+  MLKitSegmentationSelfie: d52c12fb85e7ceb4ea3a644853f7d2e09be1b00c
   MLKitSmartReply: 24772da43866b321953701899d73de09a54ff3ea
   MLKitTextRecognition: 8b0e0023a4babc66ca83d8b82864e57931164445
   MLKitTextRecognitionChinese: 1fd71c298a5368a39bf3974c68168fa55f10e6ca
