@@ -74,6 +74,10 @@ jobs:
       working-directory: ./packages/google_mlkit_smart_reply
       run: flutter pub get
 
+    - name: Install dependencies for google_mlkit_selfie_segmentation
+      working-directory: ./packages/google_mlkit_selfie_segmentation
+      run: flutter pub get
+
     # Check for any formatting issues in the code.
     - run: flutter format --set-exit-if-changed .
 
