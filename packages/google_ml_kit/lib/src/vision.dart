@@ -4,6 +4,7 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 /// Get instance of the individual api's using instance of [Vision]
@@ -55,5 +56,12 @@ class Vision {
   /// Returns an instance of [ObjectDetector].
   ObjectDetector objectDetector([ObjectDetectorOptions? options]) {
     return ObjectDetector(options: options ?? ObjectDetectorOptions());
+  }
+
+  /// Returns an instance of [SelfieSegmenter].
+  SelfieSegmenter selfieSegmenter(
+      {SegmenterMode mode = SegmenterMode.stream,
+      bool enableRawSizeMask = false}) {
+    return SelfieSegmenter(mode: mode, enableRawSizeMask: enableRawSizeMask);
   }
 }
