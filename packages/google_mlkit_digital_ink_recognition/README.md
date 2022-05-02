@@ -22,8 +22,11 @@ final digitalInkRecognizer = DigitalInkRecognizer(languageCode: languageCode);
 #### Process ink
 
 ```dart
+final p1 = StrokePoint(x: x1, y: y1, t: DateTime.now().millisecondsSinceEpoch); // make sure that `t` is a long
+final p2 = StrokePoint(x: x1, y: y1, t: DateTime.now().millisecondsSinceEpoch); // make sure that `t` is a long
+
 Stroke stroke1 = Stroke(); // it contains all of the StrokePoint
-stroke1.point = [StrokePoint(x: x1, y: y1, t: t1), StrokePoint(x: x2, y: y2, t: t2), ...]
+stroke1.point = [p1, p2, ...]
 
 Ink ink = Ink(); // it contains all of the Stroke
 ink.strokes = [stroke1, stroke2, ...];
