@@ -12,6 +12,9 @@ class TextRecognizer {
   /// Configurations for the language to be detected.
   final TextRecognitionScript script;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [TextRecognizer].
   TextRecognizer({this.script = TextRecognitionScript.latin});
 
@@ -19,6 +22,7 @@ class TextRecognizer {
   Future<RecognizedText> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
         'vision#startTextRecognizer', <String, dynamic>{
+      'id': id,
       'imageData': inputImage.toJson(),
       'script': script.index
     });
@@ -26,7 +30,8 @@ class TextRecognizer {
   }
 
   /// Closes the recognizer and releases its resources.
-  Future<void> close() => _channel.invokeMethod('vision#closeTextRecognizer');
+  Future<void> close() =>
+      _channel.invokeMethod('vision#closeTextRecognizer', {'id': id});
 }
 
 /// Configurations for [TextRecognizer] for different languages.

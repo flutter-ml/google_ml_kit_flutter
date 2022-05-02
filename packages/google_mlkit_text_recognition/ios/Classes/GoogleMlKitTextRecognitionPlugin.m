@@ -12,8 +12,7 @@
 #define closeTextRecognizer @"vision#closeTextRecognizer"
 
 @implementation GoogleMlKitTextRecognitionPlugin {
-    MLKTextRecognizer *textRecognizer;
-    int script;
+    NSMutableDictionary *instances;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -28,23 +27,55 @@
     if ([call.method isEqualToString:startTextRecognizer]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeTextRecognizer]) {
-        textRecognizer = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
+- (MLKTextRecognizer*)initialize:(FlutterMethodCall *)call {
+    NSNumber *scriptValue = call.arguments[@"script"];
+    switch(scriptValue.intValue) {
+        case 0 : {
+            MLKTextRecognizerOptions *latinOptions = [[MLKTextRecognizerOptions alloc] init];
+            return [MLKTextRecognizer textRecognizerWithOptions:latinOptions];
+        }
+        case 1 : {
+            MLKChineseTextRecognizerOptions *chineseOptions = [[MLKChineseTextRecognizerOptions alloc] init];
+            return [MLKTextRecognizer textRecognizerWithOptions:chineseOptions];
+        }
+        case 2 : {
+            MLKDevanagariTextRecognizerOptions *devanagariOptions = [[MLKDevanagariTextRecognizerOptions alloc] init];
+            return [MLKTextRecognizer textRecognizerWithOptions:devanagariOptions];
+        }
+        case 3 : {
+            MLKJapaneseTextRecognizerOptions *japaneseOptions = [[MLKJapaneseTextRecognizerOptions alloc] init];
+            return [MLKTextRecognizer textRecognizerWithOptions:japaneseOptions];
+        }
+        case 4 : {
+            MLKKoreanTextRecognizerOptions *koreanOptions = [[MLKKoreanTextRecognizerOptions alloc] init];
+            return [MLKTextRecognizer textRecognizerWithOptions:koreanOptions];
+        }
+        default:
+            return NULL;
+    }
+}
+
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
-    NSNumber *scriptValue = call.arguments[@"script"];
-    if (textRecognizer == NULL || script != scriptValue.intValue) {
-        [self initiateDetector:scriptValue.intValue];
+    NSString *uid = call.arguments[@"id"];
+    MLKTextRecognizer *textRecognizer = [instances objectForKey:uid];
+    if (textRecognizer == NULL) {
+        textRecognizer = [self initialize:call];
+        instances[uid] = textRecognizer;
     }
     
     [textRecognizer processImage:image
-                      completion:^(MLKText *_Nullable visionText, NSError *_Nullable error) {
+                      completion:^(MLKText *_Nullable visionText,
+                                   NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;
@@ -130,37 +161,6 @@
         @"recognizedLanguages" : allLanguageData,
         @"text" : text,
     }];
-}
-
-- (void)initiateDetector:(int) value {
-    script = value;
-    switch(script) {
-        case 0 : {
-            MLKTextRecognizerOptions *latinOptions = [[MLKTextRecognizerOptions alloc] init];
-            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:latinOptions];
-        }
-            return;
-        case 1 : {
-            MLKChineseTextRecognizerOptions *chineseOptions = [[MLKChineseTextRecognizerOptions alloc] init];
-            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:chineseOptions];
-        }
-            return;
-        case 2 : {
-            MLKDevanagariTextRecognizerOptions *devanagariOptions = [[MLKDevanagariTextRecognizerOptions alloc] init];
-            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:devanagariOptions];
-        }
-            return;
-        case 3 : {
-            MLKJapaneseTextRecognizerOptions *japaneseOptions = [[MLKJapaneseTextRecognizerOptions alloc] init];
-            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:japaneseOptions];
-        }
-            return;
-        case 4 : {
-            MLKKoreanTextRecognizerOptions *koreanOptions = [[MLKKoreanTextRecognizerOptions alloc] init];
-            textRecognizer = [MLKTextRecognizer textRecognizerWithOptions:koreanOptions];
-        }
-            return;
-    }
 }
 
 @end

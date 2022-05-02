@@ -29,8 +29,7 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeTextRecognizer";
 
     private final Context context;
-    private com.google.mlkit.vision.text.TextRecognizer textRecognizer;
-    private int script = -1;
+    private final Map<String, com.google.mlkit.vision.text.TextRecognizer> instances = new HashMap<>();
 
     public TextRecognizer(Context context) {
         this.context = context;
@@ -44,7 +43,7 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
@@ -53,14 +52,34 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         }
     }
 
+    private com.google.mlkit.vision.text.TextRecognizer initialize(MethodCall call) {
+        int script = (int) call.argument("script");
+        switch (script) {
+            case 0:
+                return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+            case 1:
+                return TextRecognition.getClient(new ChineseTextRecognizerOptions.Builder().build());
+            case 2:
+                return TextRecognition.getClient(new DevanagariTextRecognizerOptions.Builder().build());
+            case 3:
+                return TextRecognition.getClient(new JapaneseTextRecognizerOptions.Builder().build());
+            case 4:
+                return TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
+            default:
+                return null;
+        }
+    }
+
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
-        int script = (int) call.argument("script");
-        if (textRecognizer == null || this.script != script) {
-            initializeDetector(script);
+        String id = call.argument("id");
+        com.google.mlkit.vision.text.TextRecognizer textRecognizer = instances.get(id);
+        if (textRecognizer == null) {
+            textRecognizer = initialize(call);
+            instances.put(id, textRecognizer);
         }
 
         textRecognizer.process(inputImage)
@@ -146,30 +165,11 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         return frame;
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.vision.text.TextRecognizer textRecognizer = instances.get(id);
         if (textRecognizer == null) return;
         textRecognizer.close();
-        textRecognizer = null;
-    }
-
-    private void initializeDetector(int script) {
-        closeDetector();
-        this.script = script;
-        switch (script) {
-            case 0:
-                textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-                break;
-            case 1:
-                textRecognizer = TextRecognition.getClient(new ChineseTextRecognizerOptions.Builder().build());
-                break;
-            case 2:
-                textRecognizer = TextRecognition.getClient(new DevanagariTextRecognizerOptions.Builder().build());
-                break;
-            case 3:
-                textRecognizer = TextRecognition.getClient(new JapaneseTextRecognizerOptions.Builder().build());
-                break;
-            case 4:
-                textRecognizer = TextRecognition.getClient(new KoreanTextRecognizerOptions.Builder().build());
-        }
+        instances.remove(id);
     }
 }
