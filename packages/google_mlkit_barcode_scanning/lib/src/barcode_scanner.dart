@@ -13,6 +13,9 @@ class BarcodeScanner {
   /// List that restrict the scan to specific barcode formats.
   final List<BarcodeFormat> formats;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [BarcodeScanner].
   /// Returns a barcode scanner with the given [formats] options.
   BarcodeScanner({this.formats = const [BarcodeFormat.all]});
@@ -21,6 +24,7 @@ class BarcodeScanner {
   Future<List<Barcode>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod('vision#startBarcodeScanner', {
       'formats': formats.map((f) => f.rawValue).toList(),
+      'id': id,
       'imageData': inputImage.toJson()
     });
 
@@ -33,7 +37,8 @@ class BarcodeScanner {
   }
 
   /// Closes the scanner and releases its resources.
-  Future<void> close() => _channel.invokeMethod('vision#closeBarcodeScanner');
+  Future<void> close() =>
+      _channel.invokeMethod('vision#closeBarcodeScanner', {'id': id});
 }
 
 /// Barcode formats supported by the barcode scanner.
