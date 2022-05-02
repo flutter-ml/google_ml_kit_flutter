@@ -19,7 +19,7 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "nlp#startLanguageIdentifier";
     private static final String CLOSE = "nlp#closeLanguageIdentifier";
 
-    private LanguageIdentifier languageIdentifier;
+    private final Map<String, LanguageIdentifier> instances = new HashMap<>();
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -29,7 +29,7 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
                 identifyLanguages(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
@@ -39,30 +39,33 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void identifyLanguages(MethodCall call, final MethodChannel.Result result) {
+        String id = call.argument("id");
+        LanguageIdentifier languageIdentifier = instances.get(id);
         if (languageIdentifier == null) {
             double confidence = (double) call.argument("confidence");
             languageIdentifier = LanguageIdentification.getClient(
                     new LanguageIdentificationOptions.Builder()
                             .setConfidenceThreshold((float) confidence)
                             .build());
+            instances.put(id, languageIdentifier);
         }
 
         boolean possibleLanguages = (boolean) call.argument("possibleLanguages");
         String text = (String) call.argument("text");
         if (!possibleLanguages) {
-            identifyLanguage(text, result);
+            identifyLanguage(text, languageIdentifier, result);
         } else {
-            identifyPossibleLanguages(text, result);
+            identifyPossibleLanguages(text, languageIdentifier, result);
         }
     }
 
-    private void identifyLanguage(String text, final MethodChannel.Result result) {
+    private void identifyLanguage(String text, LanguageIdentifier languageIdentifier, final MethodChannel.Result result) {
         languageIdentifier.identifyLanguage(text)
                 .addOnSuccessListener(result::success)
                 .addOnFailureListener(e -> result.error("Language Identification Error", e.toString(), null));
     }
 
-    private void identifyPossibleLanguages(String text, final MethodChannel.Result result) {
+    private void identifyPossibleLanguages(String text, LanguageIdentifier languageIdentifier, final MethodChannel.Result result) {
         languageIdentifier.identifyPossibleLanguages(text)
                 .addOnSuccessListener(identifiedLanguages -> {
                     List<Map<String, Object>> languageList = new ArrayList<>();
@@ -77,9 +80,11 @@ public class LanguageDetector implements MethodChannel.MethodCallHandler {
                 .addOnFailureListener(e -> result.error("Error identifying possible languages", e.toString(), null));
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        LanguageIdentifier languageIdentifier = instances.get(id);
         if (languageIdentifier == null) return;
         languageIdentifier.close();
-        languageIdentifier = null;
+        instances.remove(id);
     }
 }

@@ -7,7 +7,7 @@
 #define closeLanguageIdentifier @"nlp#closeLanguageIdentifier"
 
 @implementation GoogleMlKitLanguageIdPlugin {
-    MLKLanguageIdentification *languageId;
+    NSMutableDictionary *instances;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -18,29 +18,45 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startLanguageIdentifier]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeLanguageIdentifier]) {
-        languageId = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
+- (MLKLanguageIdentification*)initialize:(FlutterMethodCall *)call {
+    NSNumber *confidence = call.arguments[@"confidence"];
+    MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence.floatValue];
+    return [MLKLanguageIdentification languageIdentificationWithOptions:options];
+}
+
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
+    NSString *uid = call.arguments[@"id"];
+    MLKLanguageIdentification *languageId = [instances objectForKey:uid];
     if (languageId == NULL) {
-        NSNumber *confidence = call.arguments[@"confidence"];
-        languageId = [self getLanguageIdentifier:confidence.floatValue];
+        languageId = [self initialize:call];
+        instances[uid] = languageId;
     }
     
     BOOL possibleLanguages = [call.arguments[@"possibleLanguages"] boolValue];
     NSString *text = call.arguments[@"text"];
     if(possibleLanguages) {
-        [self identifyPossibleLanguagesInText:text result:result];
+        [self identifyPossibleLanguagesInText:text languageId:languageId result:result];
     } else {
-        [self identifyLanguageInText:text result:result];
+        [self identifyLanguageInText:text languageId:languageId result:result];
     }
 }
 
@@ -48,6 +64,7 @@
 // For each identified langauge a confidence value is returned as well.
 // Read more here: https://developers.google.com/ml-kit/language/identification/ios
 - (void)identifyPossibleLanguagesInText:(NSString *)text
+                             languageId:(MLKLanguageIdentification*) languageId
                                  result:(FlutterResult)result {
     [languageId identifyPossibleLanguagesForText:text
                                       completion:^(NSArray * _Nonnull identifiedLanguages,
@@ -71,6 +88,7 @@
 // Identify the language for a given text.
 // Read more here: https://developers.google.com/ml-kit/language/identification/ios
 - (void)identifyLanguageInText:(NSString *)text
+                    languageId:(MLKLanguageIdentification*) languageId
                         result:(FlutterResult)result {
     [languageId identifyLanguageForText:text
                              completion:^(NSString * _Nonnull languageTag,
@@ -81,12 +99,6 @@
         }
         result(languageTag);
     }];
-}
-
-- (MLKLanguageIdentification*)getLanguageIdentifier:(float) confidence {
-    MLKLanguageIdentificationOptions *options = [[MLKLanguageIdentificationOptions alloc] initWithConfidenceThreshold:confidence];
-    MLKLanguageIdentification *languageId = [MLKLanguageIdentification languageIdentificationWithOptions:options];
-    return languageId;
 }
 
 @end
