@@ -13,6 +13,9 @@ class LanguageIdentifier {
   /// The value should be between 0 and 1.
   final double confidenceThreshold;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [IdentifiedLanguage].
   LanguageIdentifier({required this.confidenceThreshold});
 
@@ -35,8 +38,9 @@ class LanguageIdentifier {
   /// More information: https://developers.google.com/ml-kit/language/identification
   Future<List<IdentifiedLanguage>> identifyPossibleLanguages(
       String text) async {
-    final result = await _channel.invokeMethod(
-        'nlp#startLanguageIdentifier', <String, dynamic>{
+    final result = await _channel
+        .invokeMethod('nlp#startLanguageIdentifier', <String, dynamic>{
+      'id': id,
       'text': text,
       'possibleLanguages': true,
       'confidence': confidenceThreshold
@@ -51,7 +55,8 @@ class LanguageIdentifier {
   }
 
   /// Closes the identifier and releases its resources.
-  Future<void> close() => _channel.invokeMethod('nlp#closeLanguageIdentifier');
+  Future<void> close() =>
+      _channel.invokeMethod('nlp#closeLanguageIdentifier', {'id': id});
 }
 
 /// An identified language for the given input text.
