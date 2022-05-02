@@ -8,6 +8,9 @@ import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.google_mlkit_commons.GenericModelManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
@@ -16,8 +19,8 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "nlp#closeLanguageTranslator";
     private static final String MANAGE = "nlp#manageLanguageModelModels";
 
+    private final Map<String, Translator> instances = new HashMap<>();
     private final GenericModelManager genericModelManager = new GenericModelManager();
-    private Translator translator;
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -27,7 +30,7 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
                 translateText(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             case MANAGE:
@@ -42,15 +45,19 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
     private void translateText(MethodCall call, final MethodChannel.Result result) {
         String text = call.argument("text");
 
-        if (translator == null) {
+        String id = call.argument("id");
+        Translator onDeviceTranslator = instances.get(id);
+        if (onDeviceTranslator == null) {
             String sourceLanguage = call.argument("source");
             String targetLanguage = call.argument("target");
             TranslatorOptions options = new TranslatorOptions.Builder()
                     .setSourceLanguage(sourceLanguage)
                     .setTargetLanguage(targetLanguage)
                     .build();
-            translator = Translation.getClient(options);
+            onDeviceTranslator = Translation.getClient(options);
+            instances.put(id, onDeviceTranslator);
         }
+        final Translator translator = onDeviceTranslator;
 
         translator.downloadModelIfNeeded()
                 .addOnSuccessListener(
@@ -68,10 +75,12 @@ public class TextTranslator implements MethodChannel.MethodCallHandler {
                         });
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        Translator translator = instances.get(id);
         if (translator == null) return;
         translator.close();
-        translator = null;
+        instances.remove(id);
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
