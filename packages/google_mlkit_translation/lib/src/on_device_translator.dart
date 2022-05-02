@@ -12,14 +12,18 @@ class OnDeviceTranslator {
   /// The target language to translate the input into.
   final TranslateLanguage targetLanguage;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [OnDeviceTranslator].
   OnDeviceTranslator(
       {required this.sourceLanguage, required this.targetLanguage});
 
   /// Translates the given [text] from the source language into the target language.
   Future<String> translateText(String text) async {
-    final result = await _channel.invokeMethod(
-        'nlp#startLanguageTranslator', <String, dynamic>{
+    final result = await _channel
+        .invokeMethod('nlp#startLanguageTranslator', <String, dynamic>{
+      'id': id,
       'text': text,
       'source': sourceLanguage.bcpCode,
       'target': targetLanguage.bcpCode
@@ -29,7 +33,8 @@ class OnDeviceTranslator {
   }
 
   /// Closes the translator and releases its resources.
-  Future<void> close() => _channel.invokeMethod('nlp#closeLanguageTranslator');
+  Future<void> close() =>
+      _channel.invokeMethod('nlp#closeLanguageTranslator', {'id': id});
 }
 
 /// A subclass of [ModelManager] that manages [TranslateRemoteModel] required to process the image.

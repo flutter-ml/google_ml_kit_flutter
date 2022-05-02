@@ -8,7 +8,7 @@
 #define manageLanguageModelModels @"nlp#manageLanguageModelModels"
 
 @implementation GoogleMlKitTranslationPlugin {
-    MLKTranslator *onDeviceTranslator;
+    NSMutableDictionary *instances;
     GenericModelManager *genericModelManager;
 }
 
@@ -20,31 +20,45 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startLanguageTranslator]) {
         [self handleTranslation:call result:result];
     } else if ([call.method isEqualToString:manageLanguageModelModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeLanguageTranslator]) {
-        onDeviceTranslator = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
+- (MLKTranslator*)initialize:(FlutterMethodCall *)call {
+    NSString *source = call.arguments[@"source"];
+    NSString *target = call.arguments[@"target"];
+    MLKTranslatorOptions *options = [[MLKTranslatorOptions alloc] initWithSourceLanguage:source
+                                                                          targetLanguage:target];
+    return [MLKTranslator translatorWithOptions:options];
+}
+
 - (void)handleTranslation:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSString *text = call.arguments[@"text"];
     
-    if (onDeviceTranslator == NULL) {
-        NSString *source = call.arguments[@"source"];
-        NSString *target = call.arguments[@"target"];
-        MLKTranslatorOptions *options = [[MLKTranslatorOptions alloc] initWithSourceLanguage:source
-                                                                              targetLanguage:target];
-        onDeviceTranslator = [MLKTranslator translatorWithOptions:options];
+    NSString *uid = call.arguments[@"id"];
+    MLKTranslator *translator = [instances objectForKey:uid];
+    if (translator == NULL) {
+        translator = [self initialize:call];
+        instances[uid] = translator;
     }
     
-    MLKTranslator *translator = onDeviceTranslator;
     [translator downloadModelIfNeededWithCompletion:^(NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
