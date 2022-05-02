@@ -11,6 +11,9 @@ class ObjectDetector {
   /// The options for the detector.
   final ObjectDetectorOptions options;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [ObjectDetector].
   ObjectDetector({required this.options});
 
@@ -18,6 +21,7 @@ class ObjectDetector {
   Future<List<DetectedObject>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
         'vision#startObjectDetector', <String, dynamic>{
+      'id': id,
       'imageData': inputImage.toJson(),
       'options': options.toJson()
     });
@@ -31,7 +35,7 @@ class ObjectDetector {
 
   /// Closes the detector and releases its resources.
   Future<void> close() =>
-      _channel.invokeMethod<void>('vision#closeObjectDetector');
+      _channel.invokeMethod<void>('vision#closeObjectDetector', {'id': id});
 }
 
 /// The mode for [ObjectDetector].

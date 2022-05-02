@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Allow multiple instances in native layer.
+
 ## 0.2.0
 
 * Fix: return after closing detector in iOS.
