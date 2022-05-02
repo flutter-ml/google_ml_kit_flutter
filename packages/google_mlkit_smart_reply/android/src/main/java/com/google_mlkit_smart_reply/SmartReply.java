@@ -19,7 +19,7 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
     private static final String START = "nlp#startSmartReply";
     private static final String CLOSE = "nlp#closeSmartReply";
 
-    private SmartReplyGenerator smartReplyGenerator;
+    private final Map<String, SmartReplyGenerator> instances = new HashMap<>();
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -29,14 +29,13 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
                 suggestReply(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
                 result.notImplemented();
                 break;
         }
-
     }
 
     private void suggestReply(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -56,8 +55,12 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
             }
         }
 
-        if (smartReplyGenerator == null)
+        String id = call.argument("id");
+        SmartReplyGenerator smartReplyGenerator = instances.get(id);
+        if (smartReplyGenerator == null) {
             smartReplyGenerator = com.google.mlkit.nl.smartreply.SmartReply.getClient();
+            instances.put(id, smartReplyGenerator);
+        }
 
         smartReplyGenerator.suggestReplies(conversation)
                 .addOnSuccessListener(smartReplySuggestionResult -> {
@@ -76,9 +79,11 @@ public class SmartReply implements MethodChannel.MethodCallHandler {
                 .addOnFailureListener(e -> result.error("failed suggesting", e.toString(), null));
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        SmartReplyGenerator smartReplyGenerator = instances.get(id);
         if (smartReplyGenerator == null) return;
         smartReplyGenerator.close();
-        smartReplyGenerator = null;
+        instances.remove(id);
     }
 }

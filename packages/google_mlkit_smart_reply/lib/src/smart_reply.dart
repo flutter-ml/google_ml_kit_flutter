@@ -10,6 +10,9 @@ class SmartReply {
   /// The sequence of chat [Message]s to generate a suggestion for.
   List<Message> get conversation => _conversation;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Adds a [Message] to the [conversation] for local user.
   void addMessageToConversationFromLocalUser(
       String message, int timestamp) async {
@@ -36,8 +39,9 @@ class SmartReply {
           status: SmartReplySuggestionResultStatus.noReply, suggestions: []);
     }
 
-    final result = await _channel.invokeMethod(
-        'nlp#startSmartReply', <String, dynamic>{
+    final result =
+        await _channel.invokeMethod('nlp#startSmartReply', <String, dynamic>{
+      'id': id,
       'conversation': _conversation.map((message) => message.toJson()).toList()
     });
 
@@ -45,7 +49,8 @@ class SmartReply {
   }
 
   /// Closes the underlying resources including models used for reply inference.
-  Future<void> close() => _channel.invokeMethod('nlp#closeSmartReply');
+  Future<void> close() =>
+      _channel.invokeMethod('nlp#closeSmartReply', {'id': id});
 }
 
 /// Represents a text message from a certain user in a conversation, providing context for SmartReply to generate reply suggestions.

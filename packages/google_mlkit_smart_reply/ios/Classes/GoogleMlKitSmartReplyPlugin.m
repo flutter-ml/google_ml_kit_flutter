@@ -7,7 +7,7 @@
 #define closeSmartReply @"nlp#closeSmartReply"
 
 @implementation GoogleMlKitSmartReplyPlugin {
-    MLKSmartReply *smartReply;
+    NSMutableDictionary *instances;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -18,11 +18,19 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startSmartReply]) {
         [self handleStartSmartReply:call result:result];
     } else if ([call.method isEqualToString:closeSmartReply]) {
-        smartReply = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
@@ -46,8 +54,12 @@
         [conversation addObject:message];
     }
     
-    if (smartReply == NULL)
+    NSString *uid = call.arguments[@"id"];
+    MLKSmartReply *smartReply = [instances objectForKey:uid];
+    if (smartReply == NULL) {
         smartReply = [MLKSmartReply smartReply];
+        instances[uid] = smartReply;
+    }
     
     [smartReply suggestRepliesForMessages:conversation
                                completion:^(MLKSmartReplySuggestionResult * _Nullable smartReplySuggestionResult,
