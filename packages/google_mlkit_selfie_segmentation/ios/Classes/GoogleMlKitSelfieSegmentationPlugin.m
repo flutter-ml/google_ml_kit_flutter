@@ -38,7 +38,7 @@
     }
 }
 
-- (MLKSegmenter* )initialize:(FlutterMethodCall *)call {
+- (MLKSegmenter*)initialize:(FlutterMethodCall *)call {
     BOOL isStream = [[call.arguments objectForKey:@"isStream"] boolValue];
     BOOL enableRawSizeMask = [[call.arguments objectForKey:@"enableRawSizeMask"] boolValue];
     

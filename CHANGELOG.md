@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-05-02
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.11.0`](#google_ml_kit---v0110)
+- [`google_mlkit_barcode_scanning` - `v0.3.0`](#google_mlkit_barcode_scanning---v030)
+- [`google_mlkit_digital_ink_recognition` - `v0.3.0`](#google_mlkit_digital_ink_recognition---v030)
+- [`google_mlkit_entity_extraction` - `v0.3.0`](#google_mlkit_entity_extraction---v030)
+- [`google_mlkit_face_detection` - `v0.3.0`](#google_mlkit_face_detection---v030)
+- [`google_mlkit_image_labeling` - `v0.3.0`](#google_mlkit_image_labeling---v030)
+- [`google_mlkit_language_id` - `v0.3.0`](#google_mlkit_language_id---v030)
+- [`google_mlkit_object_detection` - `v0.3.0`](#google_mlkit_object_detection---v030)
+- [`google_mlkit_pose_detection` - `v0.3.0`](#google_mlkit_pose_detection---v030)
+- [`google_mlkit_smart_reply` - `v0.3.0`](#google_mlkit_smart_reply---v030)
+- [`google_mlkit_text_recognition` - `v0.3.0`](#google_mlkit_text_recognition---v030)
+- [`google_mlkit_translation` - `v0.3.0`](#google_mlkit_translation---v030)
+
+---
+
+#### `google_ml_kit` - `v0.11.0`
+
+* Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_selfie_segmentation).
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+* Update README.
+
+#### `google_mlkit_entity_extraction` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_face_detection` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_image_labeling` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_language_id` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_object_detection` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_pose_detection` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_smart_reply` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_text_recognition` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
+#### `google_mlkit_translation` - `v0.3.0`
+
+* Allow multiple instances in native layer.
+
 ## 2022-04-29
 
 ### Changes
