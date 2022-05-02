@@ -12,20 +12,18 @@ class FaceDetector {
   /// The options for the face detector.
   final FaceDetectorOptions options;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
+  /// Constructor to create an instance of [FaceDetector].
   FaceDetector({required this.options});
 
   /// Processes the given image for face detection.
   Future<List<Face>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeListMethod<dynamic>(
         'vision#startFaceDetector', <String, dynamic>{
-      'options': <String, dynamic>{
-        'enableClassification': options.enableClassification,
-        'enableLandmarks': options.enableLandmarks,
-        'enableContours': options.enableContours,
-        'enableTracking': options.enableTracking,
-        'minFaceSize': options.minFaceSize,
-        'mode': options.performanceMode.name,
-      },
+      'options': options.toJson(),
+      'id': id,
       'imageData': inputImage.toJson(),
     });
 
@@ -39,7 +37,7 @@ class FaceDetector {
 
   /// Closes the detector and releases its resources.
   Future<void> close() =>
-      _channel.invokeMethod<void>('vision#closeFaceDetector');
+      _channel.invokeMethod<void>('vision#closeFaceDetector', {'id': id});
 }
 
 /// Immutable options for configuring features of [FaceDetector].
@@ -86,6 +84,16 @@ class FaceDetectorOptions {
 
   /// Option for controlling additional accuracy / speed trade-offs.
   final FaceDetectorMode performanceMode;
+
+  /// Returns a json representation of an instance of [FaceDetectorOptions].
+  Map<String, dynamic> toJson() => {
+        'enableClassification': enableClassification,
+        'enableLandmarks': enableLandmarks,
+        'enableContours': enableContours,
+        'enableTracking': enableTracking,
+        'minFaceSize': minFaceSize,
+        'mode': performanceMode.name,
+      };
 }
 
 /// A human face detected in an image.

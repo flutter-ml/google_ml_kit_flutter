@@ -27,7 +27,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeFaceDetector";
 
     private final Context context;
-    private com.google.mlkit.vision.face.FaceDetector detector;
+    private final Map<String, com.google.mlkit.vision.face.FaceDetector> instances = new HashMap<>();
 
     public FaceDetector(Context context) {
         this.context = context;
@@ -41,7 +41,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
@@ -55,6 +55,8 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
+        String id = call.argument("id");
+        com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
         if (detector == null) {
             Map<String, Object> options = call.argument("options");
             if (options == null) {
@@ -64,6 +66,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
 
             FaceDetectorOptions detectorOptions = parseOptions(options);
             detector = FaceDetection.getClient(detectorOptions);
+            instances.put(id, detector);
         }
 
         detector.process(inputImage)
@@ -226,9 +229,11 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
         return null;
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
         if (detector == null) return;
         detector.close();
-        detector = null;
+        instances.remove(id);
     }
 }
