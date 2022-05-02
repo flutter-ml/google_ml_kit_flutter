@@ -9,7 +9,7 @@
 #define closePoseDetector @"vision#closePoseDetector"
 
 @implementation GoogleMlKitPoseDetectionPlugin {
-    MLKPoseDetector *detector;
+    NSMutableDictionary *instances;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -20,39 +20,54 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startPoseDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closePoseDetector]) {
-        detector = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
+- (MLKPoseDetector*)initialize:(FlutterMethodCall *)call {
+    NSDictionary *options = call.arguments[@"options"];
+    NSString *mode = options[@"mode"];
+    MLKPoseDetectorMode detectorMode = MLKPoseDetectorModeStream;
+    if ([mode isEqualToString:@"single"]) {
+        detectorMode = MLKPoseDetectorModeSingleImage;
+    }
+    
+    NSString *model = options[@"model"];
+    if ([model isEqualToString:@"base"]) {
+        MLKPoseDetectorOptions *options = [[MLKPoseDetectorOptions alloc] init];
+        options.detectorMode = detectorMode;
+        return [MLKPoseDetector poseDetectorWithOptions:options];
+    } else {
+        MLKAccuratePoseDetectorOptions *options =
+        [[MLKAccuratePoseDetectorOptions alloc] init];
+        options.detectorMode = detectorMode;
+        return [MLKPoseDetector poseDetectorWithOptions:options];
+    }
+}
+
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
+    NSString *uid = call.arguments[@"id"];
+    MLKPoseDetector *detector = [instances objectForKey:uid];
     if (detector == NULL) {
-        NSDictionary *options = call.arguments[@"options"];
-        NSString *mode = options[@"mode"];
-        MLKPoseDetectorMode detectorMode = MLKPoseDetectorModeStream;
-        if ([mode isEqualToString:@"single"]) {
-            detectorMode = MLKPoseDetectorModeSingleImage;
-        }
-        
-        NSString *model = options[@"model"];
-        if ([model isEqualToString:@"base"]) {
-            MLKPoseDetectorOptions *options = [[MLKPoseDetectorOptions alloc] init];
-            options.detectorMode = detectorMode;
-            detector = [MLKPoseDetector poseDetectorWithOptions:options];
-        } else {
-            MLKAccuratePoseDetectorOptions *options =
-            [[MLKAccuratePoseDetectorOptions alloc] init];
-            options.detectorMode = detectorMode;
-            detector = [MLKPoseDetector poseDetectorWithOptions:options];
-        }
+        detector = [self initialize:call];
+        instances[uid] = detector;
     }
     
     [detector processImage:image

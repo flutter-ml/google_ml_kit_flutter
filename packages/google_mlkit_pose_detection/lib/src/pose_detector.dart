@@ -9,6 +9,9 @@ class PoseDetector {
   /// The options for the pose detector.
   final PoseDetectorOptions options;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [PoseDetector].
   PoseDetector({required this.options});
 
@@ -18,6 +21,7 @@ class PoseDetector {
     final result = await _channel.invokeMethod(
         'vision#startPoseDetector', <String, dynamic>{
       'options': options.toJson(),
+      'id': id,
       'imageData': inputImage.toJson()
     });
 
@@ -35,7 +39,8 @@ class PoseDetector {
   }
 
   /// Closes the detector and releases its resources.
-  Future<void> close() => _channel.invokeMethod('vision#closePoseDetector');
+  Future<void> close() =>
+      _channel.invokeMethod('vision#closePoseDetector', {'id': id});
 }
 
 /// Determines the parameters on which [PoseDetector] works.
