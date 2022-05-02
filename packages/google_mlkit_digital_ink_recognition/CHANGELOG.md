@@ -1,6 +1,7 @@
 ## 0.3.0
 
 * Allow multiple instances in native layer.
+* Update README.
 
 ## 0.2.1
 

@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 
@@ -35,6 +36,7 @@ class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
+      initialDirection: CameraLensDirection.front,
     );
   }
 

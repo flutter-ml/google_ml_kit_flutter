@@ -24,7 +24,7 @@ public class SelfieSegmenter implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeSelfieSegmenter";
 
     private final Context context;
-    Map<String, Segmenter> instances = new HashMap<>();
+    private final Map<String, Segmenter> instances = new HashMap<>();
 
     public SelfieSegmenter(Context context) {
         this.context = context;
