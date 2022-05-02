@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Allow multiple instances in native layer.
+
 ## 0.2.1
 
 * Update `DigitalInkRecognizer` constructor.

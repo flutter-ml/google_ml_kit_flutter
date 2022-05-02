@@ -16,6 +16,9 @@ class DigitalInkRecognizer {
   //  Visit this site [https://tools.ietf.org/html/bcp47] to learn more.
   final String languageCode;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [DigitalInkRecognizer].
   DigitalInkRecognizer({required this.languageCode});
 
@@ -24,6 +27,7 @@ class DigitalInkRecognizer {
   Future<List<RecognitionCandidate>> recognize(Ink ink) async {
     final result = await _channel
         .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
+      'id': id,
       'ink': ink.toJson(),
       'model': languageCode,
     });
@@ -39,7 +43,7 @@ class DigitalInkRecognizer {
 
   /// Closes the recognizer and releases its resources.
   Future<void> close() =>
-      _channel.invokeMethod('vision#closeDigitalInkRecognizer');
+      _channel.invokeMethod('vision#closeDigitalInkRecognizer', {'id': id});
 }
 
 /// Represents the user input as a collection of [Stroke] and serves as input for the handwriting recognition task.

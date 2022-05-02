@@ -9,9 +9,8 @@
 #define manageInkModels @"vision#manageInkModels"
 
 @implementation GoogleMlKitDigitalInkRecognitionPlugin {
-    MLKDigitalInkRecognizer *recognizer;
+    NSMutableDictionary *instances;
     GenericModelManager *genericModelManager;
-    NSString *tag;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -22,13 +21,21 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startDigitalInkRecognizer]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:manageInkModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeDigitalInkRecognizer]) {
-        recognizer = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
@@ -52,10 +59,12 @@
         return;
     }
     
-    if (recognizer == NULL || ![tag isEqualToString:modelTag]) {
-        tag = modelTag;
+    NSString *uid = call.arguments[@"id"];
+    MLKDigitalInkRecognizer *recognizer = [instances objectForKey:uid];
+    if (recognizer == NULL) {
         MLKDigitalInkRecognizerOptions *options = [[MLKDigitalInkRecognizerOptions alloc] initWithModel:model];
         recognizer = [MLKDigitalInkRecognizer digitalInkRecognizerWithOptions:options];
+        instances[uid] = recognizer;
     }
     
     NSMutableArray *strokes = [NSMutableArray array];
@@ -75,7 +84,8 @@
     MLKInk *ink = [[MLKInk alloc] initWithStrokes:strokes];
     
     [recognizer recognizeInk:ink
-                  completion:^(MLKDigitalInkRecognitionResult * _Nullable recognitionResult, NSError * _Nullable error) {
+                  completion:^(MLKDigitalInkRecognitionResult * _Nullable recognitionResult,
+                               NSError * _Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;

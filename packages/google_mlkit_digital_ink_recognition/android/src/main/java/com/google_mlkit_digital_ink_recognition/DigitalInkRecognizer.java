@@ -24,9 +24,8 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeDigitalInkRecognizer";
     private static final String MANAGE = "vision#manageInkModels";
 
-    private com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer;
+    private final Map<String, com.google.mlkit.vision.digitalink.DigitalInkRecognizer> instances = new HashMap<>();
     private final GenericModelManager genericModelManager = new GenericModelManager();
-    private String tag = "";
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -36,7 +35,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 break;
             case MANAGE:
                 manageModel(call, result);
@@ -50,15 +49,17 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         String tag = call.argument("model");
         DigitalInkRecognitionModel model = getModel(tag, result);
-        if (genericModelManager.isModelDownloaded(model)) {
-            if (recognizer == null || this.tag != tag) {
-                this.tag = tag;
-                closeDetector();
-                recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
-            }
-        } else {
+        if (model == null) return;
+        if (!genericModelManager.isModelDownloaded(model)) {
             result.error("Model Error", "Model has not been downloaded yet ", null);
             return;
+        }
+
+        String id = call.argument("id");
+        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
+        if (recognizer == null) {
+            recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
+            instances.put(id, recognizer);
         }
 
         Map<String, Object> inkMap = call.argument("ink");
@@ -95,10 +96,12 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
                 .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
         if (recognizer == null) return;
         recognizer.close();
-        recognizer = null;
+        instances.remove(id);
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
