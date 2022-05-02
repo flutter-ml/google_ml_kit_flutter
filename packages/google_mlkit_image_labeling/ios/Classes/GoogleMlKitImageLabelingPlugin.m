@@ -12,7 +12,7 @@
 #define manageFirebaseModels @"vision#manageFirebaseModels"
 
 @implementation GoogleMlKitImageLabelingPlugin {
-    MLKImageLabeler *labeler;
+    NSMutableDictionary *instances;
     GenericModelManager *genericModelManager;
 }
 
@@ -24,11 +24,19 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startImageLabelDetector]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeImageLabelDetector]) {
-        labeler = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
         [self manageModel:call result:result];
@@ -40,6 +48,8 @@
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
+    NSString *uid = call.arguments[@"id"];
+    MLKImageLabeler *labeler = [instances objectForKey:uid];
     if (labeler == NULL) {
         NSDictionary *dictionary = call.arguments[@"options"];
         NSString *type = dictionary[@"type"];
@@ -66,10 +76,12 @@
                                        details:error]);
             return;
         }
+        instances[uid] = labeler;
     }
     
     [labeler processImage:image
-               completion:^(NSArray<MLKImageLabel *> *_Nullable labels, NSError *_Nullable error) {
+               completion:^(NSArray<MLKImageLabel *> *_Nullable labels,
+                            NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
             return;

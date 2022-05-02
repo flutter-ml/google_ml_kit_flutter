@@ -29,9 +29,9 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeImageLabelDetector";
     private static final String MANAGE = "vision#manageFirebaseModels";
 
-    private final GenericModelManager genericModelManager = new GenericModelManager();
     private final Context context;
-    private ImageLabeler imageLabeler;
+    private final Map<String, ImageLabeler> instances = new HashMap<>();
+    private final GenericModelManager genericModelManager = new GenericModelManager();
 
     public ImageLabelDetector(Context context) {
         this.context = context;
@@ -45,7 +45,7 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             case MANAGE:
@@ -62,6 +62,8 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
+        String id = call.argument("id");
+        ImageLabeler imageLabeler = instances.get(id);
         if (imageLabeler == null) {
             Map<String, Object> options = call.argument("options");
             if (options == null) {
@@ -88,6 +90,7 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 result.error(type, error, error);
                 return;
             }
+            instances.put(id, imageLabeler);
         }
 
         imageLabeler.process(inputImage)
@@ -144,10 +147,12 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 .build();
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        ImageLabeler imageLabeler = instances.get(id);
         if (imageLabeler == null) return;
         imageLabeler.close();
-        imageLabeler = null;
+        instances.remove(id);
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
