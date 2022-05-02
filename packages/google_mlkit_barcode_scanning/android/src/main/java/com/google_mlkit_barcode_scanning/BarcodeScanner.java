@@ -26,7 +26,7 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeBarcodeScanner";
 
     private final Context context;
-    private com.google.mlkit.vision.barcode.BarcodeScanner barcodeScanner;
+    private final Map<String, com.google.mlkit.vision.barcode.BarcodeScanner> instances = new HashMap<>();
 
     public BarcodeScanner(Context context) {
         this.context = context;
@@ -40,7 +40,7 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
@@ -49,29 +49,31 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
         }
     }
 
+    private com.google.mlkit.vision.barcode.BarcodeScanner initialize(MethodCall call) {
+        List<Integer> formatList = call.argument("formats");
+        BarcodeScannerOptions barcodeScannerOptions;
+        if (formatList.size() > 1) {
+            int[] array = new int[formatList.size()];
+            for (int i = 1; i < formatList.size(); i++) {
+                array[i] = formatList.get(i);
+            }
+            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();
+        } else {
+            barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0)).build();
+        }
+        return BarcodeScanning.getClient(barcodeScannerOptions);
+    }
+
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
+        String id = call.argument("id");
+        com.google.mlkit.vision.barcode.BarcodeScanner barcodeScanner = instances.get(id);
         if (barcodeScanner == null) {
-            List<Integer> formatList = call.argument("formats");
-            if (formatList == null) {
-                result.error("BarcodeDetectorError", "Invalid barcode formats", null);
-                return;
-            }
-
-            BarcodeScannerOptions barcodeScannerOptions;
-            if (formatList.size() > 1) {
-                int[] array = new int[formatList.size()];
-                for (int i = 1; i < formatList.size(); i++) {
-                    array[i] = formatList.get(i);
-                }
-                barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0), array).build();
-            } else {
-                barcodeScannerOptions = new BarcodeScannerOptions.Builder().setBarcodeFormats(formatList.get(0)).build();
-            }
-            barcodeScanner = BarcodeScanning.getClient(barcodeScannerOptions);
+            barcodeScanner = initialize(call);
+            instances.put(id, barcodeScanner);
         }
 
         barcodeScanner.process(inputImage)
@@ -208,9 +210,11 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                 .addOnFailureListener(e -> result.error("BarcodeDetectorError", e.toString(), null));
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.vision.barcode.BarcodeScanner barcodeScanner = instances.get(id);
         if (barcodeScanner == null) return;
         barcodeScanner.close();
-        barcodeScanner = null;
+        instances.remove(id);
     }
 }

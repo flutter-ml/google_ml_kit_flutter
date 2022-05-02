@@ -8,7 +8,7 @@
 #define closeBarcodeScanner @"vision#closeBarcodeScanner"
 
 @implementation GoogleMlKitBarcodeScanningPlugin {
-    MLKBarcodeScanner *barcodeScanner;
+    NSMutableDictionary *instances;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -19,32 +19,48 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startBarcodeScanner]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:closeBarcodeScanner]) {
-        barcodeScanner = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
     }
 }
 
+- (MLKBarcodeScanner*)initialize:(FlutterMethodCall *)call {
+    NSArray *array = call.arguments[@"formats"];
+    NSInteger formats = 0;
+    for (NSNumber *num in array) {
+        formats += [num intValue];
+    }
+    MLKBarcodeScannerOptions *options = [[MLKBarcodeScannerOptions alloc] initWithFormats: formats];
+    return [MLKBarcodeScanner barcodeScannerWithOptions:options];
+}
+
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
     
+    NSString *uid = call.arguments[@"id"];
+    MLKBarcodeScanner *barcodeScanner = [instances objectForKey:uid];
     if (barcodeScanner == NULL) {
-        NSArray *array = call.arguments[@"formats"];
-        NSInteger formats = 0;
-        for (NSNumber *num in array) {
-            formats += [num intValue];
-        }
-        MLKBarcodeScannerOptions *options = [[MLKBarcodeScannerOptions alloc] initWithFormats: formats];
-        barcodeScanner = [MLKBarcodeScanner barcodeScannerWithOptions:options];
+        barcodeScanner = [self initialize:call];
+        instances[uid] = barcodeScanner;
     }
     
     [barcodeScanner processImage:image
-                      completion:^(NSArray<MLKBarcode *> *barcodes, NSError *error) {
+                      completion:^(NSArray<MLKBarcode *> *barcodes,
+                                   NSError *error) {
         if (error) {
             result(getFlutterError(error));
             return;
