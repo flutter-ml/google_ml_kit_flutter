@@ -9,6 +9,9 @@ class ImageLabeler {
   /// The options for the image labeler.
   final ImageLabelerOptions options;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [ImageLabeler].
   ImageLabeler({required this.options});
 
@@ -17,6 +20,7 @@ class ImageLabeler {
     final result = await _channel.invokeMethod(
         'vision#startImageLabelDetector', <String, dynamic>{
       'options': options.toJson(),
+      'id': id,
       'imageData': inputImage.toJson()
     });
     final imageLabels = <ImageLabel>[];
@@ -30,7 +34,7 @@ class ImageLabeler {
 
   /// Closes the labeler and releases its resources.
   Future<void> close() =>
-      _channel.invokeMethod('vision#closeImageLabelDetector');
+      _channel.invokeMethod('vision#closeImageLabelDetector', {'id': id});
 }
 
 /// Type of [ImageLabeler].
