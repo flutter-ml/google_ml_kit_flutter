@@ -24,7 +24,7 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closePoseDetector";
 
     private final Context context;
-    private com.google.mlkit.vision.pose.PoseDetector poseDetector;
+    private final Map<String, com.google.mlkit.vision.pose.PoseDetector> instances = new HashMap<>();
 
     public PoseDetector(Context context) {
         this.context = context;
@@ -38,7 +38,7 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
                 handleDetection(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             default:
@@ -52,6 +52,8 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
+        String id = call.argument("id");
+        com.google.mlkit.vision.pose.PoseDetector poseDetector = instances.get(id);
         if (poseDetector == null) {
             Map<String, Object> options = call.argument("options");
             if (options == null) {
@@ -77,6 +79,7 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
                         .build();
                 poseDetector = PoseDetection.getClient(detectorOptions);
             }
+            instances.put(id, poseDetector);
         }
 
         poseDetector.process(inputImage)
@@ -102,9 +105,11 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
                         e -> result.error("PoseDetectorError", e.toString(), null));
     }
 
-    private void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.vision.pose.PoseDetector poseDetector = instances.get(id);
         if (poseDetector == null) return;
         poseDetector.close();
-        poseDetector = null;
+        instances.remove(id);
     }
 }
