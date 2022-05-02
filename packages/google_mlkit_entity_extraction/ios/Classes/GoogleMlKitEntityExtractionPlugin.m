@@ -8,7 +8,7 @@
 #define manageEntityExtractionModels @"nlp#manageEntityExtractionModels"
 
 @implementation GoogleMlKitEntityExtractionPlugin {
-    MLKEntityExtractor *entityExtractor;
+    NSMutableDictionary *instances;
     GenericModelManager *genericModelManager;
 }
 
@@ -20,13 +20,21 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (id)init {
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([call.method isEqualToString:startEntityExtractor]) {
         [self handleDetection:call result:result];
     } else if ([call.method isEqualToString:manageEntityExtractionModels]) {
         [self manageModel:call result:result];
     } else if ([call.method isEqualToString:closeEntityExtractor]) {
-        entityExtractor = NULL;
+        NSString *uid = call.arguments[@"id"];
+        [instances removeObjectForKey:uid];
         result(NULL);
     } else {
         result(FlutterMethodNotImplemented);
@@ -36,10 +44,13 @@
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
     NSString *text = call.arguments[@"text"];
     
+    NSString *uid = call.arguments[@"id"];
+    MLKEntityExtractor *entityExtractor = [instances objectForKey:uid];
     if (entityExtractor == NULL) {
         NSString *language = call.arguments[@"language"];
         MLKEntityExtractorOptions *options = [[MLKEntityExtractorOptions alloc] initWithModelIdentifier:language];
         entityExtractor = [MLKEntityExtractor entityExtractorWithOptions:options];
+        instances[uid] = entityExtractor;
     }
     
     MLKEntityExtractionParams *params = [[MLKEntityExtractionParams alloc] init];
@@ -101,7 +112,6 @@
         params.typesFilter = filters;
     }
     
-    MLKEntityExtractor *extractor = entityExtractor;
     [entityExtractor downloadModelIfNeededWithCompletion:^(NSError *_Nullable error) {
         if (error) {
             result(getFlutterError(error));
@@ -109,9 +119,10 @@
         }
         // Model downloaded successfully. Okay to annotate.
         
-        [extractor annotateText:text
-                     withParams:params
-                     completion:^(NSArray *_Nullable annotations, NSError *_Nullable error) {
+        [entityExtractor annotateText:text
+                           withParams:params
+                           completion:^(NSArray *_Nullable annotations,
+                                        NSError *_Nullable error) {
             if (error) {
                 result(getFlutterError(error));
                 return;

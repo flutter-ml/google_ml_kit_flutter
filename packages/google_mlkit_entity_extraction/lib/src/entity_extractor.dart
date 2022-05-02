@@ -9,6 +9,9 @@ class EntityExtractor {
   /// The language used when parsing entities in the text.
   final EntityExtractorLanguage language;
 
+  /// Instance id.
+  final id = DateTime.now().microsecondsSinceEpoch.toString();
+
   /// Constructor to create an instance of [EntityExtractor].
   EntityExtractor({required this.language});
 
@@ -33,6 +36,7 @@ class EntityExtractor {
     final result = await _channel.invokeMethod(
         'nlp#startEntityExtractor', <String, dynamic>{
       'parameters': parameters,
+      'id': id,
       'text': text,
       'language': language.name
     });
@@ -45,7 +49,8 @@ class EntityExtractor {
   }
 
   /// Closes the extractor and releases its resources.
-  Future<void> close() => _channel.invokeMethod('nlp#closeEntityExtractor');
+  Future<void> close() =>
+      _channel.invokeMethod('nlp#closeEntityExtractor', {'id': id});
 }
 
 /// A subclass of [ModelManager] that manages [EntityExtractorRemoteModel].
