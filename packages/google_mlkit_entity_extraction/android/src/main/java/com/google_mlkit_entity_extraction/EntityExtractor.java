@@ -34,8 +34,8 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "nlp#closeEntityExtractor";
     private static final String MANAGE = "nlp#manageEntityExtractionModels";
 
+    private final Map<String, com.google.mlkit.nl.entityextraction.EntityExtractor> instances = new HashMap<>();
     private final GenericModelManager genericModelManager = new GenericModelManager();
-    private com.google.mlkit.nl.entityextraction.EntityExtractor entityExtractor;
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -45,7 +45,7 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                 extractEntities(call, result);
                 break;
             case CLOSE:
-                closeDetector();
+                closeDetector(call);
                 result.success(null);
                 break;
             case MANAGE:
@@ -60,12 +60,16 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
     private void extractEntities(MethodCall call, final MethodChannel.Result result) {
         String text = call.argument("text");
 
-        if (entityExtractor == null) {
+        String id = call.argument("id");
+        com.google.mlkit.nl.entityextraction.EntityExtractor extractor = instances.get(id);
+        if (extractor == null) {
             String language = call.argument("language");
-            entityExtractor = EntityExtraction.getClient(
+            extractor = EntityExtraction.getClient(
                     new EntityExtractorOptions.Builder(language)
                             .build());
+            instances.put(id, extractor);
         }
+        final com.google.mlkit.nl.entityextraction.EntityExtractor entityExtractor = extractor;
 
         Map<String, Object> parameters = call.argument("parameters");
         Set<Integer> filters = null;
@@ -170,10 +174,12 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
                         });
     }
 
-    public void closeDetector() {
+    private void closeDetector(MethodCall call) {
+        String id = call.argument("id");
+        com.google.mlkit.nl.entityextraction.EntityExtractor entityExtractor = instances.get(id);
         if (entityExtractor == null) return;
         entityExtractor.close();
-        entityExtractor = null;
+        instances.remove(id);
     }
 
     private void manageModel(MethodCall call, final MethodChannel.Result result) {
