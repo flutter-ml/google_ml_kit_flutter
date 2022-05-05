@@ -51,10 +51,10 @@ class DigitalInkRecognizer {
 /// Information about the context in which an ink has been drawn.
 /// Pass this object to a [DigitalInkRecognizer] alongside an [Ink] to improve the recognition quality.
 class DigitalInkRecognitionContext {
+  /// Characters immediately before the position where the recognized text should be inserted.
   final String? preContext;
 
   /// Size of the writing area.
-  /// This is used by some recognition models to disambiguate some cases
   final WritingArea? writingArea;
 
   /// Constructor to create an instance of [DigitalInkRecognitionContext].
