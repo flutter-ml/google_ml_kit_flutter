@@ -1,5 +1,11 @@
 ## 0.3.0
 
+* Add `DigitalInkRecognitionContext`.
+* Add `WritingArea`.
+* Update README.
+
+## 0.3.0
+
 * Allow multiple instances in native layer.
 * Update README.
 

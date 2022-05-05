@@ -9,6 +9,9 @@ import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
 import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
 import com.google.mlkit.vision.digitalink.Ink;
 import com.google.mlkit.vision.digitalink.RecognitionCandidate;
+import com.google.mlkit.vision.digitalink.RecognitionContext;
+import com.google.mlkit.vision.digitalink.RecognitionResult;
+import com.google.mlkit.vision.digitalink.WritingArea;
 import com.google_mlkit_commons.GenericModelManager;
 
 import java.util.ArrayList;
@@ -79,21 +82,50 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
         }
         Ink ink = inkBuilder.build();
 
-        recognizer.recognize(ink)
-                .addOnSuccessListener(recognitionResult -> {
-                    List<Map<String, Object>> candidatesList = new ArrayList<>(recognitionResult.getCandidates().size());
-                    for (RecognitionCandidate candidate : recognitionResult.getCandidates()) {
-                        Map<String, Object> candidateData = new HashMap<>();
-                        double score = 0;
-                        if (candidate.getScore() != null)
-                            score = candidate.getScore().doubleValue();
-                        candidateData.put("text", candidate.getText());
-                        candidateData.put("score", score);
-                        candidatesList.add(candidateData);
-                    }
-                    result.success(candidatesList);
-                })
-                .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
+        RecognitionContext context = null;
+        Map<String, Object> contextMap = call.argument("context");
+        if (contextMap != null) {
+            RecognitionContext.Builder builder = RecognitionContext.builder();
+            String preContext = (String) contextMap.get("preContext");
+            if (preContext != null) {
+                builder.setPreContext(preContext);
+            } else {
+                builder.setPreContext("");
+            }
+
+            Map<String, Object> writingAreaMap = (Map<String, Object>) contextMap.get("writingArea");
+            if (writingAreaMap != null) {
+                float width = (float) (double) writingAreaMap.get("width");
+                float height = (float) (double) writingAreaMap.get("height");
+                builder.setWritingArea(new WritingArea(width, height));
+            }
+
+            context = builder.build();
+        }
+
+        if (context != null) {
+            recognizer.recognize(ink, context)
+                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
+                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
+        } else {
+            recognizer.recognize(ink)
+                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
+                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
+        }
+    }
+
+    private void process(RecognitionResult recognitionResult, final MethodChannel.Result result) {
+        List<Map<String, Object>> candidatesList = new ArrayList<>(recognitionResult.getCandidates().size());
+        for (RecognitionCandidate candidate : recognitionResult.getCandidates()) {
+            Map<String, Object> candidateData = new HashMap<>();
+            double score = 0;
+            if (candidate.getScore() != null)
+                score = candidate.getScore().doubleValue();
+            candidateData.put("text", candidate.getText());
+            candidateData.put("score", score);
+            candidatesList.add(candidateData);
+        }
+        result.success(candidatesList);
     }
 
     private void closeDetector(MethodCall call) {

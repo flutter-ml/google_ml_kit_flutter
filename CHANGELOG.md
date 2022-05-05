@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-05-05
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_digital_ink_recognition` - `v0.4.0`](#google_mlkit_digital_ink_recognition---v040)
+
+---
+
+#### `google_mlkit_digital_ink_recognition` - `v0.4.0`
+
+* Add `DigitalInkRecognitionContext`.
+* Add `WritingArea`.
+* Update README.
+
 ## 2022-05-02
 
 ### Changes
