@@ -24,11 +24,13 @@ class DigitalInkRecognizer {
 
   /// Performs a recognition of the text written on screen.
   /// It takes an instance of [Ink] which refers to the user input as a list of [Stroke].
-  Future<List<RecognitionCandidate>> recognize(Ink ink) async {
+  Future<List<RecognitionCandidate>> recognize(Ink ink,
+      {DigitalInkRecognitionContext? context}) async {
     final result = await _channel
         .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
       'id': id,
       'ink': ink.toJson(),
+      'context': context?._isValid == true ? context?.toJson() : null,
       'model': languageCode,
     });
 
@@ -44,6 +46,45 @@ class DigitalInkRecognizer {
   /// Closes the recognizer and releases its resources.
   Future<void> close() =>
       _channel.invokeMethod('vision#closeDigitalInkRecognizer', {'id': id});
+}
+
+/// Information about the context in which an ink has been drawn.
+/// Pass this object to a [DigitalInkRecognizer] alongside an [Ink] to improve the recognition quality.
+class DigitalInkRecognitionContext {
+  /// Characters immediately before the position where the recognized text should be inserted.
+  final String? preContext;
+
+  /// Size of the writing area.
+  final WritingArea? writingArea;
+
+  /// Constructor to create an instance of [DigitalInkRecognitionContext].
+  DigitalInkRecognitionContext({this.preContext, this.writingArea});
+
+  bool get _isValid => preContext != null || writingArea != null;
+
+  /// Returns a json representation of an instance of [WritingArea].
+  Map<String, dynamic> toJson() => {
+        'preContext': preContext,
+        'writingArea': writingArea?.toJson(),
+      };
+}
+
+/// The writing area is the area on the screen where the user can draw an ink.
+class WritingArea {
+  /// Writing area width, in the same units as used in [StrokePoint].
+  final double width;
+
+  /// Writing area height, in the same units as used in [StrokePoint].
+  final double height;
+
+  /// Constructor to create an instance of [WritingArea].
+  WritingArea({required this.width, required this.height});
+
+  /// Returns a json representation of an instance of [WritingArea].
+  Map<String, dynamic> toJson() => {
+        'width': width,
+        'height': height,
+      };
 }
 
 /// Represents the user input as a collection of [Stroke] and serves as input for the handwriting recognition task.

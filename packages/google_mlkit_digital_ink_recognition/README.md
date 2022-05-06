@@ -44,6 +44,21 @@ for (final candidate in candidates) {
 
 Make sure you download the language model before processing any `Ink`.
 
+To improve the accuracy of text recognition you can set an writing area and pre-context. More details [here](https://developers.google.cn/ml-kit/vision/digital-ink-recognition/ios#tips-to-improve-text-recognition-accuracy).
+
+```dart
+String preContext;
+double width;
+double height;
+final context = DigitalInkRecognitionContext(
+  preContext: preContext,
+  writingArea: WritingArea(width: width, height: height),
+);
+
+final List<RecognitionCandidate> candidates = await digitalInkRecognizer.recognize(ink, context: context);
+
+```
+
 #### Release resources with `close()`
 
 ```dart

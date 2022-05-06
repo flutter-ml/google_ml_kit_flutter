@@ -83,24 +83,56 @@
     }
     MLKInk *ink = [[MLKInk alloc] initWithStrokes:strokes];
     
-    [recognizer recognizeInk:ink
-                  completion:^(MLKDigitalInkRecognitionResult * _Nullable recognitionResult,
-                               NSError * _Nullable error) {
-        if (error) {
-            result(getFlutterError(error));
-            return;
-        } else if (!recognitionResult) {
-            result(NULL);
-            return;
+    MLKDigitalInkRecognitionContext *context;
+    NSDictionary *contextMap = call.arguments[@"context"];
+    if ([contextMap isKindOfClass: [NSDictionary class]]) {
+        NSString *preContext = contextMap[@"preContext"];
+        if ([preContext isKindOfClass: [NSNull class]]) {
+            preContext = @"";
         }
-        NSMutableArray *candidates = [NSMutableArray new];
-        for(MLKDigitalInkRecognitionCandidate *candidate in recognitionResult.candidates) {
-            NSDictionary *dictionary = @{@"text": candidate.text,
-                                         @"score": @(candidate.score.doubleValue)};
-            [candidates addObject:dictionary];
+        MLKWritingArea *writingArea;
+        NSDictionary *writingAreaMap = contextMap[@"writingArea"];
+        if ([writingAreaMap isKindOfClass: [NSDictionary class]]) {
+            NSNumber *width = writingAreaMap[@"width"];
+            NSNumber *height = writingAreaMap[@"height"];
+            writingArea = [[MLKWritingArea alloc] initWithWidth:width.floatValue height:height.floatValue];
         }
-        result(candidates);
-    }];
+        context = [[MLKDigitalInkRecognitionContext alloc] initWithPreContext:preContext writingArea:writingArea];
+    }
+    
+    if (context != NULL) {
+        [recognizer recognizeInk:ink
+                         context:context
+                      completion:^(MLKDigitalInkRecognitionResult * _Nullable recognitionResult,
+                                   NSError * _Nullable error) {
+            [self process:recognitionResult error:error result:result];
+        }];
+    } else {
+        [recognizer recognizeInk:ink
+                      completion:^(MLKDigitalInkRecognitionResult * _Nullable recognitionResult,
+                                   NSError * _Nullable error) {
+            [self process:recognitionResult error:error result:result];
+        }];
+    }
+}
+
+- (void )process:(MLKDigitalInkRecognitionResult *)recognitionResult
+           error:(NSError *)error
+          result:(FlutterResult)result {
+    if (error) {
+        result(getFlutterError(error));
+        return;
+    } else if (!recognitionResult) {
+        result(NULL);
+        return;
+    }
+    NSMutableArray *candidates = [NSMutableArray new];
+    for(MLKDigitalInkRecognitionCandidate *candidate in recognitionResult.candidates) {
+        NSDictionary *dictionary = @{@"text": candidate.text,
+                                     @"score": @(candidate.score.doubleValue)};
+        [candidates addObject:dictionary];
+    }
+    result(candidates);
 }
 
 - (void)manageModel:(FlutterMethodCall *)call result:(FlutterResult)result {
