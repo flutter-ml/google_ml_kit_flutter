@@ -48,11 +48,11 @@ PODS:
   - google_mlkit_commons (0.2.0):
     - Flutter
     - MLKitVision
-  - google_mlkit_digital_ink_recognition (0.3.0):
+  - google_mlkit_digital_ink_recognition (0.4.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 2.6.0)
-  - google_mlkit_entity_extraction (0.3.0):
+  - google_mlkit_entity_extraction (0.4.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/EntityExtraction (~> 2.6.0)
@@ -478,8 +478,8 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   google_mlkit_barcode_scanning: 56e88993b6c915ce7134f9d77cb5b2de2fca8cfa
   google_mlkit_commons: e9070f57232c3a3e4bd42fdfa621bb1f4bb3e709
-  google_mlkit_digital_ink_recognition: 7f3f58b2484d3887c30bcc1a00e9ca3bfbdb80ec
-  google_mlkit_entity_extraction: fd1d5168d887a0f79a31515faae7ac6e62792f07
+  google_mlkit_digital_ink_recognition: b5f915c6b5637a3b827dab42b59ca24b46243449
+  google_mlkit_entity_extraction: 0bf2407e9ad80934079721463dd69c3c66ecb413
   google_mlkit_face_detection: 37e11922bc916867cf325589261efbe5cb46fd97
   google_mlkit_image_labeling: 7f71f2310011308297c1b6ca5d67ef1c03ba9af9
   google_mlkit_language_id: 39af954a7ff2ab556062e80bd0701bd377528647
