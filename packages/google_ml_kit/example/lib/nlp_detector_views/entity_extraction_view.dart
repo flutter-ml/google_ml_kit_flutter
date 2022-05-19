@@ -33,67 +33,73 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: ListView(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const Center(child: Text('Enter text (English)')),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    width: 2,
-                  )),
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(border: InputBorder.none),
-                    maxLines: null,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Center(child: Text('Enter text (English)')),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      width: 2,
+                    )),
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      maxLines: null,
+                    ),
                   ),
                 ),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                ElevatedButton(
-                    onPressed: _extractEntities,
-                    child: Text('Extract Entities'))
-              ]),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   ElevatedButton(
-                      onPressed: _downloadModel, child: Text('Download Model')),
-                  ElevatedButton(
-                      onPressed: _deleteModel, child: Text('Delete Model')),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                ElevatedButton(
-                    onPressed: _isModelDownloaded,
-                    child: Text('Check download'))
-              ]),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: const Text('Result', style: TextStyle(fontSize: 20)),
-              ),
-              ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                shrinkWrap: true,
-                itemCount: _entities.length,
-                itemBuilder: (context, index) => ExpansionTile(
-                    title: Text(_entities[index].text),
-                    children: _entities[index]
-                        .entities
-                        .map((e) => Text(e.toString()))
-                        .toList()),
-              ),
-            ],
+                      onPressed: _extractEntities,
+                      child: Text('Extract Entities'))
+                ]),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: _downloadModel,
+                        child: Text('Download Model')),
+                    ElevatedButton(
+                        onPressed: _deleteModel, child: Text('Delete Model')),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: _isModelDownloaded,
+                          child: Text('Check download'))
+                    ]),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: const Text('Result', style: TextStyle(fontSize: 20)),
+                ),
+                ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _entities.length,
+                  itemBuilder: (context, index) => ExpansionTile(
+                      title: Text(_entities[index].text),
+                      children: _entities[index]
+                          .entities
+                          .map((e) => Text('${e.type.name}: $e'))
+                          .toList()),
+                ),
+              ],
+            ),
           ),
         ),
       ),
