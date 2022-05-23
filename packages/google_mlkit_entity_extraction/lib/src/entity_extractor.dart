@@ -183,11 +183,11 @@ enum EntityType {
   flightNumber,
   iban,
   isbn,
-  money,
   paymentCard,
   phone,
   trackingNumber,
   url,
+  money,
 }
 
 /// An entity extracted from a piece of text.

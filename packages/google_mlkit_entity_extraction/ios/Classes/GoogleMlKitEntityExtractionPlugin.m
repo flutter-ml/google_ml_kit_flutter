@@ -91,19 +91,19 @@
                     [filters addObject:MLKEntityExtractionEntityTypeISBN];
                     break;
                 case 7:
-                    [filters addObject:MLKEntityExtractionEntityTypeMoney];
-                    break;
-                case 8:
                     [filters addObject:MLKEntityExtractionEntityTypePaymentCard];
                     break;
-                case 9:
+                case 8:
                     [filters addObject:MLKEntityExtractionEntityTypePhone];
                     break;
-                case 10:
+                case 9:
                     [filters addObject:MLKEntityExtractionEntityTypeTrackingNumber];
                     break;
-                case 11:
+                case 10:
                     [filters addObject:MLKEntityExtractionEntityTypeURL];
+                    break;
+                case 11:
+                    [filters addObject:MLKEntityExtractionEntityTypeMoney];
                     break;
                 default:
                     break;
@@ -163,23 +163,23 @@
                     } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeISBN]) {
                         type = 6;
                         entityData[@"isbn"] = entity.ISBNEntity.ISBN;
-                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeMoney]) {
-                        type = 7;
-                        entityData[@"fraction"] = @(entity.moneyEntity.fractionalPart);
-                        entityData[@"integer"] = @(entity.moneyEntity.integerPart);
-                        entityData[@"unnormalized"] = entity.moneyEntity.unnormalizedCurrency;
                     } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePaymentCard]) {
-                        type = 8;
+                        type = 7;
                         entityData[@"network"] = @(entity.paymentCardEntity.paymentCardNetwork);
                         entityData[@"number"] = entity.paymentCardEntity.paymentCardNumber;
                     } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypePhone]) {
-                        type = 9;
+                        type = 8;
                     } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeTrackingNumber]) {
-                        type = 10;
+                        type = 9;
                         entityData[@"carrier"] = @(entity.trackingNumberEntity.parcelCarrier);
                         entityData[@"number"] = entity.trackingNumberEntity.parcelTrackingNumber;
                     } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeURL]) {
-                        type = 11;
+                        type = 10;
+                    } else if ([entity.entityType isEqualToString: MLKEntityExtractionEntityTypeMoney]) {
+                       type = 11;
+                       entityData[@"fraction"] = @(entity.moneyEntity.fractionalPart);
+                       entityData[@"integer"] = @(entity.moneyEntity.integerPart);
+                       entityData[@"unnormalized"] = entity.moneyEntity.unnormalizedCurrency;
                     }
                     
                     entityData[@"type"] = @(type);

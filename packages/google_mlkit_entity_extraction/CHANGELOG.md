@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Fix: EntityType enum order.
+
 ## 0.3.0
 
 * Allow multiple instances in native layer.
