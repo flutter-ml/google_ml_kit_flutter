@@ -48,7 +48,7 @@ final bytes = allBytes.done().buffer.asUint8List();
 final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toDouble());
 
 final InputImageRotation imageRotation =
-    InputImageRotationMethods.fromRawValue(camera.sensorOrientation) ??
+    InputImageRotationValue.fromRawValue(camera.sensorOrientation) ??
         InputImageRotation.rotation0deg;
 
 final InputImageFormat inputImageFormat =
