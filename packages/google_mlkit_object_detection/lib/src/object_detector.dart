@@ -41,7 +41,7 @@ class ObjectDetector {
 /// The mode for [ObjectDetector].
 enum DetectionMode {
   stream,
-  singleImage,
+  single,
 }
 
 /// Type of [ObjectDetector].
@@ -71,9 +71,9 @@ class ObjectDetectorOptions {
 
   /// Constructor to create an instance of [ObjectDetectorOptions].
   ObjectDetectorOptions(
-      {this.mode = DetectionMode.stream,
-      this.classifyObjects = false,
-      this.multipleObjects = false});
+      {required this.mode,
+      required this.classifyObjects,
+      required this.multipleObjects});
 
   /// Returns a json representation of an instance of [ObjectDetectorOptions].
   Map<String, dynamic> toJson() => {
@@ -106,10 +106,10 @@ class LocalObjectDetectorOptions extends ObjectDetectorOptions {
 
   /// Constructor to create an instance of [LocalObjectDetectorOptions].
   LocalObjectDetectorOptions(
-      {DetectionMode mode = DetectionMode.stream,
+      {required DetectionMode mode,
       required this.modelPath,
-      bool classifyObjects = false,
-      bool multipleObjects = false,
+      required bool classifyObjects,
+      required bool multipleObjects,
       this.maximumLabelsPerObject = 10,
       this.confidenceThreshold = 0.5})
       : super(
@@ -152,10 +152,10 @@ class FirebaseObjectDetectorOptions extends ObjectDetectorOptions {
 
   /// Constructor to create an instance of [FirebaseObjectDetectorOptions].
   FirebaseObjectDetectorOptions(
-      {DetectionMode mode = DetectionMode.stream,
+      {required DetectionMode mode,
       required this.modelName,
-      bool classifyObjects = false,
-      bool multipleObjects = false,
+      required bool classifyObjects,
+      required bool multipleObjects,
       this.maximumLabelsPerObject = 10,
       this.confidenceThreshold = 0.5})
       : super(

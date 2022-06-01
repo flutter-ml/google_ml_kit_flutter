@@ -17,6 +17,7 @@ class CameraView extends StatefulWidget {
       required this.customPaint,
       this.text,
       required this.onImage,
+      this.onScreenModeChanged,
       this.initialDirection = CameraLensDirection.back})
       : super(key: key);
 
@@ -24,6 +25,7 @@ class CameraView extends StatefulWidget {
   final CustomPaint? customPaint;
   final String? text;
   final Function(InputImage inputImage) onImage;
+  final Function(ScreenMode mode)? onScreenModeChanged;
   final CameraLensDirection initialDirection;
 
   @override
@@ -246,6 +248,9 @@ class _CameraViewState extends State<CameraView> {
       _mode = ScreenMode.liveFeed;
       _startLiveFeed();
     }
+    if (widget.onScreenModeChanged != null) {
+      widget.onScreenModeChanged!(_mode);
+    }
     setState(() {});
   }
 
@@ -312,12 +317,12 @@ class _CameraViewState extends State<CameraView> {
 
     final camera = cameras[_cameraIndex];
     final imageRotation =
-        InputImageRotationValue.fromRawValue(camera.sensorOrientation) ??
-            InputImageRotation.rotation0deg;
+        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+    if (imageRotation == null) return;
 
     final inputImageFormat =
-        InputImageFormatValue.fromRawValue(image.format.raw) ??
-            InputImageFormat.nv21;
+        InputImageFormatValue.fromRawValue(image.format.raw);
+    if (inputImageFormat == null) return;
 
     final planeData = image.planes.map(
       (Plane plane) {
