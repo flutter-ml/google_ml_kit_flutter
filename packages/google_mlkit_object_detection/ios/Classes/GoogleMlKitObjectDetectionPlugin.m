@@ -100,17 +100,18 @@
                     @"confidence" : @(label.confidence),
                 }];
             }
-            NSDictionary *data = @{
+            NSMutableDictionary *data = [NSMutableDictionary dictionaryWithDictionary:@{
                 @"rect" : @{
                     @"left" : @(object.frame.origin.x),
                     @"top" : @(object.frame.origin.y),
                     @"right" : @(object.frame.origin.x + object.frame.size.width),
                     @"bottom" : @(object.frame.origin.y + object.frame.size.height)
                 },
-                @"labels" : labels,
-                @"trackingId" : object.trackingID,
-                
-            };
+                @"labels" : labels
+            }];
+            if (object.trackingID != NULL) {
+                data[@"trackingId"] = object.trackingID;
+            }
             [objectsData addObject:data];
         }
         

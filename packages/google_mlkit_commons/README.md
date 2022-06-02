@@ -39,6 +39,7 @@ From [CameraImage](https://pub.dev/documentation/camera/latest/camera/CameraImag
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 final camera; // your camera instance
+
 final WriteBuffer allBytes = WriteBuffer();
 for (final Plane plane in cameraImage.planes) {
   allBytes.putUint8List(plane.bytes);
@@ -48,12 +49,10 @@ final bytes = allBytes.done().buffer.asUint8List();
 final Size imageSize = Size(cameraImage.width.toDouble(), cameraImage.height.toDouble());
 
 final InputImageRotation imageRotation =
-    InputImageRotationValue.fromRawValue(camera.sensorOrientation) ??
-        InputImageRotation.rotation0deg;
+    InputImageRotationValue.fromRawValue(camera.sensorOrientation);
 
 final InputImageFormat inputImageFormat =
-    InputImageFormatValue.fromRawValue(cameraImage.format.raw) ??
-        InputImageFormat.nv21;
+    InputImageFormatValue.fromRawValue(cameraImage.format.raw);
 
 final planeData = cameraImage.planes.map(
   (Plane plane) {

@@ -26,7 +26,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   void initState() {
     super.initState();
 
-    _initializeDetector();
+    _initializeDetector(DetectionMode.stream);
   }
 
   @override
@@ -45,14 +45,31 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
       onImage: (inputImage) {
         processImage(inputImage);
       },
+      onScreenModeChanged: _onScreenModeChanged,
       initialDirection: CameraLensDirection.back,
     );
   }
 
-  void _initializeDetector() async {
+  void _onScreenModeChanged(ScreenMode mode) {
+    switch (mode) {
+      case ScreenMode.gallery:
+        _initializeDetector(DetectionMode.single);
+        return;
+
+      case ScreenMode.liveFeed:
+        _initializeDetector(DetectionMode.stream);
+        return;
+    }
+  }
+
+  void _initializeDetector(DetectionMode mode) async {
+    print('Set detector in mode: $mode');
+
     // uncomment next lines if you want to use the default model
-    // final options =
-    //     ObjectDetectorOptions(classifyObjects: true, multipleObjects: true);
+    // final options = ObjectDetectorOptions(
+    //     mode: mode,
+    //     classifyObjects: true,
+    //     multipleObjects: true);
     // _objectDetector = ObjectDetector(options: options);
 
     // uncomment next lines if you want to use a local model
@@ -60,6 +77,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     final path = 'assets/ml/object_labeler.tflite';
     final modelPath = await _getModel(path);
     final options = LocalObjectDetectorOptions(
+      mode: mode,
       modelPath: modelPath,
       classifyObjects: true,
       multipleObjects: true,
@@ -73,6 +91,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     //     await FirebaseObjectDetectorModelManager().downloadModel(modelName);
     // print('Downloaded: $response');
     // final options = FirebaseObjectDetectorOptions(
+    //   mode: mode,
     //   modelName: modelName,
     //   classifyObjects: true,
     //   multipleObjects: true,
