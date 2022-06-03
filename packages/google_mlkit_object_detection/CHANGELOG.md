@@ -1,3 +1,8 @@
+## 0.4.0
+
+* Fix trackingId for null values.
+* Update `ObjectDetectorOptions` constructor.
+
 ## 0.3.0
 
 * Allow multiple instances in native layer.

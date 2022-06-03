@@ -36,7 +36,7 @@ Google's ML Kit for Flutter is a set of [Flutter plugins](https://flutter.io/pla
 - Swift 5
 - ML Kit only supports 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities.
 
-Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude amrv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
+Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude armv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
 Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 

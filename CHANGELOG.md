@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-06-01
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_object_detection` - `v0.4.0`](#google_mlkit_object_detection---v040)
+
+---
+
+#### `google_mlkit_object_detection` - `v0.4.0`
+
+* Fix trackingId for null values.
+* Update `ObjectDetectorOptions` constructor.
+
 ## 2022-05-18
 
 ### Changes

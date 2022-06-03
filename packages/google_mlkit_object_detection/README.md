@@ -35,7 +35,20 @@ final InputImage inputImage;
 #### Create an instance of `ObjectDetector`
 
 ```dart
-final objectDetector = ObjectDetector(options: CustomObjectDetectorOptions or ObjectDetectorOptions)
+// Use DetectionMode.stream when processing camera feed.
+// Use DetectionMode.single when processing a single image.
+final mode = DetectionMode.stream or DetectionMode.single;
+
+// Options to configure the detector while using with base model.
+final options = ObjectDetectorOptions(...);
+
+// Options to configure the detector while using a local custom model.
+final options = LocalObjectDetectorOptions(...);
+
+// Options to configure the detector while using a Firebase model.
+final options = FirebaseObjectDetectorOptions(...);
+
+final objectDetector = ObjectDetector(options: options);
 ```
 
 #### Process image
