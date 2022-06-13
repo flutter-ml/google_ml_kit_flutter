@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   flutter_lints: ^1.0.4
   image_picker: ^0.8.5
-  camera: ^0.9.4+21
+  camera: ^0.9.8
   path_provider: ^2.0.9
 
 #  google_ml_kit:
