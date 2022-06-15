@@ -54,8 +54,8 @@ class Vision {
   }
 
   /// Returns an instance of [ObjectDetector].
-  ObjectDetector objectDetector([ObjectDetectorOptions? options]) {
-    return ObjectDetector(options: options ?? ObjectDetectorOptions());
+  ObjectDetector objectDetector({required ObjectDetectorOptions options}) {
+    return ObjectDetector(options: options);
   }
 
   /// Returns an instance of [SelfieSegmenter].
