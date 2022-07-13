@@ -59,7 +59,7 @@ class _ImageLabelViewState extends State<ImageLabelView> {
 
     // uncomment next lines if you want to use a remote model
     // make sure to add model to firebase
-    // final modelName = 'blur_detect';
+    // final modelName = 'bird-classifier';
     // final response =
     //     await FirebaseImageLabelerModelManager().downloadModel(modelName);
     // print('Downloaded: $response');
