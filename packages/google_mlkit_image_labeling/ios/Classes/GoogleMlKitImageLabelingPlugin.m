@@ -27,7 +27,7 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (id)init {    
+- (id)init {
     self = [super init];
     if (self)
         instances = [NSMutableDictionary dictionary];
@@ -136,7 +136,6 @@
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     NSNumber *maxCount = optionsData[@"maxCount"];
     NSString *modelName = optionsData[@"modelName"];
-    
     
     MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
     MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
