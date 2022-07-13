@@ -13,7 +13,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ### Firebase dependency for remote models
 
-[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection) can be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app, and custom Models can either be bundled with the app or downloaded from [Firebase](https://firebase.google.com/).
+[Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/) can be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app, and custom Models can either be bundled with the app or downloaded from [Firebase](https://firebase.google.com/).
 
 If you wish to use remote models hosted in Firebase, you must first enable the feature in iOS. Please see the additional setup instructions [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master#firebase-dependency-custom-models).
 
