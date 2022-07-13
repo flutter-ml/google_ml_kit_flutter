@@ -71,8 +71,6 @@ class _ImageLabelViewState extends State<ImageLabelView> {
   }
 
   Future<void> processImage(InputImage inputImage) async {
-    final start = DateTime.now();
-
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -97,8 +95,6 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     if (mounted) {
       setState(() {});
     }
-
-    print('Time: ${DateTime.now().difference(start).inMilliseconds}ms');
   }
 
   Future<String> _getModel(String assetPath) async {
