@@ -60,7 +60,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 2.6.0)
-  - google_mlkit_image_labeling (1.0.0):
+  - google_mlkit_image_labeling (0.4.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ImageLabeling (~> 2.6.0)
@@ -69,7 +69,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/LanguageID (~> 2.6.0)
-  - google_mlkit_object_detection (1.0.0):
+  - google_mlkit_object_detection (0.5.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ObjectDetection (~> 2.6.0)
@@ -480,9 +480,9 @@ SPEC CHECKSUMS:
   google_mlkit_digital_ink_recognition: b5f915c6b5637a3b827dab42b59ca24b46243449
   google_mlkit_entity_extraction: 0bf2407e9ad80934079721463dd69c3c66ecb413
   google_mlkit_face_detection: 37e11922bc916867cf325589261efbe5cb46fd97
-  google_mlkit_image_labeling: e37efc2257009ee82c3b3d4378d81a3f5bbcdd1c
+  google_mlkit_image_labeling: ed3e055c04a3f321ed54cd20ca15d9ca0cb1e6c6
   google_mlkit_language_id: 39af954a7ff2ab556062e80bd0701bd377528647
-  google_mlkit_object_detection: 9102e6fb33ea9c43a25855a5aaa88c78e9b8845f
+  google_mlkit_object_detection: 9b499a57dddab3f56feb5ed4fc5bae5cc9295cbd
   google_mlkit_pose_detection: 63b7a6e22294d7da6309ef6970c3c94517787be7
   google_mlkit_selfie_segmentation: 4ef4c843f0ff4857c238e916df8c95ddc74c7eed
   google_mlkit_smart_reply: fc9ba6a5c97e491c9b326ef9313768cfc30bbe6b
