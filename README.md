@@ -105,7 +105,6 @@ platform :ios, '10.0'
 pod 'GoogleMLKit/LinkFirebase'
 ```
 
-    target.build_configurations.each do |config|
 Next, add the preprocessor flag to enable the firebase remote models at compile time. To do that, update your existing `build_configurations` loop in the `post_install` step with the following:
 
 ```ruby
