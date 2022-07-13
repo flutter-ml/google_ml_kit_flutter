@@ -52,25 +52,27 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     // uncomment next lines if you want to use a local model
     // make sure to add tflite model to assets/ml
     // final path = 'assets/ml/lite-model_aiy_vision_classifier_birds_V1_3.tflite';
-    final path = 'assets/ml/object_labeler.tflite';
-    final modelPath = await _getModel(path);
-    final options = LocalLabelerOptions(modelPath: modelPath);
-    _imageLabeler = ImageLabeler(options: options);
+    // final path = 'assets/ml/object_labeler.tflite';
+    // final modelPath = await _getModel(path);
+    // final options = LocalLabelerOptions(modelPath: modelPath);
+    // _imageLabeler = ImageLabeler(options: options);
 
     // uncomment next lines if you want to use a remote model
     // make sure to add model to firebase
-    // final modelName = 'bird-classifier';
-    // final response =
-    //     await FirebaseImageLabelerModelManager().downloadModel(modelName);
-    // print('Downloaded: $response');
-    // final options =
-    //     FirebaseLabelerOption(confidenceThreshold: 0.5, modelName: modelName);
-    // _imageLabeler = ImageLabeler(options: options);
+    final modelName = 'blur_detect';
+    final response =
+        await FirebaseImageLabelerModelManager().downloadModel(modelName);
+    print('Downloaded: $response');
+    final options =
+        FirebaseLabelerOption(confidenceThreshold: 0.5, modelName: modelName);
+    _imageLabeler = ImageLabeler(options: options);
 
     _canProcess = true;
   }
 
   Future<void> processImage(InputImage inputImage) async {
+    final start = DateTime.now();
+
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -95,6 +97,8 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     if (mounted) {
       setState(() {});
     }
+
+    print('Time: ${DateTime.now().difference(start).inMilliseconds}ms');
   }
 
   Future<String> _getModel(String assetPath) async {

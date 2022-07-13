@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-07-13
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_image_labeling` - `v1.0.0`](#google_mlkit_image_labeling---v100)
+- [`google_mlkit_object_detection` - `v1.0.0`](#google_mlkit_object_detection---v100)
+
+---
+
+#### `google_mlkit_image_labeling` - `v1.0.0`
+#### `google_mlkit_object_detection` - `v1.0.0`
+
+__BREAKING:__ For remote firebase-hosted models in iOS, you must now explicitly add the `LinkFirebase` pod and preprocessor flag to your Podfile. This removes an unnecessary dependency on FirebaseCore for those who do not need to use remote models. Please see the updated README for instructions.
+
+
 ## 2022-06-01
 
 ### Changes

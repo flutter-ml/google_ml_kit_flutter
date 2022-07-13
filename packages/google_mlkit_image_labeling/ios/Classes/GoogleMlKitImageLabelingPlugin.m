@@ -3,8 +3,11 @@
 #import <MLKitImageLabeling/MLKitImageLabeling.h>
 #import <MLKitImageLabelingCommon/MLKitImageLabelingCommon.h>
 #import <MLKitImageLabelingCustom/MLKitImageLabelingCustom.h>
-#import <MLKitLinkFirebase/MLKitLinkFirebase.h>
 #import <google_mlkit_commons/GoogleMlKitCommonsPlugin.h>
+
+#if MLKIT_FIREBASE_MODELS
+#import <MLKitLinkFirebase/MLKitLinkFirebase.h>
+#endif
 
 #define channelName @"google_mlkit_image_labeler"
 #define startImageLabelDetector @"vision#startImageLabelDetector"
@@ -24,7 +27,7 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (id)init {
+- (id)init {    
     self = [super init];
     if (self)
         instances = [NSMutableDictionary dictionary];
@@ -39,7 +42,11 @@
         [instances removeObjectForKey:uid];
         result(NULL);
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
+#if !(MLKIT_FIREBASE_MODELS)
+        result([FlutterError errorWithCode:@"ERROR_MISSING_MLKIT_FIREBASE_MODELS" message:@"You must define MLKIT_FIREBASE_MODELS=1 in your Podfile." details:nil]);
+#else
         [self manageModel:call result:result];
+#endif
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -59,6 +66,7 @@
         } else if ([@"local" isEqualToString:type]) {
             MLKCustomImageLabelerOptions *options = [self getLocalOptions:dictionary];
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+#if MLKIT_FIREBASE_MODELS
         } else if ([@"remote" isEqualToString:type]) {
             MLKCustomImageLabelerOptions *options = [self getRemoteOptions:dictionary];
             if (options == NULL) {
@@ -69,6 +77,7 @@
                 return;
             }
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+#endif
         } else {
             NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", type];
             result([FlutterError errorWithCode:type
@@ -122,10 +131,12 @@
     return options;
 }
 
+#if MLKIT_FIREBASE_MODELS
 - (MLKCustomImageLabelerOptions *)getRemoteOptions:(NSDictionary *)optionsData {
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     NSNumber *maxCount = optionsData[@"maxCount"];
     NSString *modelName = optionsData[@"modelName"];
+    
     
     MLKFirebaseModelSource *firebaseModelSource = [[MLKFirebaseModelSource alloc] initWithName:modelName];
     MLKCustomRemoteModel *remoteModel = [[MLKCustomRemoteModel alloc] initWithRemoteModelSource:firebaseModelSource];
@@ -149,5 +160,6 @@
     genericModelManager = [[GenericModelManager alloc] init];
     [genericModelManager manageModel:model call:call result:result];
 }
+#endif
 
 @end
