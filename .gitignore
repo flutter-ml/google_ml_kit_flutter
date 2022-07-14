@@ -78,6 +78,7 @@ example/android/app/google-services.json
 **/Flutter/Generated.xcconfig
 **/Flutter/flutter_assets/
 xcuserdata/
+**/.flutter-plugins-dependencies
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

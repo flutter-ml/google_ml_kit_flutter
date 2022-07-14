@@ -60,20 +60,18 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 2.6.0)
-  - google_mlkit_image_labeling (0.3.0):
+  - google_mlkit_image_labeling (0.4.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ImageLabeling (~> 2.6.0)
     - GoogleMLKit/ImageLabelingCustom (~> 2.6.0)
-    - GoogleMLKit/LinkFirebase (~> 2.6.0)
   - google_mlkit_language_id (0.3.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/LanguageID (~> 2.6.0)
-  - google_mlkit_object_detection (0.4.0):
+  - google_mlkit_object_detection (0.5.0):
     - Flutter
     - google_mlkit_commons
-    - GoogleMLKit/LinkFirebase (~> 2.6.0)
     - GoogleMLKit/ObjectDetection (~> 2.6.0)
     - GoogleMLKit/ObjectDetectionCustom (~> 2.6.0)
   - google_mlkit_pose_detection (0.3.0):
@@ -357,8 +355,8 @@ PODS:
   - nanopb/encode (2.30908.0)
   - path_provider_ios (0.0.1):
     - Flutter
-  - PromisesObjC (2.1.0)
-  - Protobuf (3.21.1)
+  - PromisesObjC (2.1.1)
+  - Protobuf (3.21.2)
   - SSZipArchive (2.4.3)
 
 DEPENDENCIES:
@@ -378,6 +376,7 @@ DEPENDENCIES:
   - google_mlkit_smart_reply (from `.symlinks/plugins/google_mlkit_smart_reply/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
+  - GoogleMLKit/LinkFirebase
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
 
@@ -481,9 +480,9 @@ SPEC CHECKSUMS:
   google_mlkit_digital_ink_recognition: b5f915c6b5637a3b827dab42b59ca24b46243449
   google_mlkit_entity_extraction: 0bf2407e9ad80934079721463dd69c3c66ecb413
   google_mlkit_face_detection: 37e11922bc916867cf325589261efbe5cb46fd97
-  google_mlkit_image_labeling: 7f71f2310011308297c1b6ca5d67ef1c03ba9af9
+  google_mlkit_image_labeling: ed3e055c04a3f321ed54cd20ca15d9ca0cb1e6c6
   google_mlkit_language_id: 39af954a7ff2ab556062e80bd0701bd377528647
-  google_mlkit_object_detection: b6b18cd36203f063de6a0330b6e0a2df9e15bc6e
+  google_mlkit_object_detection: 9b499a57dddab3f56feb5ed4fc5bae5cc9295cbd
   google_mlkit_pose_detection: 63b7a6e22294d7da6309ef6970c3c94517787be7
   google_mlkit_selfie_segmentation: 4ef4c843f0ff4857c238e916df8c95ddc74c7eed
   google_mlkit_smart_reply: fc9ba6a5c97e491c9b326ef9313768cfc30bbe6b
@@ -531,10 +530,10 @@ SPEC CHECKSUMS:
   MLKitXenoCommon: 849f10d93d3fda1ee034cab23863e4abb4c24f10
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
-  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
-  Protobuf: 9e88c1e667d75aa2491d211f26ccddde4e8ad4cf
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
 
-PODFILE CHECKSUM: fe8b2255afcb9d09e6120de35c0815e05a905905
+PODFILE CHECKSUM: 8f2f68f061aca99bbfd7c1a15104d9b29465c609
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
