@@ -176,7 +176,7 @@ packages:
       path: "../../google_mlkit_image_labeling"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.4.0"
   google_mlkit_language_id:
     dependency: "direct main"
     description:
@@ -190,7 +190,7 @@ packages:
       path: "../../google_mlkit_object_detection"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.5.0"
   google_mlkit_pose_detection:
     dependency: "direct main"
     description:
