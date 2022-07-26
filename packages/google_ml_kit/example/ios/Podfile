@@ -1,8 +1,5 @@
 platform :ios, '10.0'
 
-# Enable firebase-hosted models
-pod 'GoogleMLKit/LinkFirebase'
-
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
@@ -31,7 +28,6 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  pod 'Firebase'
 end
 
 # add this line:
@@ -52,12 +48,6 @@ post_install do |installer|
       if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
       end
-
-      # Enable firebase-hosted ML models
-      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-        '$(inherited)',
-        'MLKIT_FIREBASE_MODELS=1',
-      ]
     end
   end
 end

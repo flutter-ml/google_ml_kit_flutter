@@ -1,45 +1,6 @@
 PODS:
   - camera_avfoundation (0.0.1):
     - Flutter
-  - Firebase (8.15.0):
-    - Firebase/Core (= 8.15.0)
-  - Firebase/Core (8.15.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.15.0)
-  - Firebase/CoreOnly (8.15.0):
-    - FirebaseCore (= 8.15.0)
-  - FirebaseAnalytics (8.15.0):
-    - FirebaseAnalytics/AdIdSupport (= 8.15.0)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (8.15.0):
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleAppMeasurement (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseCore (8.15.0):
-    - FirebaseCoreDiagnostics (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (8.15.0):
-    - GoogleDataTransport (~> 9.1)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/Logger (~> 7.7)
-    - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.15.0):
-    - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.7)
-    - GoogleUtilities/UserDefaults (~> 7.7)
-    - PromisesObjC (< 3.0, >= 1.2)
   - Flutter (1.0.0)
   - google_mlkit_barcode_scanning (0.3.0):
     - Flutter
@@ -99,27 +60,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/Translate (~> 3.1.0)
-  - GoogleAppMeasurement (8.15.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.15.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.15.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (8.15.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
-    - GoogleUtilities/MethodSwizzler (~> 7.7)
-    - GoogleUtilities/Network (~> 7.7)
-    - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.1.4):
+  - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -144,9 +85,6 @@ PODS:
   - GoogleMLKit/LanguageID (3.1.0):
     - GoogleMLKit/MLKitCore
     - MLKitLanguageID (~> 3.1.0)
-  - GoogleMLKit/LinkFirebase (3.1.0):
-    - GoogleMLKit/MLKitCore
-    - MLKitLinkFirebase (~> 2.1.0)
   - GoogleMLKit/MLKitCore (3.1.0):
     - MLKitCommon (~> 7.0.0)
   - GoogleMLKit/ObjectDetection (3.1.0):
@@ -199,23 +137,10 @@ PODS:
   - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
   - GoogleToolboxForMac/StringEncoding (2.3.2):
     - GoogleToolboxForMac/Defines (= 2.3.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.7.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.7.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.7.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
-    - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
   - GoogleUtilitiesComponents (1.1.0):
@@ -260,11 +185,6 @@ PODS:
     - MLKitVisionKit (~> 5.1)
   - MLKitLanguageID (3.1.0):
     - MLKitNaturalLanguage (~> 4.1)
-  - MLKitLinkFirebase (2.1.0):
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-    - MLKitCommon (~> 7.0)
   - MLKitMDD (4.1.0):
     - MLKitCommon (~> 7.0)
   - MLKitNaturalLanguage (4.1.0):
@@ -348,20 +268,19 @@ PODS:
   - MLKitXenoCommon (1.0.0-beta9):
     - MLKitCommon (~> 7.0)
     - MLKitVision (~> 4.1)
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
   - path_provider_ios (0.0.1):
     - Flutter
   - PromisesObjC (2.1.1)
-  - Protobuf (3.21.2)
+  - Protobuf (3.21.3)
   - SSZipArchive (2.4.3)
 
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
-  - Firebase
   - Flutter (from `Flutter`)
   - google_mlkit_barcode_scanning (from `.symlinks/plugins/google_mlkit_barcode_scanning/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
@@ -376,18 +295,11 @@ DEPENDENCIES:
   - google_mlkit_smart_reply (from `.symlinks/plugins/google_mlkit_smart_reply/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
-  - GoogleMLKit/LinkFirebase
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
 
 SPEC REPOS:
   trunk:
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseCore
-    - FirebaseCoreDiagnostics
-    - FirebaseInstallations
-    - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMLKit
     - GoogleToolboxForMac
@@ -404,7 +316,6 @@ SPEC REPOS:
     - MLKitImageLabelingCommon
     - MLKitImageLabelingCustom
     - MLKitLanguageID
-    - MLKitLinkFirebase
     - MLKitMDD
     - MLKitNaturalLanguage
     - MLKitObjectDetection
@@ -469,11 +380,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
-  Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
-  FirebaseAnalytics: 7761cbadb00a717d8d0939363eb46041526474fa
-  FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
-  FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
-  FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   google_mlkit_barcode_scanning: 2e06ced03e375c692bd7e8ebcb4df00d3fbfe4aa
   google_mlkit_commons: e9070f57232c3a3e4bd42fdfa621bb1f4bb3e709
@@ -488,8 +394,7 @@ SPEC CHECKSUMS:
   google_mlkit_smart_reply: 57d63e082d594c952c3d5ee07c190492accf4803
   google_mlkit_text_recognition: 54469fde8b6c23fecd98928f8763c92979d94261
   google_mlkit_translation: 1b5470910422e612b7e3853688ef4caabf9dc278
-  GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
-  GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleMLKit: 9d072522949ff0ef4dae5359feaf3db2ef2fa658
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
@@ -506,7 +411,6 @@ SPEC CHECKSUMS:
   MLKitImageLabelingCommon: c375a2e9b87b614fe1614f003171455751f39371
   MLKitImageLabelingCustom: 59e105e37963b56fd615ea9d886df294ffef9cfd
   MLKitLanguageID: 307e8e8bb45443d6ea2db51fcd6e4ca9371fdfac
-  MLKitLinkFirebase: 6e7061a95aaea9f3891bd4fd191efcec555b288e
   MLKitMDD: d55921890f601118c81fd67b77ce7ed837bb7654
   MLKitNaturalLanguage: d10a5cebc36bfe2660af77fe726b4ba4b290c8a4
   MLKitObjectDetection: f7dba0862771fa0811c3686e8ebc847235432e2a
@@ -528,12 +432,12 @@ SPEC CHECKSUMS:
   MLKitVision: 639a171d937241f3fcf92bc1b3ef8f179f49916c
   MLKitVisionKit: fb450e1ec0b7194aa898bf26b47df897dad93773
   MLKitXenoCommon: 319d30f77375ba4ff66279917b9657578f530bd6
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
+  Protobuf: 25e5dd0944f6f05a4db360eed782af5dc9533633
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
 
-PODFILE CHECKSUM: 8f2f68f061aca99bbfd7c1a15104d9b29465c609
+PODFILE CHECKSUM: 374879795a6a8247d49ab75437faea33232e5642
 
 COCOAPODS: 1.11.3

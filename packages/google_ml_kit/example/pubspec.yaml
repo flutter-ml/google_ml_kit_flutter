@@ -13,9 +13,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_lints: ^1.0.4
   image_picker: ^0.8.5+3
-  camera: ^0.9.8+1
+  camera: ^0.10.0
   path_provider: ^2.0.11
 
   #  google_ml_kit:
@@ -49,6 +48,7 @@ dependencies:
     path: ../../google_mlkit_smart_reply
 
 dev_dependencies:
+  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
 

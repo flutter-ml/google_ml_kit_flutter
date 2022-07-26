@@ -96,13 +96,16 @@ The plugins that allow Custom Models are:
 ### iOS Additional Setup
 To use custom models hosted in firebase in iOS, you have to update your app's Podfile.
 
-First, include the `GoogleMLKit/LinkFirebase` pod at the top of your Podfile:
+First, include `GoogleMLKit/LinkFirebase` and `Firebase` in your Podfile:
 
 ```ruby
 platform :ios, '10.0'
 
+...
+
 # Enable firebase-hosted models #
 pod 'GoogleMLKit/LinkFirebase'
+pod 'Firebase'
 ```
 
 Next, add the preprocessor flag to enable the firebase remote models at compile time. To do that, update your existing `build_configurations` loop in the `post_install` step with the following:
