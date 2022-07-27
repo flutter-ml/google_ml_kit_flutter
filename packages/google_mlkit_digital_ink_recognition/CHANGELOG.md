@@ -1,4 +1,8 @@
-## 0.3.0
+## 0.5.0
+
+* Update dependencies.
+
+## 0.4.0
 
 * Add `DigitalInkRecognitionContext`.
 * Add `WritingArea`.

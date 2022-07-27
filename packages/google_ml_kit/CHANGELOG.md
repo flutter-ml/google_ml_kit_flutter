@@ -1,3 +1,7 @@
+## 0.12.0
+
+* Update dependencies.
+
 ## 0.11.0
 
 * Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_selfie_segmentation).
