@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -35,6 +35,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:smart-reply:17.0.0'
+    implementation 'com.google.mlkit:smart-reply:17.0.2'
 }
 
