@@ -74,7 +74,8 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to 
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 29
+- targetSdkVersion: 31
+- compileSdkVersion: 31
 
 ## Migrating from ML Kit for Firebase
 
