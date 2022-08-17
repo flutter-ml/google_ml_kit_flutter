@@ -74,7 +74,13 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
             for (final Map<String, Object> point : pointsList) {
                 float x = (float) (double) point.get("x");
                 float y = (float) (double) point.get("y");
-                long t = (long) point.get("t");
+                Object t0 = point.get("t");
+                long t;
+                if (t0 instanceof Integer) {
+                    t = (int) t0;
+                } else {
+                    t = (long) t0;   
+                }
                 Ink.Point strokePoint = Ink.Point.create(x, y, t);
                 strokeBuilder.addPoint(strokePoint);
             }
