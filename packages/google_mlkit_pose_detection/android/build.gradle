@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.2.1'
     }
 }
 
@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -35,6 +35,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:pose-detection:18.0.0-beta1'
-    implementation 'com.google.mlkit:pose-detection-accurate:18.0.0-beta1'
+    implementation 'com.google.mlkit:pose-detection:18.0.0-beta2'
+    implementation 'com.google.mlkit:pose-detection-accurate:18.0.0-beta2'
 }

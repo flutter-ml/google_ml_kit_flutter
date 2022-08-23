@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-07-26
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.12.0`](#google_ml_kit---v0120)
+- [`google_mlkit_barcode_scanning` - `v0.4.0`](#google_mlkit_barcode_scanning---v040)
+- [`google_mlkit_digital_ink_recognition` - `v0.5.0`](#google_mlkit_digital_ink_recognition---v050)
+- [`google_mlkit_entity_extraction` - `v0.5.0`](#google_mlkit_entity_extraction---v050)
+- [`google_mlkit_face_detection` - `v0.4.0`](#google_mlkit_face_detection---v040)
+- [`google_mlkit_image_labeling` - `v0.4.0`](#google_mlkit_image_labeling---v040)
+- [`google_mlkit_language_id` - `v0.4.0`](#google_mlkit_language_id---v040)
+- [`google_mlkit_object_detection` - `v0.5.0`](#google_mlkit_object_detection---v050)
+- [`google_mlkit_pose_detection` - `v0.4.0`](#google_mlkit_pose_detection---v040)
+- [`google_mlkit_selfie_segmentation` - `v0.1.0`](#google_mlkit_selfie_segmentation---v010)
+- [`google_mlkit_smart_reply` - `v0.4.0`](#google_mlkit_smart_reply---v040)
+- [`google_mlkit_text_recognition` - `v0.4.0`](#google_mlkit_text_recognition---v040)
+- [`google_mlkit_translation` - `v0.4.0`](#google_mlkit_translation---v040)
+
+---
+
+#### `google_ml_kit` - `v0.12.0`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_entity_extraction` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_face_detection` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_image_labeling` - `v0.4.0`
+
+* Update dependencies.
+* __BREAKING:__ For remote firebase-hosted models in iOS, you must now explicitly add the `GoogleMLKit/LinkFirebase` pod and preprocessor flag to your Podfile. This removes an unnecessary dependency on FirebaseCore for those who do not need to use remote models. Please see the updated README for instructions.
+
+#### `google_mlkit_language_id` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_object_detection` - `v0.5.0`
+
+* Update dependencies.
+* __BREAKING:__ For remote firebase-hosted models in iOS, you must now explicitly add the `GoogleMLKit/LinkFirebase` pod and preprocessor flag to your Podfile. This removes an unnecessary dependency on FirebaseCore for those who do not need to use remote models. Please see the updated README for instructions.
+
+#### `google_mlkit_pose_detection` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_selfie_segmentation` - `v0.1.0`
+
+* Update dependencies.
+
+#### `google_mlkit_smart_reply` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_translation` - `v0.4.0`
+
+* Update dependencies.
+
 ## 2022-06-01
 
 ### Changes

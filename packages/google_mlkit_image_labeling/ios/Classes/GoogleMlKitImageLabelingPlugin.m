@@ -3,8 +3,11 @@
 #import <MLKitImageLabeling/MLKitImageLabeling.h>
 #import <MLKitImageLabelingCommon/MLKitImageLabelingCommon.h>
 #import <MLKitImageLabelingCustom/MLKitImageLabelingCustom.h>
-#import <MLKitLinkFirebase/MLKitLinkFirebase.h>
 #import <google_mlkit_commons/GoogleMlKitCommonsPlugin.h>
+
+#if MLKIT_FIREBASE_MODELS
+#import <MLKitLinkFirebase/MLKitLinkFirebase.h>
+#endif
 
 #define channelName @"google_mlkit_image_labeler"
 #define startImageLabelDetector @"vision#startImageLabelDetector"
@@ -39,7 +42,11 @@
         [instances removeObjectForKey:uid];
         result(NULL);
     } else if ([call.method isEqualToString:manageFirebaseModels]) {
+#if MLKIT_FIREBASE_MODELS
         [self manageModel:call result:result];
+#else
+        result([FlutterError errorWithCode:@"ERROR_MISSING_MLKIT_FIREBASE_MODELS" message:@"You must define MLKIT_FIREBASE_MODELS=1 in your Podfile." details:nil]);
+#endif
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -60,6 +67,7 @@
             MLKCustomImageLabelerOptions *options = [self getLocalOptions:dictionary];
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
         } else if ([@"remote" isEqualToString:type]) {
+#if MLKIT_FIREBASE_MODELS
             MLKCustomImageLabelerOptions *options = [self getRemoteOptions:dictionary];
             if (options == NULL) {
                 FlutterError *error = [FlutterError errorWithCode:@"Error Model has not been downloaded yet"
@@ -69,6 +77,9 @@
                 return;
             }
             labeler = [MLKImageLabeler imageLabelerWithOptions:options];
+#else
+            result([FlutterError errorWithCode:@"ERROR_MISSING_MLKIT_FIREBASE_MODELS" message:@"You must define MLKIT_FIREBASE_MODELS=1 in your Podfile." details:nil]);
+#endif
         } else {
             NSString *error = [NSString stringWithFormat:@"Invalid model type: %@", type];
             result([FlutterError errorWithCode:type
@@ -122,6 +133,7 @@
     return options;
 }
 
+#if MLKIT_FIREBASE_MODELS
 - (MLKCustomImageLabelerOptions *)getRemoteOptions:(NSDictionary *)optionsData {
     NSNumber *conf = optionsData[@"confidenceThreshold"];
     NSNumber *maxCount = optionsData[@"maxCount"];
@@ -149,5 +161,6 @@
     genericModelManager = [[GenericModelManager alloc] init];
     [genericModelManager manageModel:model call:call result:result];
 }
+#endif
 
 @end

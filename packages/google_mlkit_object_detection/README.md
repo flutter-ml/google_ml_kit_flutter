@@ -11,9 +11,11 @@ A Flutter plugin to use [Google's ML Kit Object Detection and Tracking](https://
 
 Before you get started read about the requirements and known issues of this plugin [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin#requirements).
 
-### Firebase dependency
+### Firebase dependency for remote models
 
-[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection) could be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app. Custom Models are downloaded from [Firebase](https://firebase.google.com/). Since both model options are handled in this plugin, that requires you to add Firebase to your project even if you are only using the Base Models. More details [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master#firebase-dependency-custom-models).
+[Object Detection and Tracking](https://developers.google.com/ml-kit/vision/object-detection) can be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app, and custom Models can either be bundled with the app or downloaded from [Firebase](https://firebase.google.com/).
+
+If you wish to use remote models hosted in Firebase, you must first enable the feature in iOS. Please see the additional setup instructions [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master#firebase-dependency-custom-models).
 
 To add Firebase to your project follow these steps:
 
