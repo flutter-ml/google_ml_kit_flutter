@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// An object detector and tracker that detects objects in an [InputImage] and supports tracking them.
 class ObjectDetector {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_object_detector');
+  static const MethodChannel _channel = MethodChannel('google_mlkit_object_detector');
 
   /// The options for the detector.
   final ObjectDetectorOptions options;
@@ -20,11 +17,13 @@ class ObjectDetector {
   /// Processes the given image for object detection and tracking.
   Future<List<DetectedObject>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
-        'vision#startObjectDetector', <String, dynamic>{
-      'id': id,
-      'imageData': inputImage.toJson(),
-      'options': options.toJson()
-    });
+      'vision#startObjectDetector',
+      <String, dynamic>{
+        'id': id,
+        'imageData': inputImage.toJson(),
+        'options': options.toJson(),
+      },
+    );
     final objects = <DetectedObject>[];
     for (final dynamic json in result) {
       objects.add(DetectedObject.fromJson(json));
@@ -34,8 +33,7 @@ class ObjectDetector {
   }
 
   /// Closes the detector and releases its resources.
-  Future<void> close() =>
-      _channel.invokeMethod<void>('vision#closeObjectDetector', {'id': id});
+  Future<void> close() => _channel.invokeMethod<void>('vision#closeObjectDetector', {'id': id});
 }
 
 /// The mode for [ObjectDetector].
@@ -70,10 +68,7 @@ class ObjectDetectorOptions {
   final bool multipleObjects;
 
   /// Constructor to create an instance of [ObjectDetectorOptions].
-  ObjectDetectorOptions(
-      {required this.mode,
-      required this.classifyObjects,
-      required this.multipleObjects});
+  ObjectDetectorOptions({required this.mode, required this.classifyObjects, required this.multipleObjects});
 
   /// Returns a json representation of an instance of [ObjectDetectorOptions].
   Map<String, dynamic> toJson() => {
@@ -105,17 +100,18 @@ class LocalObjectDetectorOptions extends ObjectDetectorOptions {
   final String modelPath;
 
   /// Constructor to create an instance of [LocalObjectDetectorOptions].
-  LocalObjectDetectorOptions(
-      {required DetectionMode mode,
-      required this.modelPath,
-      required bool classifyObjects,
-      required bool multipleObjects,
-      this.maximumLabelsPerObject = 10,
-      this.confidenceThreshold = 0.5})
-      : super(
-            mode: mode,
-            classifyObjects: classifyObjects,
-            multipleObjects: multipleObjects);
+  LocalObjectDetectorOptions({
+    required DetectionMode mode,
+    required this.modelPath,
+    required bool classifyObjects,
+    required bool multipleObjects,
+    this.maximumLabelsPerObject = 10,
+    this.confidenceThreshold = 0.5,
+  }) : super(
+          mode: mode,
+          classifyObjects: classifyObjects,
+          multipleObjects: multipleObjects,
+        );
 
   /// Returns a json representation of an instance of [LocalObjectDetectorOptions].
   @override
@@ -151,17 +147,18 @@ class FirebaseObjectDetectorOptions extends ObjectDetectorOptions {
   final String modelName;
 
   /// Constructor to create an instance of [FirebaseObjectDetectorOptions].
-  FirebaseObjectDetectorOptions(
-      {required DetectionMode mode,
-      required this.modelName,
-      required bool classifyObjects,
-      required bool multipleObjects,
-      this.maximumLabelsPerObject = 10,
-      this.confidenceThreshold = 0.5})
-      : super(
-            mode: mode,
-            classifyObjects: classifyObjects,
-            multipleObjects: multipleObjects);
+  FirebaseObjectDetectorOptions({
+    required DetectionMode mode,
+    required this.modelName,
+    required bool classifyObjects,
+    required bool multipleObjects,
+    this.maximumLabelsPerObject = 10,
+    this.confidenceThreshold = 0.5,
+  }) : super(
+          mode: mode,
+          classifyObjects: classifyObjects,
+          multipleObjects: multipleObjects,
+        );
 
   /// Returns a json representation of an instance of [FirebaseObjectDetectorOptions].
   @override
@@ -188,10 +185,7 @@ class DetectedObject {
   final List<Label> labels;
 
   /// Constructor to create an instance of [DetectedObject].
-  DetectedObject(
-      {required this.boundingBox,
-      required this.labels,
-      required this.trackingId});
+  DetectedObject({required this.boundingBox, required this.labels, required this.trackingId});
 
   /// Returns an instance of [DetectedObject] from a given [json].
   factory DetectedObject.fromJson(Map<dynamic, dynamic> json) {
@@ -235,8 +229,5 @@ class Label {
 /// A subclass of [ModelManager] that manages [FirebaseModelSource] required to process the image.
 class FirebaseObjectDetectorModelManager extends ModelManager {
   /// Constructor to create an instance of [FirebaseObjectDetectorModelManager].
-  FirebaseObjectDetectorModelManager()
-      : super(
-            channel: ObjectDetector._channel,
-            method: 'vision#manageFirebaseModels');
+  FirebaseObjectDetectorModelManager() : super(channel: ObjectDetector._channel, method: 'vision#manageFirebaseModels');
 }
