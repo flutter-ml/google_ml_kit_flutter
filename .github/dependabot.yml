@@ -9,3 +9,60 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_ml_kit/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_barcode_scanning/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_commons/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_digital_ink_recognition/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_entity_extraction/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_face_detection/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_image_labeling/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_language_id/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_object_detection/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_pose_detection/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_selfie_segmentation/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_smart_reply/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_text_recognition/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/packages/google_mlkit_translation/"
+    schedule:
+      interval: "daily"
+
