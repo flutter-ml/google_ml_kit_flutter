@@ -1,0 +1,43 @@
+ name: Release Please 
+ on:
+   push:
+     branches:
+       - master
+ jobs:
+   release:
+     runs-on: ubuntu-latest
+     if: github.repository_owner  == 'bharat-biradar'
+     steps:
+        
+        - name: Release-Please
+          id: release
+          uses: GoogleCloudPlatform/release-please-action@v3
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            release-type: simple
+
+        - name: Chekout code
+          if: ${{ steps.release.outputs.release_created }}
+          uses: actions/checkout@v3
+
+        - name: Setup Dart
+          if: ${{ steps.release.outputs.release_created }}
+          uses: dart-lang/setup-dart@v1.3
+
+        - name: Install dependencies
+          if: ${{ steps.release.outputs.release_created }}
+          run: dart pub get .
+
+        - name: Set version
+          if: ${{ steps.release.outputs.release_created }}
+          run: dart pub global activate cider && cider version "${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}"
+
+        - name: Setup credentials
+          if: ${{ steps.release.outputs.release_created }}
+          run: |
+            cat <<EOF > $PUB_CACHE/credentials.json
+            ${{ secrets.PUB_DEV_CREDENTIALS_JSON }}
+            EOF
+        - name: Publish package
+          if: ${{ steps.release.outputs.release_created }}
+          run: dart pub publish --force
