@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'GoogleMLKit/Translate', '~> 3.1.0'
+  s.dependency 'GoogleMLKit/Translate', '~> 3.2.0'
   s.dependency 'google_mlkit_commons'
   s.platform = :ios, '10.0'
   s.ios.deployment_target = '10.0'
