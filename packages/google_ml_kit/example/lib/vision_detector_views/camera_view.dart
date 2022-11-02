@@ -38,7 +38,7 @@ class _CameraViewState extends State<CameraView> {
   File? _image;
   String? _path;
   ImagePicker? _imagePicker;
-  int _cameraIndex = 0;
+  int _cameraIndex = -1;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
   final bool _allowPicker = true;
   bool _changingCameraLens = false;
@@ -60,14 +60,19 @@ class _CameraViewState extends State<CameraView> {
             element.sensorOrientation == 90),
       );
     } else {
-      _cameraIndex = cameras.indexOf(
-        cameras.firstWhere(
-          (element) => element.lensDirection == widget.initialDirection,
-        ),
-      );
+      for (var i = 0; i < cameras.length; i++) {
+        if (cameras[i].lensDirection == widget.initialDirection) {
+          _cameraIndex = i;
+          break;
+        }
+      }
     }
 
-    _startLiveFeed();
+    if (_cameraIndex != -1) {
+      _startLiveFeed();
+    } else {
+      _mode = ScreenMode.gallery;
+    }
   }
 
   @override
