@@ -10,7 +10,8 @@ class TextRecognizerView extends StatefulWidget {
 }
 
 class _TextRecognizerViewState extends State<TextRecognizerView> {
-  final TextRecognizer _textRecognizer = TextRecognizer();
+  final TextRecognizer _textRecognizer =
+      TextRecognizer(script: TextRecognitionScript.chinese);
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
