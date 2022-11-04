@@ -5,7 +5,7 @@ import '../activity_indicator/activity_indicator.dart';
 
 class EntityExtractionView extends StatefulWidget {
   @override
-  _EntityExtractionViewState createState() => _EntityExtractionViewState();
+  State<EntityExtractionView> createState() => _EntityExtractionViewState();
 }
 
 class _EntityExtractionViewState extends State<EntityExtractionView> {

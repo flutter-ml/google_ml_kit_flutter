@@ -7,7 +7,7 @@ import 'painters/face_detector_painter.dart';
 
 class FaceDetectorView extends StatefulWidget {
   @override
-  _FaceDetectorViewState createState() => _FaceDetectorViewState();
+  State<FaceDetectorView> createState() => _FaceDetectorViewState();
 }
 
 class _FaceDetectorViewState extends State<FaceDetectorView> {

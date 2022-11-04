@@ -6,7 +6,7 @@ import 'painters/barcode_detector_painter.dart';
 
 class BarcodeScannerView extends StatefulWidget {
   @override
-  _BarcodeScannerViewState createState() => _BarcodeScannerViewState();
+  State<BarcodeScannerView> createState() => _BarcodeScannerViewState();
 }
 
 class _BarcodeScannerViewState extends State<BarcodeScannerView> {
