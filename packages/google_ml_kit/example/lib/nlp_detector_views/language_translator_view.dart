@@ -5,7 +5,7 @@ import '../activity_indicator/activity_indicator.dart';
 
 class LanguageTranslatorView extends StatefulWidget {
   @override
-  _LanguageTranslatorViewState createState() => _LanguageTranslatorViewState();
+  State<LanguageTranslatorView> createState() => _LanguageTranslatorViewState();
 }
 
 class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {

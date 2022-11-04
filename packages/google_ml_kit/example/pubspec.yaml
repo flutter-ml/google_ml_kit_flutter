@@ -13,13 +13,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^0.8.5+3
-  camera: ^0.10.0
+  image_picker: ^0.8.6
+  camera: ^0.10.0+4
+  path: ^1.8.2
   path_provider: ^2.0.11
 
   #  google_ml_kit:
   #    path: ../
-  #  google_mlkit_commons:
+  google_mlkit_commons:
   #    path: ../../google_mlkit_commons
   google_mlkit_barcode_scanning:
     path: ../../google_mlkit_barcode_scanning
@@ -48,7 +49,7 @@ dependencies:
     path: ../../google_mlkit_smart_reply
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

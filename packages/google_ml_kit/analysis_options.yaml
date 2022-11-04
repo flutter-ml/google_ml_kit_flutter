@@ -19,3 +19,4 @@ linter:
     prefer_single_quotes: true
     unnecessary_getters_setters: true
     unnecessary_lambdas: true
+    use_build_context_synchronously: false

@@ -5,7 +5,7 @@ import '../activity_indicator/activity_indicator.dart';
 
 class DigitalInkView extends StatefulWidget {
   @override
-  _DigitalInkViewState createState() => _DigitalInkViewState();
+  State<DigitalInkView> createState() => _DigitalInkViewState();
 }
 
 class _DigitalInkViewState extends State<DigitalInkView> {
@@ -75,12 +75,12 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    child: Text('Read Text'),
                     onPressed: _recogniseText,
+                    child: Text('Read Text'),
                   ),
                   ElevatedButton(
-                    child: Text('Clear Pad'),
                     onPressed: _clearPad,
+                    child: Text('Clear Pad'),
                   ),
                 ],
               ),
@@ -92,16 +92,16 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    child: Text('Check Model'),
                     onPressed: _isModelDownloaded,
+                    child: Text('Check Model'),
                   ),
                   ElevatedButton(
-                    child: Text('Download'),
                     onPressed: _downloadModel,
+                    child: Text('Download'),
                   ),
                   ElevatedButton(
-                    child: Text('Delete'),
                     onPressed: _deleteModel,
+                    child: Text('Delete'),
                   ),
                 ],
               ),
