@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2022-11-04
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.13.0`](#google_ml_kit---v0130)
+- [`google_mlkit_barcode_scanning` - `v0.5.0`](#google_mlkit_barcode_scanning---v050)
+- [`google_mlkit_digital_ink_recognition` - `v0.6.0`](#google_mlkit_digital_ink_recognition---v060)
+- [`google_mlkit_entity_extraction` - `v0.6.0`](#google_mlkit_entity_extraction---v060)
+- [`google_mlkit_face_detection` - `v0.5.0`](#google_mlkit_face_detection---v050)
+- [`google_mlkit_image_labeling` - `v0.5.0`](#google_mlkit_image_labeling---v050)
+- [`google_mlkit_language_id` - `v0.5.0`](#google_mlkit_language_id---v050)
+- [`google_mlkit_object_detection` - `v0.6.0`](#google_mlkit_object_detection---v060)
+- [`google_mlkit_pose_detection` - `v0.5.0`](#google_mlkit_pose_detection---v050)
+- [`google_mlkit_selfie_segmentation` - `v0.2.0`](#google_mlkit_selfie_segmentation---v020)
+- [`google_mlkit_smart_reply` - `v0.5.0`](#google_mlkit_smart_reply---v050)
+- [`google_mlkit_text_recognition` - `v0.5.0`](#google_mlkit_text_recognition---v050)
+- [`google_mlkit_translation` - `v0.5.0`](#google_mlkit_translation---v050)
+
+---
+
+#### `google_ml_kit` - `v0.13.0`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_entity_extraction` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_face_detection` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_image_labeling` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_language_id` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_object_detection` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_pose_detection` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_selfie_segmentation` - `v0.2.0`
+
+* Update dependencies.
+
+#### `google_mlkit_smart_reply` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.5.0`
+
+* Update dependencies.
+
+#### `google_mlkit_translation` - `v0.5.0`
+
+* Update dependencies.
+
 ## 2022-07-26
 
 ### Changes
