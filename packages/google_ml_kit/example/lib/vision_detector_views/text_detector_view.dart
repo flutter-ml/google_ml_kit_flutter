@@ -6,11 +6,12 @@ import 'painters/text_detector_painter.dart';
 
 class TextRecognizerView extends StatefulWidget {
   @override
-  _TextRecognizerViewState createState() => _TextRecognizerViewState();
+  State<TextRecognizerView> createState() => _TextRecognizerViewState();
 }
 
 class _TextRecognizerViewState extends State<TextRecognizerView> {
-  final TextRecognizer _textRecognizer = TextRecognizer();
+  final TextRecognizer _textRecognizer =
+      TextRecognizer(script: TextRecognitionScript.chinese);
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;

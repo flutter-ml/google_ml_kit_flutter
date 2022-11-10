@@ -4,7 +4,7 @@ import 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
 
 class LanguageIdentifierView extends StatefulWidget {
   @override
-  _LanguageIdentifierViewState createState() => _LanguageIdentifierViewState();
+  State<LanguageIdentifierView> createState() => _LanguageIdentifierViewState();
 }
 
 class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
@@ -44,8 +44,8 @@ class _LanguageIdentifierViewState extends State<LanguageIdentifierView> {
             child: const Text('Identify Language')),
         SizedBox(height: 15),
         ElevatedButton(
-          child: const Text('Identify possible languages'),
           onPressed: _identifyPossibleLanguages,
+          child: const Text('Identify possible languages'),
         ),
         ListView.builder(
             shrinkWrap: true,

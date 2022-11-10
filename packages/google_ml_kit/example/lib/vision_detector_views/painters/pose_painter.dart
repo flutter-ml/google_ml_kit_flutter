@@ -67,10 +67,13 @@ class PosePainter extends CustomPainter {
           rightPaint);
 
       //Draw legs
+      paintLine(PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
-          PoseLandmarkType.leftHip, PoseLandmarkType.leftAnkle, leftPaint);
+          PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle, leftPaint);
       paintLine(
-          PoseLandmarkType.rightHip, PoseLandmarkType.rightAnkle, rightPaint);
+          PoseLandmarkType.rightHip, PoseLandmarkType.rightKnee, rightPaint);
+      paintLine(
+          PoseLandmarkType.rightKnee, PoseLandmarkType.rightAnkle, rightPaint);
     }
   }
 

@@ -12,7 +12,7 @@ import 'painters/object_detector_painter.dart';
 
 class ObjectDetectorView extends StatefulWidget {
   @override
-  _ObjectDetectorView createState() => _ObjectDetectorView();
+  State<ObjectDetectorView> createState() => _ObjectDetectorView();
 }
 
 class _ObjectDetectorView extends State<ObjectDetectorView> {
