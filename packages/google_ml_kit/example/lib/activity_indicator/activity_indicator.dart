@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 class Toast {
@@ -50,21 +52,21 @@ class LoadingIndicator extends StatelessWidget {
 
   Widget _getLoadingIndicator() {
     return Padding(
+        padding: EdgeInsets.only(bottom: 16),
         child: SizedBox(
-            child: CircularProgressIndicator(strokeWidth: 3),
             width: 32,
-            height: 32),
-        padding: EdgeInsets.only(bottom: 16));
+            height: 32,
+            child: CircularProgressIndicator(strokeWidth: 3)));
   }
 
   Widget _getHeading() {
     return Padding(
+        padding: EdgeInsets.only(bottom: 4),
         child: Text(
           'Please wait …',
           style: TextStyle(color: Colors.white, fontSize: 16),
           textAlign: TextAlign.center,
-        ),
-        padding: EdgeInsets.only(bottom: 4));
+        ));
   }
 
   Widget _getText(String displayedText) {

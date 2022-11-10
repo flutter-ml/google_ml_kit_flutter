@@ -7,7 +7,7 @@ import 'painters/segmentation_painter.dart';
 
 class SelfieSegmenterView extends StatefulWidget {
   @override
-  _SelfieSegmenterViewState createState() => _SelfieSegmenterViewState();
+  State<SelfieSegmenterView> createState() => _SelfieSegmenterViewState();
 }
 
 class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {

@@ -1,6 +1,6 @@
 name: google_ml_kit
 description: A Flutter plugin to use all APIs from Google's standalone ML Kit for mobile platforms.
-version: 0.12.0
+version: 0.13.0
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:
@@ -12,14 +12,14 @@ dependencies:
     sdk: flutter
 
   # Vision APIs
-  google_mlkit_barcode_scanning: ^0.4.0
-  google_mlkit_digital_ink_recognition: ^0.5.0
-  google_mlkit_face_detection: ^0.4.0
-  google_mlkit_image_labeling: ^0.4.0
-  google_mlkit_object_detection: ^0.5.0
-  google_mlkit_pose_detection: ^0.4.0
-  google_mlkit_selfie_segmentation: ^0.1.0
-  google_mlkit_text_recognition: ^0.4.0
+  google_mlkit_barcode_scanning: ^0.5.0
+  google_mlkit_digital_ink_recognition: ^0.6.0
+  google_mlkit_face_detection: ^0.5.0
+  google_mlkit_image_labeling: ^0.5.0
+  google_mlkit_object_detection: ^0.6.0
+  google_mlkit_pose_detection: ^0.5.0
+  google_mlkit_selfie_segmentation: ^0.2.0
+  google_mlkit_text_recognition: ^0.5.0
 
   # uncomment these lines when working on the local plugins
 #  google_mlkit_commons:
@@ -42,10 +42,10 @@ dependencies:
 #    path: ../google_mlkit_text_recognition
 
   # Natural Language APIs
-  google_mlkit_entity_extraction: ^0.5.0
-  google_mlkit_language_id: ^0.4.0
-  google_mlkit_translation: ^0.4.0
-  google_mlkit_smart_reply: ^0.4.0
+  google_mlkit_entity_extraction: ^0.6.0
+  google_mlkit_language_id: ^0.5.0
+  google_mlkit_translation: ^0.5.0
+  google_mlkit_smart_reply: ^0.5.0
 
   # uncomment these lines when working on the local plugins
 #  google_mlkit_entity_extraction:
@@ -60,4 +60,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1

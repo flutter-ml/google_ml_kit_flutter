@@ -3,7 +3,7 @@ import 'package:google_mlkit_smart_reply/google_mlkit_smart_reply.dart';
 
 class SmartReplyView extends StatefulWidget {
   @override
-  _SmartReplyViewState createState() => _SmartReplyViewState();
+  State<SmartReplyView> createState() => _SmartReplyViewState();
 }
 
 class _SmartReplyViewState extends State<SmartReplyView> {

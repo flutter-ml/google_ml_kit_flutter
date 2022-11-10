@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -8,6 +8,12 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
+
+# Add language package you need to use
+pod 'GoogleMLKit/TextRecognitionChinese', '~> 3.2.0'
+# pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 3.2.0'
+# pod 'GoogleMLKit/TextRecognitionJapanese', '~> 3.2.0'
+# pod 'GoogleMLKit/TextRecognitionKorean', '~> 3.2.0'
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
