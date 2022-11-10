@@ -11,7 +11,7 @@ import 'painters/label_detector_painter.dart';
 
 class ImageLabelView extends StatefulWidget {
   @override
-  _ImageLabelViewState createState() => _ImageLabelViewState();
+  State<ImageLabelView> createState() => _ImageLabelViewState();
 }
 
 class _ImageLabelViewState extends State<ImageLabelView> {

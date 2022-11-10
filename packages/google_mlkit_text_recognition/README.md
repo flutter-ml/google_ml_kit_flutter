@@ -19,6 +19,32 @@ The ML Kit Text Recognition API can recognize text in any Chinese, Devanagari, J
 
 ### Text Recognition
 
+### Adding language package dependencies
+
+By default, this package only supports recognition of Latin characters. If you need to recognize other languages, you need to manually add dependencies
+
+For the iOS platform add to the `ios/Podfile` file:
+
+```ruby
+# Add language package you need to use
+pod 'GoogleMLKit/TextRecognitionChinese', '~> 3.2.0'
+pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 3.2.0'
+pod 'GoogleMLKit/TextRecognitionJapanese', '~> 3.2.0'
+pod 'GoogleMLKit/TextRecognitionKorean', '~> 3.2.0'
+```
+
+For the Android platform add to the `andorid/app/build.gradle` file:
+
+```gradle
+dependencies {
+    // Add language package you need to use
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.0-beta5'
+    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.0-beta5'
+    implementation 'com.google.mlkit:text-recognition-japanese:16.0.0-beta5'
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta5'
+}
+```
+
 #### Create an instance of `InputImage`
 
 Create an instance of `InputImage` as explained [here](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_commons#creating-an-inputimage).
