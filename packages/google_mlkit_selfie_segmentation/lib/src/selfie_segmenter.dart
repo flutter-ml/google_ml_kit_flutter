@@ -77,15 +77,10 @@ class SegmentationMask {
 
   /// Returns an instance of [SegmentationMask] from a given [json].
   factory SegmentationMask.fromJson(Map<dynamic, dynamic> json) {
-    final array = json['confidences'];
-    final List<double> confidences = [];
-    for (final confidence in array) {
-      confidences.add(confidence.toDouble());
-    }
     return SegmentationMask(
-      width: json['width'].toInt(),
-      height: json['height'].toInt(),
-      confidences: confidences,
+      width: json['width'] as int,
+      height: json['height'] as int,
+      confidences: json['confidences'] as List<double>,
     );
   }
 }

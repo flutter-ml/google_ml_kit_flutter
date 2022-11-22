@@ -37,7 +37,7 @@ dependencies:
 #  google_mlkit_pose_detection:
 #    path: ../google_mlkit_pose_detection
 #  google_mlkit_selfie_segmentation:
-#    path: ../../google_mlkit_selfie_segmentation
+#    path: ../google_mlkit_selfie_segmentation
 #  google_mlkit_text_recognition:
 #    path: ../google_mlkit_text_recognition
 
