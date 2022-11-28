@@ -57,3 +57,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/ml/
+    - assets/ml/fitness_pose_samples.csv
+    - assets/ml/fitness_pose_squats.csv
