@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'dart:ui';
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
