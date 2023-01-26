@@ -11,9 +11,7 @@ import com.google.mlkit.vision.segmentation.selfie.SelfieSegmenterOptions;
 import com.google_mlkit_commons.InputImageConverter;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
@@ -88,13 +86,14 @@ public class SelfieSegmenter implements MethodChannel.MethodCallHandler {
                             map.put("width", maskWidth);
                             map.put("height", maskHeight);
 
-                            List<Float> confidences = new ArrayList<>();
+                            final float[] confidences = new float[maskWidth * maskHeight];
+//                            mask.asFloatBuffer().get(confidences, 0, confidences.length);
 
                             for (int y = 0; y < maskHeight; y++) {
                                 for (int x = 0; x < maskWidth; x++) {
                                     // Gets the confidence of the (x,y) pixel in the mask being in the foreground.
                                     // float foregroundConfidence = mask.getFloat();
-                                    confidences.add(mask.getFloat());
+                                    confidences[y * maskWidth + x] = mask.getFloat();
                                 }
                             }
 
