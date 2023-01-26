@@ -33,7 +33,7 @@ pod 'GoogleMLKit/TextRecognitionJapanese', '~> 3.2.0'
 pod 'GoogleMLKit/TextRecognitionKorean', '~> 3.2.0'
 ```
 
-For the Android platform add to the `andorid/app/build.gradle` file:
+For the Android platform add to the `android/app/build.gradle` file:
 
 ```gradle
 dependencies {

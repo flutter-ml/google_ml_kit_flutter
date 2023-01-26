@@ -1,12 +1,13 @@
 import 'dart:math';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as services;
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A face detector that detects faces in a given [InputImage].
 class FaceDetector {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_face_detector');
+  static const services.MethodChannel _channel =
+      services.MethodChannel('google_mlkit_face_detector');
 
   /// The options for the face detector.
   final FaceDetectorOptions options;
