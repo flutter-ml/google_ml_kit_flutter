@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Optimize android result callback time
+
 ## 0.2.0
 
 * Update dependencies.
