@@ -115,6 +115,7 @@ final options = LocalObjectDetectorOptions(
   modelPath: modelPath,
   classifyObjects: true,
   multipleObjects: true,
+  mode: DetectionMode.stream,
 );
 final objectDetector = ObjectDetector(options: options);
 ```
