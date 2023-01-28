@@ -1,12 +1,13 @@
 import 'dart:math';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as services;
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A text recognizer that recognizes text from a given [InputImage].
 class TextRecognizer {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_text_recognizer');
+  static const services.MethodChannel _channel =
+      services.MethodChannel('google_mlkit_text_recognizer');
 
   /// Configurations for the language to be detected.
   final TextRecognitionScript script;
