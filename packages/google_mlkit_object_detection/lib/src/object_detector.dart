@@ -1,10 +1,11 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as services;
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// An object detector and tracker that detects objects in an [InputImage] and supports tracking them.
 class ObjectDetector {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_object_detector');
+  static const services.MethodChannel _channel =
+      services.MethodChannel('google_mlkit_object_detector');
 
   /// The options for the detector.
   final ObjectDetectorOptions options;
