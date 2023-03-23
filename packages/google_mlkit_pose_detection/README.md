@@ -41,7 +41,7 @@ for (Pose pose in poses) {
     final type = landmark.type;
     final x = landmark.x;
     final y = landmark.y;
-  }
+ });
   
   // to access specific landmarks
   final landmark = pose.landmarks[PoseLandmarkType.nose];
