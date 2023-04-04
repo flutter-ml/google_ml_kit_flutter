@@ -25,6 +25,7 @@ class LanguageIdentifier {
   Future<String> identifyLanguage(String text) async {
     final result = await _channel.invokeMethod(
         'nlp#startLanguageIdentifier', <String, dynamic>{
+      'id': id,
       'text': text,
       'possibleLanguages': false,
       'confidence': confidenceThreshold
