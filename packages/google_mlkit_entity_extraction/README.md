@@ -38,7 +38,7 @@ Entity extraction supports the following languages:
 #### Create an instance of `EntityExtractor`
 
 ```dart
-final entityExtractor = EntityExtractor(language: EntityExtractorOptions.english);
+final entityExtractor = EntityExtractor(language: EntityExtractorLanguage.english);
 ```
 
 #### Process text
@@ -47,12 +47,12 @@ final entityExtractor = EntityExtractor(language: EntityExtractorOptions.english
 final List<EntityAnnotation> annotations = await entityExtractor.annotateText(text);
 
 for (final annotation in annotations) {
-  annotation.start
-  annotation.end
-  annotation.text
+  annotation.start;
+  annotation.end;
+  annotation.text;
   for (final entity in annotation.entities) {
-    entity.type
-    entity.rawValue
+    entity.type;
+    entity.rawValue;
   }
 }
 ```
