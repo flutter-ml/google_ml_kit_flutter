@@ -1,6 +1,6 @@
 name: google_mlkit_commons
 description: A Flutter plugin with commons files to implement google's standalone ml kit made for mobile platform.
-version: 0.2.0
+version: 0.3.0
 homepage: https://github.com/bharat-biradar/Google-Ml-Kit-plugin
 
 environment:
