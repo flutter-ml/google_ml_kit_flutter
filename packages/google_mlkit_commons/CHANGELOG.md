@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Update dependencies.
+
 ## 0.2.0
 
 * Fix: InputImage from file path.
