@@ -314,7 +314,7 @@ Packages with changes:
 
 #### `google_ml_kit` - `v0.11.0`
 
-* Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_selfie_segmentation).
+* Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_selfie_segmentation).
 * Update dependencies.
 
 #### `google_mlkit_barcode_scanning` - `v0.3.0`
