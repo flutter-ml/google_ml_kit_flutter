@@ -106,7 +106,7 @@ assets:
 Add this method:
 
 ```dart
-import 'dart:io';
+import 'dart:io' as io;
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
