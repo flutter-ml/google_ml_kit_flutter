@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-04-19
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.14.0`](#google_ml_kit---v0140)
+- [`google_mlkit_barcode_scanning` - `v0.6.0`](#google_mlkit_barcode_scanning---v060)
+- [`google_mlkit_commons` - `v0.3.0`](#google_mlkit_commons---v030)
+- [`google_mlkit_digital_ink_recognition` - `v0.7.0`](#google_mlkit_digital_ink_recognition---v070)
+- [`google_mlkit_entity_extraction` - `v0.7.0`](#google_mlkit_entity_extraction---v070)
+- [`google_mlkit_face_detection` - `v0.6.0`](#google_mlkit_face_detection---v060)
+- [`google_mlkit_image_labeling` - `v0.6.0`](#google_mlkit_image_labeling---v060)
+- [`google_mlkit_language_id` - `v0.6.0`](#google_mlkit_language_id---v060)
+- [`google_mlkit_object_detection` - `v0.7.0`](#google_mlkit_object_detection---v070)
+- [`google_mlkit_pose_detection` - `v0.6.0`](#google_mlkit_pose_detection---v060)
+- [`google_mlkit_selfie_segmentation` - `v0.3.0`](#google_mlkit_selfie_segmentation---v030)
+- [`google_mlkit_smart_reply` - `v0.6.0`](#google_mlkit_smart_reply---v060)
+- [`google_mlkit_text_recognition` - `v0.6.0`](#google_mlkit_text_recognition---v060)
+- [`google_mlkit_translation` - `v0.6.0`](#google_mlkit_translation---v060)
+
+---
+
+#### `google_ml_kit` - `v0.14.0`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_commons` - `v0.3.0`
+
+* Update dependencies.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_entity_extraction` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_face_detection` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_image_labeling` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_language_id` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_object_detection` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_pose_detection` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_selfie_segmentation` - `v0.3.0`
+
+* Update dependencies.
+
+#### `google_mlkit_smart_reply` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.6.0`
+
+* Update dependencies.
+
+#### `google_mlkit_translation` - `v0.6.0`
+
+* Update dependencies.
+
 ## 2022-11-04
 
 ### Changes
@@ -233,7 +314,7 @@ Packages with changes:
 
 #### `google_ml_kit` - `v0.11.0`
 
-* Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/bharat-biradar/Google-Ml-Kit-plugin/tree/master/packages/google_mlkit_selfie_segmentation).
+* Add new plugin to umbrella: [google\_mlkit\_selfie\_segmentation](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_selfie_segmentation).
 * Update dependencies.
 
 #### `google_mlkit_barcode_scanning` - `v0.3.0`

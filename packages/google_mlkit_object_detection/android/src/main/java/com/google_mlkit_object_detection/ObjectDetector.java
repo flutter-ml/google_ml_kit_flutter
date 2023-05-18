@@ -136,11 +136,8 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
         int maxLabels = (int) options.get("maxLabels");
         String path = (String) options.get("path");
 
-        // LocalModel localModel = new LocalModel.Builder()
-        //         .setAssetFilePath(path)
-        //         .build();
         LocalModel localModel = new LocalModel.Builder()
-                .setAbsoluteFilePath(path)
+                .setAssetFilePath(path)
                 .build();
 
         CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(localModel);
