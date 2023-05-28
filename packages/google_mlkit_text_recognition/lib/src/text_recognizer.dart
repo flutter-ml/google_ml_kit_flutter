@@ -83,12 +83,6 @@ class TextBlock {
   /// List of corner points of the text block in clockwise order starting with the top left point relative to the image in the default coordinate space.
   final List<Point<int>> cornerPoints;
 
-  // The confidence of the recognized block.
-  final double confidence;
-
-  // The angle of the rotation of the recognized block.
-  final double angle;
-
   /// Constructor to create an instance of [TextBlock].
   TextBlock({
     required this.text,
@@ -96,16 +90,12 @@ class TextBlock {
     required this.boundingBox,
     required this.recognizedLanguages,
     required this.cornerPoints,
-    required this.confidence,
-    required this.angle,
   });
 
   /// Returns an instance of [TextBlock] from a given [json].
   factory TextBlock.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
-    final confidence = json['confidence'];
-    final angle = json['angle'];
     final recognizedLanguages =
         _listToRecognizedLanguages(json['recognizedLanguages']);
     final points = _listToCornerPoints(json['points']);
@@ -120,8 +110,6 @@ class TextBlock {
       boundingBox: rect,
       recognizedLanguages: recognizedLanguages,
       cornerPoints: points,
-      confidence: confidence,
-      angle: angle,
     );
   }
 }
@@ -197,18 +185,35 @@ class TextElement {
   /// List of corner points of the text element in clockwise order starting with the top left point relative to the image in the default coordinate space.
   final List<Point<int>> cornerPoints;
 
+  // The confidence of the recognized block.
+  final double confidence;
+
+  // The angle of the rotation of the recognized block.
+  final double angle;
+
   /// Constructor to create an instance of [TextElement].
-  TextElement(
-      {required this.text,
-      required this.boundingBox,
-      required this.cornerPoints});
+  TextElement({
+    required this.text,
+    required this.boundingBox,
+    required this.cornerPoints,
+    required this.confidence,
+    required this.angle,
+  });
 
   /// Returns an instance of [TextElement] from a given [json].
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
     final points = _listToCornerPoints(json['points']);
-    return TextElement(text: text, boundingBox: rect, cornerPoints: points);
+    final confidence = json['confidence'];
+    final angle = json['angle'];
+    return TextElement(
+      text: text,
+      boundingBox: rect,
+      cornerPoints: points,
+      confidence: confidence,
+      angle: angle,
+    );
   }
 }
 
