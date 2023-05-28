@@ -87,10 +87,16 @@ public class EntityExtractor implements MethodChannel.MethodCallHandler {
             timeZone = TimeZone.getTimeZone((String) parameters.get("timezone"));
         }
 
+        Long referenceTime = null;
+        if (parameters.get("time") != null) {
+            referenceTime = (Long) parameters.get("time");
+        }
+
         EntityExtractionParams params = new EntityExtractionParams.Builder(text)
                 .setEntityTypesFilter(filters)
                 .setPreferredLocale(locale)
                 .setReferenceTimeZone(timeZone)
+                .setReferenceTime(referenceTime)
                 .build();
 
         entityExtractor
