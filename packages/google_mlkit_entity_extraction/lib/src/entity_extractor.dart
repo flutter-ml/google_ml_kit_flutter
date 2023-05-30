@@ -17,6 +17,8 @@ class EntityExtractor {
 
   /// Annotates the given text with the given parameters such as reference time, preferred locale, reference time zone and entity types filter.
   /// Returns a list of [EntityAnnotation] or returns empty list if there is no identified entity.
+  ///
+  /// [referenceTime] should be expressed in milliseconds since epoch.
   Future<List<EntityAnnotation>> annotateText(
     String text, {
     int? referenceTime,
