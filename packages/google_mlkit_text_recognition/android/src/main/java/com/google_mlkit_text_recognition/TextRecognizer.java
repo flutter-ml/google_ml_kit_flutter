@@ -158,7 +158,6 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         addTo.put("angle", angle);
     }
 
-
     private void addPoints(Point[] cornerPoints, List<Map<String, Integer>> points) {
         for (Point point : cornerPoints) {
             Map<String, Integer> p = new HashMap<>();
@@ -168,7 +167,6 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         }
     }
 
-    
     private Map<String, Integer> getBoundingPoints(Rect rect) {
         Map<String, Integer> frame = new HashMap<>();
         frame.put("left", rect.left);

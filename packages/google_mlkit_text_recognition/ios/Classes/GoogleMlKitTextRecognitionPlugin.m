@@ -188,6 +188,8 @@
         },
         @"recognizedLanguages" : allLanguageData,
         @"text" : text,
+        @"confidence" : confidence,
+        @"angle" : angle,
     }];
 }
 

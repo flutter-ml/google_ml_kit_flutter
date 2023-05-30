@@ -26,9 +26,9 @@ class LanguageIdentifier {
     final result = await _channel
         .invokeMethod('nlp#startLanguageIdentifier', <String, dynamic>{
       'text': text,
-      'id': id,
       'possibleLanguages': false,
-      'confidence': confidenceThreshold
+      'confidence': confidenceThreshold,
+      'id': id,
     });
 
     return result.toString();
