@@ -44,7 +44,7 @@ flutter pub get
 cd ../google_ml_kit
 flutter pub get
 
-cd example
+cd ../example
 flutter pub get
 
 cd ios
