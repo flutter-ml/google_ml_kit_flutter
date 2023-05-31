@@ -1,4 +1,5 @@
 export 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+export 'package:google_mlkit_commons/google_mlkit_commons.dart';
 export 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 export 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 export 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
