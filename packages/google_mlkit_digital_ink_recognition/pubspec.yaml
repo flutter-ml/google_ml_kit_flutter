@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_mlkit_commons: ^0.4.0
-#    path: ../google_mlkit_commons
+  google_mlkit_commons: #^0.4.0
+    path: ../google_mlkit_commons
 
 dev_dependencies:
   flutter_test:
