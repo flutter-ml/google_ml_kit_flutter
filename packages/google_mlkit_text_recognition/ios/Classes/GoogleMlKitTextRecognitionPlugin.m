@@ -115,7 +115,9 @@
              cornerPoints:block.cornerPoints
                     frame:block.frame
                 languages:block.recognizedLanguages
-                     text:block.text];
+                     text:block.text
+               confidence:NULL
+                    angle:NULL];
             
             NSMutableArray *textLines = [NSMutableArray array];
             for (MLKTextLine *line in block.lines) {
@@ -125,7 +127,9 @@
                  cornerPoints:line.cornerPoints
                         frame:line.frame
                     languages:line.recognizedLanguages
-                         text:line.text];
+                         text:line.text
+                   confidence:line.confidence
+                        angle:line.angle];
                 
                 NSMutableArray *elementsData = [NSMutableArray array];
                 for (MLKTextElement *element in line.elements) {
@@ -135,7 +139,9 @@
                      cornerPoints:element.cornerPoints
                             frame:element.frame
                         languages:NULL
-                             text:element.text];
+                             text:element.text
+                       confidence:element.confidence
+                            angle:element.angle];
                     
                     [elementsData addObject:elementData];
                 }
@@ -157,7 +163,9 @@
    cornerPoints:(NSArray<NSValue *> *)cornerPoints
           frame:(CGRect)frame
       languages:(NSArray<MLKTextRecognizedLanguage *> *)languages
-           text:(NSString *)text {
+           text:(NSString *)text
+     confidence:(NSNumber *)confidence
+          angle:(NSNumber *)angle {
     NSMutableArray *points = [NSMutableArray array];
     for (NSValue *point in cornerPoints) {
         [points addObject:@{ @"x" : @(point.CGPointValue.x),
@@ -180,6 +188,8 @@
         },
         @"recognizedLanguages" : allLanguageData,
         @"text" : text,
+        @"confidence" : confidence,
+        @"angle" : angle,
     }];
 }
 

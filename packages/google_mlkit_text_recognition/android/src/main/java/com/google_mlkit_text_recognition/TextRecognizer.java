@@ -96,7 +96,9 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                                 block.getText(),
                                 block.getBoundingBox(),
                                 block.getCornerPoints(),
-                                block.getRecognizedLanguage());
+                                block.getRecognizedLanguage(), 
+                                null, 
+                                null);
 
                         List<Map<String, Object>> textLines = new ArrayList<>();
                         for (Text.Line line : block.getLines()) {
@@ -106,7 +108,9 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                                     line.getText(),
                                     line.getBoundingBox(),
                                     line.getCornerPoints(),
-                                    line.getRecognizedLanguage());
+                                    line.getRecognizedLanguage(), 
+                                    line.getConfidence(), 
+                                    line.getAngle());
 
                             List<Map<String, Object>> elementsData = new ArrayList<>();
                             for (Text.Element element : line.getElements()) {
@@ -116,7 +120,9 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                                         element.getText(),
                                         element.getBoundingBox(),
                                         element.getCornerPoints(),
-                                        element.getRecognizedLanguage());
+                                        element.getRecognizedLanguage(),
+                                        element.getConfidence(),
+                                        element.getAngle());
 
                                 elementsData.add(elementData);
                             }
@@ -136,7 +142,10 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                          String text,
                          Rect rect,
                          Point[] cornerPoints,
-                         String recognizedLanguage) {
+                         String recognizedLanguage, 
+                         Float confidence,
+                         Float angle
+                         ) {
         List<String> recognizedLanguages = new ArrayList<>();
         recognizedLanguages.add(recognizedLanguage);
         List<Map<String, Integer>> points = new ArrayList<>();
@@ -145,6 +154,8 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         addTo.put("rect", getBoundingPoints(rect));
         addTo.put("recognizedLanguages", recognizedLanguages);
         addTo.put("text", text);
+        addTo.put("confidence", confidence);
+        addTo.put("angle", angle);
     }
 
     private void addPoints(Point[] cornerPoints, List<Map<String, Integer>> points) {
