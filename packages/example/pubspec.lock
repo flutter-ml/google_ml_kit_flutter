@@ -138,9 +138,9 @@ packages:
   google_mlkit_commons:
     dependency: "direct main"
     description:
-      path: "../google_mlkit_commons"
-      relative: true
-    source: path
+      name: google_mlkit_commons
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.4.0"
   google_mlkit_digital_ink_recognition:
     dependency: "direct main"
