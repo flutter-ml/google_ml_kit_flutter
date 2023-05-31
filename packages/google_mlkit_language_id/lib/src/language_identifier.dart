@@ -23,11 +23,12 @@ class LanguageIdentifier {
   /// If no language could be determined then [undeterminedLanguageCode] is returned.
   /// More information: https://developers.google.com/ml-kit/language/identification
   Future<String> identifyLanguage(String text) async {
-    final result = await _channel.invokeMethod(
-        'nlp#startLanguageIdentifier', <String, dynamic>{
+    final result = await _channel
+        .invokeMethod('nlp#startLanguageIdentifier', <String, dynamic>{
       'text': text,
       'possibleLanguages': false,
-      'confidence': confidenceThreshold
+      'confidence': confidenceThreshold,
+      'id': id,
     });
 
     return result.toString();
