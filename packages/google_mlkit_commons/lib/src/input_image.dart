@@ -14,10 +14,9 @@ class InputImage {
   final InputImageType type;
 
   /// The image data when creating an image of type = [InputImageType.bytes].
-  final InputImageData? inputImageData;
+  final InputImageMetadata? metadata;
 
-  InputImage._(
-      {this.filePath, this.bytes, required this.type, this.inputImageData});
+  InputImage._({this.filePath, this.bytes, required this.type, this.metadata});
 
   /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -31,11 +30,9 @@ class InputImage {
 
   /// Creates an instance of [InputImage] using bytes.
   factory InputImage.fromBytes(
-      {required Uint8List bytes, required InputImageData inputImageData}) {
+      {required Uint8List bytes, required InputImageMetadata metadata}) {
     return InputImage._(
-        bytes: bytes,
-        type: InputImageType.bytes,
-        inputImageData: inputImageData);
+        bytes: bytes, type: InputImageType.bytes, metadata: metadata);
   }
 
   /// Returns a json representation of an instance of [InputImage].
@@ -43,7 +40,7 @@ class InputImage {
         'bytes': bytes,
         'type': type.name,
         'path': filePath,
-        'metadata': inputImageData == null ? 'none' : inputImageData!.toJson()
+        'metadata': metadata?.toJson()
       };
 }
 
@@ -54,66 +51,38 @@ enum InputImageType {
 }
 
 /// Data of image required when creating image from bytes.
-class InputImageData {
+class InputImageMetadata {
   /// Size of image.
   final Size size;
 
   /// Image rotation degree.
-  final InputImageRotation imageRotation;
+  final InputImageRotation rotation;
 
   /// Format of the input image.
-  final InputImageFormat inputImageFormat;
-
-  /// The plane attributes to create the image buffer on iOS.
   ///
   /// Not used on Android.
-  final List<InputImagePlaneMetadata>? planeData;
+  final InputImageFormat format;
 
-  /// Constructor to create an instance of [InputImageData].
-  InputImageData(
-      {required this.size,
-      required this.imageRotation,
-      required this.inputImageFormat,
-      required this.planeData});
+  /// The row stride for color plane, in bytes.
+  ///
+  /// Not used on Android.
+  final int bytesPerRow;
 
-  /// Returns a json representation of an instance of [InputImageData].
+  /// Constructor to create an instance of [InputImageMetadata].
+  InputImageMetadata({
+    required this.size,
+    required this.rotation,
+    required this.format,
+    required this.bytesPerRow,
+  });
+
+  /// Returns a json representation of an instance of [InputImageMetadata].
   Map<String, dynamic> toJson() => {
         'width': size.width,
         'height': size.height,
-        'rotation': imageRotation.rawValue,
-        'imageFormat': inputImageFormat.rawValue,
-        'planeData': planeData
-            ?.map((InputImagePlaneMetadata plane) => plane.toJson())
-            .toList(),
-      };
-}
-
-/// Plane attributes to create the image buffer on iOS.
-///
-/// When using iOS, [height], and [width] throw [AssertionError]
-/// if `null`.
-class InputImagePlaneMetadata {
-  /// The row stride for this color plane, in bytes.
-  final int bytesPerRow;
-
-  /// Height of the pixel buffer on iOS.
-  final int? height;
-
-  /// Width of the pixel buffer on iOS.
-  final int? width;
-
-  /// Constructor to create an instance of [InputImagePlaneMetadata].
-  InputImagePlaneMetadata({
-    required this.bytesPerRow,
-    this.height,
-    this.width,
-  });
-
-  /// Returns a json representation of an instance of [InputImagePlaneMetadata].
-  Map<String, dynamic> toJson() => {
-        'bytesPerRow': bytesPerRow,
-        'height': height,
-        'width': width,
+        'rotation': rotation.rawValue,
+        'image_format': format.rawValue,
+        'bytes_per_row': bytesPerRow,
       };
 }
 

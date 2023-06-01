@@ -109,12 +109,10 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
       _text = '';
     });
     final objects = await _objectDetector.processImage(inputImage);
-    if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null) {
+    if (inputImage.metadata?.size != null &&
+        inputImage.metadata?.rotation != null) {
       final painter = ObjectDetectorPainter(
-          objects,
-          inputImage.inputImageData!.imageRotation,
-          inputImage.inputImageData!.size);
+          objects, inputImage.metadata!.rotation, inputImage.metadata!.size);
       _customPaint = CustomPaint(painter: painter);
     } else {
       String text = 'Objects found: ${objects.length}\n\n';
