@@ -58,10 +58,10 @@ For the Android platform add to the `android/app/build.gradle` file:
 ```gradle
 dependencies {
     // Add language package you need to use
-    implementation 'com.google.mlkit:text-recognition-chinese:16.0.0-beta5'
-    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.0-beta5'
-    implementation 'com.google.mlkit:text-recognition-japanese:16.0.0-beta5'
-    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta5'
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.0-beta6'
+    implementation 'com.google.mlkit:text-recognition-devanagari:16.0.0-beta6'
+    implementation 'com.google.mlkit:text-recognition-japanese:16.0.0-beta6'
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta6'
 }
 ```
 

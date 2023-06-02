@@ -124,6 +124,21 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                                         element.getConfidence(),
                                         element.getAngle());
 
+                                List<Map<String, Object>> symbolsData = new ArrayList<>();
+                                for (Text.Symbol symbol : element.getSymbols()) {
+                                    Map<String, Object> symbolData = new HashMap<>();
+
+                                    addData(symbolData,
+                                            symbol.getText(),
+                                            symbol.getBoundingBox(),
+                                            symbol.getCornerPoints(),
+                                            symbol.getRecognizedLanguage(),
+                                            symbol.getConfidence(),
+                                            symbol.getAngle());
+                                    symbolsData.add(symbolData);
+                                }
+
+                                elementData.put("symbols", symbolsData);
                                 elementsData.add(elementData);
                             }
                             lineData.put("elements", elementsData);
