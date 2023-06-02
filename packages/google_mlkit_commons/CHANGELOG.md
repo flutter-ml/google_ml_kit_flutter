@@ -1,8 +1,8 @@
 ## 0.4.0
 
-* Update InputImage.
-* Rename InputImageData -> InputImageMetadata.
-* Remove InputImagePlaneMetadata.
+* __BREAKING:__ Update InputImage.
+* __BREAKING:__ Rename InputImageData -> InputImageMetadata.
+* __BREAKING:__ Remove InputImagePlaneMetadata.
 * Only support nv21 for Android and bgra8888 for iOS.
 
 ## 0.3.0

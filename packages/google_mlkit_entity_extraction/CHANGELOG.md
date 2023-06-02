@@ -1,3 +1,8 @@
+## 0.8.0
+
+* Fix: Pass `referenceTime` to native API when calling `annotateText`.
+* Update dependencies.
+
 ## 0.7.0
 
 * Update dependencies.

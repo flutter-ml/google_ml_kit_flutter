@@ -1,3 +1,8 @@
+## 0.7.0
+
+* Fix: Add confidence and angle in object response for `TextLine` and `TextElement`.
+* Update dependencies.
+
 ## 0.6.0
 
 * Update dependencies.

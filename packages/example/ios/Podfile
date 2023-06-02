@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -10,7 +10,7 @@ project 'Runner', {
 }
 
 # Add language package you need to use
-pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
+# pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
 # pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 4.0.0'
 # pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
 # pod 'GoogleMLKit/TextRecognitionKorean', '~> 4.0.0'
@@ -37,7 +37,7 @@ target 'Runner' do
 end
 
 # add this line:
-$iOSVersion = '10.0'
+$iOSVersion = '12.0'
 
 post_install do |installer|
   # add these lines:

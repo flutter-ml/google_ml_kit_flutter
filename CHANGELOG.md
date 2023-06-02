@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-06-01
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.15.0`](#google_ml_kit---v0150)
+- [`google_mlkit_barcode_scanning` - `v0.7.0`](#google_mlkit_barcode_scanning---v070)
+- [`google_mlkit_digital_ink_recognition` - `v0.8.0`](#google_mlkit_digital_ink_recognition---v080)
+- [`google_mlkit_entity_extraction` - `v0.8.0`](#google_mlkit_entity_extraction---v080)
+- [`google_mlkit_face_detection` - `v0.7.0`](#google_mlkit_face_detection---v070)
+- [`google_mlkit_image_labeling` - `v0.7.0`](#google_mlkit_image_labeling---v070)
+- [`google_mlkit_language_id` - `v0.7.0`](#google_mlkit_language_id---v070)
+- [`google_mlkit_object_detection` - `v0.8.0`](#google_mlkit_object_detection---v080)
+- [`google_mlkit_pose_detection` - `v0.7.0`](#google_mlkit_pose_detection---v070)
+- [`google_mlkit_selfie_segmentation` - `v0.4.0`](#google_mlkit_selfie_segmentation---v040)
+- [`google_mlkit_smart_reply` - `v0.7.0`](#google_mlkit_smart_reply---v070)
+- [`google_mlkit_text_recognition` - `v0.7.0`](#google_mlkit_text_recognition---v070)
+- [`google_mlkit_translation` - `v0.7.0`](#google_mlkit_translation---v070)
+
+---
+
+#### `google_ml_kit` - `v0.15.0`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.8.0`
+
+* Update dependencies.
+
+#### `google_mlkit_entity_extraction` - `v0.8.0`
+
+* Fix: Pass `referenceTime` to native API when calling `annotateText`.
+* Update dependencies.
+
+#### `google_mlkit_face_detection` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_image_labeling` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_language_id` - `v0.7.0`
+
+* Fix: Pass `id` to native API when calling `identifyLanguage`.
+* Update dependencies.
+
+#### `google_mlkit_object_detection` - `v0.8.0`
+
+* Update dependencies.
+
+#### `google_mlkit_pose_detection` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_selfie_segmentation` - `v0.4.0`
+
+* Update dependencies.
+
+#### `google_mlkit_smart_reply` - `v0.7.0`
+
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.7.0`
+
+* Fix: Add confidence and angle in object response for `TextLine` and `TextElement`.
+* Update dependencies.
+
+#### `google_mlkit_translation` - `v0.7.0`
+
+* Update dependencies.
+
+## 2023-05-31
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_commons` - `v0.4.0`](#google_mlkit_commons---v040)
+
+---
+
+#### `google_mlkit_commons` - `v0.4.0`
+
+* __BREAKING:__ Update InputImage.
+* __BREAKING:__ Rename InputImageData -> InputImageMetadata.
+* __BREAKING:__ Remove InputImagePlaneMetadata.
+* Only support nv21 for Android and bgra8888 for iOS.
+
 ## 2023-04-19
 
 ### Changes
