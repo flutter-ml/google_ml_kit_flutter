@@ -36,8 +36,10 @@
 }
 
 - (id)init {
-    instances = [NSMutableDictionary new];
-    return [super init];
+    self = [super init];
+    if (self)
+        instances = [NSMutableDictionary dictionary];
+    return  self;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
