@@ -9,12 +9,6 @@ project 'Runner', {
   'Release' => :release,
 }
 
-# Add language package you need to use
-# pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
-# pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 4.0.0'
-# pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
-# pod 'GoogleMLKit/TextRecognitionKorean', '~> 4.0.0'
-
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
   unless File.exist?(generated_xcode_build_settings_path)
@@ -33,6 +27,12 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
+  # Add language package you need to use
+  pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
+  pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 4.0.0'
+  pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
+  pod 'GoogleMLKit/TextRecognitionKorean', '~> 4.0.0'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
