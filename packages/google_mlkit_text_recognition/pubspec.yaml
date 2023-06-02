@@ -1,6 +1,6 @@
 name: google_mlkit_text_recognition
 description: A Flutter plugin to use Google's ML Kit Text Recognition to recognize text in any Chinese, Devanagari, Japanese, Korean and Latin character set.
-version: 0.8.0
+version: 0.8.1
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 
 environment:

@@ -11,11 +11,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
-- [`google_mlkit_text_recognition` - `v0.8.0`](#google_mlkit_text_recognition---v080)
+- [`google_mlkit_text_recognition` - `v0.8.1`](#google_mlkit_text_recognition---v081)
 
 ---
 
-#### `google_mlkit_text_recognition` - `v0.8.0`
+#### `google_mlkit_text_recognition` - `v0.8.1`
 
 * Fix: Confidence and angle only available for Android.
 * Feat: Add `TextSymbol`, only available for Android.

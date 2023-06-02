@@ -1,4 +1,4 @@
-## 0.8.0
+## 0.8.1
 
 * Fix: Confidence and angle only available for Android.
 * Feat: Add `TextSymbol`, only available for Android.
