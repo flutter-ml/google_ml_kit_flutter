@@ -48,7 +48,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 4.0.0)
-  - google_mlkit_text_recognition (0.7.0):
+  - google_mlkit_text_recognition (0.8.0):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/TextRecognition (~> 4.0.0)
@@ -388,7 +388,7 @@ SPEC CHECKSUMS:
   google_mlkit_pose_detection: e061dd69ecd5a35727bffc478c04ed49bba36bb7
   google_mlkit_selfie_segmentation: 89895ec9e1a95be1dc10c909553424eb157c5358
   google_mlkit_smart_reply: ee22a596568911dfef188d8ba7df19fbd61e02df
-  google_mlkit_text_recognition: f6a4cb33a878bfac1350f58edc663a9f02501e95
+  google_mlkit_text_recognition: 8f210d9c0afc47538cc2b12a5c3b3c9620c84624
   google_mlkit_translation: 656df4fa816bc67531ae99fa328af3a50e268cdf
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
