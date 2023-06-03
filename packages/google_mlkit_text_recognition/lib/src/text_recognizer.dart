@@ -131,11 +131,13 @@ class TextLine {
   /// The corner points of the text line in clockwise order starting with the top left point relative to the image in the default coordinate space.
   final List<Point<int>> cornerPoints;
 
-  // The confidence of the recognized block.
-  final double confidence;
+  // The confidence of the recognized line.
+  // Only available in Android, for iOS returns null.
+  final double? confidence;
 
   // The angle of the rotation of the recognized line.
-  final double angle;
+  // Only available in Android, for iOS returns null.
+  final double? angle;
 
   /// Constructor to create an instance of [TextLine].
   TextLine({
@@ -179,22 +181,33 @@ class TextElement {
   /// String representation of the text element that was recognized.
   final String text;
 
+  /// List of text elements that make up the line.
+  // Only available in Android, for iOS returns an empty list.
+  final List<TextSymbol> symbols;
+
   /// Rect that contains the text element.
   final Rect boundingBox;
+
+  /// List of recognized languages in the text element. If no languages were recognized, the list is empty.
+  final List<String> recognizedLanguages;
 
   /// List of corner points of the text element in clockwise order starting with the top left point relative to the image in the default coordinate space.
   final List<Point<int>> cornerPoints;
 
-  // The confidence of the recognized block.
-  final double confidence;
+  // The confidence of the recognized element.
+  // Only available in Android, for iOS returns null.
+  final double? confidence;
 
-  // The angle of the rotation of the recognized block.
-  final double angle;
+  // The angle of the rotation of the recognized element.
+  // Only available in Android, for iOS returns null.
+  final double? angle;
 
   /// Constructor to create an instance of [TextElement].
   TextElement({
     required this.text,
+    required this.symbols,
     required this.boundingBox,
+    required this.recognizedLanguages,
     required this.cornerPoints,
     required this.confidence,
     required this.angle,
@@ -204,12 +217,73 @@ class TextElement {
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final rect = RectJson.fromJson(json['rect']);
+    final recognizedLanguages =
+        _listToRecognizedLanguages(json['recognizedLanguages']);
     final points = _listToCornerPoints(json['points']);
     final confidence = json['confidence'];
     final angle = json['angle'];
+    final symbols = <TextSymbol>[];
+    for (final symbol in json['symbols']) {
+      final textSymbol = TextSymbol.fromJson(symbol);
+      symbols.add(textSymbol);
+    }
     return TextElement(
       text: text,
+      symbols: symbols,
       boundingBox: rect,
+      recognizedLanguages: recognizedLanguages,
+      cornerPoints: points,
+      confidence: confidence,
+      angle: angle,
+    );
+  }
+}
+
+/// A text symbol recognized in an image. Represents a single symbol in an [TextElement].
+class TextSymbol {
+  /// String representation of the text symbol that was recognized.
+  final String text;
+
+  /// Rect that contains the text symbol.
+  final Rect boundingBox;
+
+  /// List of recognized languages in the text symbol. If no languages were recognized, the list is empty.
+  final List<String> recognizedLanguages;
+
+  /// List of corner points of the text symbol in clockwise order starting with the top left point relative to the image in the default coordinate space.
+  final List<Point<int>> cornerPoints;
+
+  // The confidence of the recognized symbol.
+  // Only available in Android, for iOS returns null.
+  final double? confidence;
+
+  // The angle of the rotation of the recognized symbol.
+  // Only available in Android, for iOS returns null.
+  final double? angle;
+
+  /// Constructor to create an instance of [TextSymbol].
+  TextSymbol({
+    required this.text,
+    required this.boundingBox,
+    required this.recognizedLanguages,
+    required this.cornerPoints,
+    required this.confidence,
+    required this.angle,
+  });
+
+  /// Returns an instance of [TextSymbol] from a given [json].
+  factory TextSymbol.fromJson(Map<dynamic, dynamic> json) {
+    final text = json['text'];
+    final rect = RectJson.fromJson(json['rect']);
+    final recognizedLanguages =
+        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final points = _listToCornerPoints(json['points']);
+    final confidence = json['confidence'];
+    final angle = json['angle'];
+    return TextSymbol(
+      text: text,
+      boundingBox: rect,
+      recognizedLanguages: recognizedLanguages,
       cornerPoints: points,
       confidence: confidence,
       angle: angle,

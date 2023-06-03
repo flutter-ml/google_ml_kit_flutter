@@ -211,7 +211,7 @@ packages:
       path: "../google_mlkit_text_recognition"
       relative: true
     source: path
-    version: "0.7.0"
+    version: "0.8.1"
   google_mlkit_translation:
     dependency: "direct main"
     description:

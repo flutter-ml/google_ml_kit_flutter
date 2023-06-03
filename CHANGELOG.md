@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-06-02
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_text_recognition` - `v0.8.1`](#google_mlkit_text_recognition---v081)
+
+---
+
+#### `google_mlkit_text_recognition` - `v0.8.1`
+
+* Fix: Confidence and angle only available for Android.
+* Feat: Add `TextSymbol`, only available for Android.
+
 ## 2023-06-01
 
 ### Changes

@@ -2,9 +2,7 @@
 
 #define channelName @"google_mlkit_commons"
 
-@implementation GoogleMlKitCommonsPlugin {
-    GenericModelManager *genericModelManager;
-}
+@implementation GoogleMlKitCommonsPlugin
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel

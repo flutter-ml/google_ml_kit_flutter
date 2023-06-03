@@ -48,7 +48,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 4.0.0)
-  - google_mlkit_text_recognition (0.7.0):
+  - google_mlkit_text_recognition (0.8.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/TextRecognition (~> 4.0.0)
@@ -104,6 +104,18 @@ PODS:
   - GoogleMLKit/TextRecognition (4.0.0):
     - GoogleMLKit/MLKitCore
     - MLKitTextRecognition (~> 2.0.0)
+  - GoogleMLKit/TextRecognitionChinese (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognitionChinese (~> 1.0.0)
+  - GoogleMLKit/TextRecognitionDevanagari (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognitionDevanagari (~> 1.0.0)
+  - GoogleMLKit/TextRecognitionJapanese (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognitionJapanese (~> 1.0.0)
+  - GoogleMLKit/TextRecognitionKorean (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognitionKorean (~> 1.0.0)
   - GoogleMLKit/Translate (4.0.0):
     - GoogleMLKit/MLKitCore
     - MLKitTranslate (~> 3.0.0)
@@ -213,8 +225,24 @@ PODS:
     - MLKitCommon (~> 9.0)
     - MLKitTextRecognitionCommon (= 1.0.0)
     - MLKitVision (~> 5.0)
+  - MLKitTextRecognitionChinese (1.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitTextRecognitionCommon (= 1.0.0)
+    - MLKitVision (~> 5.0)
   - MLKitTextRecognitionCommon (1.0.0):
     - MLKitCommon (~> 9.0)
+    - MLKitVision (~> 5.0)
+  - MLKitTextRecognitionDevanagari (1.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitTextRecognitionCommon (= 1.0.0)
+    - MLKitVision (~> 5.0)
+  - MLKitTextRecognitionJapanese (1.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitTextRecognitionCommon (= 1.0.0)
+    - MLKitVision (~> 5.0)
+  - MLKitTextRecognitionKorean (1.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitTextRecognitionCommon (= 1.0.0)
     - MLKitVision (~> 5.0)
   - MLKitTranslate (3.0.0):
     - MLKitNaturalLanguage (~> 5.0)
@@ -260,6 +288,10 @@ DEPENDENCIES:
   - google_mlkit_smart_reply (from `.symlinks/plugins/google_mlkit_smart_reply/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
+  - GoogleMLKit/TextRecognitionChinese (~> 4.0.0)
+  - GoogleMLKit/TextRecognitionDevanagari (~> 4.0.0)
+  - GoogleMLKit/TextRecognitionJapanese (~> 4.0.0)
+  - GoogleMLKit/TextRecognitionKorean (~> 4.0.0)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
 
@@ -293,7 +325,11 @@ SPEC REPOS:
     - MLKitSegmentationSelfie
     - MLKitSmartReply
     - MLKitTextRecognition
+    - MLKitTextRecognitionChinese
     - MLKitTextRecognitionCommon
+    - MLKitTextRecognitionDevanagari
+    - MLKitTextRecognitionJapanese
+    - MLKitTextRecognitionKorean
     - MLKitTranslate
     - MLKitVision
     - MLKitVisionKit
@@ -352,7 +388,7 @@ SPEC CHECKSUMS:
   google_mlkit_pose_detection: e061dd69ecd5a35727bffc478c04ed49bba36bb7
   google_mlkit_selfie_segmentation: 89895ec9e1a95be1dc10c909553424eb157c5358
   google_mlkit_smart_reply: ee22a596568911dfef188d8ba7df19fbd61e02df
-  google_mlkit_text_recognition: f6a4cb33a878bfac1350f58edc663a9f02501e95
+  google_mlkit_text_recognition: 1671b3abf7aee81aa0fc876f0f6a83dac069242e
   google_mlkit_translation: 656df4fa816bc67531ae99fa328af3a50e268cdf
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -383,7 +419,11 @@ SPEC CHECKSUMS:
   MLKitSegmentationSelfie: 94c51690e93068160c6585525357ee722a9cda0a
   MLKitSmartReply: 1b7d39c9f363133bb67c9ddf9ffafada5ecd82b5
   MLKitTextRecognition: 9ff0c843f2723d31d4bdd0c0d17a0a18382ed23e
+  MLKitTextRecognitionChinese: 1c2d90260b0ee2b5541bb6ce3b60fa5fed66a2a5
   MLKitTextRecognitionCommon: 0d48930fee25cce9d52d0ba217490d4797061aa2
+  MLKitTextRecognitionDevanagari: ed581ba85fccbbcf3e15629ec8be6d6abb02d2d1
+  MLKitTextRecognitionJapanese: bbcaa15796ca9a1f42e3191e57468beb51b1035e
+  MLKitTextRecognitionKorean: 8de40a4e5081242a7a83187583a3a7b57b5a703b
   MLKitTranslate: e805e2873e0fbb211547c714b40c22c08cb8d7cb
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   MLKitVisionKit: 5b5472d40ffc143bda693ba20a3cff44fe627d41
@@ -393,6 +433,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SSZipArchive: cefe1364104a0231268a5deb8495bdf2861f52f0
 
-PODFILE CHECKSUM: 84931930ef9b1a9a3f9abc6f0f308b6cdd0ba198
+PODFILE CHECKSUM: d7a40f01d7c78d8d39819210961d45fa6c9f3939
 
 COCOAPODS: 1.12.1
