@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-import 'camera_view.dart';
+import 'detector_view.dart';
 import 'painters/face_detector_painter.dart';
 
 class FaceDetectorView extends StatefulWidget {
@@ -14,13 +14,14 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   final FaceDetector _faceDetector = FaceDetector(
     options: FaceDetectorOptions(
       enableContours: true,
-      enableClassification: true,
+      enableLandmarks: true,
     ),
   );
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
+  var _cameraLensDirection = CameraLensDirection.front;
 
   @override
   void dispose() {
@@ -31,18 +32,17 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
+    return DetectorView(
       title: 'Face Detector',
       customPaint: _customPaint,
       text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
-      initialDirection: CameraLensDirection.front,
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
     );
   }
 
-  Future<void> processImage(InputImage inputImage) async {
+  Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -53,7 +53,11 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = FaceDetectorPainter(
-          faces, inputImage.metadata!.size, inputImage.metadata!.rotation);
+        faces,
+        inputImage.metadata!.size,
+        inputImage.metadata!.rotation,
+        _cameraLensDirection,
+      );
       _customPaint = CustomPaint(painter: painter);
     } else {
       String text = 'Faces found: ${faces.length}\n\n';

@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'nlp_detector_views/entity_extraction_view.dart';
@@ -14,12 +13,8 @@ import 'vision_detector_views/pose_detector_view.dart';
 import 'vision_detector_views/selfie_segmenter_view.dart';
 import 'vision_detector_views/text_detector_view.dart';
 
-List<CameraDescription> cameras = [];
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  cameras = await availableCameras();
 
   runApp(MyApp());
 }

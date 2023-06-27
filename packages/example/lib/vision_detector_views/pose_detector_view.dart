@@ -1,8 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
-import 'camera_view.dart';
+import 'detector_view.dart';
 import 'painters/pose_painter.dart';
 
 class PoseDetectorView extends StatefulWidget {
@@ -17,6 +18,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
+  var _cameraLensDirection = CameraLensDirection.back;
 
   @override
   void dispose() async {
@@ -27,17 +29,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
+    return DetectorView(
       title: 'Pose Detector',
       customPaint: _customPaint,
       text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
     );
   }
 
-  Future<void> processImage(InputImage inputImage) async {
+  Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -48,7 +50,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = PosePainter(
-          poses, inputImage.metadata!.size, inputImage.metadata!.rotation);
+        poses,
+        inputImage.metadata!.size,
+        inputImage.metadata!.rotation,
+        _cameraLensDirection,
+      );
       _customPaint = CustomPaint(painter: painter);
     } else {
       _text = 'Poses found: ${poses.length}\n\n';

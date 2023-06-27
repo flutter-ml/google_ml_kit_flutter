@@ -209,12 +209,12 @@ class Barcode {
   /// The rectangle that holds the discovered barcode relative to the detected image in the view coordinate system.
   ///
   /// Could be null if the bounding rectangle can not be determined.
-  final Rect? boundingBox;
+  final Rect boundingBox;
 
   /// The four corner points of the barcode, in clockwise order starting with the top left relative to the detected image in the view coordinate system.
   ///
   /// Due to the possible perspective distortions, this is not necessarily a rectangle.
-  final List<Point<int>>? cornerPoints;
+  final List<Point<int>> cornerPoints;
 
   /// Constructor to create an instance of [Barcode].
   Barcode({
@@ -235,21 +235,10 @@ class Barcode {
     final displayValue = json['displayValue'];
     final rawValue = json['rawValue'];
     final rawBytes = json['rawBytes'];
-    final boundingBox = json['boundingBoxLeft'] != null
-        ? Rect.fromLTRB(
-            (json['boundingBoxLeft']).toDouble(),
-            (json['boundingBoxTop']).toDouble(),
-            (json['boundingBoxRight']).toDouble(),
-            (json['boundingBoxBottom']).toDouble())
-        : null;
-    BarcodeValue? value;
-    final points = json['cornerPoints'];
-    final List<Point<int>> cornerPoints = [];
-    for (final point in points) {
-      final cornerPoint = Point<int>(point['x'].toInt(), point['y'].toInt());
-      cornerPoints.add(cornerPoint);
-    }
+    final boundingBox = RectJson.fromJson(json['rect']);
+    final cornerPoints = _listToCornerPoints(json['points']);
 
+    BarcodeValue? value;
     switch (type) {
       case BarcodeType.wifi:
         value = BarcodeWifi.fromJson(json);
@@ -290,7 +279,7 @@ class Barcode {
       rawValue: rawValue,
       rawBytes: rawBytes,
       boundingBox: boundingBox,
-      cornerPoints: cornerPoints.isEmpty ? null : cornerPoints,
+      cornerPoints: cornerPoints,
     );
   }
 }
@@ -719,4 +708,13 @@ List<String> _getUrls(dynamic json) {
     list.add(url.toString());
   });
   return list;
+}
+
+/// Convert list of map to list of [Point].
+List<Point<int>> _listToCornerPoints(List<dynamic> points) {
+  final p = <Point<int>>[];
+  for (final point in points) {
+    p.add(Point<int>(point['x'].toInt(), point['y'].toInt()));
+  }
+  return p;
 }

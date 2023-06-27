@@ -88,25 +88,11 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                         barcodeMap.put("rawValue", barcode.getRawValue());
                         barcodeMap.put("rawBytes", barcode.getRawBytes());
                         barcodeMap.put("displayValue", barcode.getDisplayValue());
-                        Rect bb = barcode.getBoundingBox();
-                        if (bb != null) {
-                            barcodeMap.put("boundingBoxBottom", bb.bottom);
-                            barcodeMap.put("boundingBoxLeft", bb.left);
-                            barcodeMap.put("boundingBoxRight", bb.right);
-                            barcodeMap.put("boundingBoxTop", bb.top);
-                        }
-
-                        Point[] points = barcode.getCornerPoints();
-                        if (points != null) {
-                            List<Map<String, Object>> cornerPoints = new ArrayList<>();
-                            for (Point point : points) {
-                                Map<String, Object> cornerPoint = new HashMap<>();
-                                cornerPoint.put("x", point.x);
-                                cornerPoint.put("y", point.y);
-                                cornerPoints.add(cornerPoint);
-                            }
-                            barcodeMap.put("cornerPoints", cornerPoints);
-                        }
+                        barcodeMap.put("rect", getBoundingPoints(barcode.getBoundingBox()));
+                        Point[] cornerPoints = barcode.getCornerPoints();
+                        List<Map<String, Integer>> points = new ArrayList<>();
+                        addPoints(cornerPoints, points);
+                        barcodeMap.put("points", points);
                         switch (valueType) {
                             case Barcode.TYPE_UNKNOWN:
                             case Barcode.TYPE_ISBN:
@@ -128,7 +114,6 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                                 barcodeMap.put("subject", barcode.getEmail().getSubject());
                                 barcodeMap.put("emailType", barcode.getEmail().getType());
                                 break;
-
                             case Barcode.TYPE_PHONE:
                                 barcodeMap.put("number", barcode.getPhone().getNumber());
                                 barcodeMap.put("phoneType", barcode.getPhone().getType());
@@ -155,7 +140,6 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                                 barcodeMap.put("lastName", barcode.getDriverLicense().getLastName());
                                 barcodeMap.put("country", barcode.getDriverLicense().getIssuingCountry());
                                 break;
-
                             case Barcode.TYPE_CONTACT_INFO:
                                 barcodeMap.put("firstName", barcode.getContactInfo().getName().getFirst());
                                 barcodeMap.put("lastName", barcode.getContactInfo().getName().getLast());
@@ -192,7 +176,6 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                                 List<String> urls = new ArrayList<>(barcode.getContactInfo().getUrls());
                                 barcodeMap.put("urls", urls);
                                 break;
-
                             case Barcode.TYPE_CALENDAR_EVENT:
                                 barcodeMap.put("description", barcode.getCalendarEvent().getDescription());
                                 barcodeMap.put("location", barcode.getCalendarEvent().getLocation());
@@ -208,6 +191,24 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
                     result.success(barcodeList);
                 })
                 .addOnFailureListener(e -> result.error("BarcodeDetectorError", e.toString(), null));
+    }
+
+    private void addPoints(Point[] cornerPoints, List<Map<String, Integer>> points) {
+        for (Point point : cornerPoints) {
+            Map<String, Integer> p = new HashMap<>();
+            p.put("x", point.x);
+            p.put("y", point.y);
+            points.add(p);
+        }
+    }
+
+    private Map<String, Integer> getBoundingPoints(Rect rect) {
+        Map<String, Integer> frame = new HashMap<>();
+        frame.put("left", rect.left);
+        frame.put("right", rect.right);
+        frame.put("top", rect.top);
+        frame.put("bottom", rect.bottom);
+        return frame;
     }
 
     private void closeDetector(MethodCall call) {

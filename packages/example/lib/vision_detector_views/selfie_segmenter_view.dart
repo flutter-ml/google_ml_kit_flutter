@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 
-import 'camera_view.dart';
+import 'detector_view.dart';
 import 'painters/segmentation_painter.dart';
 
 class SelfieSegmenterView extends StatefulWidget {
@@ -19,6 +19,7 @@ class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
+  var _cameraLensDirection = CameraLensDirection.front;
 
   @override
   void dispose() async {
@@ -29,18 +30,17 @@ class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
+    return DetectorView(
       title: 'Selfie Segmenter',
       customPaint: _customPaint,
       text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
-      initialDirection: CameraLensDirection.front,
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
     );
   }
 
-  Future<void> processImage(InputImage inputImage) async {
+  Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -56,6 +56,7 @@ class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {
         mask,
         inputImage.metadata!.size,
         inputImage.metadata!.rotation,
+        _cameraLensDirection,
       );
       _customPaint = CustomPaint(painter: painter);
     } else {

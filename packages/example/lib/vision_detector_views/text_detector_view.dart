@@ -1,7 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
-import 'camera_view.dart';
+import 'detector_view.dart';
 import 'painters/text_detector_painter.dart';
 
 class TextRecognizerView extends StatefulWidget {
@@ -16,6 +17,7 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
+  var _cameraLensDirection = CameraLensDirection.back;
 
   @override
   void dispose() async {
@@ -26,17 +28,17 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
+    return DetectorView(
       title: 'Text Detector',
       customPaint: _customPaint,
       text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
     );
   }
 
-  Future<void> processImage(InputImage inputImage) async {
+  Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -46,8 +48,12 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
     final recognizedText = await _textRecognizer.processImage(inputImage);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
-      final painter = TextRecognizerPainter(recognizedText,
-          inputImage.metadata!.size, inputImage.metadata!.rotation);
+      final painter = TextRecognizerPainter(
+        recognizedText,
+        inputImage.metadata!.size,
+        inputImage.metadata!.rotation,
+        _cameraLensDirection,
+      );
       _customPaint = CustomPaint(painter: painter);
     } else {
       _text = 'Recognized text:\n\n${recognizedText.text}';
