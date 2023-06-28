@@ -53,7 +53,7 @@ From bytes:
 final inputImage = InputImage.fromBytes(bytes: bytes, metadata: metadata);
 ```
 
-If you are using the [Camera plugin](https://pub.dev/packages/camera)) make sure to configure your [CameraController](https://pub.dev/documentation/camera/latest/camera/CameraController-class.html) to only use `nv21` for Android and `bgra8888` for iOS.
+If you are using the [Camera plugin](https://pub.dev/packages/camera) make sure to configure your [CameraController](https://pub.dev/documentation/camera/latest/camera/CameraController-class.html) to only use `nv21` for Android and `bgra8888` for iOS.
 
 ```dart
 import 'dart:io';

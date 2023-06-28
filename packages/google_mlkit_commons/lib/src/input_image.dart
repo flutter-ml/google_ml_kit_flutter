@@ -56,6 +56,8 @@ class InputImageMetadata {
   final Size size;
 
   /// Image rotation degree.
+  ///
+  /// Not used on iOS.
   final InputImageRotation rotation;
 
   /// Format of the input image.
