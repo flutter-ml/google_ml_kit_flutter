@@ -57,17 +57,17 @@ final List<Barcode> barcodes = await barcodeScanner.processImage(inputImage);
 
 for (Barcode barcode in barcodes) {
   final BarcodeType type = barcode.type;
-  final Rect boundingBox = barcode.boundingBox;
-  final String displayValue = barcode.displayValue;
-  final String rawValue = barcode.rawValue;
+  final Rect? boundingBox = barcode.boundingBox;
+  final String? displayValue = barcode.displayValue;
+  final String? rawValue = barcode.rawValue;
 
   // See API reference for complete list of supported types
   switch (type) {
     case BarcodeType.wifi:
-      BarcodeWifi barcodeWifi = barcode.value;
+      BarcodeValue? barcodeWifi = barcode.value;
       break;
-    case BarcodeValueType.url:
-      BarcodeUrl barcodeUrl = barcode.value;
+    case BarcodeType.url:
+      BarcodeValue? barcodeUrl = barcode.value;
       break;
   }
 }
