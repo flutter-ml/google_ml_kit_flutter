@@ -194,14 +194,14 @@ class DetectedObject {
 
   /// Returns an instance of [DetectedObject] from a given [json].
   factory DetectedObject.fromJson(Map<dynamic, dynamic> json) {
-    final rect = RectJson.fromJson(json['rect']);
+    final boundingBox = RectJson.fromJson(json['rect']);
     final trackingId = json['trackingId'];
     final labels = <Label>[];
     for (final dynamic label in json['labels']) {
       labels.add(Label.fromJson(label));
     }
     return DetectedObject(
-      boundingBox: rect,
+      boundingBox: boundingBox,
       labels: labels,
       trackingId: trackingId,
     );
