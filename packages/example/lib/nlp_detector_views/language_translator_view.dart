@@ -12,10 +12,11 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
   String? _translatedText;
   final _controller = TextEditingController();
   final _modelManager = OnDeviceTranslatorModelManager();
-  final _sourceLanguage = TranslateLanguage.english;
-  final _targetLanguage = TranslateLanguage.spanish;
-  late final _onDeviceTranslator = OnDeviceTranslator(
-      sourceLanguage: _sourceLanguage, targetLanguage: _targetLanguage);
+  var _sourceLanguage = TranslateLanguage.english;
+  var _targetLanguage = TranslateLanguage.spanish;
+  var _onDeviceTranslator = OnDeviceTranslator(
+      sourceLanguage: TranslateLanguage.english,
+      targetLanguage: TranslateLanguage.spanish);
 
   @override
   void dispose() {
@@ -41,33 +42,48 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
                   child: Text('Enter text (source: ${_sourceLanguage.name})')),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    width: 2,
-                  )),
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(border: InputBorder.none),
-                    maxLines: null,
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        width: 2,
+                      )),
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(border: InputBorder.none),
+                        maxLines: null,
+                      ),
+                    )),
+                    SizedBox(width: 20),
+                    _buildDropdown(false),
+                  ],
                 ),
               ),
+              SizedBox(height: 30),
               Center(
                   child: Text(
                       'Translated Text (target: ${_targetLanguage.name})')),
-              SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Container(
-                    width: MediaQuery.of(context).size.width / 1.3,
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                      width: 2,
-                    )),
-                    child: Text(_translatedText ?? '')),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            width: 2,
+                          )),
+                          child: Text(_translatedText ?? '')),
+                    ),
+                    SizedBox(width: 20),
+                    _buildDropdown(true),
+                  ],
+                ),
               ),
               SizedBox(height: 30),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -116,6 +132,36 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
       ),
     );
   }
+
+  Widget _buildDropdown(bool isTarget) => DropdownButton<String>(
+        value: (isTarget ? _targetLanguage : _sourceLanguage).bcpCode,
+        icon: const Icon(Icons.arrow_downward),
+        elevation: 16,
+        style: const TextStyle(color: Colors.blue),
+        underline: Container(
+          height: 2,
+          color: Colors.blue,
+        ),
+        onChanged: (String? code) {
+          if (code != null) {
+            final lang = BCP47Code.fromRawValue(code);
+            if (lang != null) {
+              setState(() {
+                isTarget ? _targetLanguage = lang : _sourceLanguage = lang;
+                _onDeviceTranslator = OnDeviceTranslator(
+                    sourceLanguage: _sourceLanguage,
+                    targetLanguage: _targetLanguage);
+              });
+            }
+          }
+        },
+        items: TranslateLanguage.values.map<DropdownMenuItem<String>>((lang) {
+          return DropdownMenuItem<String>(
+            value: lang.bcpCode,
+            child: Text(lang.name),
+          );
+        }).toList(),
+      );
 
   Future<void> _downloadSourceModel() async {
     Toast().show(
@@ -179,9 +225,15 @@ class _LanguageTranslatorViewState extends State<LanguageTranslatorView> {
 
   Future<void> _translateText() async {
     FocusScope.of(context).unfocus();
-    final result = await _onDeviceTranslator.translateText(_controller.text);
-    setState(() {
-      _translatedText = result;
-    });
+    Toast().show(
+        'Translating...',
+        _onDeviceTranslator.translateText(_controller.text).then((result) {
+          setState(() {
+            _translatedText = result;
+          });
+          return 'done!';
+        }),
+        context,
+        this);
   }
 }
