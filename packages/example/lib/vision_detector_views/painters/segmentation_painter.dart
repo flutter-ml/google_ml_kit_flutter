@@ -1,23 +1,25 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 
-class SegmentationPainter extends CustomPainter {
-  final SegmentationMask mask;
-  final Size absoluteImageSize;
-  final Color color = Colors.red;
-  final InputImageRotation rotation;
+import 'coordinates_translator.dart';
 
+class SegmentationPainter extends CustomPainter {
   SegmentationPainter(
     this.mask,
-    this.absoluteImageSize,
+    this.imageSize,
     this.rotation,
+    this.cameraLensDirection,
   );
+
+  final SegmentationMask mask;
+  final Size imageSize;
+  final Color color = Colors.red;
+  final InputImageRotation rotation;
+  final CameraLensDirection cameraLensDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    canvas.clipRect(rect);
-
     final width = mask.width;
     final height = mask.height;
     final confidences = mask.confidences;
@@ -26,34 +28,25 @@ class SegmentationPainter extends CustomPainter {
 
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        final int tx = transformX(x.toDouble(), size).round();
-        final int ty = transformY(y.toDouble(), size).round();
+        final int tx = translateX(
+          x.toDouble(),
+          size,
+          Size(mask.width.toDouble(), mask.height.toDouble()),
+          rotation,
+          cameraLensDirection,
+        ).round();
+        final int ty = translateY(
+          y.toDouble(),
+          size,
+          Size(mask.width.toDouble(), mask.height.toDouble()),
+          rotation,
+          cameraLensDirection,
+        ).round();
 
-        final double opacity = confidences[(y * width) + x] * 0.25;
+        final double opacity = confidences[(y * width) + x] * 0.5;
         paint.color = color.withOpacity(opacity);
-        canvas.drawCircle(Offset(tx.toDouble(), ty.toDouble()), 1, paint);
+        canvas.drawCircle(Offset(tx.toDouble(), ty.toDouble()), 2, paint);
       }
-    }
-  }
-
-  double transformX(double x, Size size) {
-    switch (rotation) {
-      case InputImageRotation.rotation90deg:
-        return x * size.width / absoluteImageSize.height;
-      case InputImageRotation.rotation270deg:
-        return size.width - x * size.width / absoluteImageSize.height;
-      default:
-        return x * size.width / absoluteImageSize.width;
-    }
-  }
-
-  double transformY(double y, Size size) {
-    switch (rotation) {
-      case InputImageRotation.rotation90deg:
-      case InputImageRotation.rotation270deg:
-        return y * size.height / absoluteImageSize.width;
-      default:
-        return y * size.height / absoluteImageSize.height;
     }
   }
 
