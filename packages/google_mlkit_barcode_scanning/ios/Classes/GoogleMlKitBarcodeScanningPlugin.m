@@ -85,10 +85,12 @@
         @"rawValue" : barcode.rawValue ?: [NSNull null],
         @"rawBytes" : barcode.rawData ?: [NSNull null],
         @"displayValue" : barcode.displayValue ?: [NSNull null],
-        @"boundingBoxLeft" : @(barcode.frame.origin.x),
-        @"boundingBoxTop" : @(barcode.frame.origin.y),
-        @"boundingBoxBottom" : @(barcode.frame.origin.y + barcode.frame.size.height),
-        @"boundingBoxRight" : @(barcode.frame.origin.x + barcode.frame.size.width)
+        @"rect" : @{
+            @"left" : @(barcode.frame.origin.x),
+            @"top" : @(barcode.frame.origin.y),
+            @"right" : @(barcode.frame.origin.x + barcode.frame.size.width),
+            @"bottom" : @(barcode.frame.origin.y + barcode.frame.size.height)
+        }
     }];
     
     NSMutableArray *cornerPoints = [NSMutableArray array];
@@ -99,7 +101,7 @@
             @"y": @(newPoint.y),
         }];
     }
-    dictionary[@"cornerPoints"] = cornerPoints;
+    dictionary[@"points"] = cornerPoints;
     
     switch (barcode.valueType) {
         case MLKBarcodeValueTypeUnknown:
