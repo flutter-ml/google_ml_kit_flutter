@@ -1,14 +1,21 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import 'coordinates_translator.dart';
 
 class PosePainter extends CustomPainter {
-  PosePainter(this.poses, this.absoluteImageSize, this.rotation);
+  PosePainter(
+    this.poses,
+    this.imageSize,
+    this.rotation,
+    this.cameraLensDirection,
+  );
 
   final List<Pose> poses;
-  final Size absoluteImageSize;
+  final Size imageSize;
   final InputImageRotation rotation;
+  final CameraLensDirection cameraLensDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -31,8 +38,20 @@ class PosePainter extends CustomPainter {
       pose.landmarks.forEach((_, landmark) {
         canvas.drawCircle(
             Offset(
-              translateX(landmark.x, rotation, size, absoluteImageSize),
-              translateY(landmark.y, rotation, size, absoluteImageSize),
+              translateX(
+                landmark.x,
+                size,
+                imageSize,
+                rotation,
+                cameraLensDirection,
+              ),
+              translateY(
+                landmark.y,
+                size,
+                imageSize,
+                rotation,
+                cameraLensDirection,
+              ),
             ),
             1,
             paint);
@@ -43,10 +62,36 @@ class PosePainter extends CustomPainter {
         final PoseLandmark joint1 = pose.landmarks[type1]!;
         final PoseLandmark joint2 = pose.landmarks[type2]!;
         canvas.drawLine(
-            Offset(translateX(joint1.x, rotation, size, absoluteImageSize),
-                translateY(joint1.y, rotation, size, absoluteImageSize)),
-            Offset(translateX(joint2.x, rotation, size, absoluteImageSize),
-                translateY(joint2.y, rotation, size, absoluteImageSize)),
+            Offset(
+                translateX(
+                  joint1.x,
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
+                ),
+                translateY(
+                  joint1.y,
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
+                )),
+            Offset(
+                translateX(
+                  joint2.x,
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
+                ),
+                translateY(
+                  joint2.y,
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
+                )),
             paintType);
       }
 
@@ -79,7 +124,6 @@ class PosePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant PosePainter oldDelegate) {
-    return oldDelegate.absoluteImageSize != absoluteImageSize ||
-        oldDelegate.poses != poses;
+    return oldDelegate.imageSize != imageSize || oldDelegate.poses != poses;
   }
 }

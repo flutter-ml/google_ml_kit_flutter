@@ -7,7 +7,7 @@ import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'camera_view.dart';
+import 'detector_view.dart';
 import 'painters/object_detector_painter.dart';
 
 class ObjectDetectorView extends StatefulWidget {
@@ -16,53 +16,51 @@ class ObjectDetectorView extends StatefulWidget {
 }
 
 class _ObjectDetectorView extends State<ObjectDetectorView> {
-  late ObjectDetector _objectDetector;
+  ObjectDetector? _objectDetector;
+  DetectionMode _mode = DetectionMode.stream;
   bool _canProcess = false;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _initializeDetector(DetectionMode.stream);
-  }
+  var _cameraLensDirection = CameraLensDirection.back;
 
   @override
   void dispose() {
     _canProcess = false;
-    _objectDetector.close();
+    _objectDetector?.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
+    return DetectorView(
       title: 'Object Detector',
       customPaint: _customPaint,
       text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
-      onScreenModeChanged: _onScreenModeChanged,
-      initialDirection: CameraLensDirection.back,
+      onImage: _processImage,
+      initialCameraLensDirection: _cameraLensDirection,
+      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
+      onCameraFeedReady: () => _initializeDetector(_mode),
+      onDetectorViewModeChanged: _onScreenModeChanged,
     );
   }
 
-  void _onScreenModeChanged(ScreenMode mode) {
+  void _onScreenModeChanged(DetectorViewMode mode) {
     switch (mode) {
-      case ScreenMode.gallery:
-        _initializeDetector(DetectionMode.single);
+      case DetectorViewMode.gallery:
+        _mode = DetectionMode.single;
+        _initializeDetector(_mode);
         return;
 
-      case ScreenMode.liveFeed:
-        _initializeDetector(DetectionMode.stream);
+      case DetectorViewMode.liveFeed:
+        _mode = DetectionMode.stream;
+        _initializeDetector(_mode);
         return;
     }
   }
 
   void _initializeDetector(DetectionMode mode) async {
+    _objectDetector?.close();
     print('Set detector in mode: $mode');
 
     // uncomment next lines if you want to use the default model
@@ -101,18 +99,24 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     _canProcess = true;
   }
 
-  Future<void> processImage(InputImage inputImage) async {
+  Future<void> _processImage(InputImage inputImage) async {
+    if (_objectDetector == null) return;
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     setState(() {
       _text = '';
     });
-    final objects = await _objectDetector.processImage(inputImage);
+    final objects = await _objectDetector!.processImage(inputImage);
+    print('Objects found: ${objects.length}\n\n');
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = ObjectDetectorPainter(
-          objects, inputImage.metadata!.rotation, inputImage.metadata!.size);
+        objects,
+        inputImage.metadata!.size,
+        inputImage.metadata!.rotation,
+        _cameraLensDirection,
+      );
       _customPaint = CustomPaint(painter: painter);
     } else {
       String text = 'Objects found: ${objects.length}\n\n';
