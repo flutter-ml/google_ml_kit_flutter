@@ -95,10 +95,10 @@ class TextBlock {
   /// Returns an instance of [TextBlock] from a given [json].
   factory TextBlock.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
-    final rect = RectJson.fromJson(json['rect']);
+    final boundingBox = RectJson.fromJson(json['rect']);
     final recognizedLanguages =
         _listToRecognizedLanguages(json['recognizedLanguages']);
-    final points = _listToCornerPoints(json['points']);
+    final cornerPoints = _listToCornerPoints(json['points']);
     final lines = <TextLine>[];
     for (final line in json['lines']) {
       final textLine = TextLine.fromJson(line);
@@ -107,9 +107,9 @@ class TextBlock {
     return TextBlock(
       text: text,
       lines: lines,
-      boundingBox: rect,
+      boundingBox: boundingBox,
       recognizedLanguages: recognizedLanguages,
-      cornerPoints: points,
+      cornerPoints: cornerPoints,
     );
   }
 }
@@ -153,12 +153,12 @@ class TextLine {
   /// Returns an instance of [TextLine] from a given [json].
   factory TextLine.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
-    final rect = RectJson.fromJson(json['rect']);
+    final boundingBox = RectJson.fromJson(json['rect']);
     final confidence = json['confidence'];
     final angle = json['angle'];
     final recognizedLanguages =
         _listToRecognizedLanguages(json['recognizedLanguages']);
-    final points = _listToCornerPoints(json['points']);
+    final cornerPoints = _listToCornerPoints(json['points']);
     final elements = <TextElement>[];
     for (final element in json['elements']) {
       final textElement = TextElement.fromJson(element);
@@ -167,9 +167,9 @@ class TextLine {
     return TextLine(
       text: text,
       elements: elements,
-      boundingBox: rect,
+      boundingBox: boundingBox,
       recognizedLanguages: recognizedLanguages,
-      cornerPoints: points,
+      cornerPoints: cornerPoints,
       confidence: confidence,
       angle: angle,
     );
@@ -216,10 +216,10 @@ class TextElement {
   /// Returns an instance of [TextElement] from a given [json].
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
-    final rect = RectJson.fromJson(json['rect']);
+    final boundingBox = RectJson.fromJson(json['rect']);
     final recognizedLanguages =
         _listToRecognizedLanguages(json['recognizedLanguages']);
-    final points = _listToCornerPoints(json['points']);
+    final cornerPoints = _listToCornerPoints(json['points']);
     final confidence = json['confidence'];
     final angle = json['angle'];
     final symbols = <TextSymbol>[];
@@ -230,9 +230,9 @@ class TextElement {
     return TextElement(
       text: text,
       symbols: symbols,
-      boundingBox: rect,
+      boundingBox: boundingBox,
       recognizedLanguages: recognizedLanguages,
-      cornerPoints: points,
+      cornerPoints: cornerPoints,
       confidence: confidence,
       angle: angle,
     );
@@ -274,17 +274,17 @@ class TextSymbol {
   /// Returns an instance of [TextSymbol] from a given [json].
   factory TextSymbol.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
-    final rect = RectJson.fromJson(json['rect']);
+    final boundingBox = RectJson.fromJson(json['rect']);
     final recognizedLanguages =
         _listToRecognizedLanguages(json['recognizedLanguages']);
-    final points = _listToCornerPoints(json['points']);
+    final cornerPoints = _listToCornerPoints(json['points']);
     final confidence = json['confidence'];
     final angle = json['angle'];
     return TextSymbol(
       text: text,
-      boundingBox: rect,
+      boundingBox: boundingBox,
       recognizedLanguages: recognizedLanguages,
-      cornerPoints: points,
+      cornerPoints: cornerPoints,
       confidence: confidence,
       angle: angle,
     );
