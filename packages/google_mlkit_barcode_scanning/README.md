@@ -64,10 +64,10 @@ for (Barcode barcode in barcodes) {
   // See API reference for complete list of supported types
   switch (type) {
     case BarcodeType.wifi:
-      BarcodeValue? barcodeWifi = barcode.value;
+      final barcodeWifi = barcode.value as BarcodeWifi;
       break;
     case BarcodeType.url:
-      BarcodeValue? barcodeUrl = barcode.value;
+      final barcodeUrl = barcode.value as BarcodeUrl;
       break;
   }
 }
