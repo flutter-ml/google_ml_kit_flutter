@@ -33,9 +33,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-### Image Labeling
-
-#### Create an instance of `InputImage`
+### Create an instance of `InputImage`
 
 Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
 
@@ -43,14 +41,14 @@ Create an instance of `InputImage` as explained [here](https://github.com/flutte
 final InputImage inputImage;
 ```
 
-#### Create an instance of `ImageLabeler`
+### Create an instance of `ImageLabeler`
 
 ```dart
 final ImageLabelerOptions options = ImageLabelerOptions(confidenceThreshold: 0.5);
 final imageLabeler = ImageLabeler(options: options);
 ```
 
-#### Process image
+### Process image
 
 ```dart
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
@@ -62,17 +60,17 @@ for (ImageLabel label in labels) {
 }
 ```
 
-#### Release resources with `close()`
+### Release resources with `close()`
 
 ```dart
 imageLabeler.close();
 ```
 
-### Models
+## Models
 
 Image Labeling can be used with either the Base Model or a [Custom Model](https://developers.google.com/ml-kit/custom-models). The base model is the default model bundled in the SDK, and a custom model can either be bundled with the app as an asset or downloaded from [Firebase](https://firebase.google.com/).
 
-#### Base model
+### Base model
 
 To use the base model:
 

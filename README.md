@@ -97,9 +97,9 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to 
 - targetSdkVersion: 33
 - compileSdkVersion: 33
 
-## Migrating from ML Kit for Firebase
+## Migrating from ML Kit for Firebase to the new standalone ML Kit SDK
 
-When Migrating from ML Kit for Firebase read [this guide](https://developers.google.com/ml-kit/migration). 
+When Migrating from ML Kit for Firebase to the new standalone ML Kit SDK read [this guide](https://developers.google.com/ml-kit/migration). 
 
 For Android details read [this](https://developers.google.com/ml-kit/migration/android). 
 

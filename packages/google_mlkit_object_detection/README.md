@@ -33,9 +33,7 @@ Before you get started read about the requirements and known issues of this plug
 
 ## Usage
 
-### Object Detection and Tracking
-
-#### Create an instance of `InputImage`
+### Create an instance of `InputImage`
 
 Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
 
@@ -43,7 +41,7 @@ Create an instance of `InputImage` as explained [here](https://github.com/flutte
 final InputImage inputImage;
 ```
 
-#### Create an instance of `ObjectDetector`
+### Create an instance of `ObjectDetector`
 
 ```dart
 // Use DetectionMode.stream when processing camera feed.
@@ -62,7 +60,7 @@ final options = FirebaseObjectDetectorOptions(...);
 final objectDetector = ObjectDetector(options: options);
 ```
 
-#### Process image
+### Process image
 
 ```dart
 final List<DetectedObject> objects = await objectDetector.processImage(inputImage);
@@ -77,17 +75,17 @@ for(DetectedObject detectedObject in objects){
 }
 ```
 
-#### Release resources with `close()`
+### Release resources with `close()`
 
 ```dart
 objectDetector.close();
 ```
 
-### Models
+## Models
 
 Object Detection and Tracking can be used with either the Base Model or a [Custom Model](https://developers.google.com/ml-kit/custom-models). The base model is the default model bundled in the SDK, and a custom model can either be bundled with the app as an asset or downloaded from [Firebase](https://firebase.google.com/).
 
-#### Base model
+### Base model
 
 To use the base model:
 
