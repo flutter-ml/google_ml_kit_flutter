@@ -317,54 +317,36 @@ class _CameraViewState extends State<CameraView> {
     widget.onImage(inputImage);
   }
 
+  final _orientations = {
+    DeviceOrientation.portraitUp: 0,
+    DeviceOrientation.landscapeLeft: 90,
+    DeviceOrientation.portraitDown: 180,
+    DeviceOrientation.landscapeRight: 270,
+  };
+
   InputImage? _inputImageFromCameraImage(CameraImage image) {
     if (_controller == null) return null;
 
     // get camera rotation
     final camera = _cameras[_cameraIndex];
-    var rotation =
-        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+    final sensorOrientation = camera.sensorOrientation;
+    var rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
     // print(
     //     'lensDirection: ${camera.lensDirection}, rotation: ${camera.sensorOrientation} [$rotation], ${_controller?.value.deviceOrientation} ${_controller?.value.lockedCaptureOrientation} ${_controller?.value.isCaptureOrientationLocked}');
     if (Platform.isAndroid) {
-      switch (camera.lensDirection) {
-        case CameraLensDirection.front:
-          switch (_controller!.value.deviceOrientation) {
-            case DeviceOrientation.portraitUp:
-              rotation = InputImageRotation.rotation270deg;
-              break;
-            case DeviceOrientation.landscapeLeft:
-              rotation = InputImageRotation.rotation0deg;
-              break;
-            case DeviceOrientation.portraitDown:
-              rotation = InputImageRotation.rotation90deg;
-              break;
-            case DeviceOrientation.landscapeRight:
-              rotation = InputImageRotation.rotation180deg;
-              break;
-          }
-          break;
-
-        case CameraLensDirection.back:
-          switch (_controller!.value.deviceOrientation) {
-            case DeviceOrientation.portraitUp:
-              rotation = InputImageRotation.rotation90deg;
-              break;
-            case DeviceOrientation.landscapeLeft:
-              rotation = InputImageRotation.rotation0deg;
-              break;
-            case DeviceOrientation.portraitDown:
-              rotation = InputImageRotation.rotation270deg;
-              break;
-            case DeviceOrientation.landscapeRight:
-              rotation = InputImageRotation.rotation180deg;
-              break;
-          }
-          break;
-
-        case CameraLensDirection.external:
-          break;
+      var rotationCompensation =
+          _orientations[_controller!.value.deviceOrientation];
+      if (rotationCompensation == null) return null;
+      if (camera.lensDirection == CameraLensDirection.front) {
+        // front-facing
+        rotationCompensation = (sensorOrientation + rotationCompensation) % 360;
+      } else {
+        // back-facing
+        rotationCompensation =
+            (sensorOrientation - rotationCompensation + 360) % 360;
       }
+      rotation = InputImageRotationValue.fromRawValue(rotationCompensation);
+      // print('rotationCompensation: $rotationCompensation');
     }
     if (rotation == null) return null;
     // print('final rotation: $rotation');
