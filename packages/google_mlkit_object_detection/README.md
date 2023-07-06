@@ -44,15 +44,15 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
   <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
 </p>
 
-Then your Podfile should look like this:
+Your Podfile should look like this:
 
 ```ruby
-platform :ios, '11.0'
+platform :ios, '11.0'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '11.0'
+$iOSVersion = '11.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
