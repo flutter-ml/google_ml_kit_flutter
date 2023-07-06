@@ -40,13 +40,9 @@ Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to
 
 Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 
-![](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png)
-
-<br>
-<p align="center">
-<img width=300px src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png" />
+<p align="center" width="100%">
+  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
 </p>
-<br><br>
 
 Then your Podfile should look like this:
 
