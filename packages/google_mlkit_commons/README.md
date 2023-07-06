@@ -53,7 +53,9 @@ From bytes:
 final inputImage = InputImage.fromBytes(bytes: bytes, metadata: metadata);
 ```
 
-If you are using the [Camera plugin](https://pub.dev/packages/camera) make sure to configure your [CameraController](https://pub.dev/documentation/camera/latest/camera/CameraController-class.html) to only use `nv21` for Android and `bgra8888` for iOS.
+If you are using the [Camera plugin](https://pub.dev/packages/camera) make sure to configure your [CameraController](https://pub.dev/documentation/camera/latest/camera/CameraController-class.html) to only use `ImageFormatGroup.nv21` for Android and `ImageFormatGroup.bgra8888` for iOS.
+
+Notice that the image rotation is computed in a different way for both iOS and Android. Image rotation is used in Android to convert the `InputImage` [from Dart to Java](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons/android/src/main/java/com/google_mlkit_commons/InputImageConverter.java), but it is not used in iOS to convert [from Dart to Obj-C](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons/ios/Classes/MLKVisionImage%2BFlutterPlugin.m). However, image rotation and `camera.lensDirection` can be used in both platforms to [compensate x and y coordinates on a canvas](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/lib/vision_detector_views/painters/coordinates_translator.dart).
 
 ```dart
 import 'dart:io';
@@ -72,10 +74,29 @@ final controller = CameraController(
 );
 
 InputImage? _inputImageFromCameraImage(CameraImage image) {
-  // get camera rotation
+  // get image rotation
+  // it is used in android to convert the InputImage from Dart to Java
+  // `rotation` is not used in iOS to convert the InputImage from Dart to Obj-C
+  // in both platforms `rotation` and `camera.lensDirection` can be used to compensate `x` and `y` coordinates on a canvas
   final camera = cameras[_cameraIndex];
-  final rotation =
-  InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+  final sensorOrientation = camera.sensorOrientation;
+  InputImageRotation? rotation;
+  if (Platform.isIOS) {
+    rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
+  } else if (Platform.isAndroid) {
+    var rotationCompensation =
+        _orientations[_controller!.value.deviceOrientation];
+    if (rotationCompensation == null) return null;
+    if (camera.lensDirection == CameraLensDirection.front) {
+      // front-facing
+      rotationCompensation = (sensorOrientation + rotationCompensation) % 360;
+    } else {
+      // back-facing
+      rotationCompensation =
+          (sensorOrientation - rotationCompensation + 360) % 360;
+    }
+    rotation = InputImageRotationValue.fromRawValue(rotationCompensation);
+  }
   if (rotation == null) return null;
 
   // get image format

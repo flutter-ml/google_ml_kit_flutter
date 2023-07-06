@@ -37,7 +37,7 @@ Before you get started read about the requirements and known issues of this plug
 
 #### Create an instance of `InputImage`
 
-Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_commons#creating-an-inputimage).
+Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
 
 ```dart
 final InputImage inputImage;
