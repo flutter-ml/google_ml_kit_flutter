@@ -1,5 +1,6 @@
 ## 0.5.0
 
+* fix: Selfie Segmentation data casting.
 * Update README.
 * Update dependencies.
 

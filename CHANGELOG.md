@@ -35,14 +35,13 @@ Packages with changes:
 
 #### `google_mlkit_barcode_scanning` - `v0.8.0`
 
-* fix: boundingBox and cornerPoint
+* fix: boundingBox and cornerPoint.
 * Update README.
 * Update dependencies.
 
 #### `google_mlkit_commons` - `v0.5.0`
 
-* Update README.
-* Update dependencies.
+* Update README: Improve Image rotation for Android.
 
 #### `google_mlkit_digital_ink_recognition` - `v0.9.0`
 
@@ -85,6 +84,7 @@ Packages with changes:
 
 #### `google_mlkit_selfie_segmentation` - `v0.5.0`
 
+* fix: Selfie Segmentation data casting.
 * Update README.
 * Update dependencies.
 

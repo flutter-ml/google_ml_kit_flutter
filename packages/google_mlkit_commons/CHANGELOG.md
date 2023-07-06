@@ -1,7 +1,6 @@
 ## 0.5.0
 
-* Update README.
-* Update dependencies.
+* Update README: Improve Image rotation for Android.
 
 ## 0.4.0
 
