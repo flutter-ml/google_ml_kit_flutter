@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
-- [`google_ml_kit` - `v0.16.0`](#google_ml_kit---v0160)
+- [`google_ml_kit` - `v0.16.1`](#google_ml_kit---v0161)
 - [`google_mlkit_barcode_scanning` - `v0.8.0`](#google_mlkit_barcode_scanning---v080)
 - [`google_mlkit_commons` - `v0.5.0`](#google_mlkit_commons---v050)
 - [`google_mlkit_digital_ink_recognition` - `v0.9.0`](#google_mlkit_digital_ink_recognition---v090)
@@ -29,9 +29,9 @@ Packages with changes:
 
 ---
 
-#### `google_ml_kit` - `v0.16.0`
+#### `google_ml_kit` - `v0.16.1`
 
-* Update dependencies.
+* Update dependencies: Add Face Mesh Detector.
 
 #### `google_mlkit_barcode_scanning` - `v0.8.0`
 

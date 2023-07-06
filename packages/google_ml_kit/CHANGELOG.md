@@ -1,6 +1,6 @@
-## 0.16.0
+## 0.16.1
 
-* Update dependencies.
+* Update dependencies: Add Face Mesh Detector.
 
 ## 0.15.0
 
