@@ -17,6 +17,9 @@ flutter pub get
 cd ../google_mlkit_face_detection
 flutter pub get
 
+cd ../google_mlkit_face_mesh_detection
+flutter pub get
+
 cd ../google_mlkit_image_labeling
 flutter pub get
 

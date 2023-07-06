@@ -21,6 +21,9 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 4.0.0)
+  - google_mlkit_face_mesh_detection (0.0.1):
+    - Flutter
+    - google_mlkit_commons
   - google_mlkit_image_labeling (0.7.0):
     - Flutter
     - google_mlkit_commons
@@ -280,6 +283,7 @@ DEPENDENCIES:
   - google_mlkit_digital_ink_recognition (from `.symlinks/plugins/google_mlkit_digital_ink_recognition/ios`)
   - google_mlkit_entity_extraction (from `.symlinks/plugins/google_mlkit_entity_extraction/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
+  - google_mlkit_face_mesh_detection (from `.symlinks/plugins/google_mlkit_face_mesh_detection/ios`)
   - google_mlkit_image_labeling (from `.symlinks/plugins/google_mlkit_image_labeling/ios`)
   - google_mlkit_language_id (from `.symlinks/plugins/google_mlkit_language_id/ios`)
   - google_mlkit_object_detection (from `.symlinks/plugins/google_mlkit_object_detection/ios`)
@@ -353,6 +357,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_entity_extraction/ios"
   google_mlkit_face_detection:
     :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
+  google_mlkit_face_mesh_detection:
+    :path: ".symlinks/plugins/google_mlkit_face_mesh_detection/ios"
   google_mlkit_image_labeling:
     :path: ".symlinks/plugins/google_mlkit_image_labeling/ios"
   google_mlkit_language_id:
@@ -382,6 +388,7 @@ SPEC CHECKSUMS:
   google_mlkit_digital_ink_recognition: 07fb2aae2d704592be8f6c2ff63f3adcfd3d768c
   google_mlkit_entity_extraction: 480e6029eaacf7fac2305276dc111978bd351bb5
   google_mlkit_face_detection: 6930c8cecb10f49921ff7010c165eb1d803e87fd
+  google_mlkit_face_mesh_detection: 2eeca458203c830b42cfb46de71af317079e65d9
   google_mlkit_image_labeling: b338655e8ed02823d06503362c754d6b02537824
   google_mlkit_language_id: ee26aec812e70084affbcf628f6c5c7308b1291d
   google_mlkit_object_detection: bab13ee252b52eb3bf96db2e88af30c31dd59588

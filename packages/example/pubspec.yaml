@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^0.8.7+5
+  image_picker: ^0.8.9
   camera: ^0.10.5+2
   path: ^1.8.2
   path_provider: ^2.0.15
@@ -26,6 +26,8 @@ dependencies:
     path: ../google_mlkit_digital_ink_recognition
   google_mlkit_face_detection:
     path: ../google_mlkit_face_detection
+  google_mlkit_face_mesh_detection:
+    path: ../google_mlkit_face_mesh_detection
   google_mlkit_image_labeling:
     path: ../google_mlkit_image_labeling
   google_mlkit_object_detection:
@@ -47,7 +49,7 @@ dependencies:
     path: ../google_mlkit_smart_reply
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
 
