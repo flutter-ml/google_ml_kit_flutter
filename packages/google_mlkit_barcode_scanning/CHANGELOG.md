@@ -1,3 +1,9 @@
+## 0.8.0
+
+* fix: boundingBox and cornerPoint
+* Update README.
+* Update dependencies.
+
 ## 0.7.0
 
 * Update dependencies.

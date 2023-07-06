@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Update README.
+* Update dependencies.
+
 ## 0.4.0
 
 * __BREAKING:__ Update InputImage.
