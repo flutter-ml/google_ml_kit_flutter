@@ -37,6 +37,10 @@ jobs:
       working-directory: ./packages/google_mlkit_face_detection
       run: flutter pub get
 
+    - name: Install dependencies for google_mlkit_face_mesh_detection
+      working-directory: ./packages/google_mlkit_face_mesh_detection
+      run: flutter pub get
+
     - name: Install dependencies for google_mlkit_image_labeling
       working-directory: ./packages/google_mlkit_image_labeling
       run: flutter pub get
