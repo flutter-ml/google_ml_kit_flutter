@@ -31,10 +31,10 @@ A Flutter plugin to use [Google's ML Kit Object Detection and Tracking](https://
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
-- Xcode 13 or newer
+- Minimum iOS Deployment Target: 11.0
+- Xcode 13.2.1 or newer
 - Swift 5
-- ML Kit only supports 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
+- ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
 Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude armv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -42,11 +42,21 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 
 ![](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png)
 
+<br>
+<p align="center">
+<img width=300px src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png" />
+</p>
+<br><br>
+
 Then your Podfile should look like this:
 
 ```ruby
+platform :ios, '11.0'
+
+...
+
 # add this line:
-$iOSVersion = '12.0'
+$iOSVersion = '11.0'
 
 post_install do |installer|
   # add these lines:
@@ -69,7 +79,7 @@ post_install do |installer|
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 11.0, you can set it to something newer but not older.
 
 ### Android
 
