@@ -384,7 +384,7 @@ SPEC CHECKSUMS:
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   google_mlkit_barcode_scanning: ec351dc4eeea0e004996607817b75a0b9fd278ba
-  google_mlkit_commons: 26607e403b3301ec966e578a308c98c6ac3e9477
+  google_mlkit_commons: 803b9b2fc28852082ae592a2db594c1e467b2f31
   google_mlkit_digital_ink_recognition: 07fb2aae2d704592be8f6c2ff63f3adcfd3d768c
   google_mlkit_entity_extraction: 480e6029eaacf7fac2305276dc111978bd351bb5
   google_mlkit_face_detection: 6930c8cecb10f49921ff7010c165eb1d803e87fd

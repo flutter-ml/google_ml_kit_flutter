@@ -11,8 +11,8 @@ class TextRecognizerView extends StatefulWidget {
 }
 
 class _TextRecognizerViewState extends State<TextRecognizerView> {
-  final TextRecognizer _textRecognizer =
-      TextRecognizer(script: TextRecognitionScript.latin);
+  var _script = TextRecognitionScript.latin;
+  var _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
@@ -28,15 +28,65 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
 
   @override
   Widget build(BuildContext context) {
-    return DetectorView(
-      title: 'Text Detector',
-      customPaint: _customPaint,
-      text: _text,
-      onImage: _processImage,
-      initialCameraLensDirection: _cameraLensDirection,
-      onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
+    return Scaffold(
+      body: Stack(children: [
+        DetectorView(
+          title: 'Text Detector',
+          customPaint: _customPaint,
+          text: _text,
+          onImage: _processImage,
+          initialCameraLensDirection: _cameraLensDirection,
+          onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
+        ),
+        Positioned(
+            top: 40,
+            left: 100,
+            right: 100,
+            child: Row(
+              children: [
+                Spacer(),
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: _buildDropdown(),
+                    )),
+                Spacer(),
+              ],
+            )),
+      ]),
     );
   }
+
+  Widget _buildDropdown() => DropdownButton<TextRecognitionScript>(
+        value: _script,
+        icon: const Icon(Icons.arrow_downward),
+        elevation: 16,
+        style: const TextStyle(color: Colors.blue),
+        underline: Container(
+          height: 2,
+          color: Colors.blue,
+        ),
+        onChanged: (TextRecognitionScript? script) {
+          if (script != null) {
+            setState(() {
+              _script = script;
+              _textRecognizer.close();
+              _textRecognizer = TextRecognizer(script: _script);
+            });
+          }
+        },
+        items: TextRecognitionScript.values
+            .map<DropdownMenuItem<TextRecognitionScript>>((script) {
+          return DropdownMenuItem<TextRecognitionScript>(
+            value: script,
+            child: Text(script.name),
+          );
+        }).toList(),
+      );
 
   Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
