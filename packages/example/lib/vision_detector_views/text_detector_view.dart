@@ -39,7 +39,7 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
           onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
         ),
         Positioned(
-            top: 40,
+            top: 30,
             left: 100,
             right: 100,
             child: Row(
