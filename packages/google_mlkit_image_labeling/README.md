@@ -27,42 +27,80 @@ A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.goog
 
 - Since the plugin uses platform channels, you may encounter issues with the native API. Before submitting a new issue, identify the source of the issue. You can run both iOS and/or Android native [example apps by Google](https://github.com/googlesamples/mlkit) and make sure that the issue is not reproducible with their native examples. If you can reproduce the issue in their apps then report the issue to Google. The [authors](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/AUTHORS) do not have access to the source code of their native APIs, so you need to report the issue to them. If you find that their example apps are okay and still you have an issue using this plugin, then look at our [closed and open issues](https://github.com/flutter-ml/google_ml_kit_flutter/issues). If you cannot find anything that can help you then report the issue and provide enough details. Be patient, someone from the community will eventually help you.
 
-## Getting Started
+## Requirements
 
-Before you get started read about the requirements and known issues of this plugin [here](https://github.com/flutter-ml/google_ml_kit_flutter#requirements).
+### iOS
 
-### Firebase dependency for remote models
+- Minimum iOS Deployment Target: 12.0
+- Xcode 13.2.1 or newer
+- Swift 5
+- ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
-[Image Labeling](https://developers.google.com/ml-kit/vision/image-labeling/) can be used with both Base Models and [Custom Models](https://developers.google.com/ml-kit/custom-models). Base models are bundled with the app, and custom Models can either be bundled with the app or downloaded from [Firebase](https://firebase.google.com/).
+Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude armv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
-If you wish to use remote models hosted in Firebase, you must first enable the feature in iOS. Please see the additional setup instructions [here](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master#firebase-dependency-custom-models).
+Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 
+<p align="center" width="100%">
+  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
+</p>
 
-To add Firebase to your project follow these steps:
+Your Podfile should look like this:
 
-- [Android](https://firebase.google.com/docs/android/setup)
-- [iOS](https://firebase.google.com/docs/ios/setup)
+```ruby
+platform :ios, '12.0'  # or newer version
+
+...
+
+# add this line:
+$iOSVersion = '12.0'  # or newer version
+
+post_install do |installer|
+  # add these lines:
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
+  end
+  
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    
+    # add these lines:
+    target.build_configurations.each do |config|
+      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
+      end
+    end
+    
+  end
+end
+```
+
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+
+### Android
+
+- minSdkVersion: 21
+- targetSdkVersion: 33
+- compileSdkVersion: 33
 
 ## Usage
 
-### Image Labeling
+### Create an instance of `InputImage`
 
-#### Create an instance of `InputImage`
-
-Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_commons#creating-an-inputimage).
+Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
 
 ```dart
 final InputImage inputImage;
 ```
 
-#### Create an instance of `ImageLabeler`
+### Create an instance of `ImageLabeler`
 
 ```dart
 final ImageLabelerOptions options = ImageLabelerOptions(confidenceThreshold: 0.5);
 final imageLabeler = ImageLabeler(options: options);
 ```
 
-#### Process image
+### Process image
 
 ```dart
 final List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
@@ -74,13 +112,26 @@ for (ImageLabel label in labels) {
 }
 ```
 
-#### Release resources with `close()`
+### Release resources with `close()`
 
 ```dart
 imageLabeler.close();
 ```
 
-### Load local custom model
+## Models
+
+Image Labeling can be used with either the Base Model or a [Custom Model](https://developers.google.com/ml-kit/custom-models). The base model is the default model bundled in the SDK, and a custom model can either be bundled with the app as an asset or downloaded from [Firebase](https://firebase.google.com/).
+
+### Base model
+
+To use the base model:
+
+```dart
+final ImageLabelerOptions options = ImageLabelerOptions(confidenceThreshold: confidenceThreshold);
+final imageLabeler = ImageLabeler(options: options);
+```
+
+### Local custom model
 
 To use a local custom model add the [tflite model](https://www.tensorflow.org/lite) to your `pubspec.yaml`:
 
@@ -117,34 +168,90 @@ Create an instance of [ImageLabeler]:
 
 ```dart
 final modelPath = await _getModel('assets/ml/object_labeler.tflite');
-final options = LocalLabelerOptions(modelPath: modelPath);
+final options = LocalLabelerOptions(
+  confidenceThreshold: confidenceThreshold,
+  modelPath: modelPath,
+);
 final imageLabeler = ImageLabeler(options: options);
 ```
 
-### Managing remote models
+### Firebase model
 
-#### Create an instance of model manager
+Google's standalone ML Kit library does **NOT** have any direct dependency with Firebase. As designed by Google, you do NOT need to include Firebase in your project in order to use ML Kit. However, to use a remote model hosted in Firebase, you must setup Firebase in your project following these steps:
+
+- [Android](https://firebase.google.com/docs/android/setup)
+- [iOS](https://firebase.google.com/docs/ios/setup)
+
+#### iOS Additional Setup
+
+Additionally, for iOS you have to update your app's Podfile.
+
+First, include `GoogleMLKit/LinkFirebase` and `Firebase` in your Podfile:
+
+```ruby
+platform :ios, '12.0'
+
+...
+
+# Enable firebase-hosted models #
+pod 'GoogleMLKit/LinkFirebase'
+pod 'Firebase'
+```
+
+Next, add the preprocessor flag to enable the firebase remote models at compile time. To do that, update your existing `build_configurations` loop in the `post_install` step with the following:
+
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    ... # Here are some configurations automatically generated by flutter
+
+    target.build_configurations.each do |config|
+      # Enable firebase-hosted ML models
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'MLKIT_FIREBASE_MODELS=1',
+      ]
+    end
+  end
+end
+```
+
+#### Usage
+
+To use a Firebase model:
+
+```dart
+final options = FirebaseLabelerOption(
+  confidenceThreshold: confidenceThreshold,
+  modelName: modelName,
+);
+final imageLabeler = ImageLabeler(options: options);
+```
+
+#### Managing Firebase models
+
+Create an instance of model manager
 
 ```dart
 final modelManager = FirebaseImageLabelerModelManager();
 ```
 
-#### Check if model is downloaded
+To check if model is downloaded
 
 ```dart
-final bool response = await modelManager.isModelDownloaded(model);
+final bool response = await modelManager.isModelDownloaded(modelName);
 ```
 
-#### Download model
+To download a model
 
 ```dart
-final bool response = await modelManager.downloadModel(model);
+final bool response = await modelManager.downloadModel(modelName);
 ```
 
-#### Delete model
+To delete a model
 
 ```dart
-final bool response = await modelManager.deleteModel(model);
+final bool response = await modelManager.deleteModel(modelName);
 ```
 
 ## Example app
