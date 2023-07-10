@@ -1,3 +1,7 @@
+## 0.5.0
+
+* Update README: Improve Image rotation for Android.
+
 ## 0.4.0
 
 * __BREAKING:__ Update InputImage.

@@ -1,4 +1,4 @@
-platform :ios, '12.0'
+platform :ios, '12.0'  # or newer version
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -37,7 +37,7 @@ target 'Runner' do
 end
 
 # add this line:
-$iOSVersion = '12.0'
+$iOSVersion = '12.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
