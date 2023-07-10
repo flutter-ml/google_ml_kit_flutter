@@ -57,6 +57,7 @@ class _DetectorViewState extends State<DetectorView> {
           )
         : GalleryView(
             title: widget.title,
+            text: widget.text,
             onImage: widget.onImage,
             onDetectorViewModeChanged: _onDetectorViewModeChanged);
   }
