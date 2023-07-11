@@ -1,6 +1,7 @@
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:google_mlkit_face_mesh_detection/google_mlkit_face_mesh_detection.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -51,6 +52,11 @@ class Vision {
   /// Return an instance of [FaceDetector].
   FaceDetector faceDetector([FaceDetectorOptions? options]) {
     return FaceDetector(options: options ?? FaceDetectorOptions());
+  }
+
+  /// Return an instance of [FaceMeshDetector].
+  FaceMeshDetector faceMeshDetector([FaceMeshDetectorOptions? option]) {
+    return FaceMeshDetector(option: option ?? FaceMeshDetectorOptions.faceMesh);
   }
 
   /// Returns an instance of [ObjectDetector].

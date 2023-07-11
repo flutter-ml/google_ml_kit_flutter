@@ -17,6 +17,9 @@ flutter pub publish --dry-run
 cd ../google_mlkit_face_detection
 flutter pub publish --dry-run
 
+cd ../google_mlkit_face_mesh_detection
+flutter pub publish --dry-run
+
 cd ../google_mlkit_image_labeling
 flutter pub publish --dry-run
 
