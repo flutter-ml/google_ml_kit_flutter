@@ -152,6 +152,8 @@ final objectDetector = ObjectDetector(options: options);
 
 ### Local custom model
 
+Before using a [custom model](https://developers.google.com/ml-kit/custom-models) make sure you read and understand the ML Kit's compatibility requirements for TensorFlow Lite models [here](https://developers.google.com/ml-kit/custom-models#model-compatibility). To learn how to create a custom model that is compatible with ML Kit go [here](https://github.com/flutter-ml/mlkit-custom-model).
+
 To use a local custom model add the [tflite model](https://www.tensorflow.org/lite) to your `pubspec.yaml`:
 
 ```yaml
