@@ -143,22 +143,19 @@ assets:
 Add this method:
 
 ```dart
-import 'dart:io' as io;
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-Future<String> _getModel(String assetPath) async {
-  if (io.Platform.isAndroid) {
-    return 'flutter_assets/$assetPath';
-  }
-  final path = '${(await getApplicationSupportDirectory()).path}/$assetPath';
-  await io.Directory(dirname(path)).create(recursive: true);
-  final file = io.File(path);
+Future<String> getModelPath(String asset) async {
+  final path = '${(await getApplicationSupportDirectory()).path}/$asset';
+  await Directory(dirname(path)).create(recursive: true);
+  final file = File(path);
   if (!await file.exists()) {
-    final byteData = await rootBundle.load(assetPath);
+    final byteData = await rootBundle.load(asset);
     await file.writeAsBytes(byteData.buffer
-        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+            .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
   }
   return file.path;
 }
@@ -167,12 +164,26 @@ Future<String> _getModel(String assetPath) async {
 Create an instance of [ImageLabeler]:
 
 ```dart
-final modelPath = await _getModel('assets/ml/object_labeler.tflite');
+final modelPath = await getModelPath('assets/ml/object_labeler.tflite');
 final options = LocalLabelerOptions(
   confidenceThreshold: confidenceThreshold,
   modelPath: modelPath,
 );
 final imageLabeler = ImageLabeler(options: options);
+```
+
+#### Android Additional Setup
+
+Add the following to your app's build.gradle file to ensure Gradle doesn't compress the model file when building the app:
+
+```groovy
+android {
+    // ...
+    aaptOptions {
+        noCompress "tflite"
+        // or noCompress "lite"
+    }
+}
 ```
 
 ### Firebase model

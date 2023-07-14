@@ -122,7 +122,9 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
         float confidenceThreshold = (float) (double) labelerOptions.get("confidenceThreshold");
         int maxCount = (int) labelerOptions.get("maxCount");
         String path = (String) labelerOptions.get("path");
-        LocalModel localModel = new LocalModel.Builder().setAssetFilePath(path).build();
+        LocalModel localModel = new LocalModel.Builder()
+                .setAbsoluteFilePath(path)
+                .build();
         return new CustomImageLabelerOptions.Builder(localModel)
                 .setConfidenceThreshold(confidenceThreshold)
                 .setMaxResultCount(maxCount)
