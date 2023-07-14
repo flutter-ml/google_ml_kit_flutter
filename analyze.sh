@@ -1,4 +1,4 @@
 #!/bin/bash
 
-flutter format --set-exit-if-changed .
+dart format --set-exit-if-changed .
 flutter analyze .

@@ -61,6 +61,8 @@ class _SelfieSegmenterViewState extends State<SelfieSegmenterView> {
       _customPaint = CustomPaint(painter: painter);
     } else {
       // TODO: set _customPaint to draw on top of image
+      _text =
+          'There is a mask with ${(mask?.confidences ?? []).where((element) => element > 0.8).length} elements';
       _customPaint = null;
     }
     _isBusy = false;
