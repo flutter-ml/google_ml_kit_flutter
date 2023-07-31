@@ -43,21 +43,21 @@ class BarcodeDetectorPainter extends CustomPainter {
       builder.pop();
 
       final left = translateX(
-        barcode.boundingBox.left.toDouble(),
+        barcode.boundingBox.left,
         size,
         imageSize,
         rotation,
         cameraLensDirection,
       );
       final top = translateY(
-        barcode.boundingBox.top.toDouble(),
+        barcode.boundingBox.top,
         size,
         imageSize,
         rotation,
         cameraLensDirection,
       );
       final right = translateX(
-        barcode.boundingBox.right.toDouble(),
+        barcode.boundingBox.right,
         size,
         imageSize,
         rotation,
