@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
@@ -202,8 +203,9 @@ public class BarcodeScanner implements MethodChannel.MethodCallHandler {
         }
     }
 
-    private Map<String, Integer> getBoundingPoints(Rect rect) {
+    private Map<String, Integer> getBoundingPoints(@Nullable Rect rect) {
         Map<String, Integer> frame = new HashMap<>();
+        if (rect == null) return frame;
         frame.put("left", rect.left);
         frame.put("right", rect.right);
         frame.put("top", rect.top);
