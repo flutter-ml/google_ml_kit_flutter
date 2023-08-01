@@ -207,6 +207,8 @@ class Barcode {
   final Uint8List? rawBytes;
 
   /// The rectangle that holds the discovered barcode relative to the detected image in the view coordinate system.
+  ///
+  /// If nothing found it returns a rectangle with left, top, right, and bottom edges all at zero. `Rect.zero`.
   final Rect boundingBox;
 
   /// The four corner points of the barcode, in clockwise order starting with the top left relative to the detected image in the view coordinate system.
