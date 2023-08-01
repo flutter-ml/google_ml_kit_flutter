@@ -204,7 +204,7 @@ abstract class Entity {
   Entity({required this.rawValue, required this.type});
 
   @override
-  String toString() => rawValue;
+  String toString() => '{type: ${type.name}}';
 }
 
 /// An address entity extracted from text.
@@ -238,6 +238,10 @@ class DateTimeEntity extends Entity {
   DateTimeEntity(String rawValue,
       {required this.dateTimeGranularity, required this.timestamp})
       : super(rawValue: rawValue, type: EntityType.dateTime);
+
+  @override
+  String toString() =>
+      '{type: ${type.name}, timestamp: $timestamp, granularity: ${dateTimeGranularity.name}}';
 }
 
 /// An email entity extracted from text.
@@ -259,6 +263,10 @@ class FlightNumberEntity extends Entity {
   FlightNumberEntity(String rawValue,
       {required this.airlineCode, required this.flightNumber})
       : super(rawValue: rawValue, type: EntityType.flightNumber);
+
+  @override
+  String toString() =>
+      '{type: ${type.name}, flightNumber: $flightNumber, airlineCode: $airlineCode}';
 }
 
 /// An IBAN entity extracted from text.
@@ -272,6 +280,10 @@ class IbanEntity extends Entity {
   /// Constructor to create an instance of [IbanEntity].
   IbanEntity(String rawValue, {required this.iban, required this.countryCode})
       : super(rawValue: rawValue, type: EntityType.iban);
+
+  @override
+  String toString() =>
+      '{type: ${type.name}, iban: $iban, countryCode: $countryCode}';
 }
 
 /// An ISBN entity extracted from text.
@@ -282,6 +294,9 @@ class IsbnEntity extends Entity {
   /// Constructor to create an instance of [IsbnEntity].
   IsbnEntity(String rawValue, {required this.isbn})
       : super(rawValue: rawValue, type: EntityType.isbn);
+
+  @override
+  String toString() => '{type: ${type.name}, isbn: $isbn}';
 }
 
 /// A money entity extracted from text.
@@ -301,6 +316,9 @@ class MoneyEntity extends Entity {
       required this.integerPart,
       required this.unnormalizedCurrency})
       : super(rawValue: rawValue, type: EntityType.money);
+
+  @override
+  String toString() => '{type: ${type.name}, currency: $unnormalizedCurrency}';
 }
 
 /// The supported payment card networks that can be detected.
@@ -331,6 +349,10 @@ class PaymentCardEntity extends Entity {
   PaymentCardEntity(String rawValue,
       {required this.network, required this.number})
       : super(rawValue: rawValue, type: EntityType.paymentCard);
+
+  @override
+  String toString() =>
+      '{type: ${type.name}, number: $number, network: $network}';
 }
 
 /// A phone number entity extracted from text.
@@ -368,6 +390,10 @@ class TrackingNumberEntity extends Entity {
   TrackingNumberEntity(String rawValue,
       {required this.carrier, required this.number})
       : super(rawValue: rawValue, type: EntityType.trackingNumber);
+
+  @override
+  String toString() =>
+      '{type: ${type.name}, number: $number, carrier: $carrier}';
 }
 
 /// An URL entity extracted from text.
