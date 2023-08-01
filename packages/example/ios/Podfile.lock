@@ -297,7 +297,7 @@ DEPENDENCIES:
   - GoogleMLKit/TextRecognitionJapanese (~> 4.0.0)
   - GoogleMLKit/TextRecognitionKorean (~> 4.0.0)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -378,7 +378,7 @@ EXTERNAL SOURCES:
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
@@ -436,7 +436,7 @@ SPEC CHECKSUMS:
   MLKitVisionKit: 5b5472d40ffc143bda693ba20a3cff44fe627d41
   MLKitXenoCommon: 9fbc49cbaf44767693aac1bce4d866020e089d55
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SSZipArchive: cefe1364104a0231268a5deb8495bdf2861f52f0
 

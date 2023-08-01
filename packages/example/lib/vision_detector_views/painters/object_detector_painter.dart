@@ -39,11 +39,11 @@ class ObjectDetectorPainter extends CustomPainter {
       );
       builder.pushStyle(
           ui.TextStyle(color: Colors.lightGreenAccent, background: background));
-
-      for (final Label label in detectedObject.labels) {
+      if (detectedObject.labels.isNotEmpty) {
+        final label = detectedObject.labels
+            .reduce((a, b) => a.confidence > b.confidence ? a : b);
         builder.addText('${label.text} ${label.confidence}\n');
       }
-
       builder.pop();
 
       final left = translateX(

@@ -95,7 +95,7 @@ class _EntityExtractionViewState extends State<EntityExtractionView> {
                       title: Text(_entities[index].text),
                       children: _entities[index]
                           .entities
-                          .map((e) => Text('${e.type.name}: $e'))
+                          .map((e) => Text(e.toString()))
                           .toList()),
                 ),
               ],
