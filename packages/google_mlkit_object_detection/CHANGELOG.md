@@ -1,3 +1,8 @@
+## 0.10.0
+
+* Update path for Custom models.
+* Update README with Custom models tutorial.
+
 ## 0.9.0
 
 * Update README.

@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-08-04
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.16.2`](#google_ml_kit---v0162)
+- [`google_mlkit_barcode_scanning` - `v0.9.0`](#google_mlkit_barcode_scanning---v090)
+- [`google_mlkit_entity_extraction` - `v0.10.0`](#google_mlkit_entity_extraction---v0100)
+- [`google_mlkit_image_labeling` - `v0.9.0`](#google_mlkit_image_labeling---v090)
+- [`google_mlkit_object_detection` - `v0.10.0`](#google_mlkit_object_detection---v0100)
+- [`google_mlkit_pose_detection` - `v0.9.0`](#google_mlkit_pose_detection---v090)
+- [`google_mlkit_text_recognition` - `v0.10.0`](#google_mlkit_text_recognition---v0100)
+
+---
+
+#### `google_ml_kit` - `v0.16.2`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.9.0`
+
+* fix: barcode Rect.zero if rect not found.
+
+#### `google_mlkit_entity_extraction` - `v0.10.0`
+
+* fix: `DateTimeEntity.timestamp` result is expected in milliseconds, not seconds, for iOS.
+* feat: Update `toString()` method for `Entity` classes.
+
+#### `google_mlkit_image_labeling` - `v0.9.0`
+
+* Update path for Custom models.
+* Update README with Custom models tutorial.
+
+#### `google_mlkit_object_detection` - `v0.10.0`
+
+* Update path for Custom models.
+* Update README with Custom models tutorial.
+
+#### `google_mlkit_pose_detection` - `v0.9.0`
+
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.10.0`
+
+* Update dependencies.
+
 ## 2023-07-06
 
 ### Changes

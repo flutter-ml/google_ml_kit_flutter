@@ -1,3 +1,7 @@
+## 0.9.0
+
+* fix: barcode Rect.zero if rect not found.
+
 ## 0.8.0
 
 * fix: boundingBox and cornerPoint.

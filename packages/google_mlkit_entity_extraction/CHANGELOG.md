@@ -1,3 +1,8 @@
+## 0.10.0
+
+* fix: `DateTimeEntity.timestamp` result is expected in milliseconds, not seconds, for iOS.
+* feat: Update `toString()` method for `Entity` classes.
+
 ## 0.9.0
 
 * Update README.
