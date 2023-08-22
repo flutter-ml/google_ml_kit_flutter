@@ -114,6 +114,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+import 'package:flutter/services.dart';
 
 final camera; // your camera instance
 final controller = CameraController(
@@ -125,12 +126,19 @@ final controller = CameraController(
           : ImageFormatGroup.bgra8888, // for iOS
 );
 
+final _orientations = {
+  DeviceOrientation.portraitUp: 0,
+  DeviceOrientation.landscapeLeft: 90,
+  DeviceOrientation.portraitDown: 180,
+  DeviceOrientation.landscapeRight: 270,
+};
+
 InputImage? _inputImageFromCameraImage(CameraImage image) {
   // get image rotation
   // it is used in android to convert the InputImage from Dart to Java
   // `rotation` is not used in iOS to convert the InputImage from Dart to Obj-C
   // in both platforms `rotation` and `camera.lensDirection` can be used to compensate `x` and `y` coordinates on a canvas
-  final camera = cameras[_cameraIndex];
+  final camera = _cameras[_cameraIndex];
   final sensorOrientation = camera.sensorOrientation;
   InputImageRotation? rotation;
   if (Platform.isIOS) {
