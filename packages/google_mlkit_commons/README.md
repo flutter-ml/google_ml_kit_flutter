@@ -132,6 +132,7 @@ final _orientations = {
   DeviceOrientation.portraitDown: 180,
   DeviceOrientation.landscapeRight: 270,
 };
+
 InputImage? _inputImageFromCameraImage(CameraImage image) {
   // get image rotation
   // it is used in android to convert the InputImage from Dart to Java
