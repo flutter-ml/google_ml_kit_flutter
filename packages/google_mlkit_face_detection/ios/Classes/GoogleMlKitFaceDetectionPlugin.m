@@ -63,7 +63,10 @@
 }
 
 - (void)handleDetection:(FlutterMethodCall *)call result:(FlutterResult)result {
+    int rotation = [call.arguments[@"imageData"][@"metadata"][@"rotation"] intValue];
+    UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation];
     MLKVisionImage *image = [MLKVisionImage visionImageFromData:call.arguments[@"imageData"]];
+    image.orientation = imageOrientation;
     
     NSString *uid = call.arguments[@"id"];
     MLKFaceDetector *detector = [instances objectForKey:uid];
@@ -168,6 +171,19 @@
         
         result(faceData);
     }];
+}
+
+- (UIImageOrientation)imageOrientationFromRotation:(int)rotation {
+    switch (rotation) {
+        case 90:
+            return UIImageOrientationLeft;  // Rotates the image 90 degrees to the left
+        case 180:
+            return UIImageOrientationDown;  // Rotates the image 180 degrees
+        case 270:
+            return UIImageOrientationRight;  // Rotates the image 90 degrees to the right
+        default:
+            return UIImageOrientationUp;  // Default orientation (no rotation)
+    }
 }
 
 - (id)getLandmarkPosition:(MLKFace *)face landmark:(MLKFaceLandmarkType)landmarkType {
