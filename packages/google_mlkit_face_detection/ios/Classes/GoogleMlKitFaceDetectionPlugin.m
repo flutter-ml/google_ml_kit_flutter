@@ -176,11 +176,11 @@
 - (UIImageOrientation)imageOrientationFromRotation:(int)rotation {
     switch (rotation) {
         case 90:
-            return UIImageOrientationLeft;  // Rotates the image 90 degrees to the left
+            return UIImageOrientationRight;  // Rotates the image 90 degrees to the left
         case 180:
             return UIImageOrientationDown;  // Rotates the image 180 degrees
         case 270:
-            return UIImageOrientationRight;  // Rotates the image 90 degrees to the right
+            return UIImageOrientationLeft;  // Rotates the image 90 degrees to the right
         default:
             return UIImageOrientationUp;  // Default orientation (no rotation)
     }
