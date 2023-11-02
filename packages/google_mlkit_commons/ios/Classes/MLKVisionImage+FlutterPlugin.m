@@ -6,14 +6,35 @@
 + (MLKVisionImage *)visionImageFromData:(NSDictionary *)imageData {
     NSString *imageType = imageData[@"type"];
     if ([@"file" isEqualToString:imageType]) {
-        return [self filePathToVisionImage:imageData[@"path"]];
+        int rotation = [imageData[@"metadata"][@"rotation"] intValue];
+        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation];
+        MLKVisionImage *image = [self filePathToVisionImage:imageData[@"path"]];
+        image.orientation = imageOrientation;
+        return image;
     } else if ([@"bytes" isEqualToString:imageType]) {
-        return [self bytesToVisionImage:imageData];
+        int rotation = [imageData[@"metadata"][@"rotation"] intValue];
+        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation];
+        MLKVisionImage *image = [self bytesToVisionImage:imageData];
+        image.orientation = imageOrientation;
+        return image;
     } else {
         NSString *errorReason = [NSString stringWithFormat:@"No image type for: %@", imageType];
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:errorReason
                                      userInfo:nil];
+    }
+}
+
++ (UIImageOrientation)imageOrientationFromRotation:(int)rotation {
+    switch (rotation) {
+        case 90:
+            return UIImageOrientationRight;  // Rotates the image 90 degrees to the right
+        case 180:
+            return UIImageOrientationDown;  // Rotates the image 180 degrees
+        case 270:
+            return UIImageOrientationLeft;  // Rotates the image 90 degrees to the left
+        default:
+            return UIImageOrientationUp;  // Default orientation (no rotation)
     }
 }
 
