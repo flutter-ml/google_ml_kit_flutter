@@ -1,6 +1,6 @@
 name: google_mlkit_barcode_scanning
 description: A Flutter plugin to use Google's ML Kit Barcode Scanning to read data encoded using most standard barcode formats.
-version: 0.9.0
+version: 0.10.0
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_mlkit_commons: ^0.5.0
+  google_mlkit_commons: ^0.6.0
 #    path: ../google_mlkit_commons
 
 dev_dependencies:

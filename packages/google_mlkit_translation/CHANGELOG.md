@@ -1,3 +1,8 @@
+## 0.9.0
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
 ## 0.8.0
 
 * Update README.

@@ -3,6 +3,107 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2023-11-02
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.16.3`](#google_ml_kit---v0163)
+- [`google_mlkit_barcode_scanning` - `v0.10.0`](#google_mlkit_barcode_scanning---v0100)
+- [`google_mlkit_commons` - `v0.6.0`](#google_mlkit_commons---v060)
+- [`google_mlkit_digital_ink_recognition` - `v0.10.0`](#google_mlkit_digital_ink_recognition---v0100)
+- [`google_mlkit_entity_extraction` - `v0.11.0`](#google_mlkit_entity_extraction---v0110)
+- [`google_mlkit_face_detection` - `v0.9.0`](#google_mlkit_face_detection---v090)
+- [`google_mlkit_face_mesh_detection` - `v0.0.2`](#google_mlkit_face_mesh_detection---v002)
+- [`google_mlkit_image_labeling` - `v0.10.0`](#google_mlkit_image_labeling---v0100)
+- [`google_mlkit_language_id` - `v0.9.0`](#google_mlkit_language_id---v090)
+- [`google_mlkit_object_detection` - `v0.11.0`](#google_mlkit_object_detection---v0110)
+- [`google_mlkit_pose_detection` - `v0.10.0`](#google_mlkit_pose_detection---v0100)
+- [`google_mlkit_selfie_segmentation` - `v0.6.0`](#google_mlkit_selfie_segmentation---v060)
+- [`google_mlkit_smart_reply` - `v0.9.0`](#google_mlkit_smart_reply---v090)
+- [`google_mlkit_text_recognition` - `v0.11.0`](#google_mlkit_text_recognition---v0110)
+- [`google_mlkit_translation` - `v0.9.0`](#google_mlkit_translation---v090)
+
+---
+
+#### `google_ml_kit` - `v0.16.3`
+
+* Update dependencies.
+
+#### `google_mlkit_barcode_scanning` - `v0.10.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_commons` - `v0.6.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+* Add rotation to Image in iOS.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.10.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_entity_extraction` - `v0.11.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_face_detection` - `v0.9.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_face_mesh_detection` - `v0.0.2`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_image_labeling` - `v0.10.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_language_id` - `v0.9.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_object_detection` - `v0.11.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_pose_detection` - `v0.10.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_selfie_segmentation` - `v0.6.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_smart_reply` - `v0.9.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_text_recognition` - `v0.11.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
+#### `google_mlkit_translation` - `v0.9.0`
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
 ## 2023-08-04
 
 ### Changes

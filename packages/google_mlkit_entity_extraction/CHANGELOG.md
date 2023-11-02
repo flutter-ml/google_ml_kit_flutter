@@ -1,3 +1,8 @@
+## 0.11.0
+
+* Fix: Update build.gradle, support AGP 8.
+* Update README.
+
 ## 0.10.0
 
 * fix: `DateTimeEntity.timestamp` result is expected in milliseconds, not seconds, for iOS.

@@ -13,10 +13,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^1.0.1
-  camera: ^0.10.5+2
-  path: ^1.8.3
-  path_provider: ^2.0.15
+  image_picker: ^1.0.2
+  camera: ^0.10.5+3
+  path: ^1.8.2
+  path_provider: ^2.1.0
 
   google_mlkit_commons:
 #    path: ../google_mlkit_commons
