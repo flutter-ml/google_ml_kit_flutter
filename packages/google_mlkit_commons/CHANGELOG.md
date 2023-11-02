@@ -1,8 +1,7 @@
-## 0.6.0
+## 0.6.1
 
 * Fix: Update build.gradle, support AGP 8.
 * Update README.
-* Add rotation to Image in iOS.
 
 ## 0.5.0
 
