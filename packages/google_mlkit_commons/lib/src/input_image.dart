@@ -71,6 +71,8 @@ class InputImageMetadata {
   final int bytesPerRow;
 
   // Camera lens direction.
+  ///
+  /// Not used on Android.
   final InputImageCameraLensDirection cameraLensDirection;
 
   /// Constructor to create an instance of [InputImageMetadata].
