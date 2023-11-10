@@ -169,7 +169,7 @@ enum InputImageCameraLensDirection {
   back,
 }
 
-extension InputImageCameraLensRotationValue on InputImageCameraLensDirection {
+extension InputImageCameraLensDirectionValue on InputImageCameraLensDirection {
   int get rawValue {
     switch (this) {
       case InputImageCameraLensDirection.back:
