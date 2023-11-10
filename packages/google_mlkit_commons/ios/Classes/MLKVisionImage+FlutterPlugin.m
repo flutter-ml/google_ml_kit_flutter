@@ -6,12 +6,7 @@
 + (MLKVisionImage *)visionImageFromData:(NSDictionary *)imageData {
     NSString *imageType = imageData[@"type"];
     if ([@"file" isEqualToString:imageType]) {
-        int rotation = [imageData[@"metadata"][@"rotation"] intValue];
-        int cameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
-        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cameraLensDirection];
-        MLKVisionImage *image = [self filePathToVisionImage:imageData[@"path"]];
-        image.orientation = imageOrientation;
-        return image;
+        return [self filePathToVisionImage:imageData[@"path"]];
     } else if ([@"bytes" isEqualToString:imageType]) {
         int rotation = [imageData[@"metadata"][@"rotation"] intValue];
         int cameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
