@@ -71,7 +71,7 @@ class InputImageMetadata {
   final int bytesPerRow;
 
   // Camera lens direction.
-  final InputImageLensDirection cameraLensDirection;
+  final InputImageCameraLensDirection cameraLensDirection;
 
   /// Constructor to create an instance of [InputImageMetadata].
   InputImageMetadata({

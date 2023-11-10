@@ -7,15 +7,15 @@
     NSString *imageType = imageData[@"type"];
     if ([@"file" isEqualToString:imageType]) {
         int rotation = [imageData[@"metadata"][@"rotation"] intValue];
-        int CameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
+        int cameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
         UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cameraLensDirection];
         MLKVisionImage *image = [self filePathToVisionImage:imageData[@"path"]];
         image.orientation = imageOrientation;
         return image;
     } else if ([@"bytes" isEqualToString:imageType]) {
         int rotation = [imageData[@"metadata"][@"rotation"] intValue];
-        int lensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
-        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cmaeraLensDirection];
+        int cameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
+        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cameraLensDirection];
         MLKVisionImage *image = [self bytesToVisionImage:imageData];
         image.orientation = imageOrientation;
         return image;
