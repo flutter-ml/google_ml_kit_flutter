@@ -1,4 +1,4 @@
-group 'com.google_mlki_smart_reply'
+group 'com.google_mlkit_smart_reply'
 version '1.0'
 
 buildscript {
