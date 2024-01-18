@@ -76,7 +76,7 @@ class _CameraViewState extends State<CameraView> {
     if (_cameras.isEmpty) return Container();
     if (_controller == null) return Container();
     if (_controller?.value.isInitialized == false) return Container();
-    return Container(
+    return ColoredBox(
       color: Colors.black,
       child: Stack(
         fit: StackFit.expand,
