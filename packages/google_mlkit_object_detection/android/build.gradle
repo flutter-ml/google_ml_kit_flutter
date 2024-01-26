@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
@@ -27,7 +27,7 @@ android {
         namespace 'com.google_mlkit_object_detection'
     }
     
-    compileSdkVersion 31
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,6 +41,6 @@ android {
 
 dependencies {
     implementation 'com.google.mlkit:object-detection:17.0.0'
-    implementation 'com.google.mlkit:object-detection-custom:17.0.0'
+    implementation 'com.google.mlkit:object-detection-custom:17.0.1'
     implementation 'com.google.mlkit:linkfirebase:17.0.0'
 }
