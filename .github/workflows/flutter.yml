@@ -16,7 +16,7 @@ jobs:
       with:
         java-version: 11
         distribution: temurin
-    - uses: subosito/flutter-action@v2.13.0
+    - uses: subosito/flutter-action@v2.14.0
       with:
         flutter-version: '3.10.5'
         cache: true
