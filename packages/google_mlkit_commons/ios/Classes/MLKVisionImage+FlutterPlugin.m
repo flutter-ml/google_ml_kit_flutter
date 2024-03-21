@@ -8,12 +8,34 @@
     if ([@"file" isEqualToString:imageType]) {
         return [self filePathToVisionImage:imageData[@"path"]];
     } else if ([@"bytes" isEqualToString:imageType]) {
-        return [self bytesToVisionImage:imageData];
+        int rotation = [imageData[@"metadata"][@"rotation"] intValue];
+        int cameraLensDirection = [imageData[@"metadata"][@"camera_lens_direction"] intValue];
+        UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cameraLensDirection];
+        MLKVisionImage *image = [self bytesToVisionImage:imageData];
+        image.orientation = imageOrientation;
+        return image;
     } else {
         NSString *errorReason = [NSString stringWithFormat:@"No image type for: %@", imageType];
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:errorReason
                                      userInfo:nil];
+    }
+}
+
++ (UIImageOrientation)imageOrientationFromRotation:(int)rotation cameraLensDirection:(int)cameraLensDirection {
+    switch (rotation) {
+        case 90:
+            return cameraLensDirection == 0 ? UIImageOrientationRight  // Rotates the image 270 degrees to the left 
+                                            : UIImageOrientationRightMirrored;  // Rotates the image 270 degrees to the left (image is mirrored) 
+        case 180:
+            return cameraLensDirection == 0 ? UIImageOrientationDown  // Rotates the image 180 degrees to the left 
+                                            : UIImageOrientationDownMirrored;  // Rotates the image 180 degrees to the left (image is mirrored)
+        case 270:
+            return cameraLensDirection == 0 ? UIImageOrientationLeft  // Rotates the image 90 degrees to the left
+                                            : UIImageOrientationLeftMirrored;  // Rotates the image 90 degrees to the left (image is mirrored)
+        default:
+            return cameraLensDirection == 0 ? UIImageOrientationUp // Rotates 0 degreees
+                                            : UIImageOrientationUpMirrored;  // Rotates the image 0 degrees (image is mirrored)
     }
 }
 
