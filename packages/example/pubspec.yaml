@@ -47,6 +47,8 @@ dependencies:
     path: ../google_mlkit_translation
   google_mlkit_smart_reply:
     path: ../google_mlkit_smart_reply
+  google_mlkit_document_scanner:
+    path: ../google_mlkit_document_scanner
 
 dev_dependencies:
   flutter_lints: ^2.0.2
