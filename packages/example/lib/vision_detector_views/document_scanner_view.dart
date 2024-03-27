@@ -7,9 +7,21 @@ class DocumentScannerView extends StatefulWidget {
 }
 
 class _DocumentScannerViewState extends State<DocumentScannerView> {
-  final DocumentScanner documentScanner = DocumentScanner(
+  DocumentScanner documentScanner = DocumentScanner(
     options: DocumentScannerOptions(),
   );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    documentScanner.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +31,10 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
         elevation: 0,
       ),
       body: Container(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => documentScanner.scanDocument(),
+        child: Icon(Icons.scanner),
+      ),
     );
   }
 }

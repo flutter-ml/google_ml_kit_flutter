@@ -14,14 +14,18 @@ class DocumentScanner {
   DocumentScanner({required this.options});
 
   /// Processes the given image for document scanner.
-  Future<void> scanDocument() async {
-    final result = await _channel.invokeListMethod<dynamic>(
-        'vision#startDocumentScanner', <String, dynamic>{
-      'options': options.toJson(),
-      'id': id,
-    });
-
-    print(result.toString());
+  Future<List<String>?> scanDocument() async {
+    try {
+      final List<dynamic>? results = await _channel.invokeListMethod<dynamic>(
+          'vision#startDocumentScanner', <String, dynamic>{
+        'options': options.toJson(),
+        'id': id,
+      });
+      return results?.map((e) => e as String).toList();
+    } catch (e) {
+      print("Exception $e");
+      throw Exception("Exception happen here");
+    }
   }
 
   /// Closes the detector and releases its resources.
@@ -59,8 +63,8 @@ class DocumentScannerOptions {
   /// Returns a json representation of an instance of [DocumentScannerOptions].
   Map<String, dynamic> toJson() => {
         'pageLimit': pageLimit,
-        'format': documentFormat,
-        'mode': mode,
+        'format': documentFormat.name,
+        'mode': mode.name,
         'isGalleryImport': isGalleryImport,
       };
 }
