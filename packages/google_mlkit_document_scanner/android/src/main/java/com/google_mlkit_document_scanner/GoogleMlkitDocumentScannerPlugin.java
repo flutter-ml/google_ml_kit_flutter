@@ -12,7 +12,7 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin {
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), channelName);
-        channel.setMethodCallHandler(new DocumentScanner(flutterPluginBinding.getApplicationContext()));
+        channel.setMethodCallHandler(new DocumentScanner());
     }
 
     @Override

@@ -1,38 +1,44 @@
 package com.google_mlkit_document_scanner;
 
-import androidx.annotation.NonNull;
 import android.app.Activity;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult;
-import androidx.activity.result.IntentSenderRequest;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.net.Uri;
 
-import android.content.Context;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-
-import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanning;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions;
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning;
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult;
 
-public class DocumentScanner implements MethodChannel.MethodCallHandler {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import io.flutter.Log;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
+
+public class DocumentScanner implements MethodChannel.MethodCallHandler, ActivityAware, PluginRegistry.ActivityResultListener {
   private static final String START = "vision#startDocumentScanner";
   private static final String CLOSE = "vision#closeDocumentScanner";
 
-  private final Context context;
+  private Activity activity;
+
+  private ActivityPluginBinding binding;
+
+  private static final String TAG = "MyActivity";
+
   private final Map<String, com.google.mlkit.vision.documentscanner.GmsDocumentScanner> instances = new HashMap<>();
 
-  public DocumentScanner(Context context) {
-    this.context = context;
-  }
+  final private int START_DOCUMENT_ACTIVITY = 0x362738;
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -50,7 +56,45 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler {
     }
   }
 
+  @Override 
+  public void onAttachedToActivity( ActivityPluginBinding pluginBinding){
+    Log.w(TAG, "Attached To Activity");
+    activity = pluginBinding.getActivity();
+    binding = pluginBinding;
+    binding.addActivityResultListener(this);
+  }
+
+  @Override
+  public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+    if(requestCode == START_DOCUMENT_ACTIVITY){
+      GmsDocumentScanningResult result =
+              GmsDocumentScanningResult.fromActivityResultIntent(intent);
+      if(resultCode == Activity.RESULT_OK && result != null){
+        if(result.getPdf() !=null){
+          GmsDocumentScanningResult.Pdf pdf = result.getPdf();
+          Uri pdfUri = pdf.getUri();
+          int pageCount = pdf.getPageCount();
+          Log.i(TAG, "Success: PdfUri " + pdfUri.toString());
+        }
+        if(result.getPages() != null){
+          List<GmsDocumentScanningResult.Page> pages = result.getPages();
+          for(GmsDocumentScanningResult.Page page : pages){
+            Uri imageUri = page.getImageUri();
+            Log.i(TAG, "Success: ImageUri " + imageUri.toString());
+          }
+        }
+      }else if(resultCode == Activity.RESULT_CANCELED){
+        Log.i(TAG, "Canceled");
+      }else{
+        Log.i(TAG, "Unknown Error");
+      }
+
+    }
+    return false;
+  }
+
   private void handleScanner(MethodCall call, final MethodChannel.Result result) {
+    Log.w(TAG, "Here second");
     String id = call.argument("id");
     com.google.mlkit.vision.documentscanner.GmsDocumentScanner scanner = instances.get(id);
     if (scanner == null) {
@@ -65,10 +109,36 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler {
       instances.put(id, scanner);
     }
 
-    // scanner.getStartScanIntent(activity).addOnSuccessListener(
-    // result.error("DocumentScannerError", "Error", null)).addOnFailureListener(
-    // e -> result.error("DocumentScannerError", e.toString(), null));
-    result.error("DocumentScannerError", "Through", null);
+    // Ensure activity is available before proceeding
+    if (activity == null) {
+      Log.w(TAG, "Activity is null 1, cannot start scanning");
+      result.error("DocumentScannerError", "Activity is not available", null);
+      return;
+    }
+    scanner.getStartScanIntent(activity).addOnSuccessListener(new OnSuccessListener<IntentSender>() {
+      @Override
+      public void onSuccess(IntentSender intentSender) {
+          try{
+            if(activity == null){
+              Log.w(TAG, "Activity is null 2, cannot start scanning");
+              result.error("DocumentScannerError", "Activity is not available", null);
+            }else{
+              activity.startIntentSenderForResult(intentSender, START_DOCUMENT_ACTIVITY, null, 0, 0, 0);
+
+            }
+          }catch(IntentSender.SendIntentException e){
+            Log.i(TAG, "Error: Failed to start document scanner " + e);
+          }
+      }
+    })
+      .addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+          Log.i(TAG, "Error: Failed to start document scanner " + e);
+        }
+      });
+
+    
   }
 
   // parse scanner options
@@ -79,7 +149,7 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler {
     int pageLimit = (int) options.get("pageLimit");
 
     int format;
-    switch ((String) options.get("format")) {
+    switch ((String) Objects.requireNonNull(options.get("format"))) {
       case "pdf":
         format = GmsDocumentScannerOptions.RESULT_FORMAT_PDF;
         break;
@@ -119,8 +189,26 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler {
     com.google.mlkit.vision.documentscanner.GmsDocumentScanner scanner = instances.get(id);
     if (scanner == null)
       return;
-    // scanner.close();
+    binding.removeActivityResultListener(this);
     instances.remove(id);
+  }
+
+
+  @Override 
+  public void onDetachedFromActivityForConfigChanges(){
+    Log.w(TAG, "onDetachedFromActivityForConfigChanges");
+
+  }
+
+  @Override 
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding){
+    Log.w(TAG, "onReattachedToActivityForConfigChanges");
+    binding.addActivityResultListener(this);
+  }
+  @Override 
+  public void onDetachedFromActivity(){
+    Log.w(TAG, "onDetachedFromActivity");
+    binding.removeActivityResultListener(this);
   }
 
 }

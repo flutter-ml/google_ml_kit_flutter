@@ -24,7 +24,7 @@ class DocumentScanner {
       return results?.map((e) => e as String).toList();
     } catch (e) {
       print("Exception $e");
-      throw Exception("Exception happen here");
+      throw Exception(">> Exception happen here ${e.toString()}");
     }
   }
 
