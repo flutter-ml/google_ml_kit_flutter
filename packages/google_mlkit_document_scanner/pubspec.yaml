@@ -8,14 +8,15 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
+  google_mlkit_commons: ^0.6.0
+#    path: ../google_mlkit_commons
   flutter:
     sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.2
-  google_mlkit_commons: ^0.6.0
-#    path: ../google_mlkit_commons
+
 
 flutter:
   plugin:

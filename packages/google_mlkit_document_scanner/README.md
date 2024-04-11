@@ -1,19 +1,33 @@
-# Google's ML Kit Face Mesh Detection for Flutter
+# Google's ML Kit Document scanner for Flutter
 
-[![Pub Version](https://img.shields.io/pub/v/google_mlkit_face_mesh_detection)](https://pub.dev/packages/google_mlkit_face_mesh_detection)
+[![Pub Version](https://img.shields.io/pub/v/google_mlkit_document_scanner)](https://pub.dev/packages/google_mlkit_document_scanner)
 [![analysis](https://github.com/flutter-ml/google_ml_kit_flutter/actions/workflows/flutter.yml/badge.svg)](https://github.com/flutter-ml/google_ml_kit_flutter/actions)
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-A Flutter plugin to use [Google's ML Kit Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection) for face mesh detection, you can generate in real-time a high accuracy [face mesh](https://developers.google.com/ml-kit/vision/face-mesh-detection/concepts) of 468 3D points for selfie-like images.
+A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, whicj allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
 
-Faces should be within ~2 meters (~7 feet) of the camera, so that the faces are sufficiently large for optimal face mesh recognition. In general, the larger the face, the better the face mesh recognition.
+The UI flow, ML models and other large resources are delivered using Google Play services, which means:
 
-If you want to detect faces further than ~2 meters (~7 feet) away from the camera, please see [google_mlkit_face_detection](https://pub.dev/packages/google_mlkit_face_detection).
+- Low binary size impact (all ML models and large resources are downloaded centrally in Google Play services).
+- No camera permission is required - the document scanner leverages the Google Play services' camera permission, and users are in control of which files to share back with your app.
 
-Note that the face should be facing the camera with at least half of the face visible. Any large object between the face and the camera may result in lower accuracy.
+Key capabilities
+- High-quality and consistent user interface for digitizing physical documents.
+- Automatic capture with document detection.
+- Accurate edge detection for optimal crop results.
+- Automatic rotation detection to show documents upright.
+- No camera permission is needed from your app.
+- Low apk binary size impact.
 
-**NOTE** Since [Google's Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection) API is still in Beta and only supports Android. Stay tune for updates in their website.
+Customization
+
+The document scanner API provides a high-quality fully fledged UI flow that is consistent across Android apps. However, there is also room to customize some aspects of the user experience
+- Maximum number of pages 
+- Gallery import 
+- Editing functionalities
+
+**NOTE** Since [Google's Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) API is still in Beta and only supports Android. Stay tune for updates in their website.
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
@@ -37,54 +51,6 @@ Note that the face should be facing the camera with at least half of the face vi
 
 ## Requirements
 
-### iOS
-
-- Minimum iOS Deployment Target: 12.0
-- Xcode 13.2.1 or newer
-- Swift 5
-- ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
-
-Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude armv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
-
-Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
-
-<p align="center" width="100%">
-  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
-</p>
-
-Your Podfile should look like this:
-
-```ruby
-platform :ios, '12.0'  # or newer version
-
-...
-
-# add this line:
-$iOSVersion = '12.0'  # or newer version
-
-post_install do |installer|
-  # add these lines:
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-  end
-  
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    
-    # add these lines:
-    target.build_configurations.each do |config|
-      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-      end
-    end
-    
-  end
-end
-```
-
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
-
 ### Android
 
 - minSdkVersion: 21
@@ -93,39 +59,37 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to 
 
 ## Usage
 
-### Face Mesh Detection
+### Document Scanner
 
-#### Create an instance of `InputImage`
+#### Create an instance of `DocumentScannerOptions`
 
-Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
-
-```dart
-final InputImage inputImage;
+```dart 
+DocumentScannerOptions documentOptions = DocumentScannerOptions(
+  mode: ScannerMode.filter // to control the feature sets in the flow 
+  isGalleryImport: true, // importing from the photo gallery 
+   pageLimit: 1, // setting a limit to the number of pages scanned
+);
 ```
 
-#### Create an instance of `FaceMeshDetector`
+#### Create an instance of `DocumentScanner`
 
 ```dart
-final meshDetector = FaceMeshDetector(option: FaceMeshDetectorOptions.faceMesh);
+final documentScanner = DocumentScanner(option: documentOptions);
 ```
 
-#### Process image
+#### Start Scann
+
+Returns paths of the scanned documents 
 
 ```dart
-final List<FaceMesh> meshes = await meshDetector.processImage(inputImage);
+List<String>? documents = await documentScanner.scanDocument();
 
-for (FaceMesh mesh in meshes) {
-  final boundingBox = mesh.boundingBox;
-  final points = mesh.points;
-  final triangles = mesh.triangles;
-  final contour = mesh.contours[FaceMeshContourType.faceOval];
-}
 ```
 
 #### Release resources with `close()`
 
 ```dart
-meshDetector.close();
+documentScanner.close();
 ```
 
 ## Example app
