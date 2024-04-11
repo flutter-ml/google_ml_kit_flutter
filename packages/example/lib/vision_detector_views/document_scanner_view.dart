@@ -32,7 +32,15 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
       ),
       body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => documentScanner.scanDocument(),
+        onPressed: () async {
+          try {
+            final documents = await documentScanner.scanDocument();
+
+            print('documents: $documents');
+          } catch (e) {
+            print('Error: $e');
+          }
+        },
         child: Icon(Icons.scanner),
       ),
     );
