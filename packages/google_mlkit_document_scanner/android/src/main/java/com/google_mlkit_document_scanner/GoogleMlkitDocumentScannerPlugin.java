@@ -32,6 +32,7 @@ import io.flutter.plugin.common.PluginRegistry;
 
 public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
         PluginRegistry.ActivityResultListener {
+
     private static final String channelName = "google_mlkit_document_scanner";
     private static final String START = "vision#startDocumentScanner";
     private static final String CLOSE = "vision#closeDocumentScanner";
@@ -111,10 +112,8 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, Activity
             } else {
                 pendingResult.error(TAG, "Unknown Error", null);
             }
-
             return true;
         }
-
         return false;
     }
 
@@ -125,28 +124,24 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, Activity
         // Check if the result is a pdf and return the pdf uri
         if (pdf != null) {
             Uri pdfUri = pdf.getUri();
-
             List<String> pdfUris = new ArrayList<>();
-
             pdfUris.add(pdfUri.toString());
             pendingResult.success(pdfUris);
-
         }
 
         // Check if the result is a list of images and return the image uris
         if (pages.size() > 0) {
             List<String> imageUris = new ArrayList<>();
-
             for (GmsDocumentScanningResult.Page page : pages) {
                 Uri imageUri = page.getImageUri();
                 imageUris.add(imageUri.toString());
             }
-
             pendingResult.success(imageUris);
         }
 
     }
 
+    /// handle the scanning 
     private void handleScanner(MethodCall call, MethodChannel.Result result) {
         String id = call.argument("id");
         GmsDocumentScanner scanner = instances.get(id);
@@ -159,7 +154,6 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, Activity
                 pendingResult.error(TAG, "Invalid options", null);
                 return;
             }
-
             GmsDocumentScannerOptions scannerOptions = parseOptions(options);
             scanner = GmsDocumentScanning.getClient(scannerOptions);
             instances.put(id, scanner);
@@ -183,7 +177,6 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, Activity
                         pendingResult.error(TAG, "Failed to start document scanner", null);
                     }
                 });
-
     }
 
     private void addActivityResultListener(ActivityPluginBinding binding) {
@@ -233,7 +226,7 @@ public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, Activity
         return builder.build();
     }
 
-    // close the scanner
+    /// close the scanner
     private void closeScanner(MethodCall call) {
         String id = call.argument("id");
         GmsDocumentScanner scanner = instances.get(id);
