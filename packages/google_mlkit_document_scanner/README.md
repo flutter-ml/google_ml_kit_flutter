@@ -77,7 +77,7 @@ DocumentScannerOptions documentOptions = DocumentScannerOptions(
 final documentScanner = DocumentScanner(option: documentOptions);
 ```
 
-#### Start Scann
+#### Start Scanner
 
 Returns paths of the scanned documents 
 
