@@ -108,7 +108,7 @@ final List<IdentifiedLanguage> possibleLanguages = await languageIdentifier.iden
 #### Release resources with `close()`
 
 ```dart
-imageLabeler.close();
+languageIdentifier.close();
 ```
 
 ## Example app

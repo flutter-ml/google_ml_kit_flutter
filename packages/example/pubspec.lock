@@ -179,10 +179,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_mlkit_commons
-      sha256: "24057bbdd304302ad458e9bdd4ba36902bcdb05e6065c3e3a4dc83eb367c8057"
+      sha256: "046586b381cdd139f7f6a05ad6998f7e339d061bd70158249907358394b5f496"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.6.1"
   google_mlkit_digital_ink_recognition:
     dependency: "direct main"
     description:
@@ -494,7 +494,7 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      sha256: "43798d895c929056255600343db8f049921cbec94d31ec87f1dc5c16c01935dd"
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
