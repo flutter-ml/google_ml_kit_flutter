@@ -55,5 +55,4 @@ android {
 
 dependencies {
    implementation 'com.google.android.gms:play-services-mlkit-document-scanner:16.0.0-beta1'
-//   implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
 }
