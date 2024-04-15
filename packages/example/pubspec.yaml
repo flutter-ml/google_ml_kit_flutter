@@ -19,7 +19,7 @@ dependencies:
   path_provider: ^2.1.0
 
   google_mlkit_commons:
-#    path: ../google_mlkit_commons
+    path: ../google_mlkit_commons
   google_mlkit_barcode_scanning:
     path: ../google_mlkit_barcode_scanning
   google_mlkit_digital_ink_recognition:

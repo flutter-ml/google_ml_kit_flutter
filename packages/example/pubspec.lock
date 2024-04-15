@@ -178,10 +178,9 @@ packages:
   google_mlkit_commons:
     dependency: "direct main"
     description:
-      name: google_mlkit_commons
-      sha256: "046586b381cdd139f7f6a05ad6998f7e339d061bd70158249907358394b5f496"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../google_mlkit_commons"
+      relative: true
+    source: path
     version: "0.6.1"
   google_mlkit_digital_ink_recognition:
     dependency: "direct main"
