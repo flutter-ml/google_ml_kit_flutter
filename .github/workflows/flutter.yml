@@ -55,6 +55,10 @@ jobs:
       working-directory: ./packages/google_mlkit_digital_ink_recognition
       run: flutter pub get
 
+    - name: Install dependencies for google_mlkit_document_scanner
+      working-directory: ./packages/google_mlkit_document_scanner
+      run: flutter pub get
+
     - name: Install dependencies for google_mlkit_language_id
       working-directory: ./packages/google_mlkit_language_id
       run: flutter pub get
@@ -85,10 +89,6 @@ jobs:
 
     - name: Install dependencies for google_mlkit_selfie_segmentation
       working-directory: ./packages/google_mlkit_selfie_segmentation
-      run: flutter pub get
-
-    - name: Install dependencies for google_mlkit_document_scanner
-      working-directory: ./packages/google_mlkit_document_scanner
       run: flutter pub get
 
     - name: Install dependencies for example
