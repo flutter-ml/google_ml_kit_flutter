@@ -297,7 +297,7 @@ DEPENDENCIES:
   - GoogleMLKit/TextRecognitionJapanese (~> 4.0.0)
   - GoogleMLKit/TextRecognitionKorean (~> 4.0.0)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
@@ -378,11 +378,11 @@ EXTERNAL SOURCES:
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_mlkit_barcode_scanning: d42717e8a28a5523bcb0b8a285c7d19555021c68
   google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
   google_mlkit_digital_ink_recognition: d389ce65a846a29ca6e5a67d0257284f54cc9788
@@ -442,4 +442,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6cbfc3b172867eb3fa438d0d6fd6f72a6b8f9e04
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2
