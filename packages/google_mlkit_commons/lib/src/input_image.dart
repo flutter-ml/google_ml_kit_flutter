@@ -56,9 +56,12 @@ class InputImageMetadata {
   final Size size;
 
   /// Image rotation degree.
-  ///
-  /// Not used on iOS.
   final InputImageRotation rotation;
+
+  // Camera lens direction.
+  ///
+  /// Not used on Android.
+  final InputImageCameraLensDirection cameraLensDirection;
 
   /// Format of the input image.
   ///
@@ -76,6 +79,7 @@ class InputImageMetadata {
     required this.rotation,
     required this.format,
     required this.bytesPerRow,
+    required this.cameraLensDirection,
   });
 
   /// Returns a json representation of an instance of [InputImageMetadata].
@@ -85,6 +89,7 @@ class InputImageMetadata {
         'rotation': rotation.rawValue,
         'image_format': format.rawValue,
         'bytes_per_row': bytesPerRow,
+        'camera_lens_direction': cameraLensDirection.rawValue,
       };
 }
 
@@ -149,6 +154,34 @@ extension InputImageFormatValue on InputImageFormat {
   static InputImageFormat? fromRawValue(int rawValue) {
     try {
       return InputImageFormat.values
+          .firstWhere((element) => element.rawValue == rawValue);
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+/// The camera lens direction to be specified
+///
+/// Not used on Android.
+enum InputImageCameraLensDirection {
+  front,
+  back,
+}
+
+extension InputImageCameraLensDirectionValue on InputImageCameraLensDirection {
+  int get rawValue {
+    switch (this) {
+      case InputImageCameraLensDirection.back:
+        return 0;
+      case InputImageCameraLensDirection.front:
+        return 1;
+    }
+  }
+
+  static InputImageCameraLensDirection? fromRawValue(int rawValue) {
+    try {
+      return InputImageCameraLensDirection.values
           .firstWhere((element) => element.rawValue == rawValue);
     } catch (_) {
       return null;

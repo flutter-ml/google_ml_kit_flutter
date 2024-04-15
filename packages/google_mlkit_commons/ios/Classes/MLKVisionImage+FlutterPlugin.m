@@ -32,12 +32,17 @@
     NSNumber *height = metadata[@"height"];
     NSNumber *rawFormat = metadata[@"image_format"];
     NSNumber *bytesPerRow = metadata[@"bytes_per_row"];
+    int rotation = [metadata[@"rotation"] intValue];
+    int cameraLensDirection = [metadata[@"camera_lens_direction"] intValue];
+    UIImageOrientation imageOrientation = [self imageOrientationFromRotation:rotation cameraLensDirection:cameraLensDirection];
     CVPixelBufferRef pxBuffer = [self bytesToPixelBuffer:width.unsignedLongValue
                                                   height:height.unsignedLongValue
                                                   format:FOUR_CHAR_CODE(rawFormat.unsignedIntValue)
                                              baseAddress:(void *)imageBytes.bytes
                                              bytesPerRow:bytesPerRow.unsignedLongValue];
-    return [self pixelBufferToVisionImage:pxBuffer];
+    MLKVisionImage *image = [self pixelBufferToVisionImage:pxBuffer];
+    image.orientation = imageOrientation;
+    return image;
 }
 
 + (CVPixelBufferRef)bytesToPixelBuffer:(size_t)width
@@ -64,6 +69,23 @@
     CVPixelBufferRelease(pixelBufferRef);
     CGImageRelease(videoImage);
     return [[MLKVisionImage alloc] initWithImage:uiImage];
+}
+
++ (UIImageOrientation)imageOrientationFromRotation:(int)rotation cameraLensDirection:(int)cameraLensDirection {
+    switch (rotation) {
+        case 90:
+            return cameraLensDirection == 0 ? UIImageOrientationRight  // Rotates the image 270 degrees to the left
+                                            : UIImageOrientationRightMirrored;  // Rotates the image 270 degrees to the left (image is mirrored)
+        case 180:
+            return cameraLensDirection == 0 ? UIImageOrientationDown  // Rotates the image 180 degrees to the left
+                                            : UIImageOrientationDownMirrored;  // Rotates the image 180 degrees to the left (image is mirrored)
+        case 270:
+            return cameraLensDirection == 0 ? UIImageOrientationLeft  // Rotates the image 90 degrees to the left
+                                            : UIImageOrientationLeftMirrored;  // Rotates the image 90 degrees to the left (image is mirrored)
+        default:
+            return cameraLensDirection == 0 ? UIImageOrientationUp // Rotates 0 degreees
+                                            : UIImageOrientationUpMirrored;  // Rotates the image 0 degrees (image is mirrored)
+    }
 }
 
 @end

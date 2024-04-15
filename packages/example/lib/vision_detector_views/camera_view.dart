@@ -378,6 +378,9 @@ class _CameraViewState extends State<CameraView> {
         rotation: rotation, // used only in Android
         format: format, // used only in iOS
         bytesPerRow: plane.bytesPerRow, // used only in iOS
+        cameraLensDirection: InputImageCameraLensDirectionValue.fromRawValue(
+                camera.lensDirection.index) ??
+            InputImageCameraLensDirection.front,
       ),
     );
   }
