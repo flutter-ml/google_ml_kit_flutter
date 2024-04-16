@@ -52,7 +52,8 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         String tag = call.argument("model");
         DigitalInkRecognitionModel model = getModel(tag, result);
-        if (model == null) return;
+        if (model == null)
+            return;
         if (!genericModelManager.isModelDownloaded(model)) {
             result.error("Model Error", "Model has not been downloaded yet ", null);
             return;
@@ -79,7 +80,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
                 if (t0 instanceof Integer) {
                     t = (int) t0;
                 } else {
-                    t = (long) t0;   
+                    t = (long) t0;
                 }
                 Ink.Point strokePoint = Ink.Point.create(x, y, t);
                 strokeBuilder.addPoint(strokePoint);
@@ -137,7 +138,8 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
-        if (recognizer == null) return;
+        if (recognizer == null)
+            return;
         recognizer.close();
         instances.remove(id);
     }

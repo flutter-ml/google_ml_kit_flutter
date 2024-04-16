@@ -38,6 +38,8 @@ dependencies:
     path: ../google_mlkit_selfie_segmentation
   google_mlkit_text_recognition:
     path: ../google_mlkit_text_recognition
+  google_mlkit_document_scanner:
+    path: ../google_mlkit_document_scanner
 
   google_mlkit_entity_extraction:
     path: ../google_mlkit_entity_extraction

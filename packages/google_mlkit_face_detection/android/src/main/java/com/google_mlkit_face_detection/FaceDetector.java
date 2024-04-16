@@ -53,7 +53,8 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null) return;
+        if (inputImage == null)
+            return;
 
         String id = call.argument("id");
         com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
@@ -92,13 +93,11 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
                                     faceData.put("smilingProbability", face.getSmilingProbability());
                                 }
 
-                                if (face.getLeftEyeOpenProbability()
-                                        != null) {
+                                if (face.getLeftEyeOpenProbability() != null) {
                                     faceData.put("leftEyeOpenProbability", face.getLeftEyeOpenProbability());
                                 }
 
-                                if (face.getRightEyeOpenProbability()
-                                        != null) {
+                                if (face.getRightEyeOpenProbability() != null) {
                                     faceData.put("rightEyeOpenProbability", face.getRightEyeOpenProbability());
                                 }
 
@@ -120,20 +119,17 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     }
 
     private FaceDetectorOptions parseOptions(Map<String, Object> options) {
-        int classification =
-                (boolean) options.get("enableClassification")
-                        ? FaceDetectorOptions.CLASSIFICATION_MODE_ALL
-                        : FaceDetectorOptions.CLASSIFICATION_MODE_NONE;
+        int classification = (boolean) options.get("enableClassification")
+                ? FaceDetectorOptions.CLASSIFICATION_MODE_ALL
+                : FaceDetectorOptions.CLASSIFICATION_MODE_NONE;
 
-        int landmark =
-                (boolean) options.get("enableLandmarks")
-                        ? FaceDetectorOptions.LANDMARK_MODE_ALL
-                        : FaceDetectorOptions.LANDMARK_MODE_NONE;
+        int landmark = (boolean) options.get("enableLandmarks")
+                ? FaceDetectorOptions.LANDMARK_MODE_ALL
+                : FaceDetectorOptions.LANDMARK_MODE_NONE;
 
-        int contours =
-                (boolean) options.get("enableContours")
-                        ? FaceDetectorOptions.CONTOUR_MODE_ALL
-                        : FaceDetectorOptions.CONTOUR_MODE_NONE;
+        int contours = (boolean) options.get("enableContours")
+                ? FaceDetectorOptions.CONTOUR_MODE_ALL
+                : FaceDetectorOptions.CONTOUR_MODE_NONE;
 
         int mode;
         switch ((String) options.get("mode")) {
@@ -147,13 +143,12 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
                 throw new IllegalArgumentException("Not a mode:" + options.get("mode"));
         }
 
-        FaceDetectorOptions.Builder builder =
-                new FaceDetectorOptions.Builder()
-                        .setClassificationMode(classification)
-                        .setLandmarkMode(landmark)
-                        .setContourMode(contours)
-                        .setMinFaceSize((float) ((double) options.get("minFaceSize")))
-                        .setPerformanceMode(mode);
+        FaceDetectorOptions.Builder builder = new FaceDetectorOptions.Builder()
+                .setClassificationMode(classification)
+                .setLandmarkMode(landmark)
+                .setContourMode(contours)
+                .setMinFaceSize((float) ((double) options.get("minFaceSize")))
+                .setPerformanceMode(mode);
 
         if ((boolean) options.get("enableTracking")) {
             builder.enableTracking();
@@ -211,7 +206,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private double[] landmarkPosition(Face face, int landmarkInt) {
         FaceLandmark landmark = face.getLandmark(landmarkInt);
         if (landmark != null) {
-            return new double[]{landmark.getPosition().x, landmark.getPosition().y};
+            return new double[] { landmark.getPosition().x, landmark.getPosition().y };
         }
         return null;
     }
@@ -222,7 +217,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
             List<PointF> contourPoints = contour.getPoints();
             List<double[]> result = new ArrayList<>();
             for (int i = 0; i < contourPoints.size(); i++) {
-                result.add(new double[]{contourPoints.get(i).x, contourPoints.get(i).y});
+                result.add(new double[] { contourPoints.get(i).x, contourPoints.get(i).y });
             }
             return result;
         }
@@ -232,7 +227,8 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
-        if (detector == null) return;
+        if (detector == null)
+            return;
         detector.close();
         instances.remove(id);
     }
