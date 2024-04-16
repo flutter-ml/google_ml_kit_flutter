@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface GoogleMlkitDocumentScannerPlugin : NSObject<FlutterPlugin>
+@interface GoogleMlKitDocumentScannerPlugin : NSObject<FlutterPlugin>
 @end

@@ -1,11 +1,11 @@
-#import "GoogleMlkitDocumentScannerPlugin.h"
+#import "GoogleMlKitDocumentScannerPlugin.h"
 
-@implementation GoogleMlkitDocumentScannerPlugin
+@implementation GoogleMlKitDocumentScannerPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"google_mlkit_document_scanner"
             binaryMessenger:[registrar messenger]];
-  GoogleMlkitDocumentScannerPlugin* instance = [[GoogleMlkitDocumentScannerPlugin alloc] init];
+  GoogleMlKitDocumentScannerPlugin* instance = [[GoogleMlKitDocumentScannerPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 

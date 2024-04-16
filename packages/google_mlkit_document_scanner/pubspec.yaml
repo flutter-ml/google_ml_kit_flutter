@@ -21,6 +21,6 @@ flutter:
     platforms:
       android:
         package: com.google_mlkit_document_scanner
-        pluginClass: GoogleMlkitDocumentScannerPlugin
+        pluginClass: GoogleMlKitDocumentScannerPlugin
       ios:
-        pluginClass: GoogleMlkitDocumentScannerPlugin
+        pluginClass: GoogleMlKitDocumentScannerPlugin

@@ -30,7 +30,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
-public class GoogleMlkitDocumentScannerPlugin implements FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
+public class GoogleMlKitDocumentScannerPlugin implements FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
         PluginRegistry.ActivityResultListener {
 
     private static final String channelName = "google_mlkit_document_scanner";
