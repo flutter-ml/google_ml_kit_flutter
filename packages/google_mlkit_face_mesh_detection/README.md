@@ -89,7 +89,7 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to 
 
 - minSdkVersion: 21
 - targetSdkVersion: 33
-- compileSdkVersion: 33
+- compileSdkVersion: 34
 
 ## Usage
 

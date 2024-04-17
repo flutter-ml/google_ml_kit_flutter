@@ -34,12 +34,11 @@ class DocumentScanner {
 /// Used to configure features such as pageLimit, scanner mode, document format and gallery import
 class DocumentScannerOptions {
   /// Constructor for [DocumentScannerOptions].
-  ///
   DocumentScannerOptions({
     this.pageLimit = 1,
-    this.isGalleryImport = false,
     this.documentFormat = DocumentFormat.jpeg,
     this.mode = ScannerMode.full,
+    this.isGalleryImport = false,
   });
 
   /// Sets a page limit for the maximum number of pages that can be scanned in a single scanning session. default = 1
@@ -72,7 +71,7 @@ enum DocumentFormat {
 
 /// Scanner mode which determines what features are enabled.
 enum ScannerMode {
-  full,
-  filter,
   base,
+  filter,
+  full,
 }

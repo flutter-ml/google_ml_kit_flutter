@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'nlp_detector_views/entity_extraction_view.dart';
@@ -59,7 +61,8 @@ class Home extends StatelessWidget {
                       CustomCard('Digital Ink Recognition', DigitalInkView()),
                       CustomCard('Pose Detection', PoseDetectorView()),
                       CustomCard('Selfie Segmentation', SelfieSegmenterView()),
-                      CustomCard('Document Scanner', DocumentScannerView()),
+                      if (Platform.isAndroid)
+                        CustomCard('Document Scanner', DocumentScannerView()),
                     ],
                   ),
                   SizedBox(

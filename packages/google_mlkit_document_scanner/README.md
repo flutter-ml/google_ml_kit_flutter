@@ -5,7 +5,7 @@
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, whicj allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
+A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, which allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
 
 The UI flow, ML models and other large resources are delivered using Google Play services, which means:
 
@@ -52,13 +52,14 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 ## Requirements
 
 ### iOS
+
 Not supported
 
 ### Android
 
 - minSdkVersion: 21
 - targetSdkVersion: 33
-- compileSdkVersion: 33
+- compileSdkVersion: 34
 
 ## Usage
 
@@ -68,9 +69,10 @@ Not supported
 
 ```dart 
 DocumentScannerOptions documentOptions = DocumentScannerOptions(
-  mode: ScannerMode.filter // to control the feature sets in the flow 
+  documentFormat: DocumentFormat.jpeg, // set output document format 
+  mode: ScannerMode.filter, // to control what features are enabled 
+  pageLimit: 1, // setting a limit to the number of pages scanned
   isGalleryImport: true, // importing from the photo gallery 
-   pageLimit: 1, // setting a limit to the number of pages scanned
 );
 ```
 
@@ -86,7 +88,6 @@ Returns paths of the scanned documents
 
 ```dart
 List<String>? documents = await documentScanner.scanDocument();
-
 ```
 
 #### Release resources with `close()`
