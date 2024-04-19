@@ -8,20 +8,20 @@ class DocumentScanner {
   /// Instance id.
   final id = DateTime.now().microsecondsSinceEpoch.toString();
 
-  /// The options for the document scanning
+  /// The options for the document scanning.
   final DocumentScannerOptions options;
 
   /// Constructor to create an instance of [DocumentScanner].
   DocumentScanner({required this.options});
 
-  /// Processes the given image for document scanner.
-  Future<List<String>?> scanDocument() async {
-    final List<dynamic>? results = await _channel.invokeListMethod<dynamic>(
+  /// Starts the document scanner UI flow.
+  Future<DocumentScanningResult> scanDocument() async {
+    final dynamic results = await _channel.invokeMapMethod<dynamic, dynamic>(
         'vision#startDocumentScanner', <String, dynamic>{
       'options': options.toJson(),
       'id': id,
     });
-    return results?.map((e) => e as String).toList();
+    return DocumentScanningResult.fromJson(results);
   }
 
   /// Closes the detector and releases its resources.
@@ -31,27 +31,27 @@ class DocumentScanner {
 
 /// Immutable options for configuring features of [DocumentScannerOptions].
 ///
-/// Used to configure features such as pageLimit, scanner mode, document format and gallery import
+/// Used to configure features such as pageLimit, scanner mode, document format and gallery import.
 class DocumentScannerOptions {
   /// Constructor for [DocumentScannerOptions].
   DocumentScannerOptions({
-    this.pageLimit = 1,
     this.documentFormat = DocumentFormat.jpeg,
+    this.pageLimit = 1,
     this.mode = ScannerMode.full,
     this.isGalleryImport = false,
   });
 
-  /// Sets a page limit for the maximum number of pages that can be scanned in a single scanning session. default = 1
+  /// Sets a page limit for the maximum number of pages that can be scanned in a single scanning session. default = 1.
   final int pageLimit;
 
-  /// Sets scanner result formats
-  /// Available formats: PDF, JPG and default format is JPG
+  /// Sets scanner result formats.
+  /// Available formats: PDF, JPG and default format is JPG.
   final DocumentFormat documentFormat;
 
-  /// Sets the scanner mode which determines what features are enabled. default = ScannerModel.full
+  /// Sets the scanner mode which determines what features are enabled. default = ScannerModel.full.
   final ScannerMode mode;
 
-  /// Enable or disable the capability to import from the photo gallery. default = false
+  /// Enable or disable the capability to import from the photo gallery. default = false.
   final bool isGalleryImport;
 
   /// Returns a json representation of an instance of [DocumentScannerOptions].
@@ -74,4 +74,55 @@ enum ScannerMode {
   base,
   filter,
   full,
+}
+
+/// Result for document scanning.
+class DocumentScanningResult {
+  /// Returns the PDF result or null if `DocumentFormat.pdf` was not specified when creating the scanner options.
+  final DocumentScanningResultPdf? pdf;
+
+  /// Returns the scanned images or null if `DocumentFormat.jpeg` was not specified when creating the scanner options.
+  final List<String> images;
+
+  /// Constructor to create an instance of [DocumentScanningResult].
+  DocumentScanningResult({required this.pdf, required this.images});
+
+  /// Returns an instance of [DocumentScanningResult] from a given [json].
+  factory DocumentScanningResult.fromJson(Map<dynamic, dynamic> json) {
+    final images = json['images'] != null
+        ? List<String>.from(json['images'] as List)
+        : <String>[];
+    final pdf = json['pdf'] != null
+        ? DocumentScanningResultPdf.fromJson(json['pdf'])
+        : null;
+    return DocumentScanningResult(pdf: pdf, images: images);
+  }
+
+  @override
+  String toString() {
+    return '{pdf: $pdf, images: $images}';
+  }
+}
+
+/// Represents the PDF in the scanning result.
+class DocumentScanningResultPdf {
+  /// Returns the number of page being scanned.
+  final int pageCount;
+
+  /// Returns the PDF file Uri.
+  final String uri;
+
+  /// Constructor to create an instance of [DocumentScanningResultPdf].
+  DocumentScanningResultPdf({required this.pageCount, required this.uri});
+
+  /// Returns an instance of [DocumentScanningResultPdf] from a given [json].
+  factory DocumentScanningResultPdf.fromJson(Map<dynamic, dynamic> json) {
+    return DocumentScanningResultPdf(
+        pageCount: json['pageCount'], uri: json['uri']);
+  }
+
+  @override
+  String toString() {
+    return '{pageCount: $pageCount, uri: $uri}';
+  }
 }
