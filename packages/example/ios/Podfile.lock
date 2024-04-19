@@ -13,6 +13,9 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 4.0.0)
+  - google_mlkit_document_scanner (0.0.1):
+    - Flutter
+    - google_mlkit_commons
   - google_mlkit_entity_extraction (0.11.0):
     - Flutter
     - google_mlkit_commons
@@ -285,6 +288,7 @@ DEPENDENCIES:
   - google_mlkit_barcode_scanning (from `.symlinks/plugins/google_mlkit_barcode_scanning/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_digital_ink_recognition (from `.symlinks/plugins/google_mlkit_digital_ink_recognition/ios`)
+  - google_mlkit_document_scanner (from `.symlinks/plugins/google_mlkit_document_scanner/ios`)
   - google_mlkit_entity_extraction (from `.symlinks/plugins/google_mlkit_entity_extraction/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - google_mlkit_face_mesh_detection (from `.symlinks/plugins/google_mlkit_face_mesh_detection/ios`)
@@ -357,6 +361,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
   google_mlkit_digital_ink_recognition:
     :path: ".symlinks/plugins/google_mlkit_digital_ink_recognition/ios"
+  google_mlkit_document_scanner:
+    :path: ".symlinks/plugins/google_mlkit_document_scanner/ios"
   google_mlkit_entity_extraction:
     :path: ".symlinks/plugins/google_mlkit_entity_extraction/ios"
   google_mlkit_face_detection:
@@ -385,11 +391,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
-  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
+  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_mlkit_barcode_scanning: d42717e8a28a5523bcb0b8a285c7d19555021c68
   google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
   google_mlkit_digital_ink_recognition: d389ce65a846a29ca6e5a67d0257284f54cc9788
+  google_mlkit_document_scanner: 45c54f9f04522d5730660f041234af05bb57d9e3
   google_mlkit_entity_extraction: ce59dde3a8342e820121d9283f97e1fb16fd6f28
   google_mlkit_face_detection: 52f7e4c15a7c49b98940fa32af4c2b10fd8608fc
   google_mlkit_face_mesh_detection: 8d536ecd0323efb7595445be86800bf37afb3e53
@@ -407,7 +414,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
