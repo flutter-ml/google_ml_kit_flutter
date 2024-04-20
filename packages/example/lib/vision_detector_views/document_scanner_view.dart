@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
 
 class DocumentScannerView extends StatefulWidget {
@@ -7,22 +10,12 @@ class DocumentScannerView extends StatefulWidget {
 }
 
 class _DocumentScannerViewState extends State<DocumentScannerView> {
-  DocumentScanner documentScanner = DocumentScanner(
-    options: DocumentScannerOptions(
-      mode: ScannerMode.filter, // to control the feature sets in the flow
-      isGalleryImport: false, // importing from the photo gallery
-      pageLimit: 1, // setting a limit to the number of pages scanned
-    ),
-  );
-  List<String>? documents;
-  @override
-  void initState() {
-    super.initState();
-  }
+  DocumentScanner? _documentScanner;
+  DocumentScanningResult? _result;
 
   @override
   void dispose() {
-    documentScanner.close();
+    _documentScanner?.close();
     super.dispose();
   }
 
@@ -36,43 +29,109 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.document_scanner_outlined,
-              size: 250,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.document_scanner_outlined,
+                  size: 50,
+                ),
+                SizedBox(width: 8),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => startScan(DocumentFormat.pdf),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: const Text(
+                      'Scan PDF',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
+                SizedBox(width: 8),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => startScan(DocumentFormat.jpeg),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: const Text(
+                      'Scan JPEG',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (_result?.pdf != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 16, bottom: 8, right: 8, left: 8),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('PDF Document:')),
               ),
-              onPressed: startScan,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'Start Scan',
-                  style: TextStyle(color: Colors.white),
+              SizedBox(
+                height: 300,
+                child: PDFView(
+                  filePath: _result!.pdf!.uri,
+                  enableSwipe: true,
+                  swipeHorizontal: true,
+                  autoSpacing: false,
+                  pageFling: false,
                 ),
               ),
-            ),
+            ],
+            if (_result?.images.isNotEmpty == true) ...[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 16, bottom: 8, right: 8, left: 8),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Images [0]:')),
+              ),
+              SizedBox(
+                  height: 400, child: Image.file(File(_result!.images.first))),
+            ],
           ],
         ),
       ),
     );
   }
 
-  void startScan() async {
+  void startScan(DocumentFormat format) async {
     try {
-      documents = await documentScanner.scanDocument();
-      print('documents: $documents');
+      _result = null;
+      setState(() {});
+      _documentScanner?.close();
+      _documentScanner = DocumentScanner(
+        options: DocumentScannerOptions(
+          documentFormat: format,
+          mode: ScannerMode.full,
+          isGalleryImport: false,
+          pageLimit: 1,
+        ),
+      );
+      _result = await _documentScanner?.scanDocument();
+      print('result: $_result');
+      setState(() {});
     } catch (e) {
       print('Error: $e');
     }
