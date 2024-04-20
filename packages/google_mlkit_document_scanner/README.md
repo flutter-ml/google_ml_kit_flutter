@@ -84,10 +84,12 @@ final documentScanner = DocumentScanner(option: documentOptions);
 
 #### Start Scanner
 
-Returns paths of the scanned documents 
+The scanner returns objects for the scanned document. 
 
 ```dart
-List<String>? documents = await documentScanner.scanDocument();
+DocumentScanningResult result = await documentScanner.scanDocument();
+final pdf = result.pdf; // A PDF object.
+final images = result.images;  // A list with the paths to the images.
 ```
 
 #### Release resources with `close()`
