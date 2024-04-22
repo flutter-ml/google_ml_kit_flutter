@@ -3,6 +3,128 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-05-22
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.17.0`](#google_ml_kit---v0170)
+- [`google_mlkit_barcode_scanning` - `v0.11.1`](#google_mlkit_barcode_scanning---v0111)
+- [`google_mlkit_commons` - `v0.7.1`](#google_mlkit_commons---v071)
+- [`google_mlkit_digital_ink_recognition` - `v0.11.1`](#google_mlkit_digital_ink_recognition---v0111)
+- [`google_mlkit_document_scanner` - `v0.1.0`](#google_mlkit_document_scanner---v010)
+- [`google_mlkit_entity_extraction` - `v0.12.1`](#google_mlkit_entity_extraction---v0121)
+- [`google_mlkit_face_detection` - `v0.10.1`](#google_mlkit_face_detection---v0101)
+- [`google_mlkit_face_mesh_detection` - `v0.1.1`](#google_mlkit_face_mesh_detection---v011)
+- [`google_mlkit_image_labeling` - `v0.11.1`](#google_mlkit_image_labeling---v0111)
+- [`google_mlkit_language_id` - `v0.10.1`](#google_mlkit_language_id---v0101)
+- [`google_mlkit_object_detection` - `v0.12.1`](#google_mlkit_object_detection---v0121)
+- [`google_mlkit_pose_detection` - `v0.11.1`](#google_mlkit_pose_detection---v0111)
+- [`google_mlkit_selfie_segmentation` - `v0.7.1`](#google_mlkit_selfie_segmentation---v071)
+- [`google_mlkit_smart_reply` - `v0.10.1`](#google_mlkit_smart_reply---v0101)
+- [`google_mlkit_text_recognition` - `v0.12.1`](#google_mlkit_text_recognition---v0121)
+- [`google_mlkit_translation` - `v0.10.1`](#google_mlkit_translation---v0101)
+
+---
+
+#### `google_ml_kit` - `v0.17.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* DEPRECATE convenience properties in favor of using specific plugins.
+* Update README.
+
+#### `google_mlkit_barcode_scanning` - `v0.11.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_commons` - `v0.7.0`
+
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.11.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_document_scanner` - `v0.0.1`
+
+* Initial release.
+* Update README.
+
+#### `google_mlkit_entity_extraction` - `v0.12.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_face_detection` - `v0.10.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_face_mesh_detection` - `v0.1.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_image_labeling` - `v0.11.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_language_id` - `v0.10.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_object_detection` - `v0.12.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_pose_detection` - `v0.11.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_selfie_segmentation` - `v0.7.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_smart_reply` - `v0.10.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_text_recognition` - `v0.12.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
+#### `google_mlkit_translation` - `v0.10.0`
+
+* Update dependencies.
+* Update SDK constraint.
+* Update README.
+
 ## 2023-11-02
 
 ### Changes
@@ -13,6 +135,7 @@ Packages with changes:
 
 - [`google_ml_kit` - `v0.16.3`](#google_ml_kit---v0163)
 - [`google_mlkit_barcode_scanning` - `v0.10.0`](#google_mlkit_barcode_scanning---v0100)
+- [`google_mlkit_commons` - `v0.6.1`](#google_mlkit_commons---v061)
 - [`google_mlkit_commons` - `v0.6.0`](#google_mlkit_commons---v060)
 - [`google_mlkit_digital_ink_recognition` - `v0.10.0`](#google_mlkit_digital_ink_recognition---v0100)
 - [`google_mlkit_entity_extraction` - `v0.11.0`](#google_mlkit_entity_extraction---v0110)
@@ -37,6 +160,10 @@ Packages with changes:
 
 * Fix: Update build.gradle, support AGP 8.
 * Update README.
+
+#### `google_mlkit_commons` - `v0.6.1`
+
+* Remove rotation to Image in iOS.
 
 #### `google_mlkit_commons` - `v0.6.0`
 
