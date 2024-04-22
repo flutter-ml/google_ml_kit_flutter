@@ -40,6 +40,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:smart-reply:17.0.2'
+    implementation 'com.google.mlkit:smart-reply:17.0.3'
 }
 
