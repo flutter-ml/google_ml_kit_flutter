@@ -1,3 +1,7 @@
+## 0.12.0
+
+* Fix: Updated dependent GoogleMLKit/EntityExtraction version to ~>6.0.0 on iOS 
+
 ## 0.11.0
 
 * Fix: Update build.gradle, support AGP 8.

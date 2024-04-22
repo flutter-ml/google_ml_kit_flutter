@@ -1,5 +1,9 @@
 ## 0.10.0
 
+* Fix: Updated dependent GoogleMLKit/ImageLabeling and GoogleMLKit/ImageLabelingCustom version to ~>6.0.0 on iOS 
+
+## 0.10.0
+
 * Fix: Update build.gradle, support AGP 8.
 * Update README.
 

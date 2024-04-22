@@ -1,3 +1,7 @@
+## 0.10.0
+
+* Fix: Updated dependent GoogleMLKit/FaceDetection version to ~>6.0.0 on iOS 
+
 ## 0.9.0
 
 * Fix: Update build.gradle, support AGP 8.
