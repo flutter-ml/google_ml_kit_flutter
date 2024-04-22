@@ -28,10 +28,10 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   # Add language package you need to use
-  pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
-  pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 4.0.0'
-  pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
-  pod 'GoogleMLKit/TextRecognitionKorean', '~> 4.0.0'
+  pod 'GoogleMLKit/TextRecognitionChinese', '~> 5.0.0'
+  pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 5.0.0'
+  pod 'GoogleMLKit/TextRecognitionJapanese', '~> 5.0.0'
+  pod 'GoogleMLKit/TextRecognitionKorean', '~> 5.0.0'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
