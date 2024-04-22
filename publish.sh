@@ -11,6 +11,9 @@ flutter pub publish --dry-run
 cd ../google_mlkit_digital_ink_recognition
 flutter pub publish --dry-run
 
+cd ../google_mlkit_document_scanner
+flutter pub publish --dry-run
+
 cd ../google_mlkit_entity_extraction
 flutter pub publish --dry-run
 

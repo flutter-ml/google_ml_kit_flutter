@@ -10,13 +10,12 @@ Pod::Spec.new do |s|
   s.description      = pubspec['description']
   s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
-  s.authors          = 'Multiple Authors'
+  s.author           = 'Multiple Authors'
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'GoogleMLKit/FaceDetection', '~> 6.0.0'
-  s.dependency 'google_mlkit_commons'
+  #   s.dependency 'GoogleMLKit/DocumentScanner', '~> 4.0.0'
   s.platform = :ios, '12.0'
   s.ios.deployment_target = '12.0'
   s.static_framework = true

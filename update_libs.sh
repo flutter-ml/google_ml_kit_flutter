@@ -11,6 +11,9 @@ flutter pub get
 cd ../google_mlkit_digital_ink_recognition
 flutter pub get
 
+cd ../google_mlkit_document_scanner
+flutter pub get
+
 cd ../google_mlkit_entity_extraction
 flutter pub get
 
