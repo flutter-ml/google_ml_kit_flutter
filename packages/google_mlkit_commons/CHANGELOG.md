@@ -1,3 +1,7 @@
+## 0.7.0
+
+* Update SDK constraint.
+
 ## 0.6.1
 
 * Fix: Update build.gradle, support AGP 8.

@@ -13,6 +13,7 @@ Packages with changes:
 
 - [`google_ml_kit` - `v0.17.0`](#google_ml_kit---v0170)
 - [`google_mlkit_barcode_scanning` - `v0.11.0`](#google_mlkit_barcode_scanning---v0110)
+- [`google_mlkit_commons` - `v0.7.0`](#google_mlkit_commons---v070)
 - [`google_mlkit_digital_ink_recognition` - `v0.11.0`](#google_mlkit_digital_ink_recognition---v0110)
 - [`google_mlkit_document_scanner` - `v0.0.1`](#google_mlkit_document_scanner---v001)
 - [`google_mlkit_entity_extraction` - `v0.12.0`](#google_mlkit_entity_extraction---v0120)
@@ -29,17 +30,25 @@ Packages with changes:
 
 ---
 
-#### `google_ml_kit` - `v0.70.0`
+#### `google_ml_kit` - `v0.17.0`
 
 * Update dependencies.
+* Update SDK constraint.
+* DEPRECATE convenience properties in favor of using specific plugins.
 
 #### `google_mlkit_barcode_scanning` - `v0.11.0`
 
 * Update dependencies.
+* Update SDK constraint.
+
+#### `google_mlkit_commons` - `v0.7.0`
+
+* Update SDK constraint.
 
 #### `google_mlkit_digital_ink_recognition` - `v0.11.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_document_scanner` - `v0.0.1`
 
@@ -48,46 +57,57 @@ Packages with changes:
 #### `google_mlkit_entity_extraction` - `v0.12.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_face_detection` - `v0.10.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_face_mesh_detection` - `v0.1.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_image_labeling` - `v0.11.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_language_id` - `v0.10.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_object_detection` - `v0.12.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_pose_detection` - `v0.11.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_selfie_segmentation` - `v0.7.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_smart_reply` - `v0.10.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_text_recognition` - `v0.12.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 #### `google_mlkit_translation` - `v0.10.0`
 
 * Update dependencies.
+* Update SDK constraint.
 
 ## 2023-11-02
 

@@ -1,6 +1,7 @@
 ## 0.12.0
 
 * Update dependencies.
+* Update SDK constraint.
 
 ## 0.11.0
 

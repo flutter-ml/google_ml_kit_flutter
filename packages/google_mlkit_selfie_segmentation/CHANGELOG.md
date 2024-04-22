@@ -1,6 +1,7 @@
 ## 0.7.0
 
 * Update dependencies.
+* Update SDK constraint.
 
 ## 0.6.0
 

@@ -1,3 +1,9 @@
+## 0.17.0
+
+* Update dependencies.
+* Update SDK constraint.
+* DEPRECATE convenience properties in favor of using specific plugins. 
+
 ## 0.16.3
 
 * Update dependencies.
