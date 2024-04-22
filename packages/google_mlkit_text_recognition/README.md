@@ -99,10 +99,10 @@ For the iOS platform add to the `ios/Podfile` file:
 
 ```ruby
 # Add language package you need to use
-pod 'GoogleMLKit/TextRecognitionChinese', '~> 4.0.0'
-pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 4.0.0'
-pod 'GoogleMLKit/TextRecognitionJapanese', '~> 4.0.0'
-pod 'GoogleMLKit/TextRecognitionKorean', '~> 4.0.0'
+pod 'GoogleMLKit/TextRecognitionChinese', '~> 5.0.0'
+pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 5.0.0'
+pod 'GoogleMLKit/TextRecognitionJapanese', '~> 5.0.0'
+pod 'GoogleMLKit/TextRecognitionKorean', '~> 5.0.0'
 ```
 
 For the Android platform add to the `android/app/build.gradle` file:
