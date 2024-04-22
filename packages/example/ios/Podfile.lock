@@ -8,7 +8,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/BarcodeScanning (~> 5.0.0)
-  - google_mlkit_commons (0.6.1):
+  - google_mlkit_commons (0.7.0):
     - Flutter
     - MLKitVision
   - google_mlkit_digital_ink_recognition (0.11.0):
@@ -399,7 +399,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
   google_mlkit_barcode_scanning: cf72255af35c1473f59a02830ab2e64cb87a4495
-  google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
+  google_mlkit_commons: c4ed4c16347e1ccad4fb6747710f90cda18adcad
   google_mlkit_digital_ink_recognition: cf94066d464fe1548bd08eb1f5b93807a68bd6b9
   google_mlkit_document_scanner: b796a4614554b9ac09d21e118d1978ba3bf3b5bc
   google_mlkit_entity_extraction: 8d119878794e1335a90fea72d843c61dfdda3841

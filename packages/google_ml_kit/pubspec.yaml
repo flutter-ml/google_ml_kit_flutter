@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   # Vision APIs
-  google_mlkit_commons: ^0.6.1
+  google_mlkit_commons: ^0.7.0
   google_mlkit_barcode_scanning: ^0.10.0
   google_mlkit_digital_ink_recognition: ^0.10.0
   google_mlkit_face_detection: ^0.9.0
