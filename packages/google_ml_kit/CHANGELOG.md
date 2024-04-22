@@ -1,8 +1,3 @@
-## 0.17.0
-
-* Update iOS dependencies
-* Raising iOS min version to 14.0
-
 ## 0.16.3
 
 * Update dependencies.

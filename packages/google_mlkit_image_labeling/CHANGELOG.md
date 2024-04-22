@@ -1,8 +1,3 @@
-## 0.11.0
-
-* Update iOS dependencies
-* Raising iOS min version to 14.0
-
 ## 0.10.0
 
 * Fix: Update build.gradle, support AGP 8.
