@@ -40,5 +40,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.mlkit:face-mesh-detection:16.0.0-beta1'
+    implementation 'com.google.mlkit:face-mesh-detection:16.0.0-beta2'
 }
