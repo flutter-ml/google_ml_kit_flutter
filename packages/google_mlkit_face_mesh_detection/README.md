@@ -39,7 +39,7 @@ Note that the face should be facing the camera with at least half of the face vi
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
+- Minimum iOS Deployment Target: 14.0
 - Xcode 13.2.1 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
@@ -55,12 +55,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '12.0'  # or newer version
+platform :ios, '14.0'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '12.0'  # or newer version
+$iOSVersion = '14.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -83,7 +83,7 @@ post_install do |installer|
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 14.0, you can set it to something newer but not older.
 
 ### Android
 

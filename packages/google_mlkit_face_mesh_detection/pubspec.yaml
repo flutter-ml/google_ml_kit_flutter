@@ -1,6 +1,6 @@
 name: google_mlkit_face_mesh_detection
 description: A Flutter plugin to use Google's ML Kit Face Mesh Detection.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 
 environment:
