@@ -5,7 +5,8 @@
     <application
         android:name="${applicationName}"
         android:label="ML Kit in Flutter"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

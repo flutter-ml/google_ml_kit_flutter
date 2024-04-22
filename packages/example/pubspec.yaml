@@ -13,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_pdfview: ^1.3.2
   image_picker: ^1.1.0
   camera: ^0.10.5+9
   path: ^1.9.0
@@ -24,6 +25,8 @@ dependencies:
     path: ../google_mlkit_barcode_scanning
   google_mlkit_digital_ink_recognition:
     path: ../google_mlkit_digital_ink_recognition
+  google_mlkit_document_scanner:
+    path: ../google_mlkit_document_scanner
   google_mlkit_face_detection:
     path: ../google_mlkit_face_detection
   google_mlkit_face_mesh_detection:

@@ -2,6 +2,8 @@ PODS:
   - camera_avfoundation (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_pdfview (1.0.2):
+    - Flutter
   - google_mlkit_barcode_scanning (0.10.0):
     - Flutter
     - google_mlkit_commons
@@ -282,9 +284,11 @@ PODS:
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
+  - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - google_mlkit_barcode_scanning (from `.symlinks/plugins/google_mlkit_barcode_scanning/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_digital_ink_recognition (from `.symlinks/plugins/google_mlkit_digital_ink_recognition/ios`)
+  - google_mlkit_document_scanner (from `.symlinks/plugins/google_mlkit_document_scanner/ios`)
   - google_mlkit_entity_extraction (from `.symlinks/plugins/google_mlkit_entity_extraction/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - google_mlkit_face_mesh_detection (from `.symlinks/plugins/google_mlkit_face_mesh_detection/ios`)
@@ -351,12 +355,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   Flutter:
     :path: Flutter
+  flutter_pdfview:
+    :path: ".symlinks/plugins/flutter_pdfview/ios"
   google_mlkit_barcode_scanning:
     :path: ".symlinks/plugins/google_mlkit_barcode_scanning/ios"
   google_mlkit_commons:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
   google_mlkit_digital_ink_recognition:
     :path: ".symlinks/plugins/google_mlkit_digital_ink_recognition/ios"
+  google_mlkit_document_scanner:
+    :path: ".symlinks/plugins/google_mlkit_document_scanner/ios"
   google_mlkit_entity_extraction:
     :path: ".symlinks/plugins/google_mlkit_entity_extraction/ios"
   google_mlkit_face_detection:
@@ -385,7 +393,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
-  camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
+  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_mlkit_barcode_scanning: 1dc3bb1cd4caa3d04654f450b70497f1923335e6
   google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
