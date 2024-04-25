@@ -204,7 +204,7 @@ packages:
       path: "../google_mlkit_document_scanner"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.2.0"
   google_mlkit_entity_extraction:
     dependency: "direct main"
     description:
@@ -225,7 +225,7 @@ packages:
       path: "../google_mlkit_face_mesh_detection"
       relative: true
     source: path
-    version: "0.1.1"
+    version: "0.2.0"
   google_mlkit_image_labeling:
     dependency: "direct main"
     description:

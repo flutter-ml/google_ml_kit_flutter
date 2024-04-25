@@ -15,7 +15,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 6.0.0)
-  - google_mlkit_document_scanner (0.1.0):
+  - google_mlkit_document_scanner (0.2.0):
     - Flutter
   - google_mlkit_entity_extraction (0.13.0):
     - Flutter
@@ -25,7 +25,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 6.0.0)
-  - google_mlkit_face_mesh_detection (0.1.1):
+  - google_mlkit_face_mesh_detection (0.2.0):
     - Flutter
     - google_mlkit_commons
   - google_mlkit_image_labeling (0.12.0):
@@ -392,10 +392,10 @@ SPEC CHECKSUMS:
   google_mlkit_barcode_scanning: 383d0c2dd62d92b36c0b10c7e69cf98d3650dc40
   google_mlkit_commons: 96aaca445520311b84a2da013dedf3427fe4cc69
   google_mlkit_digital_ink_recognition: b9abc8bbe3b9a62a28b2740efc74d9324d8b24c5
-  google_mlkit_document_scanner: d699d8d37d75a97abf6ba07ce72c8fbe8f8fe456
+  google_mlkit_document_scanner: 5b889061c0b0967d83cb0c15c1b084776f509a00
   google_mlkit_entity_extraction: 6a2f93e1d83cd971a453052a955084e22fadb0ed
   google_mlkit_face_detection: b760d6035222630f347352b3b13f4a23ea9fb994
-  google_mlkit_face_mesh_detection: 1746ddb8d3658b3da12fbe1bdf5d13abb5b1f1c5
+  google_mlkit_face_mesh_detection: 0b0aa33d79e82959925391b176e1d96a846caf9c
   google_mlkit_image_labeling: 6e0b7cbdec78650a00cccefc95f1ee8e6168a58c
   google_mlkit_language_id: a63b1951078835b2682e52d9243012dfed621fec
   google_mlkit_object_detection: 54a45452f93ce49f38a24a2e6880591708d7c752

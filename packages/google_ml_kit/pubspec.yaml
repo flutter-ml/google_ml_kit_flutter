@@ -13,15 +13,15 @@ dependencies:
 
   # Vision APIs
   google_mlkit_commons: ^0.7.1
-  google_mlkit_barcode_scanning: ^0.11.1
-  google_mlkit_digital_ink_recognition: ^0.11.1
-  google_mlkit_face_detection: ^0.10.1
-  google_mlkit_face_mesh_detection: ^0.1.1
-  google_mlkit_image_labeling: ^0.11.1
-  google_mlkit_object_detection: ^0.12.1
-  google_mlkit_pose_detection: ^0.11.1
-  google_mlkit_selfie_segmentation: ^0.7.1
-  google_mlkit_text_recognition: ^0.12.1
+  google_mlkit_barcode_scanning: ^0.12.0
+  google_mlkit_digital_ink_recognition: ^0.12.0
+  google_mlkit_face_detection: ^0.11.0
+  google_mlkit_face_mesh_detection: ^0.2.0
+  google_mlkit_image_labeling: ^0.12.0
+  google_mlkit_object_detection: ^0.13.0
+  google_mlkit_pose_detection: ^0.12.0
+  google_mlkit_selfie_segmentation: ^0.8.0
+  google_mlkit_text_recognition: ^0.13.0
 
   # uncomment these lines when working on the local plugins
 #  google_mlkit_commons:
@@ -44,10 +44,10 @@ dependencies:
 #    path: ../google_mlkit_text_recognition
 
   # Natural Language APIs
-  google_mlkit_entity_extraction: ^0.12.1
-  google_mlkit_language_id: ^0.10.1
-  google_mlkit_translation: ^0.10.1
-  google_mlkit_smart_reply: ^0.10.1
+  google_mlkit_entity_extraction: ^0.13.0
+  google_mlkit_language_id: ^0.11.0
+  google_mlkit_translation: ^0.11.0
+  google_mlkit_smart_reply: ^0.11.0
 
   # uncomment these lines when working on the local plugins
 #  google_mlkit_entity_extraction:
