@@ -14,8 +14,10 @@ Packages with changes:
 - [`google_ml_kit` - `v0.18.0`](#google_ml_kit---v0180)
 - [`google_mlkit_barcode_scanning` - `v0.12.0`](#google_mlkit_barcode_scanning---v0120)
 - [`google_mlkit_digital_ink_recognition` - `v0.12.0`](#google_mlkit_digital_ink_recognition---v0120)
+- [`google_mlkit_document_scanner` - `v0.2.0`](#google_mlkit_document_scanner---v020)
 - [`google_mlkit_entity_extraction` - `v0.13.0`](#google_mlkit_entity_extraction---v0130)
 - [`google_mlkit_face_detection` - `v0.11.0`](#google_mlkit_face_detection---v0110)
+- [`google_mlkit_face_mesh_detection` - `v0.2.0`](#google_mlkit_face_mesh_detection---v020)
 - [`google_mlkit_image_labeling` - `v0.12.0`](#google_mlkit_image_labeling---v0120)
 - [`google_mlkit_language_id` - `v0.11.0`](#google_mlkit_language_id---v0110)
 - [`google_mlkit_object_detection` - `v0.13.0`](#google_mlkit_object_detection---v0130)
@@ -44,6 +46,10 @@ Packages with changes:
 * Update README.
 * Set `platform :ios, '15.5'` in Podfile.
 
+#### `google_mlkit_document_scanner` - `v0.2.0`
+
+* Update README.
+
 #### `google_mlkit_entity_extraction` - `v0.13.0`
 
 * Update dependencies.
@@ -52,6 +58,10 @@ Packages with changes:
 #### `google_mlkit_face_detection` - `v0.11.0`
 
 * Update dependencies.
+* Update README.
+
+#### `google_mlkit_face_mesh_detection` - `v0.2.0`
+
 * Update README.
 
 #### `google_mlkit_image_labeling` - `v0.12.0`
