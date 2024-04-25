@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Update README.
+
 ## 0.1.1
 
 * Update README.

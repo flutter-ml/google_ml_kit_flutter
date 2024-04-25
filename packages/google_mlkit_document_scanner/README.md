@@ -5,6 +5,8 @@
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
+> ***NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).***
+
 A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, which allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
 
 The UI flow, ML models and other large resources are delivered using Google Play services, which means:
@@ -27,11 +29,9 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 - Gallery import 
 - Editing functionalities
 
-**NOTE** Since [Google's Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) API is still in Beta and only supports Android. Stay tune for updates in their website.
-
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
-- [Google's ML Kit](https://developers.google.com/ml-kit) was build only for mobile platforms: iOS and Android apps.
+- [Google's ML Kit](https://developers.google.com/ml-kit) was build only for mobile platforms: iOS and Android apps. Web or any other platform is not supported, you can request support for those platform to Google in [their repo](https://github.com/googlesamples/mlkit/issues).
 
 - This plugin is not sponsored or maintained by Google. The [authors](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/AUTHORS) are developers excited about Machine Learning that wanted to expose Google's native APIs to Flutter.
 
@@ -53,7 +53,7 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 
 ### iOS
 
-Not supported
+This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
 
 ### Android
 

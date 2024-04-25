@@ -1,3 +1,9 @@
+## 0.12.0
+
+* Update dependencies.
+* Update README.
+* Set `platform :ios, '15.5'` in Podfile.
+
 ## 0.11.1
 
 * Update README.

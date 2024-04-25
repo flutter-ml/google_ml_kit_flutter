@@ -9,7 +9,7 @@ A Flutter plugin to use [Google's ML Kit Text Recognition](https://developers.go
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
-- [Google's ML Kit](https://developers.google.com/ml-kit) was build only for mobile platforms: iOS and Android apps.
+- [Google's ML Kit](https://developers.google.com/ml-kit) was build only for mobile platforms: iOS and Android apps. Web or any other platform is not supported, you can request support for those platform to Google in [their repo](https://github.com/googlesamples/mlkit/issues).
 
 - This plugin is not sponsored or maintained by Google. The [authors](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/AUTHORS) are developers excited about Machine Learning that wanted to expose Google's native APIs to Flutter.
 
@@ -32,7 +32,7 @@ A Flutter plugin to use [Google's ML Kit Text Recognition](https://developers.go
 ### iOS
 
 - Minimum iOS Deployment Target: 12.0
-- Xcode 13.2.1 or newer
+- Xcode 15 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -41,7 +41,7 @@ Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to
 Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 
 <p align="center" width="100%">
-  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
+  <img src="https://raw.githubusercontent.com/flutter-ml/google_ml_kit_flutter/master/resources/build_settings_01.png">
 </p>
 
 Your Podfile should look like this:
@@ -99,10 +99,10 @@ For the iOS platform add to the `ios/Podfile` file:
 
 ```ruby
 # Add language package you need to use
-pod 'GoogleMLKit/TextRecognitionChinese', '~> 5.0.0'
-pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 5.0.0'
-pod 'GoogleMLKit/TextRecognitionJapanese', '~> 5.0.0'
-pod 'GoogleMLKit/TextRecognitionKorean', '~> 5.0.0'
+pod 'GoogleMLKit/TextRecognitionChinese', '~> 6.0.0'
+pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 6.0.0'
+pod 'GoogleMLKit/TextRecognitionJapanese', '~> 6.0.0'
+pod 'GoogleMLKit/TextRecognitionKorean', '~> 6.0.0'
 ```
 
 For the Android platform add to the `android/app/build.gradle` file:
