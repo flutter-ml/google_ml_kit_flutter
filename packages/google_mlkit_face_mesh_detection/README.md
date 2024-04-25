@@ -5,6 +5,8 @@
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
+> ***NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/face-mesh-detection) and request the feature [here](https://github.com/googlesamples/mlkit/issues).***
+
 A Flutter plugin to use [Google's ML Kit Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection) for face mesh detection, you can generate in real-time a high accuracy [face mesh](https://developers.google.com/ml-kit/vision/face-mesh-detection/concepts) of 468 3D points for selfie-like images.
 
 Faces should be within ~2 meters (~7 feet) of the camera, so that the faces are sufficiently large for optimal face mesh recognition. In general, the larger the face, the better the face mesh recognition.
@@ -12,8 +14,6 @@ Faces should be within ~2 meters (~7 feet) of the camera, so that the faces are 
 If you want to detect faces further than ~2 meters (~7 feet) away from the camera, please see [google_mlkit_face_detection](https://pub.dev/packages/google_mlkit_face_detection).
 
 Note that the face should be facing the camera with at least half of the face visible. Any large object between the face and the camera may result in lower accuracy.
-
-**NOTE** Since [Google's Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection) API is still in Beta and only supports Android. Stay tune for updates in their website.
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
@@ -39,51 +39,7 @@ Note that the face should be facing the camera with at least half of the face vi
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
-- Xcode 13.2.1 or newer
-- Swift 5
-- ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
-
-Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to exclude armv7 architectures in Xcode in order to run `flutter build ios` or `flutter build ipa`. More info [here](https://developers.google.com/ml-kit/migration/ios).
-
-Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
-
-<p align="center" width="100%">
-  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
-</p>
-
-Your Podfile should look like this:
-
-```ruby
-platform :ios, '12.0'  # or newer version
-
-...
-
-# add this line:
-$iOSVersion = '12.0'  # or newer version
-
-post_install do |installer|
-  # add these lines:
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-  end
-  
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    
-    # add these lines:
-    target.build_configurations.each do |config|
-      if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
-      end
-    end
-    
-  end
-end
-```
-
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/face-mesh-detection) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
 
 ### Android
 

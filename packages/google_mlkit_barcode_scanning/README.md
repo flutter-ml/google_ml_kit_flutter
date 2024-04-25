@@ -32,7 +32,7 @@ A Flutter plugin to use [Google's ML Kit Barcode Scanning](https://developers.go
 ### iOS
 
 - Minimum iOS Deployment Target: 12.0
-- Xcode 13.2.1 or newer
+- Xcode 15 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -41,7 +41,7 @@ Since ML Kit does not support 32-bit architectures (i386 and armv7), you need to
 Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > armv7
 
 <p align="center" width="100%">
-  <img src="https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/resources/build_settings_01.png">
+  <img src="https://raw.githubusercontent.com/flutter-ml/google_ml_kit_flutter/master/resources/build_settings_01.png">
 </p>
 
 Your Podfile should look like this:
