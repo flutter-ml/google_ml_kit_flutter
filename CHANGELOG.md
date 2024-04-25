@@ -136,7 +136,7 @@ Packages with changes:
 
 * Update dependencies.
 * Update SDK constraint.
-* *DEPRECATE* convenience properties in favor of using specific plugins.
+* **DEPRECATE** convenience properties in favor of using specific plugins.
 * Update README.
 
 #### `google_mlkit_barcode_scanning` - `v0.11.1`

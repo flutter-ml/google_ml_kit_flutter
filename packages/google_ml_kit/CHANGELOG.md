@@ -6,7 +6,7 @@
 
 * Update dependencies.
 * Update SDK constraint.
-* *DEPRECATE* convenience properties in favor of using specific plugins.
+* **DEPRECATE** convenience properties in favor of using specific plugins.
 * Update README.
 
 ## 0.16.3
