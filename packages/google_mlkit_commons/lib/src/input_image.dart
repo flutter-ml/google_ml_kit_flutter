@@ -62,7 +62,11 @@ class InputImageMetadata {
 
   /// Format of the input image.
   ///
-  /// Not used on Android.
+  /// Android only supports
+  /// - [InputImageFormat.nv21]
+  /// - [InputImageFormat.yuv_420_888]
+  /// - [InputImageFormat.yv12]
+  /// as described in [here](https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage.ImageFormat).
   final InputImageFormat format;
 
   /// The row stride for color plane, in bytes.
