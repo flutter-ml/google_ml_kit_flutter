@@ -37,7 +37,7 @@ public class InputImageConverter {
                     (int) (double) metaData.get("width"),
                     (int) (double) metaData.get("height"),
                     (int) metaData.get("rotation"),
-                    (int) imageData.get("image_format"));
+                    (int) metaData.get("image_format"));
             return inputImage;
         } else {
             result.error("InputImageConverterError", "Invalid Input Image", null);
