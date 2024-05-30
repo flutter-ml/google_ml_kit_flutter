@@ -1,3 +1,8 @@
+## 0.7.2
+
+* Widened image format support for Android
+* Improve documentation for image formats
+
 ## 0.7.1
 
 * Update README.

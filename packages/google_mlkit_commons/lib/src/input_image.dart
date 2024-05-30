@@ -62,11 +62,15 @@ class InputImageMetadata {
 
   /// Format of the input image.
   ///
-  /// Android only supports
+  /// Android supports
   /// - [InputImageFormat.nv21]
   /// - [InputImageFormat.yuv_420_888]
   /// - [InputImageFormat.yv12]
   /// as described in [here](https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage.ImageFormat).
+  ///
+  /// iOS supports
+  /// - [InputImageFormat.yuv420]
+  /// - [InputImageFormat.bgra8888]
   final InputImageFormat format;
 
   /// The row stride for color plane, in bytes.
@@ -126,10 +130,19 @@ extension InputImageRotationValue on InputImageRotation {
 
 /// To indicate the format of image while creating input image from bytes
 enum InputImageFormat {
+  /// Android only: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#IMAGE_FORMAT_NV21
   nv21,
+
+  /// Android only: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#public-static-final-int-image_format_yv12
   yv12,
+
+  /// Android only: https://developers.google.com/android/reference/com/google/mlkit/vision/common/InputImage#public-static-final-int-image_format_yuv_420_888
   yuv_420_888,
+
+  /// iOS only: https://developer.apple.com/documentation/corevideo/kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
   yuv420,
+
+  /// iOS only: https://developer.apple.com/documentation/corevideo/kcvpixelformattype_32bgra
   bgra8888,
 }
 
