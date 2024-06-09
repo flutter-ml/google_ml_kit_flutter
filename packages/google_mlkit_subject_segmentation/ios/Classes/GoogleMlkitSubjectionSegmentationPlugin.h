@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface GoogleMlkitSubjectSegmentationPlugin : NSObject<FlutterPlugin>
+@interface GoogleMlKitSubjectSegmentationPlugin : NSObject<FlutterPlugin>
 @end

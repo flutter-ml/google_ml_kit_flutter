@@ -23,6 +23,6 @@ flutter:
     platforms:
       android:
         package: com.google_mlkit_subject_segmentation
-        pluginClass: GoogleMlkitSubjectSegmentationPlugin
+        pluginClass: GoogleMlKitSubjectSegmentationPlugin
       ios:
-        pluginClass: GoogleMlkitSubjectSegmentationPlugin
+        pluginClass: GoogleMlKitSubjectSegmentationPlugin
