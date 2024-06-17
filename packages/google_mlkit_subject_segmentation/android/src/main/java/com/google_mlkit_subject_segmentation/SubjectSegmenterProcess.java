@@ -5,14 +5,17 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
 import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.segmentation.subject.Subject;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmentation;
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenter;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
@@ -86,14 +89,33 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
        subjectSegmenter.process(inputImage)
                .addOnSuccessListener( subjectSegmentationResult -> {
                    Map<String, Object> map = new HashMap<>();
+                   map.put("maxWidth", imageWidth);
+                   map.put("maxHeight", imageHeight);
+                   List<Subject> subjects = subjectSegmentationResult.getSubjects();
+                   @ColorInt int[] colors = new int[imageWidth * imageHeight];
                    FloatBuffer foregroundMask = subjectSegmentationResult.getForegroundConfidenceMask();
-                   Bitmap foregroundBitmap = subjectSegmentationResult.getForegroundBitmap();
-                   int[] colors = new int[imageWidth * imageHeight];
-                   for (int i = 0; i < imageWidth* imageHeight; i++) {
-                       if (foregroundMask.get() > 0.5f) {
-                           colors[i] = Color.argb(128, 255, 0, 255);
+                   for (int k =0; k <subjects.size(); k++){
+                       Subject subject = subjects.get(k);
+                       int color = Color.argb(128, rgb[0], rgb[1], rgb[2]);
+                       FloatBuffer mask = subject.getConfidenceMask();
+                       for(int j = 0; j < subject.getHeight(); j++){
+                           for (int i = 0; j < subject.getWidth(); i++){
+                               if(foregroundMask.get() >  0.5f){
+                                   colors[(subject.getStartY() + j) * imageWidth + subject.getStartX() + i] = color;
+                               }
+                           }
                        }
                    }
+
+                   int[] confidences = new int[imageWidth * imageHeight];
+//                   FloatBuffer foregroundMask = subjectSegmentationResult.getForegroundConfidenceMask();
+//                   for (int i = 0; i < imageWidth * imageHeight; i++) {
+//                       if (foregroundMask.get() > 0.5f) {
+//                           colors[i] = Color.argb(128, 255, 0, 255);
+//                       }
+//                   }
+
+                   map.put("confidences", confidences);
                    result.success(map);
 
                }).addOnFailureListener( e -> result.error("Subject segmentation failed!", e.getMessage(), e) );
