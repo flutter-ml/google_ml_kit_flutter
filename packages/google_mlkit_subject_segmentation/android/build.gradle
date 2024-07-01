@@ -9,6 +9,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
+
     }
 }
 
@@ -36,8 +37,6 @@ android {
     defaultConfig {
         minSdkVersion 21
     }
-    ndkVersion '26.2.11394342'
-    buildToolsVersion '34.0.0'
 }
 
 dependencies {

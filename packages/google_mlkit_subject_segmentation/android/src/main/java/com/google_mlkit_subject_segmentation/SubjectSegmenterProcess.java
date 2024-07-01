@@ -1,11 +1,7 @@
 package com.google_mlkit_subject_segmentation;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 
-
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
 import com.google.mlkit.vision.common.InputImage;
@@ -92,32 +88,20 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
                    map.put("maxWidth", imageWidth);
                    map.put("maxHeight", imageHeight);
                    List<Subject> subjects = subjectSegmentationResult.getSubjects();
-                   @ColorInt int[] colors = new int[imageWidth * imageHeight];
-                   FloatBuffer foregroundMask = subjectSegmentationResult.getForegroundConfidenceMask();
-                   for (int k =0; k <subjects.size(); k++){
+                   final float[] confidences = new float[imageWidth * imageHeight];
+                   for (int k =0; k < subjects.size(); k++){
                        Subject subject = subjects.get(k);
-                       int color = Color.argb(128, rgb[0], rgb[1], rgb[2]);
                        FloatBuffer mask = subject.getConfidenceMask();
                        for(int j = 0; j < subject.getHeight(); j++){
                            for (int i = 0; j < subject.getWidth(); i++){
-                               if(foregroundMask.get() >  0.5f){
-                                   colors[(subject.getStartY() + j) * imageWidth + subject.getStartX() + i] = color;
+                               if (mask.get() > 0.5f) {
+                                   confidences[ (subject.getStartY() + j) * imageWidth + subject.getStartX() + i] = mask.get();
                                }
                            }
                        }
                    }
-
-                   int[] confidences = new int[imageWidth * imageHeight];
-//                   FloatBuffer foregroundMask = subjectSegmentationResult.getForegroundConfidenceMask();
-//                   for (int i = 0; i < imageWidth * imageHeight; i++) {
-//                       if (foregroundMask.get() > 0.5f) {
-//                           colors[i] = Color.argb(128, 255, 0, 255);
-//                       }
-//                   }
-
                    map.put("confidences", confidences);
                    result.success(map);
-
                }).addOnFailureListener( e -> result.error("Subject segmentation failed!", e.getMessage(), e) );
     }
 

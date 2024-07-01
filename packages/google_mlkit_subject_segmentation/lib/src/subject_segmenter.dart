@@ -6,20 +6,36 @@ class SubjectSegmenter {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_subject_segmentation');
 
+  ///
+  /// TODO: Comment here
+  ///
+  final bool enableForegroundConfidenceMask;
+
+  ///
+  /// TODO: comment here
+  ///
+  final bool enableForegroundBitmap;
+
+  SubjectSegmenter({
+    this.enableForegroundConfidenceMask = true,
+    this.enableForegroundBitmap = false,
+  });
+
   /// Instance id.
   final id = DateTime.now().microsecondsSinceEpoch.toString();
 
   /// Processes the given [InputImage] for segmentation.
   /// Returns the segmentation mask in the given image or nil if there was an error.
-  Future<List<SubjectSegmenterMask>> processImage(InputImage inputImage) async {
-    List<dynamic> results = await _channel
+  Future<SubjectSegmenterMask> processImage(InputImage inputImage) async {
+    final results = await _channel
         .invokeMethod('vision#startSubjectSegmentation', <String, dynamic>{
       'id': id,
       'imageData': inputImage.toJson(),
+      'enableForegroundConfidenceMask': enableForegroundBitmap,
+      'enableForegroundBitmap': enableForegroundBitmap,
     });
 
-    List<SubjectSegmenterMask> masks =
-        results.map((e) => SubjectSegmenterMask.fromJson(e)).toList();
+    SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
     return masks;
   }
 
