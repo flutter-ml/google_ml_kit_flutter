@@ -1,3 +1,8 @@
+## 0.8.0
+
+* Handle NullPointer Exception in `InputImageConverter.java`
+* Fix warnings
+
 ## 0.7.2
 
 * Widened image format support for Android
