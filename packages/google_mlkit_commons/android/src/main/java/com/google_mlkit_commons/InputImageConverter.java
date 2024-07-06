@@ -40,10 +40,10 @@ public class InputImageConverter {
 
                     assert metaData != null;
                     inputImage = InputImage.fromByteArray((byte[]) Objects.requireNonNull(imageData.get("bytes")),
-                            Double.valueOf((String) metaData.get("width")).intValue(),
-                            Double.valueOf((String) metaData.get("height")).intValue(),
-                            Integer.parseInt((String) metaData.get("rotation")),
-                            Integer.parseInt((String) metaData.get("image_format")));
+                            Double.valueOf(Objects.requireNonNull(metaData.get("width")).toString()).intValue(),
+                            Double.valueOf(Objects.requireNonNull(metaData.get("height")).toString()).intValue(),
+                            Integer.parseInt(Objects.requireNonNull(metaData.get("rotation")).toString()),
+                            Integer.parseInt(Objects.requireNonNull(metaData.get("image_format")).toString()));
                     return inputImage;
                 } catch (Exception e) {
                     Log.e("ImageError", "Getting Image failed");
