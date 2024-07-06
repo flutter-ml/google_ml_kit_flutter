@@ -43,7 +43,7 @@ public class InputImageConverter {
                             Double.valueOf((String) metaData.get("width")).intValue(),
                             Double.valueOf((String) metaData.get("height")).intValue(),
                             Integer.parseInt((String) metaData.get("rotation")),
-                            InputImage.IMAGE_FORMAT_NV21);
+                            Integer.parseInt((String) metaData.get("image_format")));
                     return inputImage;
                 } catch (Exception e) {
                     Log.e("ImageError", "Getting Image failed");
