@@ -6,21 +6,6 @@ class SubjectSegmenter {
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_subject_segmentation');
 
-  ///
-  /// TODO: Comment here
-  ///
-  final bool enableForegroundConfidenceMask;
-
-  ///
-  /// TODO: comment here
-  ///
-  final bool enableForegroundBitmap;
-
-  SubjectSegmenter({
-    this.enableForegroundConfidenceMask = true,
-    this.enableForegroundBitmap = false,
-  });
-
   /// Instance id.
   final id = DateTime.now().microsecondsSinceEpoch.toString();
 
@@ -28,50 +13,75 @@ class SubjectSegmenter {
   /// Returns the segmentation mask in the given image or nil if there was an error.
   Future<SubjectSegmenterMask> processImage(InputImage inputImage) async {
     final results = await _channel
-        .invokeMethod('vision#startSubjectSegmentation', <String, dynamic>{
+        .invokeMethod('vision#startSubjectSegmenter', <String, dynamic>{
       'id': id,
       'imageData': inputImage.toJson(),
-      'enableForegroundConfidenceMask': enableForegroundBitmap,
-      'enableForegroundBitmap': enableForegroundBitmap,
     });
-
     SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
     return masks;
   }
 
   /// Closes the detector and releases its resources.
   Future<void> close() =>
-      _channel.invokeMethod('vision#closeSubjectSegmentation', {'id': id});
+      _channel.invokeMethod('vision#closeSubjectSegmenter', {'id': id});
 }
 
 class SubjectSegmenterMask {
-  /// The width of the mask.
   final int width;
 
-  /// The height of the mask.
   final int height;
 
-  /// The confidence of the pixel in the mask being in the foreground.
-  final List<double> confidences;
+  final List<Subject> subjects;
 
   /// Constructir to create a instance of [SubjectSegmenterMask].
   SubjectSegmenterMask({
     required this.width,
     required this.height,
-    required this.confidences,
+    required this.subjects,
   });
 
   /// Returns an instance of [SubjectSegmenterMask] from json
-  factory SubjectSegmenterMask.fromJson(Map<String, dynamic> json) {
-    final values = json['confidences'];
-    final List<double> confidences = [];
-    for (final item in values) {
-      confidences.add(double.parse(item.toString()));
-    }
+  factory SubjectSegmenterMask.fromJson(Map<dynamic, dynamic> json) {
+    List<dynamic> list = json['subjects'];
+    List<Subject> subjects = list.map((e) => Subject.fromJson(e)).toList();
     return SubjectSegmenterMask(
       width: json['width'] as int,
       height: json['height'] as int,
-      confidences: confidences,
+      subjects: subjects,
     );
+  }
+}
+
+class Subject {
+  final int startX;
+  final int startY;
+  final int subjectWidth;
+  final int subjectHeight;
+  final List<double> confidences;
+
+  Subject(
+      {required this.startX,
+      required this.startY,
+      required this.subjectWidth,
+      required this.subjectHeight,
+      required this.confidences});
+
+  factory Subject.fromJson(Map<dynamic, dynamic> json) {
+    return Subject(
+        startX: json['startX'] as int,
+        startY: json['startY'] as int,
+        subjectWidth: json['width'] as int,
+        subjectHeight: json['height'] as int,
+        confidences: json['confidences']);
+  }
+
+  Map<dynamic, dynamic> toJson() {
+    return {
+      "startX": startX,
+      "startY": startY,
+      "subjectWidth": subjectWidth,
+      "subjectHeight": subjectHeight,
+      "confidences": confidences,
+    };
   }
 }

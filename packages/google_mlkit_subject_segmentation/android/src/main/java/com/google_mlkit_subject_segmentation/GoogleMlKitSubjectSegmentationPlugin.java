@@ -7,7 +7,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class GoogleMlKitSubjectSegmentationPlugin implements FlutterPlugin {
   private MethodChannel channel;
-  private static final String channelName = "google_mlkit_subject_segmenter";
+  private static final String channelName = "google_mlkit_subject_segmentation";
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {

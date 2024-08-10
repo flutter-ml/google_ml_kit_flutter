@@ -19,32 +19,44 @@ class SubjectSegmentationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final width = mask.width;
-    final height = mask.height;
-    final confidences = mask.confidences;
+    final int width = mask.width;
+    final int height = mask.height;
+    final List<Subject> subjects = mask.subjects;
 
     final paint = Paint()..style = PaintingStyle.fill;
 
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        final int tx = translateX(
-          x.toDouble(),
-          size,
-          Size(mask.width.toDouble(), mask.height.toDouble()),
-          rotation,
-          cameraLensDirection,
-        ).round();
-        final int ty = translateY(
-          y.toDouble(),
-          size,
-          Size(mask.width.toDouble(), mask.height.toDouble()),
-          rotation,
-          cameraLensDirection,
-        ).round();
+    for (final Subject subject in subjects) {
+      final int startX = subject.startX;
+      final int startY = subject.startY;
+      final int subjectWidth = subject.subjectWidth;
+      final int subjectHeight = subject.subjectHeight;
+      final List<double> confidences = subject.confidences;
 
-        final double opacity = confidences[(y * width) + x] * 0.5;
-        paint.color = color.withOpacity(opacity);
-        canvas.drawCircle(Offset(tx.toDouble(), ty.toDouble()), 2, paint);
+      for (int y = 0; y < subjectHeight; y++) {
+        for (int x = 0; y < subjectWidth; x++) {
+          final int absoluteX = startX;
+          final int absoluteY = startY;
+
+          final int tx = translateX(
+                  absoluteX.toDouble(),
+                  size,
+                  Size(width.toDouble(), height.toDouble()),
+                  rotation,
+                  cameraLensDirection)
+              .round();
+
+          final int ty = translateY(
+                  absoluteY.toDouble(),
+                  size,
+                  Size(width.toDouble(), height.toDouble()),
+                  rotation,
+                  cameraLensDirection)
+              .round();
+
+          final double opacity = confidences[(y * subjectWidth) + x] * 0.5;
+          paint.color = color.withOpacity(opacity);
+          canvas.drawCircle(Offset(tx.toDouble(), ty.toDouble()), 2, paint);
+        }
       }
     }
   }

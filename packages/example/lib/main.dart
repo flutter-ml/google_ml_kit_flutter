@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit_example/vision_detector_views/subject_segmenter_view.dart';
-
 import 'nlp_detector_views/entity_extraction_view.dart';
 import 'nlp_detector_views/language_identifier_view.dart';
 import 'nlp_detector_views/language_translator_view.dart';
@@ -16,6 +14,7 @@ import 'vision_detector_views/label_detector_view.dart';
 import 'vision_detector_views/object_detector_view.dart';
 import 'vision_detector_views/pose_detector_view.dart';
 import 'vision_detector_views/selfie_segmenter_view.dart';
+import 'vision_detector_views/subject_segmenter_view.dart';
 import 'vision_detector_views/text_detector_view.dart';
 
 Future<void> main() async {

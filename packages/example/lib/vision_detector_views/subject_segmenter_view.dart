@@ -16,7 +16,7 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  var _cameraLensDirection = CameraLensDirection.front;
+  var _cameraLensDirection = CameraLensDirection.back;
 
   @override
   void dispose() async {
@@ -44,10 +44,9 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
     setState(() {
       _text = '';
     });
-    final mask = await _segmenter.processImage(inputImage);
+    final SubjectSegmenterMask mask = await _segmenter.processImage(inputImage);
     if (inputImage.metadata?.size != null &&
-        inputImage.metadata?.rotation != null &&
-        mask != null) {
+        inputImage.metadata?.rotation != null) {
       final painter = SubjectSegmentationPainter(
         mask,
         inputImage.metadata!.size,
@@ -57,8 +56,8 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
       _customPaint = CustomPaint(painter: painter);
     } else {
       // TODO: set _customPaint to draw on top of image
-      _text =
-          'There is a mask with ${(mask?.confidences ?? []).where((element) => element > 0.8).length} elements';
+      _text = 'There is a mask with ${mask.subjects.length} subjects';
+
       _customPaint = null;
     }
     _isBusy = false;
