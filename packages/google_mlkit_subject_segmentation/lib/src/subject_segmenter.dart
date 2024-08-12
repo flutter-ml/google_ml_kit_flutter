@@ -21,7 +21,7 @@ class SubjectSegmenter {
       'imageData': inputImage.toJson(),
     });
     // Convert the JSON response from the platform into a SubjectSegmenterMask instance.
-    SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
+    final SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
     return masks;
   }
 
@@ -56,8 +56,8 @@ class SubjectSegmenterMask {
 
   /// Returns an instance of [SubjectSegmenterMask] from json
   factory SubjectSegmenterMask.fromJson(Map<dynamic, dynamic> json) {
-    List<dynamic> list = json['subjects'];
-    List<Subject> subjects = list.map((e) => Subject.fromJson(e)).toList();
+    final List<Map<dynamic, dynamic>> list = json['subjects'];
+    final List<Subject> subjects = list.map(Subject.fromJson).toList();
     return SubjectSegmenterMask(
       width: json['width'] as int,
       height: json['height'] as int,
