@@ -91,6 +91,10 @@ jobs:
       working-directory: ./packages/google_mlkit_selfie_segmentation
       run: flutter pub get
 
+    - name: Install dependencies for google_mlkit_subject_segmentation
+      working-directory: ./packages/google_mlkit_subject_segmentation
+      run: flutter pub get
+
     - name: Install dependencies for example
       working-directory: ./packages/example
       run: flutter pub get
