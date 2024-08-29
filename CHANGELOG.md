@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-29 
+
+### Changes
+
+Packages with changes:
+
+- [`google_mlkit_barcode_scanning` - `v0.12.1`](#google_mlkit_barcode_scanning---v0121)
+- [`google_mlkit_face_detection` - `v0.11.1`](#google_mlkit_face_detection---v0111)
+- [`google_mlkit_image_labeling` - `v0.12.1`](#google_mlkit_image_labeling---v0121)
+- [`google_mlkit_language_id` - `v0.11.1`](#google_mlkit_language_id---v0111)
+- [`google_mlkit_object_detection` - `v0.13.1`](#google_mlkit_object_detection---v0131)
+- [`google_mlkit_pose_detection` - `v0.12.1`](#google_mlkit_pose_detection---v0121)
+- [`google_mlkit_selfie_segmentation` - `v0.8.1`](#google_mlkit_selfie_segmentation---v081)
+- [`google_mlkit_smart_reply` - `v0.11.1`](#google_mlkit_smart_reply---v0111)
+- [`google_mlkit_text_recognition` - `v0.13.1`](#google_mlkit_text_recognition---v0131)
+- [`google_mlkit_translation` - `v0.11.1`](#google_mlkit_translation---v0111)
+
+
 ## 2024-05-25
 
 ### Changes
