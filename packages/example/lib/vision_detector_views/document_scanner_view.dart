@@ -42,8 +42,8 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                    shape: MaterialStateProperty.all(
+                        WidgetStateProperty.all<Color>(Colors.black),
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -62,8 +62,8 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                    shape: MaterialStateProperty.all(
+                        WidgetStateProperty.all<Color>(Colors.black),
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

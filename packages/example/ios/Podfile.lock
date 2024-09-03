@@ -8,7 +8,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/BarcodeScanning (~> 6.0.0)
-  - google_mlkit_commons (0.7.1):
+  - google_mlkit_commons (0.8.0):
     - Flutter
     - MLKitVision
   - google_mlkit_digital_ink_recognition (0.12.0):
@@ -386,11 +386,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
-  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
+  camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
   google_mlkit_barcode_scanning: 383d0c2dd62d92b36c0b10c7e69cf98d3650dc40
-  google_mlkit_commons: 96aaca445520311b84a2da013dedf3427fe4cc69
+  google_mlkit_commons: dae24dec1b427cddec7f981f4abbf95aff8bb19e
   google_mlkit_digital_ink_recognition: b9abc8bbe3b9a62a28b2740efc74d9324d8b24c5
   google_mlkit_document_scanner: 5b889061c0b0967d83cb0c15c1b084776f509a00
   google_mlkit_entity_extraction: 6a2f93e1d83cd971a453052a955084e22fadb0ed
@@ -410,7 +410,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   MLImage: 1824212150da33ef225fbd3dc49f184cf611046c
   MLKitBarcodeScanning: 10ca0845a6d15f2f6e911f682a1998b68b973e8b
   MLKitCommon: afec63980417d29ffbb4790529a1b0a2291699e1
@@ -443,7 +443,7 @@ SPEC CHECKSUMS:
   MLKitVisionKit: 6d2ea9741b262ec0fed2a5a3de521cfa671c6e83
   MLKitXenoCommon: 39060e7a54769d97a877152c59a1898e7f8d9e35
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SSZipArchive: c69881e8ac5521f0e622291387add5f60f30f3c4
 
