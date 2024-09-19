@@ -2,6 +2,7 @@ name: google_mlkit_language_id
 description: A Flutter plugin to use Google's ML Kit Language Identification to determine the language of a string of text.
 version: 0.11.1
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
+repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_language_id
 
 environment:
   sdk: ">=2.16.0 <4.0.0"
@@ -14,7 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.2
+  flutter_lints: ^4.0.0
 
 flutter:
   plugin:

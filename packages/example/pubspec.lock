@@ -182,105 +182,105 @@ packages:
       path: "../google_mlkit_barcode_scanning"
       relative: true
     source: path
-    version: "0.12.0"
+    version: "0.12.1"
   google_mlkit_commons:
     dependency: "direct main"
     description:
       path: "../google_mlkit_commons"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "0.8.1"
   google_mlkit_digital_ink_recognition:
     dependency: "direct main"
     description:
       path: "../google_mlkit_digital_ink_recognition"
       relative: true
     source: path
-    version: "0.12.0"
+    version: "0.12.1"
   google_mlkit_document_scanner:
     dependency: "direct main"
     description:
       path: "../google_mlkit_document_scanner"
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.2.1"
   google_mlkit_entity_extraction:
     dependency: "direct main"
     description:
       path: "../google_mlkit_entity_extraction"
       relative: true
     source: path
-    version: "0.13.0"
+    version: "0.13.1"
   google_mlkit_face_detection:
     dependency: "direct main"
     description:
       path: "../google_mlkit_face_detection"
       relative: true
     source: path
-    version: "0.11.0"
+    version: "0.11.1"
   google_mlkit_face_mesh_detection:
     dependency: "direct main"
     description:
       path: "../google_mlkit_face_mesh_detection"
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.2.1"
   google_mlkit_image_labeling:
     dependency: "direct main"
     description:
       path: "../google_mlkit_image_labeling"
       relative: true
     source: path
-    version: "0.12.0"
+    version: "0.12.1"
   google_mlkit_language_id:
     dependency: "direct main"
     description:
       path: "../google_mlkit_language_id"
       relative: true
     source: path
-    version: "0.11.0"
+    version: "0.11.1"
   google_mlkit_object_detection:
     dependency: "direct main"
     description:
       path: "../google_mlkit_object_detection"
       relative: true
     source: path
-    version: "0.13.0"
+    version: "0.13.1"
   google_mlkit_pose_detection:
     dependency: "direct main"
     description:
       path: "../google_mlkit_pose_detection"
       relative: true
     source: path
-    version: "0.12.0"
+    version: "0.12.1"
   google_mlkit_selfie_segmentation:
     dependency: "direct main"
     description:
       path: "../google_mlkit_selfie_segmentation"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "0.8.1"
   google_mlkit_smart_reply:
     dependency: "direct main"
     description:
       path: "../google_mlkit_smart_reply"
       relative: true
     source: path
-    version: "0.11.0"
+    version: "0.11.1"
   google_mlkit_text_recognition:
     dependency: "direct main"
     description:
       path: "../google_mlkit_text_recognition"
       relative: true
     source: path
-    version: "0.13.0"
+    version: "0.13.1"
   google_mlkit_translation:
     dependency: "direct main"
     description:
       path: "../google_mlkit_translation"
       relative: true
     source: path
-    version: "0.11.0"
+    version: "0.11.1"
   http:
     dependency: transitive
     description:

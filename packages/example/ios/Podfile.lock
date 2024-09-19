@@ -4,62 +4,62 @@ PODS:
   - Flutter (1.0.0)
   - flutter_pdfview (1.0.2):
     - Flutter
-  - google_mlkit_barcode_scanning (0.12.0):
+  - google_mlkit_barcode_scanning (0.12.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/BarcodeScanning (~> 6.0.0)
-  - google_mlkit_commons (0.8.0):
+  - google_mlkit_commons (0.8.1):
     - Flutter
     - MLKitVision
-  - google_mlkit_digital_ink_recognition (0.12.0):
+  - google_mlkit_digital_ink_recognition (0.12.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 6.0.0)
-  - google_mlkit_document_scanner (0.2.0):
+  - google_mlkit_document_scanner (0.2.1):
     - Flutter
-  - google_mlkit_entity_extraction (0.13.0):
+  - google_mlkit_entity_extraction (0.13.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/EntityExtraction (~> 6.0.0)
-  - google_mlkit_face_detection (0.11.0):
+  - google_mlkit_face_detection (0.11.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 6.0.0)
-  - google_mlkit_face_mesh_detection (0.2.0):
+  - google_mlkit_face_mesh_detection (0.2.1):
     - Flutter
     - google_mlkit_commons
-  - google_mlkit_image_labeling (0.12.0):
+  - google_mlkit_image_labeling (0.12.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ImageLabeling (~> 6.0.0)
     - GoogleMLKit/ImageLabelingCustom (~> 6.0.0)
-  - google_mlkit_language_id (0.11.0):
+  - google_mlkit_language_id (0.11.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/LanguageID (~> 6.0.0)
-  - google_mlkit_object_detection (0.13.0):
+  - google_mlkit_object_detection (0.13.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/ObjectDetection (~> 6.0.0)
     - GoogleMLKit/ObjectDetectionCustom (~> 6.0.0)
-  - google_mlkit_pose_detection (0.12.0):
+  - google_mlkit_pose_detection (0.12.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/PoseDetection (~> 6.0.0)
     - GoogleMLKit/PoseDetectionAccurate (~> 6.0.0)
-  - google_mlkit_selfie_segmentation (0.8.0):
+  - google_mlkit_selfie_segmentation (0.8.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SegmentationSelfie (~> 6.0.0)
-  - google_mlkit_smart_reply (0.11.0):
+  - google_mlkit_smart_reply (0.11.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 6.0.0)
-  - google_mlkit_text_recognition (0.13.0):
+  - google_mlkit_text_recognition (0.13.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/TextRecognition (~> 6.0.0)
-  - google_mlkit_translation (0.11.0):
+  - google_mlkit_translation (0.11.1):
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/Translate (~> 6.0.0)
@@ -389,21 +389,21 @@ SPEC CHECKSUMS:
   camera_avfoundation: dd002b0330f4981e1bbcb46ae9b62829237459a4
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
-  google_mlkit_barcode_scanning: 383d0c2dd62d92b36c0b10c7e69cf98d3650dc40
-  google_mlkit_commons: dae24dec1b427cddec7f981f4abbf95aff8bb19e
-  google_mlkit_digital_ink_recognition: b9abc8bbe3b9a62a28b2740efc74d9324d8b24c5
-  google_mlkit_document_scanner: 5b889061c0b0967d83cb0c15c1b084776f509a00
-  google_mlkit_entity_extraction: 6a2f93e1d83cd971a453052a955084e22fadb0ed
-  google_mlkit_face_detection: b760d6035222630f347352b3b13f4a23ea9fb994
-  google_mlkit_face_mesh_detection: 0b0aa33d79e82959925391b176e1d96a846caf9c
-  google_mlkit_image_labeling: 6e0b7cbdec78650a00cccefc95f1ee8e6168a58c
-  google_mlkit_language_id: a63b1951078835b2682e52d9243012dfed621fec
-  google_mlkit_object_detection: 54a45452f93ce49f38a24a2e6880591708d7c752
-  google_mlkit_pose_detection: 47f28fa7b4f849b3a73cb0091c2891eff84b7361
-  google_mlkit_selfie_segmentation: 0c0a21ee1f811575cead86a3b810cd05b900117c
-  google_mlkit_smart_reply: 8d3ad8957603cb394212c7def04fe74999f74624
-  google_mlkit_text_recognition: 393c2526da49aa6c9c883e6d69100f54af011e24
-  google_mlkit_translation: a255e8ca9bc6b68cf7913202f8d09f0460becca6
+  google_mlkit_barcode_scanning: 7a4977a630fa019624ffee251d94624dab26d527
+  google_mlkit_commons: 242b715c38863e1ca5e732c909a1545ba52f1375
+  google_mlkit_digital_ink_recognition: e518587726698cad3de1177c11ab6aadf512a430
+  google_mlkit_document_scanner: 3e773d71690f804ac27b1c9c833179ebceab8df9
+  google_mlkit_entity_extraction: 2fa7e231eb929f53d26c565a6918b3f1a1d8c3f0
+  google_mlkit_face_detection: 5bdb0ae6886d84ca5f2a237f2e46be2d634c5355
+  google_mlkit_face_mesh_detection: 261f577041cf88e6a9760517fd3d892bfc643ac4
+  google_mlkit_image_labeling: a253b5c4426a99ecedc79199519135b8564e1929
+  google_mlkit_language_id: 5d23732ad3665890a88460fc0942c178ae03e451
+  google_mlkit_object_detection: 845d69b11087ff20cd2515524f404eb5ea7e2c4d
+  google_mlkit_pose_detection: 38c7cbfc8ceec86ed9b6c7d589330e965ab5698d
+  google_mlkit_selfie_segmentation: 48ef0fd4426c19409931081de643a70a0dbe13dc
+  google_mlkit_smart_reply: f45bb92954cc57855f382443f7b5655d1c11df88
+  google_mlkit_text_recognition: e36a265afba48580518dfc4532ce9fefaae7d20e
+  google_mlkit_translation: 123a621b48b517b5f91cb76214b8a6f95fe61440
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMLKit: 97ac7af399057e99182ee8edfa8249e3226a4065
   GoogleToolboxForMac: d1a2cbf009c453f4d6ded37c105e2f67a32206d8

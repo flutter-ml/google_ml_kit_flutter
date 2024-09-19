@@ -1,4 +1,4 @@
-## 0.8.0
+## 0.8.1
 
 * Handle NullPointer Exception in `InputImageConverter.java`
 * Fix warnings
