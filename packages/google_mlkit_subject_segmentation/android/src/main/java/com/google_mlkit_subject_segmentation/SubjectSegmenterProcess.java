@@ -84,35 +84,7 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
         SubjectSegmenterOptions.Builder builder = new SubjectSegmenterOptions.Builder();
         assert options != null;
         configureBuilder(builder, options);
-        return SubjectSegmentation.getClient(builder.build()) ;
-//        Map<String, Object> options = call.argument("options");
-//        SubjectSegmenterOptions.Builder builder = new SubjectSegmenterOptions.Builder();
-//        Boolean enableForegroundBitmap = (boolean) options.get("enableForegroundBitmap");
-//        Boolean enableForegroundConfidenceMask = (boolean) options.get("enableForegroundConfidenceMask");
-//        Boolean enableMultiConfidenceMask = (boolean) options.get("enableMultiConfidenceMask");
-//        Boolean enableMultiSubjectBitmap = (boolean) options.get("enableMultiSubjectBitmap");
-//
-//        if(Boolean.TRUE.equals(enableForegroundConfidenceMask)){
-//            builder.enableForegroundConfidenceMask();
-//        }
-//        if(Boolean.TRUE.equals(enableForegroundBitmap)){
-//            builder.enableForegroundBitmap();
-//        }
-//        if(Boolean.TRUE.equals(enableMultiConfidenceMask) || Boolean.TRUE.equals(enableMultiSubjectBitmap)){
-//            SubjectSegmenterOptions.SubjectResultOptions.Builder subjectBuilder =
-//                    new SubjectSegmenterOptions.SubjectResultOptions.Builder();
-//
-//            if(Boolean.TRUE.equals(enableMultiConfidenceMask)){
-//                subjectBuilder.enableConfidenceMask();
-//            }
-//
-//            if(Boolean.TRUE.equals(enableMultiSubjectBitmap)) {
-//                subjectBuilder.enableSubjectBitmap();
-//            }
-//            builder.enableMultipleSubjects(subjectBuilder.build());
-//        }
-//        SubjectSegmenterOptions subjectSegmenterOptions = builder.build();
-//        return SubjectSegmentation.getClient(subjectSegmenterOptions);
+        return SubjectSegmentation.getClient(builder.build());
     }
 
     private void configureBuilder(SubjectSegmenterOptions.Builder builder, Map<String, Object> options) {
@@ -193,46 +165,6 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
         return outputStream.toByteArray();
     }
 
-    private void handleDetection(MethodCall call, MethodChannel.Result result){
-        Map<String, Object> imageData = call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null) return;
-        imageHeight = inputImage.getHeight();
-        imageWidth = inputImage.getWidth();
-        String id = call.argument("id");
-        SubjectSegmenter subjectSegmenter = instances.get(id);
-        if (subjectSegmenter == null) {
-            subjectSegmenter = initialize(call);
-            instances.put(id, subjectSegmenter);
-        }
-
-       subjectSegmenter.process(inputImage)
-               .addOnSuccessListener( subjectSegmentationResult -> {
-
-                   Bitmap foregroundBitmap = subjectSegmentationResult.getForegroundBitmap();
-
-                   FloatBuffer foregroundConfidenceMask = subjectSegmentationResult.getForegroundConfidenceMask();
-
-                    List<Map<String, Object>> subjectsData = new ArrayList<>();
-                    for(Subject subject : subjectSegmentationResult.getSubjects()){
-                        Map<String, Object> subjectData = getStringObjectMap(subject);
-                        subjectsData.add(subjectData);
-                    }
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("subjects", subjectsData);
-
-                    assert foregroundBitmap != null;
-                    map.put("bitmap", getBitMap(foregroundBitmap));
-
-                    assert foregroundConfidenceMask != null;
-                    map.put("confidences", getConfidences(foregroundConfidenceMask));
-
-                    map.put("width", imageWidth);
-                    map.put("height", imageHeight);
-
-                result.success(map);
-               }).addOnFailureListener( e -> result.error("Subject segmentation failed!", e.getMessage(), e) );
-    }
 
     @NonNull
     private static Map<String, Object> getStringObjectMap(Subject subject, Map<String, Object> options) {
@@ -250,20 +182,6 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
         return subjectData;
     }
 
-//    private static float[] getConfidences(FloatBuffer floatBuffer) {
-//        assert floatBuffer != null;
-//        float[] confidences = new float[floatBuffer.remaining()];
-//        floatBuffer.get(confidences);
-//        return confidences;
-//    }
-//    private static byte[] getBitMap(Bitmap bitmap){
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        byte[] imageBytes = null;
-//        assert bitmap != null;
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-//        imageBytes = outputStream.toByteArray();
-//        return imageBytes;
-//    }
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         SubjectSegmenter subjectSegmenter = instances.get(id);
