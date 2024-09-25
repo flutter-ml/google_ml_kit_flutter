@@ -11,7 +11,8 @@ class SubjectSegmenterView extends StatefulWidget {
 }
 
 class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
-  final SubjectSegmenter _segmenter = SubjectSegmenter();
+  final SubjectSegmenter _segmenter = SubjectSegmenter(
+      options: SubjectSegmenterOptions(enableForegroundBitmap: true));
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;

@@ -1,5 +1,9 @@
+// ignore_for_file: unnecessary_lambdas
+
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+
+import '../google_mlkit_subject_segmentation.dart';
 
 /// A detector that performs segmentation on a given [InputImage].
 class SubjectSegmenter {
@@ -10,6 +14,12 @@ class SubjectSegmenter {
   /// A unique identifier for the segmentation session, generated using the current timestamp
   final id = DateTime.now().microsecondsSinceEpoch.toString();
 
+  /// The options for the subject segmenter
+  final SubjectSegmenterOptions options;
+
+  /// Constructor to create an instance of [FaceDetector].
+  SubjectSegmenter({required this.options});
+
   /// Processes the given [InputImage] for segmentation.
   ///
   /// Sends the [InputImage] data to the natvie platform via the method channel
@@ -19,6 +29,7 @@ class SubjectSegmenter {
         .invokeMethod('vision#startSubjectSegmenter', <String, dynamic>{
       'id': id,
       'imageData': inputImage.toJson(),
+      'options': options.toJson(),
     });
     // Convert the JSON response from the platform into a SubjectSegmenterMask instance.
     final SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
@@ -31,6 +42,75 @@ class SubjectSegmenter {
   /// system resources on the native side.
   Future<void> close() =>
       _channel.invokeMethod('vision#closeSubjectSegmenter', {'id': id});
+}
+
+/// Immutable options for configuring features of [FaceDetector].
+///
+/// Used to configure features such as classification, face tracking, speed,
+/// etc.
+class SubjectSegmenterOptions {
+  /// Constructor for [FaceDetectorOptions].
+  ///
+  /// The parameter [minFaceSize] must be between 0.0 and 1.0, inclusive.
+  SubjectSegmenterOptions({
+    this.enableForegroundConfidenceMask = false,
+    this.enableForegroundBitmap = false,
+    this.enableMultiConfidenceMask = false,
+    this.enableMultiSubjectBitmap = false,
+  }) : assert(
+            (enableForegroundConfidenceMask ? 1 : 0) +
+                    (enableForegroundBitmap ? 1 : 0) +
+                    (enableMultiConfidenceMask ? 1 : 0) +
+                    (enableMultiSubjectBitmap ? 1 : 0) ==
+                1,
+            'Exactly one option must be true');
+
+  ///
+  /// TODO: Comment here
+  ///
+  final bool enableForegroundConfidenceMask;
+
+  ///
+  /// TODO: comment here
+  ///
+  final bool enableForegroundBitmap;
+
+  ///
+  /// TODO: Comment here
+  ///
+  final bool enableMultiConfidenceMask;
+
+  ///
+  ///
+  ///
+  final bool enableMultiSubjectBitmap;
+
+  /// Returns a json representation of an instance of [SubjectSegmenterOptions].
+  Map<String, dynamic> toJson() => {
+        'enableForegroundConfidenceMask': enableForegroundConfidenceMask,
+        'enableForegroundBitmap': enableForegroundBitmap,
+        'enableMultiConfidenceMask': enableMultiConfidenceMask,
+        'enableMultiSubjectBitmap': enableMultiSubjectBitmap,
+      };
+
+  // Factory constructor to ensure one option is selected if none are provided
+  factory SubjectSegmenterOptions.withDefaultOption() {
+    return SubjectSegmenterOptions(enableForegroundConfidenceMask: true);
+  }
+
+  // Method to validate options
+  static bool areOptionsValid({
+    bool enableForegroundConfidenceMask = false,
+    bool enableForegroundBitmap = false,
+    bool enableMultiConfidenceMask = false,
+    bool enableMultiSubjectBitmap = false,
+  }) {
+    return (enableForegroundConfidenceMask ? 1 : 0) +
+            (enableForegroundBitmap ? 1 : 0) +
+            (enableMultiConfidenceMask ? 1 : 0) +
+            (enableMultiSubjectBitmap ? 1 : 0) ==
+        1;
+  }
 }
 
 /// A data class that represents the segmentation mask returned by the [SubjectSegmenterMask]
@@ -56,8 +136,9 @@ class SubjectSegmenterMask {
 
   /// Returns an instance of [SubjectSegmenterMask] from json
   factory SubjectSegmenterMask.fromJson(Map<dynamic, dynamic> json) {
-    final List<Map<dynamic, dynamic>> list = json['subjects'];
-    final List<Subject> subjects = list.map(Subject.fromJson).toList();
+    final List<dynamic> list = json['subjects'];
+    final List<Subject> subjects =
+        list.map((json) => Subject.fromJson(json)).toList();
     return SubjectSegmenterMask(
       width: json['width'] as int,
       height: json['height'] as int,
