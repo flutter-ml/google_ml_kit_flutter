@@ -81,7 +81,8 @@ final InputImage inputImage;
 #### Create an instance of `SubjectSegmenter`
 
 ```dart
-final segmenter = SubjectSegmenter();
+final options = SubjectSegmenterOptions();
+final segmenter = SubjectSegmenter(options: options);
 ```
 
 #### Process image
