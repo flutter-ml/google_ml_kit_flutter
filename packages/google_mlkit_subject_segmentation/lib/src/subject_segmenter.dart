@@ -17,13 +17,13 @@ class SubjectSegmenter {
   /// The options for the subject segmenter
   final SubjectSegmenterOptions options;
 
-  /// Constructor to create an instance of [FaceDetector].
+  /// Constructor to create an instance of [SubjectSegmention].
   SubjectSegmenter({required this.options});
 
   /// Processes the given [InputImage] for segmentation.
   ///
   /// Sends the [InputImage] data to the natvie platform via the method channel
-  /// Returns the segmentation mask in the given image or nil if there was an error.
+  /// Returns the segmentation mask in the given image.
   Future<SubjectSegmenterMask> processImage(InputImage inputImage) async {
     final results = await _channel
         .invokeMethod('vision#startSubjectSegmenter', <String, dynamic>{
@@ -44,45 +44,36 @@ class SubjectSegmenter {
       _channel.invokeMethod('vision#closeSubjectSegmenter', {'id': id});
 }
 
-/// Immutable options for configuring features of [FaceDetector].
+/// Immutable options for configuring features of [SubjectSegmention].
 ///
-/// Used to configure features such as classification, face tracking, speed,
-/// etc.
+/// Used to configure features such as foreground confidence mask, foreground bitmap, multi confidence mask
+/// or multi subject bitmap
 class SubjectSegmenterOptions {
-  /// Constructor for [FaceDetectorOptions].
+  /// Constructor for [SubjectSegmenterOptions].
   ///
-  /// The parameter [minFaceSize] must be between 0.0 and 1.0, inclusive.
+  /// The parameter to enable options
+  /// NOTE: To improve memory efficiency, it is recommended to only enable the necessary options.
   SubjectSegmenterOptions({
-    this.enableForegroundConfidenceMask = false,
+    this.enableForegroundConfidenceMask = true,
     this.enableForegroundBitmap = false,
     this.enableMultiConfidenceMask = false,
     this.enableMultiSubjectBitmap = false,
-  }) : assert(
-            (enableForegroundConfidenceMask ? 1 : 0) +
-                    (enableForegroundBitmap ? 1 : 0) +
-                    (enableMultiConfidenceMask ? 1 : 0) +
-                    (enableMultiSubjectBitmap ? 1 : 0) ==
-                1,
-            'Exactly one option must be true');
+  });
 
   ///
-  /// TODO: Comment here
-  ///
+  /// Enables foreground confidence mask.
   final bool enableForegroundConfidenceMask;
 
   ///
-  /// TODO: comment here
-  ///
+  /// Enables foreground bitmap
   final bool enableForegroundBitmap;
 
   ///
-  /// TODO: Comment here
-  ///
+  /// Enables confidence mask for segmented Subjects
   final bool enableMultiConfidenceMask;
 
   ///
-  ///
-  ///
+  /// Enables subject bitmap for segmented Subjects.
   final bool enableMultiSubjectBitmap;
 
   /// Returns a json representation of an instance of [SubjectSegmenterOptions].
@@ -92,25 +83,6 @@ class SubjectSegmenterOptions {
         'enableMultiConfidenceMask': enableMultiConfidenceMask,
         'enableMultiSubjectBitmap': enableMultiSubjectBitmap,
       };
-
-  // Factory constructor to ensure one option is selected if none are provided
-  factory SubjectSegmenterOptions.withDefaultOption() {
-    return SubjectSegmenterOptions(enableForegroundConfidenceMask: true);
-  }
-
-  // Method to validate options
-  static bool areOptionsValid({
-    bool enableForegroundConfidenceMask = false,
-    bool enableForegroundBitmap = false,
-    bool enableMultiConfidenceMask = false,
-    bool enableMultiSubjectBitmap = false,
-  }) {
-    return (enableForegroundConfidenceMask ? 1 : 0) +
-            (enableForegroundBitmap ? 1 : 0) +
-            (enableMultiConfidenceMask ? 1 : 0) +
-            (enableMultiSubjectBitmap ? 1 : 0) ==
-        1;
-  }
 }
 
 /// A data class that represents the segmentation mask returned by the [SubjectSegmenterMask]
@@ -121,28 +93,37 @@ class SubjectSegmenterMask {
   /// The height of the segmentation mask
   final int height;
 
+  /// The masked bitmap for the input image
+  final Uint8List? bitmap;
+
+  /// A list of forground confidence mask for the input image
+  final List<double>? confidences;
+
   /// A list of subjects detected in the image, each respresented by a [Subject] instance
-  final List<Subject> subjects;
+  final List<Subject>? subjects;
 
   /// Constructor to create a instance of [SubjectSegmenterMask].
-  ///
-  /// The [width] and [height] represent the dimensions of the mark,
-  /// and [subjects] is a list of detected subjects
   SubjectSegmenterMask({
     required this.width,
     required this.height,
-    required this.subjects,
+    this.subjects,
+    this.bitmap,
+    this.confidences,
   });
 
   /// Returns an instance of [SubjectSegmenterMask] from json
   factory SubjectSegmenterMask.fromJson(Map<dynamic, dynamic> json) {
-    final List<dynamic> list = json['subjects'];
-    final List<Subject> subjects =
-        list.map((json) => Subject.fromJson(json)).toList();
+    List<Subject>? subjects;
+    if (json['subjects'] != null) {
+      subjects =
+          json['subjects'].map((json) => Subject.fromJson(json)).toList();
+    }
     return SubjectSegmenterMask(
       width: json['width'] as int,
       height: json['height'] as int,
       subjects: subjects,
+      confidences: json['confidences'],
+      bitmap: json['bitmap'],
     );
   }
 }
@@ -162,25 +143,31 @@ class Subject {
   final int subjectHeight;
 
   /// A list of confidence values for the detected subject.
-  final List<double> confidences;
+  final List<double>? confidences;
 
-  Subject(
-      {required this.startX,
-      required this.startY,
-      required this.subjectWidth,
-      required this.subjectHeight,
-      required this.confidences});
+  /// The masked bitmap of the subject
+  final Uint8List? bitmap;
+
+  Subject({
+    required this.startX,
+    required this.startY,
+    required this.subjectWidth,
+    required this.subjectHeight,
+    this.confidences,
+    this.bitmap,
+  });
 
   /// Creates an instance of [Subject] from a JSON object.
   ///
   /// This factory constructor is used to convert JSON data into a [Subject] object.
-
   factory Subject.fromJson(Map<dynamic, dynamic> json) {
     return Subject(
-        startX: json['startX'] as int,
-        startY: json['startY'] as int,
-        subjectWidth: json['width'] as int,
-        subjectHeight: json['height'] as int,
-        confidences: json['confidences']);
+      startX: json['startX'] as int,
+      startY: json['startY'] as int,
+      subjectWidth: json['width'] as int,
+      subjectHeight: json['height'] as int,
+      confidences: json['confidences'],
+      bitmap: json['bitmap'],
+    );
   }
 }

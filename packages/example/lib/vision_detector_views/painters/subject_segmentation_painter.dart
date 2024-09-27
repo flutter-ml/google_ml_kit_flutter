@@ -21,7 +21,7 @@ class SubjectSegmentationPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final int width = mask.width;
     final int height = mask.height;
-    final List<Subject> subjects = mask.subjects;
+    final List<Subject> subjects = mask.subjects ?? [];
 
     final paint = Paint()..style = PaintingStyle.fill;
 
@@ -30,7 +30,7 @@ class SubjectSegmentationPainter extends CustomPainter {
       final int startY = subject.startY;
       final int subjectWidth = subject.subjectWidth;
       final int subjectHeight = subject.subjectHeight;
-      final List<double> confidences = subject.confidences;
+      final List<double> confidences = subject.confidences ?? [];
 
       for (int y = 0; y < subjectHeight; y++) {
         for (int x = 0; y < subjectWidth; x++) {

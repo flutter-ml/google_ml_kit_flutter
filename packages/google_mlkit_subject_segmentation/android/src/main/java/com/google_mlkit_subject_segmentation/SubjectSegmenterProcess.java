@@ -35,8 +35,6 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
     private static final String CLOSE = "vision#closeSubjectSegmenter";
 
     private final Context context;
-
-    private static final String TAG = "Logger";
      
     private int imageWidth;
     private int imageHeight;
@@ -64,8 +62,10 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
     }
 
     private void handleDetection(MethodCall call, MethodChannel.Result result) {
-        InputImage inputImage = InputImageConverter.getInputImageFromData(call.argument("imageDate"), context, result);
+        InputImage inputImage = InputImageConverter.getInputImageFromData(call.argument("imageData"), context, result);
         if(inputImage == null) return;
+        imageHeight = inputImage.getHeight();
+        imageWidth = inputImage.getWidth();
 
         String id = call.argument("id");
         SubjectSegmenter subjectSegmenter = getOrCreateSegmenter(id, call);
@@ -130,7 +130,8 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
                 }
                resultMap.put("subjects", subjectsData);
             }
-            addImageDimensions(resultMap, call);
+            resultMap.put("width", imageWidth);
+            resultMap.put("height", imageHeight);
 
             result.success(resultMap);
     }
@@ -147,12 +148,6 @@ public class SubjectSegmenterProcess implements MethodChannel.MethodCallHandler 
         }
     }
 
-    private void addImageDimensions(Map<String, Object> map, MethodCall call) {
-        Map<String, Object> imageData = call.argument("imageData");
-        assert imageData != null;
-        map.put("width", imageData.get("width"));
-        map.put("height", imageData.get("height"));
-    }
     private static float[] getConfidences(FloatBuffer floatBuffer) {
         float[] confidences = new float[floatBuffer.remaining()];
         floatBuffer.get(confidences);

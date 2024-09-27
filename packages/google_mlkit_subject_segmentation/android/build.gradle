@@ -41,5 +41,5 @@ android {
 
 dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-subject-segmentation:16.0.0-beta1'
-    implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm/flutter.jar')
+//    implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm/flutter.jar')
 }
