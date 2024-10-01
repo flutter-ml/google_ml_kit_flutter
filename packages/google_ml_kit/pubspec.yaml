@@ -1,7 +1,8 @@
 name: google_ml_kit
 description: A Flutter plugin to use all APIs from Google's standalone ML Kit for mobile platforms.
-version: 0.18.0
+version: 0.18.1
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
+repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_ml_kit
 
 environment:
   sdk: ">=2.16.0 <4.0.0"
@@ -12,54 +13,24 @@ dependencies:
     sdk: flutter
 
   # Vision APIs
-  google_mlkit_commons: ^0.7.1
-  google_mlkit_barcode_scanning: ^0.12.0
-  google_mlkit_digital_ink_recognition: ^0.12.0
-  google_mlkit_face_detection: ^0.11.0
-  google_mlkit_face_mesh_detection: ^0.2.0
-  google_mlkit_image_labeling: ^0.12.0
-  google_mlkit_object_detection: ^0.13.0
-  google_mlkit_pose_detection: ^0.12.0
-  google_mlkit_selfie_segmentation: ^0.8.0
-  google_mlkit_text_recognition: ^0.13.0
-
-  # uncomment these lines when working on the local plugins
-#  google_mlkit_commons:
-#    path: ../google_mlkit_commons
-#  google_mlkit_barcode_scanning:
-#    path: ../google_mlkit_barcode_scanning
-#  google_mlkit_digital_ink_recognition:
-#    path: ../google_mlkit_digital_ink_recognition
-#  google_mlkit_face_detection:
-#    path: ../google_mlkit_face_detection
-#  google_mlkit_image_labeling:
-#    path: ../google_mlkit_image_labeling
-#  google_mlkit_object_detection:
-#    path: ../google_mlkit_object_detection
-#  google_mlkit_pose_detection:
-#    path: ../google_mlkit_pose_detection
-#  google_mlkit_selfie_segmentation:
-#    path: ../google_mlkit_selfie_segmentation
-#  google_mlkit_text_recognition:
-#    path: ../google_mlkit_text_recognition
+  google_mlkit_commons: ^0.8.1
+  google_mlkit_barcode_scanning: ^0.12.1
+  google_mlkit_digital_ink_recognition: ^0.12.1
+  google_mlkit_face_detection: ^0.11.1
+  google_mlkit_face_mesh_detection: ^0.2.1
+  google_mlkit_image_labeling: ^0.12.1
+  google_mlkit_object_detection: ^0.13.1
+  google_mlkit_pose_detection: ^0.12.1
+  google_mlkit_selfie_segmentation: ^0.8.1
+  google_mlkit_text_recognition: ^0.13.1
 
   # Natural Language APIs
-  google_mlkit_entity_extraction: ^0.13.0
-  google_mlkit_language_id: ^0.11.0
-  google_mlkit_translation: ^0.11.0
-  google_mlkit_smart_reply: ^0.11.0
-
-  # uncomment these lines when working on the local plugins
-#  google_mlkit_entity_extraction:
-#    path: ../google_mlkit_entity_extraction
-#  google_mlkit_language_id:
-#    path: ../google_mlkit_language_id
-#  google_mlkit_translation:
-#    path: ../google_mlkit_translation
-#  google_mlkit_smart_reply:
-#    path: ../google_mlkit_smart_reply
+  google_mlkit_entity_extraction: ^0.13.1
+  google_mlkit_language_id: ^0.11.1
+  google_mlkit_translation: ^0.11.1
+  google_mlkit_smart_reply: ^0.11.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.2
+  flutter_lints: ^4.0.0

@@ -1,0 +1,86 @@
+name: Bug Report
+description: Report a bug
+labels: [ 'bug' ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out the sections below to help everyone identify and fix the bug.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your issue. If applicable, add screenshots to help explain your problem.
+      description: Add a clear and concise description of what the bug is.
+      placeholder: Description...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What is the expected result?
+      description: Add a clear and concise description of what you expected to happen.
+      placeholder: Expected result...
+    validations:
+      required: true
+  - type: dropdown
+    id: tried_example_app
+    attributes:
+      label: Did you try our example app?
+      multiple: false
+      options:
+        - ''
+        - 'No'
+        - 'Yes'
+    validations:
+      required: true
+  - type: dropdown
+    id: reproducible_in_example_app
+    attributes:
+      label: Is it reproducible in the example app?
+      multiple: false
+      options:
+        - ''
+        - 'No'
+        - 'Yes'
+    validations:
+      required: true
+  - type: dropdown
+    id: reproducible_mobile_os
+    attributes:
+      label: Reproducible in which OS?
+      multiple: true
+      options:
+        - 'iOS'
+        - 'Android'
+        - 'iOS and Android'
+    validations:
+      required: true
+  - type: textarea
+    id: flutter_doctor
+    attributes:
+      label: Flutter/Dart Version?
+      description: Run `flutter doctor` and paste the output here.
+      placeholder: flutter doctor...
+  - type: textarea
+    id: plugin_version
+    attributes:
+      label: Plugin Version?
+      description: What plugin version are you using?
+      placeholder: Plugin version...
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this issue! We will get back to you as soon as possible.
