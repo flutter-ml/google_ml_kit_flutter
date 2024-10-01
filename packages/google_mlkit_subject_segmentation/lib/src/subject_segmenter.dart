@@ -1,13 +1,8 @@
-// ignore_for_file: unnecessary_lambdas
-
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
-import '../google_mlkit_subject_segmentation.dart';
-
 /// A detector that performs segmentation on a given [InputImage].
 class SubjectSegmenter {
-  /// A platform channel used to communicate with native code for segmentation
   static const MethodChannel _channel =
       MethodChannel('google_mlkit_subject_segmentation');
 
@@ -17,22 +12,23 @@ class SubjectSegmenter {
   /// The options for the subject segmenter
   final SubjectSegmenterOptions options;
 
-  /// Constructor to create an instance of [SubjectSegmention].
+  /// Constructor to create an instance of [SubjectSegmenter].
   SubjectSegmenter({required this.options});
 
   /// Processes the given [InputImage] for segmentation.
   ///
   /// Sends the [InputImage] data to the natvie platform via the method channel
   /// Returns the segmentation mask in the given image.
-  Future<SubjectSegmenterMask> processImage(InputImage inputImage) async {
+  Future<SubjectSegmentationResult> processImage(InputImage inputImage) async {
     final results = await _channel
         .invokeMethod('vision#startSubjectSegmenter', <String, dynamic>{
       'id': id,
       'imageData': inputImage.toJson(),
       'options': options.toJson(),
     });
-    // Convert the JSON response from the platform into a SubjectSegmenterMask instance.
-    final SubjectSegmenterMask masks = SubjectSegmenterMask.fromJson(results);
+    // Convert the JSON response from the platform into a SubjectSegmentationResult instance.
+    final SubjectSegmentationResult masks =
+        SubjectSegmentationResult.fromJson(results);
     return masks;
   }
 
@@ -44,86 +40,91 @@ class SubjectSegmenter {
       _channel.invokeMethod('vision#closeSubjectSegmenter', {'id': id});
 }
 
-/// Immutable options for configuring features of [SubjectSegmention].
-///
-/// Used to configure features such as foreground confidence mask, foreground bitmap, multi confidence mask
-/// or multi subject bitmap
+/// A class to represent options for [SubjectSegmenter].
 class SubjectSegmenterOptions {
-  /// Constructor for [SubjectSegmenterOptions].
+  /// Constructor to create an instance of [SubjectSegmenterOptions].
   ///
-  /// The parameter to enable options
   /// NOTE: To improve memory efficiency, it is recommended to only enable the necessary options.
   SubjectSegmenterOptions({
-    this.enableForegroundConfidenceMask = true,
-    this.enableForegroundBitmap = false,
-    this.enableMultiConfidenceMask = false,
-    this.enableMultiSubjectBitmap = false,
+    required this.enableForegroundBitmap,
+    required this.enableForegroundConfidenceMask,
+    required this.enableMultipleSubjects,
   });
 
-  ///
-  /// Enables foreground confidence mask.
-  final bool enableForegroundConfidenceMask;
-
-  ///
-  /// Enables foreground bitmap
+  /// Enables foreground bitmap in [SubjectSegmentationResult].
   final bool enableForegroundBitmap;
 
-  ///
-  /// Enables confidence mask for segmented Subjects
-  final bool enableMultiConfidenceMask;
+  /// Enables foreground confidence mask in [SubjectSegmentationResult].
+  final bool enableForegroundConfidenceMask;
 
-  ///
-  /// Enables subject bitmap for segmented Subjects.
-  final bool enableMultiSubjectBitmap;
+  /// Enables multiple subjects in [SubjectSegmentationResult].
+  final SubjectResultOptions enableMultipleSubjects;
 
   /// Returns a json representation of an instance of [SubjectSegmenterOptions].
   Map<String, dynamic> toJson() => {
-        'enableForegroundConfidenceMask': enableForegroundConfidenceMask,
         'enableForegroundBitmap': enableForegroundBitmap,
-        'enableMultiConfidenceMask': enableMultiConfidenceMask,
-        'enableMultiSubjectBitmap': enableMultiSubjectBitmap,
+        'enableForegroundConfidenceMask': enableForegroundConfidenceMask,
+        'enableMultiSubjectBitmap': enableMultipleSubjects.toJson(),
       };
 }
 
-/// A data class that represents the segmentation mask returned by the [SubjectSegmenterMask]
-class SubjectSegmenterMask {
-  /// The width of the segmentation mask
-  final int width;
+/// A class to represent options for results in [Subject].
+class SubjectResultOptions {
+  /// Enables confidence mask for segmented [Subject]s.
+  final bool enableConfidenceMask;
 
-  /// The height of the segmentation mask
-  final int height;
+  /// Enables subject bitmap for segmented [Subject]s.
+  final bool enableSubjectBitmap;
 
-  /// The masked bitmap for the input image
-  final Uint8List? bitmap;
-
-  /// A list of forground confidence mask for the input image
-  final List<double>? confidences;
-
-  /// A list of subjects detected in the image, each respresented by a [Subject] instance
-  final List<Subject>? subjects;
-
-  /// Constructor to create a instance of [SubjectSegmenterMask].
-  SubjectSegmenterMask({
-    required this.width,
-    required this.height,
-    this.subjects,
-    this.bitmap,
-    this.confidences,
+  /// Constructor to create an instance of [SubjectResultOptions].
+  SubjectResultOptions({
+    required this.enableConfidenceMask,
+    required this.enableSubjectBitmap,
   });
 
-  /// Returns an instance of [SubjectSegmenterMask] from json
-  factory SubjectSegmenterMask.fromJson(Map<dynamic, dynamic> json) {
+  /// Returns a json representation of an instance of [SubjectResultOptions].
+  Map<String, dynamic> toJson() => {
+        'enableConfidenceMask': enableConfidenceMask,
+        'enableSubjectBitmap': enableSubjectBitmap,
+      };
+}
+
+/// A data class that represents the segmentation mask returned by the [SubjectSegmentationResult]
+class SubjectSegmentationResult {
+  /// Returns the masked bitmap for the input image.
+  ///
+  /// Returns null if it is not enabled by [SubjectSegmenterOptions.enableForegroundConfidenceMask]
+  final Uint8List? foregroundBitmap;
+
+  /// Returns the foreground confidence mask for the input image.
+  ///
+  /// Returns null if it is not enabled by [SubjectSegmenterOptions.enableForegroundConfidenceMask]
+  final List<double>? foregroundConfidenceMask;
+
+  /// Returns all segmented Subjects from the input image.
+  ///
+  /// Returns an empty list if multiple subjects are not enabled by [SubjectSegmenterOptions.enableMultipleSubjects]
+  final List<Subject> subjects;
+
+  /// Constructor to create a instance of [SubjectSegmentationResult].
+  SubjectSegmentationResult({
+    required this.subjects,
+    this.foregroundBitmap,
+    this.foregroundConfidenceMask,
+  });
+
+  /// Returns an instance of [SubjectSegmentationResult] from json
+  factory SubjectSegmentationResult.fromJson(Map<dynamic, dynamic> json) {
     List<Subject>? subjects;
     if (json['subjects'] != null) {
-      subjects =
-          json['subjects'].map((json) => Subject.fromJson(json)).toList();
+      subjects = (json['subjects'] as List)
+          .map((json) => Subject.fromJson(json as Map))
+          .toList();
     }
-    return SubjectSegmenterMask(
-      width: json['width'] as int,
-      height: json['height'] as int,
-      subjects: subjects,
-      confidences: json['confidences'],
-      bitmap: json['bitmap'],
+    return SubjectSegmentationResult(
+      subjects: subjects ?? [],
+      foregroundConfidenceMask: json['foregroundConfidenceMask'],
+      foregroundBitmap: json['foregroundBitmap'],
     );
   }
 }
@@ -137,37 +138,38 @@ class Subject {
   final int startY;
 
   /// Returns the width of this subject.
-  final int subjectWidth;
+  final int width;
 
   /// Returns the height of this subject.
-  final int subjectHeight;
+  final int height;
 
-  /// A list of confidence values for the detected subject.
-  final List<double>? confidences;
+  /// Returns the confidence mask for this subject.
+  ///
+  /// Returns null if it is not enabled by [SubjectResultOptions.enableConfidenceMask]
+  final List<double>? confidenceMask;
 
-  /// The masked bitmap of the subject
+  /// Returns the masked bitmap for this subject.
+  ///
+  /// Returns null if it is not enabled by [SubjectResultOptions.enableSubjectBitmap]
   final Uint8List? bitmap;
 
+  /// Constructor to create a instance of [Subject].
   Subject({
     required this.startX,
     required this.startY,
-    required this.subjectWidth,
-    required this.subjectHeight,
-    this.confidences,
+    required this.width,
+    required this.height,
+    this.confidenceMask,
     this.bitmap,
   });
 
-  /// Creates an instance of [Subject] from a JSON object.
-  ///
-  /// This factory constructor is used to convert JSON data into a [Subject] object.
-  factory Subject.fromJson(Map<dynamic, dynamic> json) {
-    return Subject(
-      startX: json['startX'] as int,
-      startY: json['startY'] as int,
-      subjectWidth: json['width'] as int,
-      subjectHeight: json['height'] as int,
-      confidences: json['confidences'],
-      bitmap: json['bitmap'],
-    );
-  }
+  /// Creates an instance of [Subject] from a given json.
+  factory Subject.fromJson(Map<dynamic, dynamic> json) => Subject(
+        startX: json['startX'] as int,
+        startY: json['startY'] as int,
+        width: json['width'] as int,
+        height: json['height'] as int,
+        confidenceMask: json['confidenceMask'],
+        bitmap: json['bitmap'],
+      );
 }

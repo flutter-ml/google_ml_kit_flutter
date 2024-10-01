@@ -12,7 +12,15 @@ class SubjectSegmenterView extends StatefulWidget {
 
 class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
   final SubjectSegmenter _segmenter = SubjectSegmenter(
-      options: SubjectSegmenterOptions(enableForegroundConfidenceMask: true));
+    options: SubjectSegmenterOptions(
+      enableForegroundConfidenceMask: false,
+      enableForegroundBitmap: false,
+      enableMultipleSubjects: SubjectResultOptions(
+        enableConfidenceMask: true,
+        enableSubjectBitmap: true,
+      ),
+    ),
+  );
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
@@ -45,7 +53,8 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
     setState(() {
       _text = '';
     });
-    final SubjectSegmenterMask mask = await _segmenter.processImage(inputImage);
+    final SubjectSegmentationResult mask =
+        await _segmenter.processImage(inputImage);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = SubjectSegmentationPainter(
@@ -57,7 +66,7 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
       _customPaint = CustomPaint(painter: painter);
     } else {
       // TODO: set _customPaint to draw on top of image
-      _text = 'There is a mask with ${mask.subjects?.length} subjects';
+      _text = 'There is a mask with ${mask.subjects.length} subjects';
       _customPaint = null;
     }
     _isBusy = false;
