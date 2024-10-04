@@ -31,8 +31,8 @@ A Flutter plugin to use [Google's ML Kit Object Detection and Tracking](https://
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
-- Xcode 15 or newer
+- Minimum iOS Deployment Target: 15.5.0
+- Xcode 15.3.0 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -47,12 +47,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '12.0'  # or newer version
+platform :ios, '15.5.0'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '12.0'  # or newer version
+$iOSVersion = '15.5.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -60,22 +60,22 @@ post_install do |installer|
     config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
   end
-  
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
+
     # add these lines:
     target.build_configurations.each do |config|
       if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
       end
     end
-    
+
   end
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5.0, you can set it to something newer but not older.
 
 ### Android
 
@@ -158,7 +158,7 @@ To use a local custom model add the [tflite model](https://www.tensorflow.org/li
 
 ```yaml
 assets:
-- assets/ml/
+  - assets/ml/
 ```
 
 Add this method:
@@ -223,7 +223,7 @@ Additionally, for iOS you have to update your app's Podfile.
 First, include `GoogleMLKit/LinkFirebase` and `Firebase` in your Podfile:
 
 ```ruby
-platform :ios, '12.0'
+platform :ios, '15.5.0'
 
 ...
 

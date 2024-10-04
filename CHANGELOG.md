@@ -3,6 +3,110 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-10-04
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.19.0`](#google_ml_kit---v0190)
+- [`google_mlkit_barcode_scanning` - `v0.13.0`](#google_mlkit_barcode_scanning---v0130)
+- [`google_mlkit_commons` - `v0.9.0`](#google_mlkit_commons---v090)
+- [`google_mlkit_digital_ink_recognition` - `v0.13.0`](#google_mlkit_digital_ink_recognition---v0130)
+- [`google_mlkit_document_scanner` - `v0.3.0`](#google_mlkit_document_scanner---v030)
+- [`google_mlkit_entity_extraction` - `v0.14.0`](#google_mlkit_entity_extraction---v0140)
+- [`google_mlkit_face_detection` - `v0.12.0`](#google_mlkit_face_detection---v0120)
+- [`google_mlkit_face_mesh_detection` - `v0.3.0`](#google_mlkit_face_mesh_detection---v030)
+- [`google_mlkit_image_labeling` - `v0.13.0`](#google_mlkit_image_labeling---v0130)
+- [`google_mlkit_language_id` - `v0.12.0`](#google_mlkit_language_id---v0120)
+- [`google_mlkit_object_detection` - `v0.14.0`](#google_mlkit_object_detection---v0140)
+- [`google_mlkit_pose_detection` - `v0.13.0`](#google_mlkit_pose_detection---v0130)
+- [`google_mlkit_selfie_segmentation` - `v0.9.0`](#google_mlkit_selfie_segmentation---v090)
+- [`google_mlkit_smart_reply` - `v0.12.0`](#google_mlkit_smart_reply---v0120)
+- [`google_mlkit_text_recognition` - `v0.14.0`](#google_mlkit_text_recognition---v0140)
+- [`google_mlkit_translation` - `v0.12.0`](#google_mlkit_translation---v0120)
+
+---
+
+#### `google_ml_kit` - `v0.19.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_barcode_scanning` - `v0.13.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_commons` - `v0.9.0`
+
+* Update README.
+
+#### `google_mlkit_digital_ink_recognition` - `v0.13.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_document_scanner` - `v0.3.0`
+
+* Update README.
+
+#### `google_mlkit_entity_extraction` - `v0.14.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_face_detection` - `v0.12.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_face_mesh_detection` - `v0.3.0`
+
+* Update README.
+
+#### `google_mlkit_image_labeling` - `v0.13.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_language_id` - `v0.12.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_object_detection` - `v0.14.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_pose_detection` - `v0.13.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_selfie_segmentation` - `v0.9.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_smart_reply` - `v0.12.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_text_recognition` - `v0.14.0`
+
+* Update dependencies.
+* Update README.
+
+#### `google_mlkit_translation` - `v0.12.0`
+
+* Update dependencies.
+* Update README.
+
 ## 2024-09-19
 
 ### Changes

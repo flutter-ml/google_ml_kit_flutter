@@ -31,8 +31,8 @@ A Flutter plugin to use [Google's ML Kit Text Recognition](https://developers.go
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
-- Xcode 15 or newer
+- Minimum iOS Deployment Target: 15.5.0
+- Xcode 15.3.0 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -47,12 +47,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '12.0'  # or newer version
+platform :ios, '15.5.0'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '12.0'  # or newer version
+$iOSVersion = '15.5.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -60,22 +60,22 @@ post_install do |installer|
     config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
   end
-  
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
+
     # add these lines:
     target.build_configurations.each do |config|
       if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
       end
     end
-    
+
   end
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5.0, you can set it to something newer but not older.
 
 ### Android
 
@@ -99,10 +99,10 @@ For the iOS platform add to the `ios/Podfile` file:
 
 ```ruby
 # Add language package you need to use
-pod 'GoogleMLKit/TextRecognitionChinese', '~> 6.0.0'
-pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 6.0.0'
-pod 'GoogleMLKit/TextRecognitionJapanese', '~> 6.0.0'
-pod 'GoogleMLKit/TextRecognitionKorean', '~> 6.0.0'
+pod 'GoogleMLKit/TextRecognitionChinese', '~> 7.0.0'
+pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 7.0.0'
+pod 'GoogleMLKit/TextRecognitionJapanese', '~> 7.0.0'
+pod 'GoogleMLKit/TextRecognitionKorean', '~> 7.0.0'
 ```
 
 For the Android platform add to the `android/app/build.gradle` file:
@@ -142,7 +142,7 @@ for (TextBlock block in recognizedText.blocks) {
   final List<Point<int>> cornerPoints = block.cornerPoints;
   final String text = block.text;
   final List<String> languages = block.recognizedLanguages;
-  
+
   for (TextLine line in block.lines) {
     // Same getters as TextBlock
     for (TextElement element in line.elements) {

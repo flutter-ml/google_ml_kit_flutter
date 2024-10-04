@@ -1,3 +1,8 @@
+## 0.14.0
+
+* Update dependencies.
+* Update README.
+
 ## 0.13.1
 
 * Update dependencies.

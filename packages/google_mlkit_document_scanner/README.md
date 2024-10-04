@@ -5,7 +5,7 @@
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-> ***NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).***
+> **_NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues)._**
 
 A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, which allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
 
@@ -15,6 +15,7 @@ The UI flow, ML models and other large resources are delivered using Google Play
 - No camera permission is required - the document scanner leverages the Google Play services' camera permission, and users are in control of which files to share back with your app.
 
 Key capabilities
+
 - High-quality and consistent user interface for digitizing physical documents.
 - Automatic capture with document detection.
 - Accurate edge detection for optimal crop results.
@@ -25,8 +26,9 @@ Key capabilities
 Customization
 
 The document scanner API provides a high-quality fully fledged UI flow that is consistent across Android apps. However, there is also room to customize some aspects of the user experience
-- Maximum number of pages 
-- Gallery import 
+
+- Maximum number of pages
+- Gallery import
 - Editing functionalities
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
@@ -67,12 +69,12 @@ This feature is still in Beta, and it is only available for Android. Stay tune f
 
 #### Create an instance of `DocumentScannerOptions`
 
-```dart 
+```dart
 DocumentScannerOptions documentOptions = DocumentScannerOptions(
-  documentFormat: DocumentFormat.jpeg, // set output document format 
-  mode: ScannerMode.filter, // to control what features are enabled 
+  documentFormat: DocumentFormat.jpeg, // set output document format
+  mode: ScannerMode.filter, // to control what features are enabled
   pageLimit: 1, // setting a limit to the number of pages scanned
-  isGalleryImport: true, // importing from the photo gallery 
+  isGalleryImport: true, // importing from the photo gallery
 );
 ```
 
@@ -84,7 +86,7 @@ final documentScanner = DocumentScanner(option: documentOptions);
 
 #### Start Scanner
 
-The scanner returns objects for the scanned document. 
+The scanner returns objects for the scanned document.
 
 ```dart
 DocumentScanningResult result = await documentScanner.scanDocument();

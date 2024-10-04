@@ -1,11 +1,11 @@
-# Google's ML Kit Selfie Segmentation  for Flutter
+# Google's ML Kit Selfie Segmentation for Flutter
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_selfie_segmentation)](https://pub.dev/packages/google_mlkit_selfie_segmentation)
 [![analysis](https://github.com/flutter-ml/google_ml_kit_flutter/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/flutter-ml/google_ml_kit_flutter/actions)
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-A Flutter plugin to use [Google's ML Kit Selfie Segmentation  API](https://developers.google.com/ml-kit/vision/selfie-segmentation) to easily separate the background from users within a scene and focus on what matters.
+A Flutter plugin to use [Google's ML Kit Selfie Segmentation API](https://developers.google.com/ml-kit/vision/selfie-segmentation) to easily separate the background from users within a scene and focus on what matters.
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
@@ -31,8 +31,8 @@ A Flutter plugin to use [Google's ML Kit Selfie Segmentation  API](https://devel
 
 ### iOS
 
-- Minimum iOS Deployment Target: 12.0
-- Xcode 15 or newer
+- Minimum iOS Deployment Target: 15.5.0
+- Xcode 15.3.0 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
 
@@ -47,12 +47,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '12.0'  # or newer version
+platform :ios, '15.5.0'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '12.0'  # or newer version
+$iOSVersion = '15.5.0'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -60,22 +60,22 @@ post_install do |installer|
     config.build_settings["EXCLUDED_ARCHS[sdk=*]"] = "armv7"
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
   end
-  
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
+
     # add these lines:
     target.build_configurations.each do |config|
       if Gem::Version.new($iOSVersion) > Gem::Version.new(config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'])
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSVersion
       end
     end
-    
+
   end
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 12.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5.0, you can set it to something newer but not older.
 
 ### Android
 
