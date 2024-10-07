@@ -5,7 +5,7 @@ on:
     branches:
       - test
   schedule:
-    - cron: "40 19 * * *"
+    - cron: "0 13 * * *"
 
 jobs:
   close-issues:
