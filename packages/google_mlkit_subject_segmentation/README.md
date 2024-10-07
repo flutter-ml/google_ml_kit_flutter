@@ -88,7 +88,7 @@ final segmenter = SubjectSegmenter(options: options);
 #### Process image
 
 ```dart
-final mask = await segmenter.processImage(inputImage);
+final result = await segmenter.processImage(inputImage);
 ```
 
 #### Release resources with `close()`
