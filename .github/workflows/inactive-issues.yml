@@ -1,6 +1,9 @@
 name: Close inactive issues
 
 on:
+  push:
+    branches:
+      - test
   schedule:
     - cron: "40 19 * * *"
 
