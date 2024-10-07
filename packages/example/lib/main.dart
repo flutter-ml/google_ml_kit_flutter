@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'nlp_detector_views/entity_extraction_view.dart';
 import 'nlp_detector_views/language_identifier_view.dart';
 import 'nlp_detector_views/language_translator_view.dart';
@@ -15,6 +14,7 @@ import 'vision_detector_views/label_detector_view.dart';
 import 'vision_detector_views/object_detector_view.dart';
 import 'vision_detector_views/pose_detector_view.dart';
 import 'vision_detector_views/selfie_segmenter_view.dart';
+import 'vision_detector_views/subject_segmenter_view.dart';
 import 'vision_detector_views/text_detector_view.dart';
 
 Future<void> main() async {
@@ -54,7 +54,9 @@ class Home extends StatelessWidget {
                     children: [
                       CustomCard('Barcode Scanning', BarcodeScannerView()),
                       CustomCard('Face Detection', FaceDetectorView()),
-                      CustomCard('Face Mesh Detection', FaceMeshDetectorView()),
+                      if (Platform.isAndroid)
+                        CustomCard(
+                            'Face Mesh Detection', FaceMeshDetectorView()),
                       CustomCard('Image Labeling', ImageLabelView()),
                       CustomCard('Object Detection', ObjectDetectorView()),
                       CustomCard('Text Recognition', TextRecognizerView()),
@@ -63,6 +65,9 @@ class Home extends StatelessWidget {
                       CustomCard('Selfie Segmentation', SelfieSegmenterView()),
                       if (Platform.isAndroid)
                         CustomCard('Document Scanner', DocumentScannerView()),
+                      if (Platform.isAndroid)
+                        CustomCard(
+                            'Subject Segmentation', SubjectSegmenterView())
                     ],
                   ),
                   SizedBox(

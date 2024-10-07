@@ -38,6 +38,9 @@ flutter pub get
 cd ../google_mlkit_selfie_segmentation
 flutter pub get
 
+cd ../google_mlkit_subject_segmentation
+flutter pub get
+
 cd ../google_mlkit_smart_reply
 flutter pub get
 

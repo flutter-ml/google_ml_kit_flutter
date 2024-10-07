@@ -38,6 +38,9 @@ flutter pub publish --dry-run
 cd ../google_mlkit_selfie_segmentation
 flutter pub publish --dry-run
 
+cd ../google_mlkit_subject_segmentation
+flutter pub publish --dry-run
+
 cd ../google_mlkit_smart_reply
 flutter pub publish --dry-run
 

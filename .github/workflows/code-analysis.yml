@@ -11,94 +11,96 @@ on:
     branches:
       - master
       - develop
-      - test
-      - chore
 
 jobs:
   lint:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4.2.1
-    - uses: actions/setup-java@v4.4.0
-      with:
-        java-version: 11
-        distribution: temurin
-    - uses: subosito/flutter-action@v2.16.0
-      with:
-        flutter-version: '3.24.0'
-        cache: true
+      - uses: actions/checkout@v4.2.1
+      - uses: actions/setup-java@v4.4.0
+        with:
+          java-version: 11
+          distribution: temurin
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: '3.24.0'
+          cache: true
 
-    - name: Install dependencies for google_ml_kit
-      working-directory: ./packages/google_ml_kit
-      run: flutter pub get
+      - name: Install dependencies for google_ml_kit
+        working-directory: ./packages/google_ml_kit
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_barcode_scanning
-      working-directory: ./packages/google_mlkit_barcode_scanning
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_barcode_scanning
+        working-directory: ./packages/google_mlkit_barcode_scanning
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_commons
-      working-directory: ./packages/google_mlkit_commons
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_commons
+        working-directory: ./packages/google_mlkit_commons
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_face_detection
-      working-directory: ./packages/google_mlkit_face_detection
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_face_detection
+        working-directory: ./packages/google_mlkit_face_detection
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_face_mesh_detection
-      working-directory: ./packages/google_mlkit_face_mesh_detection
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_face_mesh_detection
+        working-directory: ./packages/google_mlkit_face_mesh_detection
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_image_labeling
-      working-directory: ./packages/google_mlkit_image_labeling
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_image_labeling
+        working-directory: ./packages/google_mlkit_image_labeling
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_digital_ink_recognition
-      working-directory: ./packages/google_mlkit_digital_ink_recognition
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_digital_ink_recognition
+        working-directory: ./packages/google_mlkit_digital_ink_recognition
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_document_scanner
-      working-directory: ./packages/google_mlkit_document_scanner
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_document_scanner
+        working-directory: ./packages/google_mlkit_document_scanner
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_language_id
-      working-directory: ./packages/google_mlkit_language_id
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_language_id
+        working-directory: ./packages/google_mlkit_language_id
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_object_detection
-      working-directory: ./packages/google_mlkit_object_detection
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_object_detection
+        working-directory: ./packages/google_mlkit_object_detection
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_pose_detection
-      working-directory: ./packages/google_mlkit_pose_detection
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_pose_detection
+        working-directory: ./packages/google_mlkit_pose_detection
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_text_recognition
-      working-directory: ./packages/google_mlkit_text_recognition
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_text_recognition
+        working-directory: ./packages/google_mlkit_text_recognition
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_translation
-      working-directory: ./packages/google_mlkit_translation
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_translation
+        working-directory: ./packages/google_mlkit_translation
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_entity_extraction
-      working-directory: ./packages/google_mlkit_entity_extraction
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_entity_extraction
+        working-directory: ./packages/google_mlkit_entity_extraction
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_smart_reply
-      working-directory: ./packages/google_mlkit_smart_reply
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_smart_reply
+        working-directory: ./packages/google_mlkit_smart_reply
+        run: flutter pub get
 
-    - name: Install dependencies for google_mlkit_selfie_segmentation
-      working-directory: ./packages/google_mlkit_selfie_segmentation
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_selfie_segmentation
+        working-directory: ./packages/google_mlkit_selfie_segmentation
+        run: flutter pub get
 
-    - name: Install dependencies for example
-      working-directory: ./packages/example
-      run: flutter pub get
+      - name: Install dependencies for google_mlkit_subject_segmentation
+        working-directory: ./packages/google_mlkit_subject_segmentation
+        run: flutter pub get
 
-    # Check for any formatting issues in the code.
-    - run: dart format --set-exit-if-changed .
+      - name: Install dependencies for example
+        working-directory: ./packages/example
+        run: flutter pub get
 
-    # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
+      # Check for any formatting issues in the code.
+      - run: dart format --set-exit-if-changed .
+
+      # Statically analyze the Dart code for any errors.
+      - run: flutter analyze .

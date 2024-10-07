@@ -19,6 +19,11 @@ jobs:
           close-issue-label: "close-inactivity"
           stale-issue-message: "This issue is stale because it has been open for 30 days with no activity."
           close-issue-message: "This issue was closed because it has been inactive for 14 days since being marked as stale."
-          days-before-pr-stale: -1
-          days-before-pr-close: -1
+          days-before-pr-stale: 14
+          days-before-pr-close: 7
+          stale-pr-label: "stale"
+          close-pr-label: "close-inactivity"
+          stale-pr-message: "This PR is stale because it has been open for 14 days with no activity."
+          close-pr-message: "This PR was closed because it has been inactive for 14 days since being marked as stale."
+          operations-per-run: 100
           repo-token: ${{ secrets.GITHUB_TOKEN }}
