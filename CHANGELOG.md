@@ -25,6 +25,7 @@ Packages with changes:
 - [`google_mlkit_pose_detection` - `v0.13.0`](#google_mlkit_pose_detection---v0130)
 - [`google_mlkit_selfie_segmentation` - `v0.9.0`](#google_mlkit_selfie_segmentation---v090)
 - [`google_mlkit_smart_reply` - `v0.12.0`](#google_mlkit_smart_reply---v0120)
+- [`google_mlkit_subject_segmentation` - `v0.0.1`](#google_mlkit_subject_segmentation---v001)
 - [`google_mlkit_text_recognition` - `v0.14.0`](#google_mlkit_text_recognition---v0140)
 - [`google_mlkit_translation` - `v0.12.0`](#google_mlkit_translation---v0120)
 
@@ -96,6 +97,10 @@ Packages with changes:
 
 * Update dependencies.
 * Update README.
+
+#### `google_mlkit_subject_segmentation` - `v0.0.1`
+
+* Initial release.
 
 #### `google_mlkit_text_recognition` - `v0.14.0`
 
