@@ -5,7 +5,7 @@
 [![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-> ***NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/face-mesh-detection) and request the feature [here](https://github.com/googlesamples/mlkit/issues).***
+> **_NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/face-mesh-detection) and request the feature [here](https://github.com/googlesamples/mlkit/issues)._**
 
 A Flutter plugin to use [Google's ML Kit Face Mesh Detection](https://developers.google.com/ml-kit/vision/face-mesh-detection) for face mesh detection, you can generate in real-time a high accuracy [face mesh](https://developers.google.com/ml-kit/vision/face-mesh-detection/concepts) of 468 3D points for selfie-like images.
 
