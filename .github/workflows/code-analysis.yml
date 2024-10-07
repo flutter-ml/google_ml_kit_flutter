@@ -26,7 +26,7 @@ jobs:
         distribution: temurin
     - uses: subosito/flutter-action@v2.16.0
       with:
-        flutter-version: '3.22.2'
+        flutter-version: '3.24.0'
         cache: true
 
     - name: Install dependencies for google_ml_kit
