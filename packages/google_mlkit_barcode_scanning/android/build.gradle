@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
         google()
         mavenCentral()
@@ -22,12 +22,12 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    // Conditional for compatibility with AGP <4.2.
-    if (project.android.hasProperty("namespace")) {
+    compileSdk 34
+
+    // Conditional for compatibility with AGP < 4.2.
+    if (project.hasProperty("namespace")) {
         namespace 'com.google_mlkit_barcode_scanning'
     }
-    
-    compileSdk 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -36,6 +36,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
+        targetSdkVersion 34 // It's a good practice to specify targetSdkVersion
     }
 }
 
