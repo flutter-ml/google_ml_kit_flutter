@@ -402,7 +402,7 @@ SPEC CHECKSUMS:
   google_mlkit_pose_detection: 3e38d756c918444cc462692f4c745546313dea54
   google_mlkit_selfie_segmentation: 9d937dee1df7c7869209a3ffc140495d60a55797
   google_mlkit_smart_reply: a168a050579ca554221aa3a64e1eedda4b3635eb
-  google_mlkit_subject_segmentation: ae6b69afae87a220d410b02d6cdc8dd4bce3139b
+  google_mlkit_subject_segmentation: 7061b004cd76284f5fad40bdd09089316fcddabc
   google_mlkit_text_recognition: e540f2aff997f2b0daaa1b4fd5ead3b0b7030adc
   google_mlkit_translation: d7f4dbc00677b2ef0a35e16be1c2c3172ac157d6
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
