@@ -1,21 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'nlp_detector_views/entity_extraction_view.dart';
-import 'nlp_detector_views/language_identifier_view.dart';
-import 'nlp_detector_views/language_translator_view.dart';
-import 'nlp_detector_views/smart_reply_view.dart';
-import 'vision_detector_views/barcode_scanner_view.dart';
-import 'vision_detector_views/digital_ink_recognizer_view.dart';
-import 'vision_detector_views/document_scanner_view.dart';
 import 'vision_detector_views/face_detector_view.dart';
 import 'vision_detector_views/face_mesh_detector_view.dart';
-import 'vision_detector_views/label_detector_view.dart';
-import 'vision_detector_views/object_detector_view.dart';
-import 'vision_detector_views/pose_detector_view.dart';
-import 'vision_detector_views/selfie_segmenter_view.dart';
-import 'vision_detector_views/subject_segmenter_view.dart';
-import 'vision_detector_views/text_detector_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,36 +39,14 @@ class Home extends StatelessWidget {
                   ExpansionTile(
                     title: const Text('Vision APIs'),
                     children: [
-                      CustomCard('Barcode Scanning', BarcodeScannerView()),
                       CustomCard('Face Detection', FaceDetectorView()),
                       if (Platform.isAndroid)
                         CustomCard(
                             'Face Mesh Detection', FaceMeshDetectorView()),
-                      CustomCard('Image Labeling', ImageLabelView()),
-                      CustomCard('Object Detection', ObjectDetectorView()),
-                      CustomCard('Text Recognition', TextRecognizerView()),
-                      CustomCard('Digital Ink Recognition', DigitalInkView()),
-                      CustomCard('Pose Detection', PoseDetectorView()),
-                      CustomCard('Selfie Segmentation', SelfieSegmenterView()),
-                      if (Platform.isAndroid)
-                        CustomCard('Document Scanner', DocumentScannerView()),
-                      if (Platform.isAndroid)
-                        CustomCard(
-                            'Subject Segmentation', SubjectSegmenterView())
                     ],
                   ),
                   SizedBox(
                     height: 20,
-                  ),
-                  ExpansionTile(
-                    title: const Text('Natural Language APIs'),
-                    children: [
-                      CustomCard('Language ID', LanguageIdentifierView()),
-                      CustomCard(
-                          'On-device Translation', LanguageTranslatorView()),
-                      CustomCard('Smart Reply', SmartReplyView()),
-                      CustomCard('Entity Extraction', EntityExtractionView()),
-                    ],
                   ),
                 ],
               ),

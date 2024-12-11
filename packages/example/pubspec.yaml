@@ -18,6 +18,7 @@ dependencies:
   camera: ^0.10.6
   path: ^1.9.0
   path_provider: ^2.1.4
+  
 
   google_mlkit_commons: any
   google_mlkit_barcode_scanning:
@@ -51,6 +52,7 @@ dependencies:
     path: ../google_mlkit_translation
   google_mlkit_smart_reply:
     path: ../google_mlkit_smart_reply
+  tflite_flutter: ^0.11.0
 
 dependency_overrides:
   google_mlkit_commons:
