@@ -53,6 +53,8 @@ dependencies:
   google_mlkit_smart_reply:
     path: ../google_mlkit_smart_reply
   tflite_flutter: ^0.11.0
+  image: ^4.3.0
+  flutter_image_compress: ^2.3.0
 
 dependency_overrides:
   google_mlkit_commons:
