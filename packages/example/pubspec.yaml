@@ -70,3 +70,4 @@ flutter:
   assets:
     - assets/ml/
     - assets/images/
+    - assets/food_resnet50.tflite
