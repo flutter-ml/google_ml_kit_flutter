@@ -61,6 +61,10 @@ For iOS details read [this](https://developers.google.com/ml-kit/migration/ios).
 
 Find the example app [here](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/example).
 
+### Consuming image streams on Android
+
+Until https://github.com/flutter/flutter/issues/145961 is resolved, the most recent version of the camera package doesn't support the required image formats. To make things work, manually add the legacy plugin via the instructions from https://pub.dev/packages/camera_android.
+
 ## Contributing
 
 Contributions are welcome.
