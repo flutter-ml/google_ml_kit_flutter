@@ -25,6 +25,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class ObjectDetector implements MethodChannel.MethodCallHandler {
+
     private static final String START = "vision#startObjectDetector";
     private static final String CLOSE = "vision#closeObjectDetector";
     private static final String MANAGE = "vision#manageFirebaseModels";
@@ -59,8 +60,11 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null) return;
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
+        if (inputImage == null) {
+            return;
+        }
 
         String id = call.argument("id");
         com.google.mlkit.vision.objects.ObjectDetector objectDetector = instances.get(id);
@@ -106,8 +110,10 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
             result.success(objects);
         }).addOnFailureListener(e -> {
             e.printStackTrace();
-            result.error("ObjectDetectionError", e.toString(), null);
-        });
+            result.error("ObjectDetectionError", e.toString(), e);
+        })
+        // Closing is necessary for both success and failure.
+        .addOnCompleteListener(r -> converter.close());
     }
 
     private ObjectDetectorOptions getDefaultOptions(Map<String, Object> options) {

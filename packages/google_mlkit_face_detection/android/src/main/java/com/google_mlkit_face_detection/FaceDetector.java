@@ -23,6 +23,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 class FaceDetector implements MethodChannel.MethodCallHandler {
+
     private static final String START = "vision#startFaceDetector";
     private static final String CLOSE = "vision#closeFaceDetector";
 
@@ -52,9 +53,11 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null)
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
+        if (inputImage == null) {
             return;
+        }
 
         String id = call.argument("id");
         com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
@@ -115,7 +118,10 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
                             result.success(faces);
                         })
                 .addOnFailureListener(
-                        e -> result.error("FaceDetectorError", e.toString(), null));
+                        e -> result.error("FaceDetectorError", e.toString(), null))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
+
     }
 
     private FaceDetectorOptions parseOptions(Map<String, Object> options) {
@@ -206,7 +212,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private double[] landmarkPosition(Face face, int landmarkInt) {
         FaceLandmark landmark = face.getLandmark(landmarkInt);
         if (landmark != null) {
-            return new double[] { landmark.getPosition().x, landmark.getPosition().y };
+            return new double[]{landmark.getPosition().x, landmark.getPosition().y};
         }
         return null;
     }
@@ -217,7 +223,7 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
             List<PointF> contourPoints = contour.getPoints();
             List<double[]> result = new ArrayList<>();
             for (int i = 0; i < contourPoints.size(); i++) {
-                result.add(new double[] { contourPoints.get(i).x, contourPoints.get(i).y });
+                result.add(new double[]{contourPoints.get(i).x, contourPoints.get(i).y});
             }
             return result;
         }
@@ -227,8 +233,9 @@ class FaceDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         com.google.mlkit.vision.face.FaceDetector detector = instances.get(id);
-        if (detector == null)
+        if (detector == null) {
             return;
+        }
         detector.close();
         instances.remove(id);
     }

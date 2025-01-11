@@ -65,7 +65,8 @@ public class SelfieSegmenter implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
         String id = call.argument("id");
@@ -102,7 +103,9 @@ public class SelfieSegmenter implements MethodChannel.MethodCallHandler {
                             result.success(map);
                         })
                 .addOnFailureListener(
-                        e -> result.error("Selfie segmentation failed!", e.getMessage(), e));
+                        e -> result.error("Selfie segmentation failed!", e.getMessage(), e))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
     }
 
     private void closeDetector(MethodCall call) {
