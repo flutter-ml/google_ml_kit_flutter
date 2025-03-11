@@ -52,7 +52,7 @@ class SubjectSegmentationPainter extends CustomPainter {
               .round();
 
           final double opacity = confidences[(y * subjectWidth) + x] * 0.5;
-          paint.color = color.withOpacity(opacity);
+          paint.color = color.withAlpha((opacity * 255).round());
           canvas.drawCircle(Offset(tx.toDouble(), ty.toDouble()), 2, paint);
         }
       }
