@@ -1,4 +1,4 @@
-#import "GoogleMlKitSubjectionSegmentationPlugin.h"
+#import "GoogleMlKitSubjectSegmentationPlugin.h"
 
 @implementation GoogleMlKitSubjectSegmentationPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
