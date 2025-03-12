@@ -81,7 +81,7 @@ DocumentScannerOptions documentOptions = DocumentScannerOptions(
 #### Create an instance of `DocumentScanner`
 
 ```dart
-final documentScanner = DocumentScanner(option: documentOptions);
+final documentScanner = DocumentScanner(options: documentOptions);
 ```
 
 #### Start Scanner
