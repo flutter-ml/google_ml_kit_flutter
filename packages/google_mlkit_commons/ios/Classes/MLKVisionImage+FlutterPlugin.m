@@ -9,6 +9,8 @@
         return [self filePathToVisionImage:imageData[@"path"]];
     } else if ([@"bytes" isEqualToString:imageType]) {
         return [self bytesToVisionImage:imageData];
+    } else if ([@"bitmap" isEqualToString:imageType]) {
+        return [self bitmapToVisionImage:imageData];
     } else {
         NSString *errorReason = [NSString stringWithFormat:@"No image type for: %@", imageType];
         @throw [NSException exceptionWithName:NSInvalidArgumentException
@@ -64,6 +66,32 @@
     CVPixelBufferRelease(pixelBufferRef);
     CGImageRelease(videoImage);
     return [[MLKVisionImage alloc] initWithImage:uiImage];
+}
+
++ (MLKVisionImage *)bitmapToVisionImage:(NSDictionary *)imageData {
+    // In iOS, we receive a FlutterStandardTypedData with the bitmap bytes
+    // Convert it to UIImage
+    FlutterStandardTypedData *bitmapData = imageData[@"bitmap"];
+    
+    if (bitmapData == nil) {
+        NSString *errorReason = @"Bitmap data is nil";
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:errorReason
+                                     userInfo:nil];
+    }
+    
+    NSData *data = bitmapData.data;
+    UIImage *image = [UIImage imageWithData:data];
+    
+    if (image == nil) {
+        NSString *errorReason = @"Failed to create UIImage from bitmap data";
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:errorReason
+                                     userInfo:nil];
+    }
+    
+    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+    return visionImage;
 }
 
 @end

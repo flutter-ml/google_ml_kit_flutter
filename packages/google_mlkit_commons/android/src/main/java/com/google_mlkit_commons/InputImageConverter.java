@@ -20,10 +20,30 @@ public class InputImageConverter {
     public static InputImage getInputImageFromData(Map<String, Object> imageData,
             Context context,
             MethodChannel.Result result) {
-        //Differentiates whether the image data is a path for a image file or contains image data in form of bytes
+        //Differentiates whether the image data is a path for a image file, contains image data in form of bytes, or a bitmap
         String model = (String) imageData.get("type");
         InputImage inputImage;
-        if (model != null && model.equals("file")) {
+        if (model != null && model.equals("bitmap")) {
+            try {
+                Object bitmapObject = imageData.get("bitmap");
+                if (bitmapObject == null) {
+                    result.error("InputImageConverterError", "Bitmap is null", null);
+                    return null;
+                }
+                android.graphics.Bitmap bitmap = (android.graphics.Bitmap) bitmapObject;
+                int rotation = 0;
+                Object rotationObj = imageData.get("rotation");
+                if (rotationObj != null) {
+                    rotation = (int) rotationObj;
+                }
+                return InputImage.fromBitmap(bitmap, rotation);
+            } catch (Exception e) {
+                Log.e("ImageError", "Getting Bitmap failed");
+                Log.e("ImageError", e.toString());
+                result.error("InputImageConverterError", e.toString(), e);
+                return null;
+            }
+        } else if (model != null && model.equals("file")) {
             try {
                 inputImage = InputImage.fromFilePath(context, Uri.fromFile(new File(((String) imageData.get("path")))));
                 return inputImage;
