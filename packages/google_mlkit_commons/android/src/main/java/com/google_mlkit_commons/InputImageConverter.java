@@ -25,17 +25,26 @@ public class InputImageConverter {
         InputImage inputImage;
         if (model != null && model.equals("bitmap")) {
             try {
-                Object bitmapObject = imageData.get("bitmap");
-                if (bitmapObject == null) {
-                    result.error("InputImageConverterError", "Bitmap is null", null);
+                byte[] bitmapData = (byte[]) imageData.get("bitmapData");
+                if (bitmapData == null) {
+                    result.error("InputImageConverterError", "Bitmap data is null", null);
                     return null;
                 }
-                android.graphics.Bitmap bitmap = (android.graphics.Bitmap) bitmapObject;
+                
+                // Extract the rotation
                 int rotation = 0;
                 Object rotationObj = imageData.get("rotation");
                 if (rotationObj != null) {
                     rotation = (int) rotationObj;
                 }
+                
+                // For Flutter UI bitmap data, we need to decode it into an Android Bitmap
+                android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
+                if (bitmap == null) {
+                    result.error("InputImageConverterError", "Failed to decode bitmap from the provided data", null);
+                    return null;
+                }
+                
                 return InputImage.fromBitmap(bitmap, rotation);
             } catch (Exception e) {
                 Log.e("ImageError", "Getting Bitmap failed");

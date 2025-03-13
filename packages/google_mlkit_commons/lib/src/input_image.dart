@@ -10,8 +10,8 @@ class InputImage {
   /// The bytes of the image.
   final Uint8List? bytes;
 
-  /// The bitmap object for Android.
-  final dynamic bitmap;
+  /// Raw bitmap pixel data.
+  final Uint8List? bitmapData;
 
   /// The type of image.
   final InputImageType type;
@@ -22,7 +22,7 @@ class InputImage {
   /// The rotation degrees for bitmap images.
   final int? rotation;
 
-  InputImage._({this.filePath, this.bytes, this.bitmap, required this.type, this.metadata, this.rotation});
+  InputImage._({this.filePath, this.bytes, this.bitmapData, required this.type, this.metadata, this.rotation});
 
   /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -41,15 +41,22 @@ class InputImage {
         bytes: bytes, type: InputImageType.bytes, metadata: metadata);
   }
 
-  /// Creates an instance of [InputImage] from a bitmap.
+  /// Creates an instance of [InputImage] from bitmap data.
   /// 
-  /// On Android, this will use the native InputImage.fromBitmap().
-  /// On iOS, the bitmap will be converted to a UIImage.
+  /// This constructor is designed to work with bitmap data from Flutter UI components
+  /// such as those obtained from ui.Image.toByteData().
   /// 
+  /// [bitmap] should be the raw bitmap data.
   /// [rotation] is optional and defaults to 0. It is only used on Android.
-  factory InputImage.fromBitmap({required dynamic bitmap, int rotation = 0}) {
+  factory InputImage.fromBitmap({
+    required Uint8List bitmap,
+    int rotation = 0
+  }) {
     return InputImage._(
-        bitmap: bitmap, type: InputImageType.bitmap, rotation: rotation);
+        bitmapData: bitmap,
+        type: InputImageType.bitmap,
+        rotation: rotation
+    );
   }
 
   /// Returns a json representation of an instance of [InputImage].
@@ -58,7 +65,7 @@ class InputImage {
         'type': type.name,
         'path': filePath,
         'metadata': metadata?.toJson(),
-        'bitmap': bitmap,
+        'bitmapData': bitmapData,
         'rotation': rotation
       };
 }
