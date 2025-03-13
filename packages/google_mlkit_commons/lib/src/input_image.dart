@@ -22,7 +22,14 @@ class InputImage {
   /// The rotation degrees for bitmap images.
   final int? rotation;
 
-  InputImage._({this.filePath, this.bytes, this.bitmapData, required this.type, this.metadata, this.rotation});
+  InputImage._({
+    this.filePath,
+    this.bytes,
+    this.bitmapData,
+    required this.type,
+    this.metadata,
+    this.rotation,
+  });
 
   /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -42,10 +49,10 @@ class InputImage {
   }
 
   /// Creates an instance of [InputImage] from bitmap data.
-  /// 
+  ///
   /// This constructor is designed to work with bitmap data from Flutter UI components
   /// such as those obtained from ui.Image.toByteData(format: ui.ImageByteFormat.rawRgba).
-  /// 
+  ///
   /// Example usage with a RepaintBoundary:
   /// ```dart
   /// // Get the RenderObject from a GlobalKey
@@ -61,7 +68,7 @@ class InputImage {
   ///   height: image.height,
   /// );
   /// ```
-  /// 
+  ///
   /// [bitmap] should be the raw bitmap data, typically from ui.Image.toByteData().
   /// [width] and [height] are the dimensions of the bitmap.
   /// [rotation] is optional and defaults to 0. It is only used on Android.
@@ -69,21 +76,22 @@ class InputImage {
     required Uint8List bitmap,
     required int width,
     required int height,
-    int rotation = 0
+    int rotation = 0,
   }) {
     return InputImage._(
-        bitmapData: bitmap,
-        type: InputImageType.bitmap,
-        rotation: rotation,
-        metadata: InputImageMetadata(
-          size: Size(width.toDouble(), height.toDouble()),
-          rotation: InputImageRotation.values.firstWhere(
-            (element) => element.rawValue == rotation,
-            orElse: () => InputImageRotation.rotation0deg
-          ),
-          format: InputImageFormat.bgra8888, // Assuming BGRA format from Flutter UI
-          bytesPerRow: width * 4, // 4 bytes per pixel (RGBA)
-        )
+      bitmapData: bitmap,
+      type: InputImageType.bitmap,
+      rotation: rotation,
+      metadata: InputImageMetadata(
+        size: Size(width.toDouble(), height.toDouble()),
+        rotation: InputImageRotation.values.firstWhere(
+          (element) => element.rawValue == rotation,
+          orElse: () => InputImageRotation.rotation0deg,
+        ),
+        // Assuming BGRA format from Flutter UI
+        format: InputImageFormat.bgra8888,
+        bytesPerRow: width * 4, // 4 bytes per pixel (RGBA)
+      ),
     );
   }
 
