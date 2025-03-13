@@ -137,8 +137,12 @@ final InputImage inputImage = InputImage.fromBytes(
 );
 
 // From bitmap data
+final ui.Image image = await recorder.endRecording().toImage(width, height);
+final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
 final InputImage inputImage = InputImage.fromBitmap(
-  bitmap: uiImageBytes, // Uint8List from ui.Image.toByteData() for example
+  bitmap: byteData!.buffer.asUint8List(),
+  width: width,
+  height: height,
   rotation: 0, // optional, defaults to 0, only used on Android
 );
 ```

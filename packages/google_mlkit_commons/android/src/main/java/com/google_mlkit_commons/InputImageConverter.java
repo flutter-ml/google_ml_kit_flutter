@@ -38,14 +38,48 @@ public class InputImageConverter {
                     rotation = (int) rotationObj;
                 }
                 
-                // For Flutter UI bitmap data, we need to decode it into an Android Bitmap
-                android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
-                if (bitmap == null) {
-                    result.error("InputImageConverterError", "Failed to decode bitmap from the provided data", null);
-                    return null;
+                try {
+                    // Get metadata from the InputImage object if available
+                    Map<String, Object> metadataMap = (Map<String, Object>) imageData.get("metadata");
+                    if (metadataMap != null) {
+                        int width = Double.valueOf(Objects.requireNonNull(metadataMap.get("width")).toString()).intValue();
+                        int height = Double.valueOf(Objects.requireNonNull(metadataMap.get("height")).toString()).intValue();
+                        
+                        // Create bitmap from the Flutter UI raw RGBA bytes
+                        android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+                        java.nio.IntBuffer intBuffer = java.nio.IntBuffer.allocate(bitmapData.length / 4);
+                        
+                        // Convert RGBA bytes to int pixels
+                        for (int i = 0; i < bitmapData.length; i += 4) {
+                            int r = bitmapData[i] & 0xFF;
+                            int g = bitmapData[i + 1] & 0xFF;
+                            int b = bitmapData[i + 2] & 0xFF;
+                            int a = bitmapData[i + 3] & 0xFF;
+                            intBuffer.put((a << 24) | (r << 16) | (g << 8) | b);
+                        }
+                        intBuffer.rewind();
+                        
+                        // Copy pixel data to bitmap
+                        bitmap.copyPixelsFromBuffer(intBuffer);
+                        return InputImage.fromBitmap(bitmap, rotation);
+                    }
+                } catch (Exception e) {
+                    Log.e("ImageError", "Error creating bitmap from raw data", e);
                 }
                 
-                return InputImage.fromBitmap(bitmap, rotation);
+                // Fallback: Try to decode as standard image format (JPEG, PNG)
+                try {
+                    android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
+                    if (bitmap == null) {
+                        result.error("InputImageConverterError", "Failed to decode bitmap from the provided data", null);
+                        return null;
+                    }
+                    return InputImage.fromBitmap(bitmap, rotation);
+                } catch (Exception e) {
+                    Log.e("ImageError", "Getting Bitmap failed", e);
+                    result.error("InputImageConverterError", e.toString(), e);
+                    return null;
+                }
             } catch (Exception e) {
                 Log.e("ImageError", "Getting Bitmap failed");
                 Log.e("ImageError", e.toString());
