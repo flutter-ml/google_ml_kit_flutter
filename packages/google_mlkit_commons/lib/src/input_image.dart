@@ -47,15 +47,27 @@ class InputImage {
   /// such as those obtained from ui.Image.toByteData().
   /// 
   /// [bitmap] should be the raw bitmap data.
+  /// [width] and [height] are the dimensions of the bitmap.
   /// [rotation] is optional and defaults to 0. It is only used on Android.
   factory InputImage.fromBitmap({
     required Uint8List bitmap,
+    required int width,
+    required int height,
     int rotation = 0
   }) {
     return InputImage._(
         bitmapData: bitmap,
         type: InputImageType.bitmap,
-        rotation: rotation
+        rotation: rotation,
+        metadata: InputImageMetadata(
+          size: Size(width.toDouble(), height.toDouble()),
+          rotation: InputImageRotation.values.firstWhere(
+            (element) => element.rawValue == rotation,
+            orElse: () => InputImageRotation.rotation0deg
+          ),
+          format: InputImageFormat.bgra8888, // Assuming BGRA format from Flutter UI
+          bytesPerRow: width * 4, // 4 bytes per pixel (RGBA)
+        )
     );
   }
 
