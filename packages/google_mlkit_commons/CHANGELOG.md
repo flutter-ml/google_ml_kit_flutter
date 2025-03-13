@@ -1,6 +1,6 @@
 ## 0.10.0
 
-* Add support for bitmap inputs with `InputImage.fromBitmap()` constructor.
+* Add support for bitmap data with `InputImage.fromBitmap()` constructor.
 
 ## 0.9.0
 

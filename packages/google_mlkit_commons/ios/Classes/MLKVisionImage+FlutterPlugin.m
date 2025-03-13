@@ -68,10 +68,9 @@
     return [[MLKVisionImage alloc] initWithImage:uiImage];
 }
 
-+ (MLKVisionImage *)bitmapToVisionImage:(NSDictionary *)imageData {
-    // In iOS, we receive a FlutterStandardTypedData with the bitmap bytes
-    // Convert it to UIImage
-    FlutterStandardTypedData *bitmapData = imageData[@"bitmap"];
++ (MLKVisionImage *)bitmapToVisionImage:(NSDictionary *)imageDict {
+    // Get the bitmap data
+    FlutterStandardTypedData *bitmapData = imageDict[@"bitmapData"];
     
     if (bitmapData == nil) {
         NSString *errorReason = @"Bitmap data is nil";
@@ -80,8 +79,8 @@
                                      userInfo:nil];
     }
     
-    NSData *data = bitmapData.data;
-    UIImage *image = [UIImage imageWithData:data];
+    // Create UIImage from bitmap data
+    UIImage *image = [UIImage imageWithData:bitmapData.data];
     
     if (image == nil) {
         NSString *errorReason = @"Failed to create UIImage from bitmap data";
@@ -91,6 +90,7 @@
     }
     
     MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+    visionImage.orientation = image.imageOrientation;
     return visionImage;
 }
 

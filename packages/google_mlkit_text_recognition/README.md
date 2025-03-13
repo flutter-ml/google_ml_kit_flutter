@@ -136,10 +136,10 @@ final InputImage inputImage = InputImage.fromBytes(
   ),
 );
 
-// From a bitmap (supports both Android and iOS)
+// From bitmap data
 final InputImage inputImage = InputImage.fromBitmap(
-  bitmap: bitmap, // Platform-specific bitmap object
-  rotation: 0, // optional, defaults to 0
+  bitmap: uiImageBytes, // Uint8List from ui.Image.toByteData() for example
+  rotation: 0, // optional, defaults to 0, only used on Android
 );
 ```
 
