@@ -122,7 +122,25 @@ dependencies {
 Create an instance of `InputImage` as explained [here](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons#creating-an-inputimage).
 
 ```dart
-final InputImage inputImage;
+// From a file
+final InputImage inputImage = InputImage.fromFilePath(filePath);
+
+// From bytes
+final InputImage inputImage = InputImage.fromBytes(
+  bytes: bytes,
+  metadata: InputImageMetadata(
+    size: Size(width, height),
+    rotation: InputImageRotation.rotation0deg,
+    format: InputImageFormat.nv21, // or other formats
+    bytesPerRow: bytesPerRow,
+  ),
+);
+
+// From a bitmap (supports both Android and iOS)
+final InputImage inputImage = InputImage.fromBitmap(
+  bitmap: bitmap, // Platform-specific bitmap object
+  rotation: 0, // optional, defaults to 0
+);
 ```
 
 #### Create an instance of `TextRecognizer`

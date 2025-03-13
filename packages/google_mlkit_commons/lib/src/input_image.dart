@@ -10,13 +10,19 @@ class InputImage {
   /// The bytes of the image.
   final Uint8List? bytes;
 
+  /// The bitmap object for Android.
+  final dynamic bitmap;
+
   /// The type of image.
   final InputImageType type;
 
   /// The image data when creating an image of type = [InputImageType.bytes].
   final InputImageMetadata? metadata;
 
-  InputImage._({this.filePath, this.bytes, required this.type, this.metadata});
+  /// The rotation degrees for bitmap images.
+  final int? rotation;
+
+  InputImage._({this.filePath, this.bytes, this.bitmap, required this.type, this.metadata, this.rotation});
 
   /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -35,12 +41,25 @@ class InputImage {
         bytes: bytes, type: InputImageType.bytes, metadata: metadata);
   }
 
+  /// Creates an instance of [InputImage] from a bitmap.
+  /// 
+  /// On Android, this will use the native InputImage.fromBitmap().
+  /// On iOS, the bitmap will be converted to a UIImage.
+  /// 
+  /// [rotation] is optional and defaults to 0. It is only used on Android.
+  factory InputImage.fromBitmap({required dynamic bitmap, int rotation = 0}) {
+    return InputImage._(
+        bitmap: bitmap, type: InputImageType.bitmap, rotation: rotation);
+  }
+
   /// Returns a json representation of an instance of [InputImage].
   Map<String, dynamic> toJson() => {
         'bytes': bytes,
         'type': type.name,
         'path': filePath,
-        'metadata': metadata?.toJson()
+        'metadata': metadata?.toJson(),
+        'bitmap': bitmap,
+        'rotation': rotation
       };
 }
 
@@ -48,6 +67,7 @@ class InputImage {
 enum InputImageType {
   file,
   bytes,
+  bitmap,
 }
 
 /// Data of image required when creating image from bytes.
