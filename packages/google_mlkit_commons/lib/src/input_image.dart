@@ -44,9 +44,25 @@ class InputImage {
   /// Creates an instance of [InputImage] from bitmap data.
   /// 
   /// This constructor is designed to work with bitmap data from Flutter UI components
-  /// such as those obtained from ui.Image.toByteData().
+  /// such as those obtained from ui.Image.toByteData(format: ui.ImageByteFormat.rawRgba).
   /// 
-  /// [bitmap] should be the raw bitmap data.
+  /// Example usage with a RepaintBoundary:
+  /// ```dart
+  /// // Get the RenderObject from a GlobalKey
+  /// final boundary = myKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+  /// // Capture the widget as an image
+  /// final image = await boundary.toImage();
+  /// // Get the raw RGBA bytes
+  /// final byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  /// // Create the InputImage
+  /// final inputImage = InputImage.fromBitmap(
+  ///   bitmap: byteData!.buffer.asUint8List(),
+  ///   width: image.width,
+  ///   height: image.height,
+  /// );
+  /// ```
+  /// 
+  /// [bitmap] should be the raw bitmap data, typically from ui.Image.toByteData().
   /// [width] and [height] are the dimensions of the bitmap.
   /// [rotation] is optional and defaults to 0. It is only used on Android.
   factory InputImage.fromBitmap({
