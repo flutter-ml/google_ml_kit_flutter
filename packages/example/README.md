@@ -1,4 +1,4 @@
-# google\_ml\_kit example app
+# google_ml_kit example app
 
 Demonstrates how to use the google_mlkit plugins.
 
