@@ -389,7 +389,7 @@ SPEC CHECKSUMS:
   camera_avfoundation: 04b44aeb14070126c6529e5ab82cc7c9fca107cf
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 54e283d5851b0b247b3cc57877d35f1a05a204de
-  google_mlkit_barcode_scanning: c0a50c1042484a6ca506967dfa91fa7d7e74f280
+  google_mlkit_barcode_scanning: 4f79d1981fd312b9826fad28decea1bbf5ea55a8
   google_mlkit_commons: 92c769cc2e0a2bfdeb3c38091a36e8a9cc8c63d4
   google_mlkit_digital_ink_recognition: c38f0858e61478b43de4d34a5f75eca91ff00715
   google_mlkit_document_scanner: 9165fc129ac452163c21f81805cc33634b25989c
