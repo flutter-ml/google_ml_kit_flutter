@@ -105,6 +105,19 @@ From bytes:
 final inputImage = InputImage.fromBytes(bytes: bytes, metadata: metadata);
 ```
 
+from bitmap data:
+
+```dart
+final ui.Image image = await recorder.endRecording().toImage(width, height);
+final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+final InputImage inputImage = InputImage.fromBitmap(
+  bitmap: byteData!.buffer.asUint8List(),
+  width: width,
+  height: height,
+  rotation: 0, // optional, defaults to 0, only used on Android
+);
+```
+
 If you are using the [Camera plugin](https://pub.dev/packages/camera) make sure to configure your [CameraController](https://pub.dev/documentation/camera/latest/camera/CameraController-class.html) to only use `ImageFormatGroup.nv21` for Android and `ImageFormatGroup.bgra8888` for iOS.
 
 Notice that the image rotation is computed in a different way for both iOS and Android. Image rotation is used in Android to convert the `InputImage` [from Dart to Java](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons/android/src/main/java/com/google_mlkit_commons/InputImageConverter.java), but it is not used in iOS to convert [from Dart to Obj-C](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/google_mlkit_commons/ios/Classes/MLKVisionImage%2BFlutterPlugin.m). However, image rotation and `camera.lensDirection` can be used in both platforms to [compensate x and y coordinates on a canvas](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/lib/vision_detector_views/painters/coordinates_translator.dart).
