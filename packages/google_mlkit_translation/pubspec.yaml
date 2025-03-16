@@ -1,5 +1,5 @@
 name: google_mlkit_translation
-description: A Flutter plugin to use Google's ML Kit On-Device Translation to dynamically translate text between more than 50 languages.
+description: "A Flutter plugin to use Google's ML Kit On-Device Translation to dynamically translate text between more than 50 languages."
 version: 0.12.0
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_translation
