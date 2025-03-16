@@ -1,5 +1,5 @@
 name: google_mlkit_entity_extraction
-description: A Flutter plugin to use Google's ML Kit Entity Extractor API to recognize specific entities within static text.
+description: "A Flutter plugin to use Google's ML Kit Entity Extractor API to recognize specific entities within static text."
 version: 0.14.0
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_entity_extraction
