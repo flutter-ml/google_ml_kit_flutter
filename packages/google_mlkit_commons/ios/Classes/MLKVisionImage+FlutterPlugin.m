@@ -9,6 +9,8 @@
         return [self filePathToVisionImage:imageData[@"path"]];
     } else if ([@"bytes" isEqualToString:imageType]) {
         return [self bytesToVisionImage:imageData];
+    } else if ([@"bitmap" isEqualToString:imageType]) {
+        return [self bitmapToVisionImage:imageData];
     } else {
         NSString *errorReason = [NSString stringWithFormat:@"No image type for: %@", imageType];
         @throw [NSException exceptionWithName:NSInvalidArgumentException
@@ -64,6 +66,69 @@
     CVPixelBufferRelease(pixelBufferRef);
     CGImageRelease(videoImage);
     return [[MLKVisionImage alloc] initWithImage:uiImage];
+}
+
++ (MLKVisionImage *)bitmapToVisionImage:(NSDictionary *)imageDict {
+    // Get the bitmap data
+    FlutterStandardTypedData *bitmapData = imageDict[@"bitmapData"];
+    
+    if (bitmapData == nil) {
+        NSString *errorReason = @"Bitmap data is nil";
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:errorReason
+                                     userInfo:nil];
+    }
+    
+    // Try to get metadata if available
+    NSDictionary *metadata = imageDict[@"metadata"];
+    if (metadata != nil) {
+        NSNumber *width = metadata[@"width"];
+        NSNumber *height = metadata[@"height"];
+        
+        if (width != nil && height != nil) {
+            // Create bitmap context from raw RGBA data
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+            uint8_t *rawData = (uint8_t*)[bitmapData.data bytes];
+            size_t bytesPerPixel = 4;
+            size_t bytesPerRow = bytesPerPixel * width.intValue;
+            size_t bitsPerComponent = 8;
+            
+            CGContextRef context = CGBitmapContextCreate(rawData, width.intValue, height.intValue,
+                                                 bitsPerComponent, bytesPerRow, colorSpace,
+                                                 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+            
+            if (context) {
+                CGImageRef imageRef = CGBitmapContextCreateImage(context);
+                UIImage *image = [UIImage imageWithCGImage:imageRef];
+                
+                CGImageRelease(imageRef);
+                CGContextRelease(context);
+                CGColorSpaceRelease(colorSpace);
+                
+                if (image) {
+                    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+                    visionImage.orientation = image.imageOrientation;
+                    return visionImage;
+                }
+            }
+            
+            CGColorSpaceRelease(colorSpace);
+        }
+    }
+    
+    // Fallback: try to create UIImage directly from data
+    UIImage *image = [UIImage imageWithData:bitmapData.data];
+    
+    if (image == nil) {
+        NSString *errorReason = @"Failed to create UIImage from bitmap data";
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:errorReason
+                                     userInfo:nil];
+    }
+    
+    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+    visionImage.orientation = image.imageOrientation;
+    return visionImage;
 }
 
 @end
