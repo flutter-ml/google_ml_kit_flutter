@@ -18,7 +18,7 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
   final _widgetKey = GlobalKey();
   String _extractedText = 'Recognized text will appear here';
   bool _isBusy = false;
-  
+
   @override
   void dispose() {
     _textRecognizer.close();
@@ -90,7 +90,7 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
 
   Future<void> _extractTextFromWidget() async {
     if (_isBusy) return;
-    
+
     setState(() {
       _isBusy = true;
       _extractedText = 'Processing...';
@@ -98,8 +98,8 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
 
     try {
       // Get the RenderObject from the GlobalKey
-      final RenderRepaintBoundary? boundary = 
-          _widgetKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final RenderRepaintBoundary? boundary = _widgetKey.currentContext
+          ?.findRenderObject() as RenderRepaintBoundary?;
 
       if (boundary == null) {
         setState(() {
@@ -111,11 +111,11 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
 
       // Capture the widget as an image
       final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      
+
       // Convert to byte data in raw RGBA format
-      final ByteData? byteData = 
+      final ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-      
+
       if (byteData == null) {
         setState(() {
           _extractedText = 'Error: Failed to get image byte data';
@@ -125,21 +125,21 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
       }
 
       final Uint8List bytes = byteData.buffer.asUint8List();
-      
+
       // Create InputImage from bitmap data with dimensions
       final inputImage = InputImage.fromBitmap(
         bitmap: bytes,
         width: image.width,
         height: image.height,
       );
-      
+
       // Process the image with the text recognizer
-      final RecognizedText recognizedText = 
+      final RecognizedText recognizedText =
           await _textRecognizer.processImage(inputImage);
-      
+
       setState(() {
-        _extractedText = recognizedText.text.isNotEmpty 
-            ? recognizedText.text 
+        _extractedText = recognizedText.text.isNotEmpty
+            ? recognizedText.text
             : 'No text recognized';
         _isBusy = false;
       });
