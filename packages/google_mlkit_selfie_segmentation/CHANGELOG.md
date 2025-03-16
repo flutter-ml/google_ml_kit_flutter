@@ -1,3 +1,8 @@
+## 0.10.0
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
 ## 0.9.0
 
 * Update dependencies.
