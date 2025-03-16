@@ -8,7 +8,7 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/BarcodeScanning (~> 7.0.0)
-  - google_mlkit_commons (0.9.0):
+  - google_mlkit_commons (0.10.0):
     - Flutter
     - MLKitVision
   - google_mlkit_digital_ink_recognition (0.13.0):
@@ -390,21 +390,21 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_pdfview: 54e283d5851b0b247b3cc57877d35f1a05a204de
   google_mlkit_barcode_scanning: 4f79d1981fd312b9826fad28decea1bbf5ea55a8
-  google_mlkit_commons: 92c769cc2e0a2bfdeb3c38091a36e8a9cc8c63d4
-  google_mlkit_digital_ink_recognition: c38f0858e61478b43de4d34a5f75eca91ff00715
-  google_mlkit_document_scanner: 9165fc129ac452163c21f81805cc33634b25989c
-  google_mlkit_entity_extraction: a0192a47435da52de354d267ec1a77c47f883cf5
-  google_mlkit_face_detection: 76f493a9ffcb1aeb0ad4abd13ea58403e092ab84
-  google_mlkit_face_mesh_detection: 6f5a13765aedab17a59f418a7ea3651ae8bcea22
-  google_mlkit_image_labeling: e01dfa7cf050b00f8db79e37ae385c0f4ea82de6
-  google_mlkit_language_id: 7ade47ac519169b1d2fdf709a67de542ff992410
-  google_mlkit_object_detection: d0865775c31032eb7d945eae66d08b0456ba3ce6
-  google_mlkit_pose_detection: fac3532bc5a8698d747a1ccf085c4ea7e9057398
-  google_mlkit_selfie_segmentation: 19cd5e137f27002a06b2d99ae139194a02cca2de
-  google_mlkit_smart_reply: a04ec8dbc43d088ff2bdd6a74d3e3adc1cb984ee
-  google_mlkit_subject_segmentation: 483637f81b84d1326b2280b251e4eab046204b60
-  google_mlkit_text_recognition: d70cc1ed5064db39fce44d77b2c5449adc39a13d
-  google_mlkit_translation: b61e8834bc9c2f069871e74e5260c765e9ad77d1
+  google_mlkit_commons: be0b3ed5021d733e0ffc6af3a2c966ed08ec64ba
+  google_mlkit_digital_ink_recognition: 7da876a59d5f0daadc7b8403859e581c1ea9d932
+  google_mlkit_document_scanner: 3875c89b85318f07c0f1275bc2562e5c10927ada
+  google_mlkit_entity_extraction: 5e7dc29367b004e071caecb014683bbdde4a3cb2
+  google_mlkit_face_detection: 587cf59e6f845b8e0617548e5164337cd11e1c2e
+  google_mlkit_face_mesh_detection: 813b9c17439a9e457a9c0127337e04044f134624
+  google_mlkit_image_labeling: 7fcdd8e87452c213998f7a417a7e0b8820808eca
+  google_mlkit_language_id: ee5f8be16352ee4e3862e173c3cf75b307d7bf81
+  google_mlkit_object_detection: f9f6973e33d41cde25b6822d6e4ef1ff0ca86ce5
+  google_mlkit_pose_detection: 79469dad3a561bcc22db6d601d439b91e6a76bf4
+  google_mlkit_selfie_segmentation: 92f783ad1c7ac9fca57e8fed555b8600c0412a30
+  google_mlkit_smart_reply: 7b4764b5fbdcb3e60daa56b714faa782183b4b11
+  google_mlkit_subject_segmentation: 42af81c0c15d072565999c54a5c1dbf46e14d6cd
+  google_mlkit_text_recognition: a181d228dc2d1f3191de634e55520896176ba9d7
+  google_mlkit_translation: 15a783bc7e1c0d10d1c27fd5c9c2ff19c8e2d373
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMLKit: eff9e23ec1d90ea4157a1ee2e32a4f610c5b3318
   GoogleToolboxForMac: d1a2cbf009c453f4d6ded37c105e2f67a32206d8
