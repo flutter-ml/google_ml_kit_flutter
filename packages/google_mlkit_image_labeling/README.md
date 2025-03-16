@@ -31,7 +31,7 @@ A Flutter plugin to use [Google's ML Kit Image Labeling](https://developers.goog
 
 ### iOS
 
-- Minimum iOS Deployment Target: 15.5.0
+- Minimum iOS Deployment Target: 15.5
 - Xcode 15.3.0 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
@@ -47,12 +47,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '15.5.0'  # or newer version
+platform :ios, '15.5'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '15.5.0'  # or newer version
+$iOSVersion = '15.5'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -75,13 +75,13 @@ post_install do |installer|
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to something newer but not older.
 
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 33
-- compileSdkVersion: 34
+- targetSdkVersion: 35
+- compileSdkVersion: 35
 
 ## Usage
 
@@ -202,7 +202,7 @@ Additionally, for iOS you have to update your app's Podfile.
 First, include `GoogleMLKit/LinkFirebase` and `Firebase` in your Podfile:
 
 ```ruby
-platform :ios, '15.5.0'
+platform :ios, '15.5'
 
 ...
 
