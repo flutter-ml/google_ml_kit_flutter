@@ -1,5 +1,5 @@
 name: google_mlkit_image_labeling
-description: A Flutter plugin to use Google's ML Kit Image Labeling to detect and extract information about entities in an image across a broad group of categories.
+description: "A Flutter plugin to use Google's ML Kit Image Labeling to detect and extract information about entities in an image across a broad group of categories."
 version: 0.13.0
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_image_labeling
