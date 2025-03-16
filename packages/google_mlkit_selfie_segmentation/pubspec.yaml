@@ -1,5 +1,5 @@
 name: google_mlkit_selfie_segmentation
-description: Flutter plugin to use Google's ML Kit Selfie Segmentation API to easily separate the background from users within a scene and focus on what matters.
+description: "Flutter plugin to use Google's ML Kit Selfie Segmentation API to easily separate the background from users within a scene and focus on what matters."
 version: 0.9.0
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_selfie_segmentation
