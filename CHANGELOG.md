@@ -40,6 +40,7 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_commons` - `v0.11.0`
 
@@ -50,6 +51,7 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_document_scanner` - `v0.4.0`
 
@@ -60,21 +62,25 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_face_detection` - `v0.13.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_face_mesh_detection` - `v0.4.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_image_labeling` - `v0.14.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_language_id` - `v0.13.0`
 
@@ -85,16 +91,19 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_pose_detection` - `v0.14.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_selfie_segmentation` - `v0.10.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_smart_reply` - `v0.13.0`
 
@@ -105,6 +114,7 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 #### `google_mlkit_text_recognition` - `v0.15.0`
 
@@ -115,6 +125,7 @@ Packages with changes:
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
+* Update dependencies.
 
 ## 2024-10-07
 
