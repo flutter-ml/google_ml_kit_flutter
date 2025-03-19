@@ -26,7 +26,7 @@ Packages with changes:
 - [`google_mlkit_selfie_segmentation` - `v0.10.0`](#google_mlkit_selfie_segmentation---v0100)
 - [`google_mlkit_smart_reply` - `v0.13.0`](#google_mlkit_smart_reply---v0130)
 - [`google_mlkit_subject_segmentation` - `v0.0.2`](#google_mlkit_subject_segmentation---v002)
-- [`google_mlkit_text_recognition` - `v0.15.0`](#google_mlkit_text_recognition---v0150)
+- [`google_mlkit_text_recognition` - `v0.16.0`](#google_mlkit_text_recognition---v0150)
 - [`google_mlkit_translation` - `v0.13.0`](#google_mlkit_translation---v0130)
 
 ---
@@ -116,7 +116,7 @@ Packages with changes:
 * Updates Java compatibility version to 11
 * Update dependencies.
 
-#### `google_mlkit_text_recognition` - `v0.15.0`
+#### `google_mlkit_text_recognition` - `v0.16.0`
 
 * Increase android sdk compile version to 35
 * Updates Java compatibility version to 11
