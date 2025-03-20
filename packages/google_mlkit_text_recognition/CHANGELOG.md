@@ -2,6 +2,8 @@
 
 * Add an example showing how to extract text from a bitmap image with the new `InputImage.fromBitmap()` constructor.
 * Bumps the version to support the new `InputImage.fromBitmap()` constructor from `google_mlkit_commons`.
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
 
 ## 0.14.0
 

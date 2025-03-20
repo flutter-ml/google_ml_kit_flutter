@@ -44,8 +44,8 @@ This feature is still in Beta, and it is only available for Android. Stay tune f
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 33
-- compileSdkVersion: 34
+- targetSdkVersion: 35
+- compileSdkVersion: 35
 
 ## Usage
 
