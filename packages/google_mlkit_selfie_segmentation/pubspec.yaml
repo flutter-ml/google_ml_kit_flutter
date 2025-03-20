@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_mlkit_commons: ^0.10.0
+  google_mlkit_commons: ^0.11.0
 
 dev_dependencies:
   flutter_test:

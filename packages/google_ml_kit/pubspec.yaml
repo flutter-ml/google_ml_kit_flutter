@@ -13,22 +13,22 @@ dependencies:
     sdk: flutter
 
   # Vision APIs
-  google_mlkit_commons: ^0.9.0
-  google_mlkit_barcode_scanning: ^0.13.0
-  google_mlkit_digital_ink_recognition: ^0.13.0
-  google_mlkit_face_detection: ^0.12.0
-  google_mlkit_face_mesh_detection: ^0.3.0
-  google_mlkit_image_labeling: ^0.13.0
-  google_mlkit_object_detection: ^0.14.0
-  google_mlkit_pose_detection: ^0.13.0
-  google_mlkit_selfie_segmentation: ^0.9.0
-  google_mlkit_text_recognition: ^0.14.0
+  google_mlkit_commons: ^0.11.0
+  google_mlkit_barcode_scanning: ^0.14.1
+  google_mlkit_digital_ink_recognition: ^0.14.1
+  google_mlkit_face_detection: ^0.13.1
+  google_mlkit_face_mesh_detection: ^0.4.1
+  google_mlkit_image_labeling: ^0.14.1
+  google_mlkit_object_detection: ^0.15.0
+  google_mlkit_pose_detection: ^0.14.0
+  google_mlkit_selfie_segmentation: ^0.10.0
+  google_mlkit_text_recognition: ^0.15.0
 
   # Natural Language APIs
-  google_mlkit_entity_extraction: ^0.14.0
-  google_mlkit_language_id: ^0.12.0
-  google_mlkit_translation: ^0.12.0
-  google_mlkit_smart_reply: ^0.12.0
+  google_mlkit_entity_extraction: ^0.15.1
+  google_mlkit_language_id: ^0.13.0
+  google_mlkit_translation: ^0.13.0
+  google_mlkit_smart_reply: ^0.13.0
 
 dev_dependencies:
   flutter_test:
