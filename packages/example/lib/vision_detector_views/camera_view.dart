@@ -358,29 +358,52 @@ class _CameraViewState extends State<CameraView> {
 
     // get image format
     final format = InputImageFormatValue.fromRawValue(image.format.raw);
-    // validate format depending on platform
-    // only supported formats:
-    // * nv21 for Android
-    // * bgra8888 for iOS
-    if (format == null ||
-        (Platform.isAndroid && format != InputImageFormat.nv21) ||
+    if (format == null) {
+      print('could not find format from raw value: $image.format.raw');
+      return null;
+    }
+    // Validate format depending on platform
+    final androidSupportedFormats = [
+      InputImageFormat.nv21,
+      InputImageFormat.yv12,
+      InputImageFormat.yuv_420_888
+    ];
+    if ((Platform.isAndroid && !androidSupportedFormats.contains(format)) ||
         (Platform.isIOS && format != InputImageFormat.bgra8888)) {
+      print('image format is not supported: $format');
       return null;
     }
 
-    // since format is constraint to nv21 or bgra8888, both only have one plane
-    if (image.planes.length != 1) return null;
-    final plane = image.planes.first;
+    // Compile a flat list of all image data. For image formats with multiple planes,
+    // takes some copying.
+    final Uint8List bytes = image.planes.length == 1
+        ? image.planes.first.bytes
+        : _concatenatePlanes(image);
 
     // compose InputImage using bytes
     return InputImage.fromBytes(
-      bytes: plane.bytes,
+      bytes: bytes,
       metadata: InputImageMetadata(
         size: Size(image.width.toDouble(), image.height.toDouble()),
         rotation: rotation, // used only in Android
-        format: format, // used only in iOS
-        bytesPerRow: plane.bytesPerRow, // used only in iOS
+        format: format,
+        bytesPerRow: image.planes.first.bytesPerRow, // used only in iOS
       ),
     );
+  }
+
+  Uint8List _concatenatePlanes(CameraImage image) {
+    int length = 0;
+    for (final Plane p in image.planes) {
+      length += p.bytes.length;
+    }
+
+    final Uint8List bytes = Uint8List(length);
+    int offset = 0;
+    for (final Plane p in image.planes) {
+      bytes.setRange(offset, offset + p.bytes.length, p.bytes);
+      offset += p.bytes.length;
+    }
+    return bytes;
   }
 }

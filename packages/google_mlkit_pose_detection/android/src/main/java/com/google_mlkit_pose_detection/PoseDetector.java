@@ -49,7 +49,8 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
         String id = call.argument("id");
@@ -102,7 +103,9 @@ public class PoseDetector implements MethodChannel.MethodCallHandler {
                             result.success(array);
                         })
                 .addOnFailureListener(
-                        e -> result.error("PoseDetectorError", e.toString(), null));
+                        e -> result.error("PoseDetectorError", e.toString(), e))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
     }
 
     private void closeDetector(MethodCall call) {

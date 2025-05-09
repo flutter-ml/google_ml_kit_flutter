@@ -78,7 +78,8 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
         if (imageData == null) {
             return;
         }
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
         String id = call.argument("id");
@@ -159,7 +160,9 @@ public class TextRecognizer implements MethodChannel.MethodCallHandler {
                     textResult.put("blocks", textBlocks);
                     result.success(textResult);
                 })
-                .addOnFailureListener(e -> result.error("TextRecognizerError", e.toString(), null));
+                .addOnFailureListener(e -> result.error("TextRecognizerError", e.toString(), e))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
     }
 
     private void addData(Map<String, Object> addTo,

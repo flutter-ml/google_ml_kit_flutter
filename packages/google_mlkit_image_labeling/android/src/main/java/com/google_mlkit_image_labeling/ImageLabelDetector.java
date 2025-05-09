@@ -25,6 +25,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
+
     private static final String START = "vision#startImageLabelDetector";
     private static final String CLOSE = "vision#closeImageLabelDetector";
     private static final String MANAGE = "vision#manageFirebaseModels";
@@ -59,8 +60,11 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null) return;
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
+        if (inputImage == null) {
+            return;
+        }
 
         String id = call.argument("id");
         ImageLabeler imageLabeler = instances.get(id);
@@ -106,7 +110,9 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
 
                     result.success(labels);
                 })
-                .addOnFailureListener(e -> result.error("ImageLabelDetectorError", e.toString(), null));
+                .addOnFailureListener(e -> result.error("ImageLabelDetectorError", e.toString(), e))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
     }
 
     //Labeler options that are provided to default image labeler(uses inbuilt model).
@@ -152,7 +158,9 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         ImageLabeler imageLabeler = instances.get(id);
-        if (imageLabeler == null) return;
+        if (imageLabeler == null) {
+            return;
+        }
         imageLabeler.close();
         instances.remove(id);
     }

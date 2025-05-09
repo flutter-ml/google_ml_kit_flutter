@@ -54,12 +54,17 @@ public class SubjectSegmenter implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
         String id = call.argument("id");
         com.google.mlkit.vision.segmentation.subject.SubjectSegmenter subjectSegmenter = getOrCreateSegmenter(id, call);
-        subjectSegmenter.process(inputImage).addOnSuccessListener(subjectSegmentationResult -> processResult(subjectSegmentationResult, result)).addOnFailureListener(e -> result.error("Subject segmentation failure!", e.getMessage(), e));
+        subjectSegmenter.process(inputImage)
+            .addOnSuccessListener(subjectSegmentationResult -> processResult(subjectSegmentationResult, result))
+            .addOnFailureListener(e -> result.error("Subject segmentation failure!", e.getMessage(), e))
+            // Closing is necessary for both success and failure.
+            .addOnCompleteListener(r -> converter.close());
     }
 
     private com.google.mlkit.vision.segmentation.subject.SubjectSegmenter getOrCreateSegmenter(String id, MethodCall call) {

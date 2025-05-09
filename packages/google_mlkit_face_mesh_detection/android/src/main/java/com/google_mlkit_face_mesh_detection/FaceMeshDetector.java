@@ -22,6 +22,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 class FaceMeshDetector implements MethodChannel.MethodCallHandler {
+
     private static final String START = "vision#startFaceMeshDetector";
     private static final String CLOSE = "vision#closeFaceMeshDetector";
 
@@ -51,8 +52,11 @@ class FaceMeshDetector implements MethodChannel.MethodCallHandler {
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
         Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
-        InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
-        if (inputImage == null) return;
+        InputImageConverter converter = new InputImageConverter();
+        InputImage inputImage = converter.getInputImageFromData(imageData, context, result);
+        if (inputImage == null) {
+            return;
+        }
 
         String id = call.argument("id");
         com.google.mlkit.vision.facemesh.FaceMeshDetector detector = instances.get(id);
@@ -104,18 +108,18 @@ class FaceMeshDetector implements MethodChannel.MethodCallHandler {
                                 meshData.put("triangles", triangles);
 
                                 int[] types = {
-                                        FaceMesh.FACE_OVAL,
-                                        FaceMesh.LEFT_EYEBROW_TOP,
-                                        FaceMesh.LEFT_EYEBROW_BOTTOM,
-                                        FaceMesh.RIGHT_EYEBROW_TOP,
-                                        FaceMesh.RIGHT_EYEBROW_BOTTOM,
-                                        FaceMesh.LEFT_EYE,
-                                        FaceMesh.RIGHT_EYE,
-                                        FaceMesh.UPPER_LIP_TOP,
-                                        FaceMesh.UPPER_LIP_BOTTOM,
-                                        FaceMesh.LOWER_LIP_TOP,
-                                        FaceMesh.LOWER_LIP_BOTTOM,
-                                        FaceMesh.NOSE_BRIDGE
+                                    FaceMesh.FACE_OVAL,
+                                    FaceMesh.LEFT_EYEBROW_TOP,
+                                    FaceMesh.LEFT_EYEBROW_BOTTOM,
+                                    FaceMesh.RIGHT_EYEBROW_TOP,
+                                    FaceMesh.RIGHT_EYEBROW_BOTTOM,
+                                    FaceMesh.LEFT_EYE,
+                                    FaceMesh.RIGHT_EYE,
+                                    FaceMesh.UPPER_LIP_TOP,
+                                    FaceMesh.UPPER_LIP_BOTTOM,
+                                    FaceMesh.LOWER_LIP_TOP,
+                                    FaceMesh.LOWER_LIP_BOTTOM,
+                                    FaceMesh.NOSE_BRIDGE
                                 };
                                 Map<Integer, List<Map<String, Object>>> contours = new HashMap<>();
                                 for (int type : types) {
@@ -129,7 +133,10 @@ class FaceMeshDetector implements MethodChannel.MethodCallHandler {
                             result.success(faceMeshes);
                         })
                 .addOnFailureListener(
-                        e -> result.error("FaceMeshDetectorError", e.toString(), null));
+                        e -> result.error("FaceMeshDetectorError", e.toString(), null))
+                // Closing is necessary for both success and failure.
+                .addOnCompleteListener(r -> converter.close());
+
     }
 
     private List<Map<String, Object>> pointsToList(List<FaceMeshPoint> points) {
@@ -152,7 +159,9 @@ class FaceMeshDetector implements MethodChannel.MethodCallHandler {
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
         com.google.mlkit.vision.facemesh.FaceMeshDetector detector = instances.get(id);
-        if (detector == null) return;
+        if (detector == null) {
+            return;
+        }
         detector.close();
         instances.remove(id);
     }
