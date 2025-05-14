@@ -1,3 +1,12 @@
+## 0.11.0
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+## 0.10.0
+
+* Add support for bitmap data with `InputImage.fromBitmap()` constructor.
+
 ## 0.9.0
 
 * Update README.

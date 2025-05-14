@@ -10,13 +10,26 @@ class InputImage {
   /// The bytes of the image.
   final Uint8List? bytes;
 
+  /// Raw bitmap pixel data.
+  final Uint8List? bitmapData;
+
   /// The type of image.
   final InputImageType type;
 
   /// The image data when creating an image of type = [InputImageType.bytes].
   final InputImageMetadata? metadata;
 
-  InputImage._({this.filePath, this.bytes, required this.type, this.metadata});
+  /// The rotation degrees for bitmap images.
+  final int? rotation;
+
+  InputImage._({
+    this.filePath,
+    this.bytes,
+    this.bitmapData,
+    required this.type,
+    this.metadata,
+    this.rotation,
+  });
 
   /// Creates an instance of [InputImage] from path of image stored in device.
   factory InputImage.fromFilePath(String path) {
@@ -35,12 +48,61 @@ class InputImage {
         bytes: bytes, type: InputImageType.bytes, metadata: metadata);
   }
 
+  /// Creates an instance of [InputImage] from bitmap data.
+  ///
+  /// This constructor is designed to work with bitmap data from Flutter UI components
+  /// such as those obtained from ui.Image.toByteData(format: ui.ImageByteFormat.rawRgba).
+  ///
+  /// Example usage with a RepaintBoundary:
+  /// ```dart
+  /// // Get the RenderObject from a GlobalKey
+  /// final boundary = myKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+  /// // Capture the widget as an image
+  /// final image = await boundary.toImage();
+  /// // Get the raw RGBA bytes
+  /// final byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  /// // Create the InputImage
+  /// final inputImage = InputImage.fromBitmap(
+  ///   bitmap: byteData!.buffer.asUint8List(),
+  ///   width: image.width,
+  ///   height: image.height,
+  /// );
+  /// ```
+  ///
+  /// [bitmap] should be the raw bitmap data, typically from ui.Image.toByteData().
+  /// [width] and [height] are the dimensions of the bitmap.
+  /// [rotation] is optional and defaults to 0. It is only used on Android.
+  factory InputImage.fromBitmap({
+    required Uint8List bitmap,
+    required int width,
+    required int height,
+    int rotation = 0,
+  }) {
+    return InputImage._(
+      bitmapData: bitmap,
+      type: InputImageType.bitmap,
+      rotation: rotation,
+      metadata: InputImageMetadata(
+        size: Size(width.toDouble(), height.toDouble()),
+        rotation: InputImageRotation.values.firstWhere(
+          (element) => element.rawValue == rotation,
+          orElse: () => InputImageRotation.rotation0deg,
+        ),
+        // Assuming BGRA format from Flutter UI
+        format: InputImageFormat.bgra8888,
+        bytesPerRow: width * 4, // 4 bytes per pixel (RGBA)
+      ),
+    );
+  }
+
   /// Returns a json representation of an instance of [InputImage].
   Map<String, dynamic> toJson() => {
         'bytes': bytes,
         'type': type.name,
         'path': filePath,
-        'metadata': metadata?.toJson()
+        'metadata': metadata?.toJson(),
+        'bitmapData': bitmapData,
+        'rotation': rotation
       };
 }
 
@@ -48,6 +110,7 @@ class InputImage {
 enum InputImageType {
   file,
   bytes,
+  bitmap,
 }
 
 /// Data of image required when creating image from bytes.

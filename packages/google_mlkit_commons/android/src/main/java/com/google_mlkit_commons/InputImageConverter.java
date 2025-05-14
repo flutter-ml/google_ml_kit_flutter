@@ -20,10 +20,73 @@ public class InputImageConverter {
     public static InputImage getInputImageFromData(Map<String, Object> imageData,
             Context context,
             MethodChannel.Result result) {
-        //Differentiates whether the image data is a path for a image file or contains image data in form of bytes
+        //Differentiates whether the image data is a path for a image file, contains image data in form of bytes, or a bitmap
         String model = (String) imageData.get("type");
         InputImage inputImage;
-        if (model != null && model.equals("file")) {
+        if (model != null && model.equals("bitmap")) {
+            try {
+                byte[] bitmapData = (byte[]) imageData.get("bitmapData");
+                if (bitmapData == null) {
+                    result.error("InputImageConverterError", "Bitmap data is null", null);
+                    return null;
+                }
+                
+                // Extract the rotation
+                int rotation = 0;
+                Object rotationObj = imageData.get("rotation");
+                if (rotationObj != null) {
+                    rotation = (int) rotationObj;
+                }
+                
+                try {
+                    // Get metadata from the InputImage object if available
+                    Map<String, Object> metadataMap = (Map<String, Object>) imageData.get("metadata");
+                    if (metadataMap != null) {
+                        int width = Double.valueOf(Objects.requireNonNull(metadataMap.get("width")).toString()).intValue();
+                        int height = Double.valueOf(Objects.requireNonNull(metadataMap.get("height")).toString()).intValue();
+                        
+                        // Create bitmap from the Flutter UI raw RGBA bytes
+                        android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+                        java.nio.IntBuffer intBuffer = java.nio.IntBuffer.allocate(bitmapData.length / 4);
+                        
+                        // Convert RGBA bytes to int pixels
+                        for (int i = 0; i < bitmapData.length; i += 4) {
+                            int r = bitmapData[i] & 0xFF;
+                            int g = bitmapData[i + 1] & 0xFF;
+                            int b = bitmapData[i + 2] & 0xFF;
+                            int a = bitmapData[i + 3] & 0xFF;
+                            intBuffer.put((a << 24) | (r << 16) | (g << 8) | b);
+                        }
+                        intBuffer.rewind();
+                        
+                        // Copy pixel data to bitmap
+                        bitmap.copyPixelsFromBuffer(intBuffer);
+                        return InputImage.fromBitmap(bitmap, rotation);
+                    }
+                } catch (Exception e) {
+                    Log.e("ImageError", "Error creating bitmap from raw data", e);
+                }
+                
+                // Fallback: Try to decode as standard image format (JPEG, PNG)
+                try {
+                    android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
+                    if (bitmap == null) {
+                        result.error("InputImageConverterError", "Failed to decode bitmap from the provided data", null);
+                        return null;
+                    }
+                    return InputImage.fromBitmap(bitmap, rotation);
+                } catch (Exception e) {
+                    Log.e("ImageError", "Getting Bitmap failed", e);
+                    result.error("InputImageConverterError", e.toString(), e);
+                    return null;
+                }
+            } catch (Exception e) {
+                Log.e("ImageError", "Getting Bitmap failed");
+                Log.e("ImageError", e.toString());
+                result.error("InputImageConverterError", e.toString(), e);
+                return null;
+            }
+        } else if (model != null && model.equals("file")) {
             try {
                 inputImage = InputImage.fromFilePath(context, Uri.fromFile(new File(((String) imageData.get("path")))));
                 return inputImage;

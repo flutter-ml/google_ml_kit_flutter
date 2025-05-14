@@ -60,8 +60,8 @@ This feature is still in Beta, and it is only available for Android. Stay tune f
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 33
-- compileSdkVersion: 34
+- targetSdkVersion: 35
+- compileSdkVersion: 35
 
 ## Usage
 
@@ -81,7 +81,7 @@ DocumentScannerOptions documentOptions = DocumentScannerOptions(
 #### Create an instance of `DocumentScanner`
 
 ```dart
-final documentScanner = DocumentScanner(option: documentOptions);
+final documentScanner = DocumentScanner(options: documentOptions);
 ```
 
 #### Start Scanner

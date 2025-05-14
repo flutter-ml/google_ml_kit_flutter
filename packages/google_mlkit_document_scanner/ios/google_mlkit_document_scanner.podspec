@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   # s.dependency 'GoogleMLKit/DocumentScanner', '~> 5.0.0'
-  s.platform = :ios, '15.5.0'
-  s.ios.deployment_target = '15.5.0'
+  s.platform = :ios, '15.5'
+  s.ios.deployment_target = '15.5'
   s.static_framework = true
   s.swift_version = '5.0'
 

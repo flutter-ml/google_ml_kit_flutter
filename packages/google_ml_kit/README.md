@@ -18,7 +18,7 @@ Go to each plugin listed bellow to read about their documentation and requiremen
 ### Vision APIs
 
 | Feature                                                                                         | Plugin                                                                                                                                                                                                                                                   | Android | iOS |
-|-------------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
+| ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
 | [Barcode Scanning](https://developers.google.com/ml-kit/vision/barcode-scanning)                | [google_mlkit_barcode_scanning](https://pub.dev/packages/google_mlkit_barcode_scanning) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_barcode_scanning)](https://pub.dev/packages/google_mlkit_barcode_scanning)                             | ✅      | ✅  |
 | [Face Detection](https://developers.google.com/ml-kit/vision/face-detection)                    | [google_mlkit_face_detection](https://pub.dev/packages/google_mlkit_face_detection) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_face_detection)](https://pub.dev/packages/google_mlkit_face_detection)                                     | ✅      | ✅  |
 | [Face Mesh Detection (Beta)](https://developers.google.com/ml-kit/vision/face-mesh-detection)   | [google_mlkit_face_mesh_detection](https://pub.dev/packages/google_mlkit_face_mesh_detection) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_face_mesh_detection)](https://pub.dev/packages/google_mlkit_face_mesh_detection)                 | ✅      | ❌  |
@@ -34,7 +34,7 @@ Go to each plugin listed bellow to read about their documentation and requiremen
 ### Natural Language APIs
 
 | Feature                                                                                     | Plugin                                                                                                                                                                                                                           | Android | iOS |
-|---------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
 | [Language Identification](https://developers.google.com/ml-kit/language/identification)     | [google_mlkit_language_id](https://pub.dev/packages/google_mlkit_language_id) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_language_id)](https://pub.dev/packages/google_mlkit_language_id)                         | ✅      | ✅  |
 | [On-Device Translation](https://developers.google.com/ml-kit/language/translation)          | [google_mlkit_translation](https://pub.dev/packages/google_mlkit_translation) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_translation)](https://pub.dev/packages/google_mlkit_translation)                         | ✅      | ✅  |
 | [Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                    | [google_mlkit_smart_reply](https://pub.dev/packages/google_mlkit_smart_reply) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_smart_reply)](https://pub.dev/packages/google_mlkit_smart_reply)                         | ✅      | ✅  |
@@ -44,7 +44,7 @@ Go to each plugin listed bellow to read about their documentation and requiremen
 
 ### iOS
 
-- Minimum iOS Deployment Target: 15.5.0
+- Minimum iOS Deployment Target: 15.5
 - Xcode 15.3.0 or newer
 - Swift 5
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).
@@ -60,12 +60,12 @@ Go to Project > Runner > Building Settings > Excluded Architectures > Any SDK > 
 Your Podfile should look like this:
 
 ```ruby
-platform :ios, '15.5.0'  # or newer version
+platform :ios, '15.5'  # or newer version
 
 ...
 
 # add this line:
-$iOSVersion = '15.5.0'  # or newer version
+$iOSVersion = '15.5'  # or newer version
 
 post_install do |installer|
   # add these lines:
@@ -88,13 +88,13 @@ post_install do |installer|
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5.0, you can set it to something newer but not older.
+Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to something newer but not older.
 
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 33
-- compileSdkVersion: 34
+- targetSdkVersion: 35
+- compileSdkVersion: 35
 
 ## Example app
 

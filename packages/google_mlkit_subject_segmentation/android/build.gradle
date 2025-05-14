@@ -1,5 +1,5 @@
-group 'com.google_mlkit_subject_segmentation'
-version '1.0'
+group = "com.google_mlkit_subject_segmentation"
+version = "1.0"
 
 buildscript {
     repositories {
@@ -8,8 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-
+        classpath("com.android.tools.build:gradle:8.7.0")
     }
 }
 
@@ -20,25 +19,23 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
+apply plugin: "com.android.library"
 
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace 'com.google_mlkit_subject_segmentation'
-    }
+    namespace = "com.google_mlkit_subject_segmentation"
 
-    compileSdk 34
+    compileSdk = 35
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     defaultConfig {
-        minSdkVersion 24
+        minSdk = 24
     }
-}
 
-dependencies {
-    implementation 'com.google.android.gms:play-services-mlkit-subject-segmentation:16.0.0-beta1'
+    dependencies {
+        implementation("com.google.android.gms:play-services-mlkit-subject-segmentation:16.0.0-beta1")
+    }
 }

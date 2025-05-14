@@ -51,8 +51,8 @@ This feature is still in Beta, and it is only available for Android. Stay tune f
 ### Android
 
 - minSdkVersion: 24
-- targetSdkVersion: 33
-- compileSdkVersion: 34
+- targetSdkVersion: 35
+- compileSdkVersion: 35
 
 You can configure your app to automatically download the model to the device after your app is installed from the Play Store. To do so, add the following declaration to your app's AndroidManifest.xml file:
 

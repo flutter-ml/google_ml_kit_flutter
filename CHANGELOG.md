@@ -3,6 +3,148 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-03-20
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.20.0`](#google_ml_kit---v0200)
+- [`google_mlkit_barcode_scanning` - `v0.14.1`](#google_mlkit_barcode_scanning---v0141)
+- [`google_mlkit_commons` - `v0.11.0`](#google_mlkit_commons---v0110)
+- [`google_mlkit_digital_ink_recognition` - `v0.14.1`](#google_mlkit_digital_ink_recognition---v0141)
+- [`google_mlkit_document_scanner` - `v0.4.0`](#google_mlkit_document_scanner---v040)
+- [`google_mlkit_entity_extraction` - `v0.15.1`](#google_mlkit_entity_extraction---v0151)
+- [`google_mlkit_face_detection` - `v0.13.1`](#google_mlkit_face_detection---v0131)
+- [`google_mlkit_face_mesh_detection` - `v0.4.1`](#google_mlkit_face_mesh_detection---v041)
+- [`google_mlkit_image_labeling` - `v0.14.1`](#google_mlkit_image_labeling---v0141)
+- [`google_mlkit_language_id` - `v0.13.0`](#google_mlkit_language_id---v0130)
+- [`google_mlkit_object_detection` - `v0.15.0`](#google_mlkit_object_detection---v0150)
+- [`google_mlkit_pose_detection` - `v0.14.0`](#google_mlkit_pose_detection---v0140)
+- [`google_mlkit_selfie_segmentation` - `v0.10.0`](#google_mlkit_selfie_segmentation---v0100)
+- [`google_mlkit_smart_reply` - `v0.13.0`](#google_mlkit_smart_reply---v0130)
+- [`google_mlkit_subject_segmentation` - `v0.0.2`](#google_mlkit_subject_segmentation---v002)
+- [`google_mlkit_text_recognition` - `v0.15.0`](#google_mlkit_text_recognition---v0150)
+- [`google_mlkit_translation` - `v0.13.0`](#google_mlkit_translation---v0130)
+
+---
+
+#### `google_ml_kit` - `v0.20.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_barcode_scanning` - `v0.14.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_commons` - `v0.11.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_digital_ink_recognition` - `v0.14.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_document_scanner` - `v0.4.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_entity_extraction` - `v0.15.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_face_detection` - `v0.13.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_face_mesh_detection` - `v0.4.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_image_labeling` - `v0.14.1`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_language_id` - `v0.13.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_object_detection` - `v0.15.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_pose_detection` - `v0.14.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_selfie_segmentation` - `v0.10.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_smart_reply` - `v0.13.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_subject_segmentation` - `v0.0.2`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+#### `google_mlkit_text_recognition` - `v0.15.0`
+
+* Add an example showing how to extract text from a bitmap image with the new `InputImage.fromBitmap()` constructor.
+* Bumps the version to support the new `InputImage.fromBitmap()` constructor from `google_mlkit_commons`.
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+
+#### `google_mlkit_translation` - `v0.13.0`
+
+* Increase android sdk compile version to 35
+* Updates Java compatibility version to 11
+* Update dependencies.
+
+## 2025-03-16
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_mlkit_commons` - `v0.10.0`](#google_mlkit_commons---v0100)
+
+---
+
+#### `google_mlkit_commons` - `v0.10.0`
+
+* Add support for bitmap data with `InputImage.fromBitmap()` constructor.
+
 ## 2024-10-07
 
 ### Changes
