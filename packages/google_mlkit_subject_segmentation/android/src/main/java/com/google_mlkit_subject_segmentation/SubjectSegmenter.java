@@ -22,7 +22,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmenterOptions;
 import com.google_mlkit_commons.InputImageConverter;
-
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class SubjectSegmenter implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startSubjectSegmenter";
     private static final String CLOSE = "vision#closeSubjectSegmenter";

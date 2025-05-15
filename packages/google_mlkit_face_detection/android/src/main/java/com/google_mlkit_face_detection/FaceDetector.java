@@ -21,6 +21,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+@SuppressWarnings({"unchecked", "rawtypes"})
 
 class FaceDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startFaceDetector";

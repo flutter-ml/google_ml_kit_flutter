@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import io.flutter.plugin.common.MethodChannel;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class InputImageConverter {
 
     //Returns an [InputImage] from the image data received
@@ -99,7 +100,6 @@ public class InputImageConverter {
         } else {
             if (model != null && model.equals("bytes")) {
                 try {
-                    @SuppressWarnings("unchecked")
                     Map<String, Object> metaData = (Map<String, Object>) imageData.get("metadata");
 
                     assert metaData != null;

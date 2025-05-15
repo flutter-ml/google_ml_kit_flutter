@@ -16,7 +16,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class SelfieSegmenter implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startSelfieSegmenter";
     private static final String CLOSE = "vision#closeSelfieSegmenter";
