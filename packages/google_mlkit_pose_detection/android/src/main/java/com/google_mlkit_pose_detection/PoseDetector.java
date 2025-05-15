@@ -18,7 +18,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class PoseDetector implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startPoseDetector";
     private static final String CLOSE = "vision#closePoseDetector";
