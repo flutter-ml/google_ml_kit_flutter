@@ -22,6 +22,7 @@ import java.util.Map;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private static final String START = "vision#startDigitalInkRecognizer";
     private static final String CLOSE = "vision#closeDigitalInkRecognizer";
@@ -99,7 +100,6 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
             } else {
                 builder.setPreContext("");
             }
-
             Map<String, Object> writingAreaMap = (Map<String, Object>) contextMap.get("writingArea");
             if (writingAreaMap != null) {
                 float width = (float) (double) writingAreaMap.get("width");

@@ -28,7 +28,7 @@ import java.util.TimeZone;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class EntityExtractor implements MethodChannel.MethodCallHandler {
     private static final String START = "nlp#startEntityExtractor";
     private static final String CLOSE = "nlp#closeEntityExtractor";
