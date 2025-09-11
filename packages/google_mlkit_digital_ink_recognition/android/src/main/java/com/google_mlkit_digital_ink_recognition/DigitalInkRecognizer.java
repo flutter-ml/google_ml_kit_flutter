@@ -54,71 +54,85 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
         DigitalInkRecognitionModel model = getModel(tag, result);
         if (model == null)
             return;
-        if (!genericModelManager.isModelDownloaded(model)) {
-            result.error("Model Error", "Model has not been downloaded yet ", null);
-            return;
-        }
 
-        String id = call.argument("id");
-        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
-        if (recognizer == null) {
-            recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
-            instances.put(id, recognizer);
-        }
+        genericModelManager.isModelDownloaded(
+                model,
+                new GenericModelManager.CheckModelIsDownloadedCallback() {
+                    @Override
+                    public void onModelDownloaded(Boolean isDownloaded) {
+                        if (!isDownloaded) {
+                            result.error("Model Error", "Model has not been downloaded yet ", null);
+                            return;
+                        }
 
-        Map<String, Object> inkMap = call.argument("ink");
-        List<Map<String, Object>> strokeList = (List<Map<String, Object>>) inkMap.get("strokes");
-        Ink.Builder inkBuilder = Ink.builder();
-        for (final Map<String, Object> strokeMap : strokeList) {
-            Ink.Stroke.Builder strokeBuilder = Ink.Stroke.builder();
-            List<Map<String, Object>> pointsList = (List<Map<String, Object>>) strokeMap.get("points");
-            for (final Map<String, Object> point : pointsList) {
-                float x = (float) (double) point.get("x");
-                float y = (float) (double) point.get("y");
-                Object t0 = point.get("t");
-                long t;
-                if (t0 instanceof Integer) {
-                    t = (int) t0;
-                } else {
-                    t = (long) t0;
+                        String id = call.argument("id");
+                        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
+                        if (recognizer == null) {
+                            recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
+                            instances.put(id, recognizer);
+                        }
+
+                        Map<String, Object> inkMap = call.argument("ink");
+                        List<Map<String, Object>> strokeList = (List<Map<String, Object>>) inkMap.get("strokes");
+                        Ink.Builder inkBuilder = Ink.builder();
+                        for (final Map<String, Object> strokeMap : strokeList) {
+                            Ink.Stroke.Builder strokeBuilder = Ink.Stroke.builder();
+                            List<Map<String, Object>> pointsList = (List<Map<String, Object>>) strokeMap.get("points");
+                            for (final Map<String, Object> point : pointsList) {
+                                float x = (float) (double) point.get("x");
+                                float y = (float) (double) point.get("y");
+                                Object t0 = point.get("t");
+                                long t;
+                                if (t0 instanceof Integer) {
+                                    t = (int) t0;
+                                } else {
+                                    t = (long) t0;
+                                }
+                                Ink.Point strokePoint = Ink.Point.create(x, y, t);
+                                strokeBuilder.addPoint(strokePoint);
+                            }
+                            inkBuilder.addStroke(strokeBuilder.build());
+                        }
+                        Ink ink = inkBuilder.build();
+
+                        RecognitionContext context = null;
+                        Map<String, Object> contextMap = call.argument("context");
+                        if (contextMap != null) {
+                            RecognitionContext.Builder builder = RecognitionContext.builder();
+                            String preContext = (String) contextMap.get("preContext");
+                            if (preContext != null) {
+                                builder.setPreContext(preContext);
+                            } else {
+                                builder.setPreContext("");
+                            }
+
+                            Map<String, Object> writingAreaMap = (Map<String, Object>) contextMap.get("writingArea");
+                            if (writingAreaMap != null) {
+                                float width = (float) (double) writingAreaMap.get("width");
+                                float height = (float) (double) writingAreaMap.get("height");
+                                builder.setWritingArea(new WritingArea(width, height));
+                            }
+
+                            context = builder.build();
+                        }
+
+                        if (context != null) {
+                            recognizer.recognize(ink, context)
+                                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
+                                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
+                        } else {
+                            recognizer.recognize(ink)
+                                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
+                                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        result.error("error", e.toString(), null);
+                    }
                 }
-                Ink.Point strokePoint = Ink.Point.create(x, y, t);
-                strokeBuilder.addPoint(strokePoint);
-            }
-            inkBuilder.addStroke(strokeBuilder.build());
-        }
-        Ink ink = inkBuilder.build();
-
-        RecognitionContext context = null;
-        Map<String, Object> contextMap = call.argument("context");
-        if (contextMap != null) {
-            RecognitionContext.Builder builder = RecognitionContext.builder();
-            String preContext = (String) contextMap.get("preContext");
-            if (preContext != null) {
-                builder.setPreContext(preContext);
-            } else {
-                builder.setPreContext("");
-            }
-
-            Map<String, Object> writingAreaMap = (Map<String, Object>) contextMap.get("writingArea");
-            if (writingAreaMap != null) {
-                float width = (float) (double) writingAreaMap.get("width");
-                float height = (float) (double) writingAreaMap.get("height");
-                builder.setWritingArea(new WritingArea(width, height));
-            }
-
-            context = builder.build();
-        }
-
-        if (context != null) {
-            recognizer.recognize(ink, context)
-                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
-                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
-        } else {
-            recognizer.recognize(ink)
-                    .addOnSuccessListener(recognitionResult -> process(recognitionResult, result))
-                    .addOnFailureListener(e -> result.error("recognition Error", e.toString(), null));
-        }
+        );
     }
 
     private void process(RecognitionResult recognitionResult, final MethodChannel.Result result) {

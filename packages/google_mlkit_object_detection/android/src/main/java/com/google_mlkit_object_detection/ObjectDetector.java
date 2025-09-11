@@ -58,7 +58,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
     }
 
     private void handleDetection(MethodCall call, final MethodChannel.Result result) {
-        Map<String, Object> imageData = (Map<String, Object>) call.argument("imageData");
+        Map<String, Object> imageData = call.argument("imageData");
         InputImage inputImage = InputImageConverter.getInputImageFromData(imageData, context, result);
         if (inputImage == null) return;
 
@@ -79,12 +79,65 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
                 CustomObjectDetectorOptions detectorOptions = getLocalOptions(options);
                 objectDetector = ObjectDetection.getClient(detectorOptions);
             } else if (type.equals("remote")) {
-                CustomObjectDetectorOptions detectorOptions = getRemoteOptions(options);
-                if (detectorOptions == null) {
-                    result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
-                    return;
-                }
-                objectDetector = ObjectDetection.getClient(detectorOptions);
+                int mode = (int) options.get("mode");
+                int finalMode = mode == 0 ?
+                        CustomObjectDetectorOptions.STREAM_MODE :
+                        CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
+                boolean classify = (boolean) options.get("classify");
+                boolean multiple = (boolean) options.get("multiple");
+                double threshold = (double) options.get("threshold");
+                int maxLabels = (int) options.get("maxLabels");
+                String name = (String) options.get("modelName");
+
+                FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(name)
+                        .build();
+                CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource)
+                        .build();
+
+                genericModelManager.isModelDownloaded(
+                        remoteModel,
+                        new GenericModelManager.CheckModelIsDownloadedCallback() {
+                            @Override
+                            public void onModelDownloaded(Boolean isDownloaded) {
+                                if (!isDownloaded) {
+                                    result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
+                                    return;
+                                }
+
+                                CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(remoteModel)
+                                        .setDetectorMode(finalMode)
+                                        .setMaxPerObjectLabelCount(maxLabels)
+                                        .setClassificationConfidenceThreshold((float) threshold);
+                                if (classify) builder.enableClassification();
+                                if (multiple) builder.enableMultipleObjects();
+
+                                CustomObjectDetectorOptions customObjectDetectorOptions = builder.build();
+
+                                ObjectDetection.getClient(customObjectDetectorOptions).process(inputImage).addOnSuccessListener(detectedObjects -> {
+                                    List<Map<String, Object>> objects = new ArrayList<>();
+                                    for (DetectedObject detectedObject : detectedObjects) {
+                                        Map<String, Object> objectMap = new HashMap<>();
+                                        addData(objectMap,
+                                                detectedObject.getTrackingId(),
+                                                detectedObject.getBoundingBox(),
+                                                detectedObject.getLabels());
+                                        objects.add(objectMap);
+                                    }
+                                    result.success(objects);
+                                }).addOnFailureListener(e -> {
+                                    e.printStackTrace();
+                                    result.error("ObjectDetectionError", e.toString(), null);
+                                });
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+
+                            }
+                        }
+                );
+
+                return;
             } else {
                 String error = "Invalid model type: " + type;
                 result.error(type, error, error);
@@ -141,34 +194,6 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
                 .build();
 
         CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(localModel);
-        builder.setDetectorMode(mode);
-        if (classify) builder.enableClassification();
-        if (multiple) builder.enableMultipleObjects();
-        builder.setMaxPerObjectLabelCount(maxLabels);
-        builder.setClassificationConfidenceThreshold((float) threshold);
-        return builder.build();
-    }
-
-    private CustomObjectDetectorOptions getRemoteOptions(Map<String, Object> options) {
-        int mode = (int) options.get("mode");
-        mode = mode == 0 ?
-                CustomObjectDetectorOptions.STREAM_MODE :
-                CustomObjectDetectorOptions.SINGLE_IMAGE_MODE;
-        boolean classify = (boolean) options.get("classify");
-        boolean multiple = (boolean) options.get("multiple");
-        double threshold = (double) options.get("threshold");
-        int maxLabels = (int) options.get("maxLabels");
-        String name = (String) options.get("modelName");
-
-        FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(name)
-                .build();
-        CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource)
-                .build();
-        if (!genericModelManager.isModelDownloaded(remoteModel)) {
-            return null;
-        }
-
-        CustomObjectDetectorOptions.Builder builder = new CustomObjectDetectorOptions.Builder(remoteModel);
         builder.setDetectorMode(mode);
         if (classify) builder.enableClassification();
         if (multiple) builder.enableMultipleObjects();
