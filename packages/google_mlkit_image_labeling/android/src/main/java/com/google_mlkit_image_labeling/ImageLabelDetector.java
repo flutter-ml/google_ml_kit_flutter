@@ -79,12 +79,53 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 CustomImageLabelerOptions labelerOptions = getLocalOptions(options);
                 imageLabeler = ImageLabeling.getClient(labelerOptions);
             } else if (type.equals("remote")) {
-                CustomImageLabelerOptions labelerOptions = getRemoteOptions(options);
-                if (labelerOptions == null) {
-                    result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
-                    return;
-                }
-                imageLabeler = ImageLabeling.getClient(labelerOptions);
+                float confidenceThreshold = (float) (double) options.get("confidenceThreshold");
+                int maxCount = (int) options.get("maxCount");
+                String name = (String) options.get("modelName");
+
+                FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(name).build();
+                CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource).build();
+
+                genericModelManager.isModelDownloaded(
+                        remoteModel,
+                        new GenericModelManager.CheckModelIsDownloadedCallback() {
+                            @Override
+                            public void onModelDownloaded(Boolean isDownloaded) {
+                                if (!isDownloaded) {
+                                    result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
+                                    return;
+                                }
+
+                                CustomImageLabelerOptions labelerOptions = new CustomImageLabelerOptions.Builder(remoteModel)
+                                        .setConfidenceThreshold(confidenceThreshold)
+                                        .setMaxResultCount(maxCount)
+                                        .build();
+
+                                ImageLabeling.getClient(labelerOptions).process(inputImage)
+                                        .addOnSuccessListener(imageLabels -> {
+                                            List<Map<String, Object>> labels = new ArrayList<>(imageLabels.size());
+                                            for (ImageLabel label : imageLabels) {
+                                                Map<String, Object> labelData = new HashMap<>();
+                                                labelData.put("text", label.getText());
+                                                labelData.put("confidence", label.getConfidence());
+                                                labelData.put("index", label.getIndex());
+                                                labels.add(labelData);
+                                            }
+
+                                            result.success(labels);
+                                        })
+                                        .addOnFailureListener(e -> result.error("ImageLabelDetectorError", e.toString(), null));
+                                ;
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                result.error("Error", e.getMessage(), e);
+                            }
+                        }
+                );
+
+                return;
             } else {
                 String error = "Invalid model type: " + type;
                 result.error(type, error, error);
@@ -126,24 +167,6 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                 .setAbsoluteFilePath(path)
                 .build();
         return new CustomImageLabelerOptions.Builder(localModel)
-                .setConfidenceThreshold(confidenceThreshold)
-                .setMaxResultCount(maxCount)
-                .build();
-    }
-
-    //Options for labeler to work with custom model.
-    private CustomImageLabelerOptions getRemoteOptions(Map<String, Object> labelerOptions) {
-        float confidenceThreshold = (float) (double) labelerOptions.get("confidenceThreshold");
-        int maxCount = (int) labelerOptions.get("maxCount");
-        String name = (String) labelerOptions.get("modelName");
-
-        FirebaseModelSource firebaseModelSource = new FirebaseModelSource.Builder(name).build();
-        CustomRemoteModel remoteModel = new CustomRemoteModel.Builder(firebaseModelSource).build();
-        if (!genericModelManager.isModelDownloaded(remoteModel)) {
-            return null;
-        }
-
-        return new CustomImageLabelerOptions.Builder(remoteModel)
                 .setConfidenceThreshold(confidenceThreshold)
                 .setMaxResultCount(maxCount)
                 .build();
