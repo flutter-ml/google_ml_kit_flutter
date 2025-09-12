@@ -90,37 +90,27 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
                         remoteModel,
                         new GenericModelManager.CheckModelIsDownloadedCallback() {
                             @Override
-                            public void onModelDownloaded(Boolean isDownloaded) {
+                            public void onCheckResult(Boolean isDownloaded) {
                                 if (!isDownloaded) {
                                     result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
                                     return;
                                 }
 
-                                CustomImageLabelerOptions labelerOptions = new CustomImageLabelerOptions.Builder(remoteModel)
-                                        .setConfidenceThreshold(confidenceThreshold)
-                                        .setMaxResultCount(maxCount)
-                                        .build();
-
-                                ImageLabeling.getClient(labelerOptions).process(inputImage)
-                                        .addOnSuccessListener(imageLabels -> {
-                                            List<Map<String, Object>> labels = new ArrayList<>(imageLabels.size());
-                                            for (ImageLabel label : imageLabels) {
-                                                Map<String, Object> labelData = new HashMap<>();
-                                                labelData.put("text", label.getText());
-                                                labelData.put("confidence", label.getConfidence());
-                                                labelData.put("index", label.getIndex());
-                                                labels.add(labelData);
-                                            }
-
-                                            result.success(labels);
-                                        })
-                                        .addOnFailureListener(e -> result.error("ImageLabelDetectorError", e.toString(), null));
-                                ;
+                                startImageLabelDetector(
+                                        ImageLabeling.getClient(
+                                                new CustomImageLabelerOptions.Builder(remoteModel)
+                                                        .setConfidenceThreshold(confidenceThreshold)
+                                                        .setMaxResultCount(maxCount)
+                                                        .build()
+                                        ),
+                                        inputImage,
+                                        result
+                                );
                             }
 
                             @Override
                             public void onError(Exception e) {
-                                result.error("Error", e.getMessage(), e);
+                                result.error("Model download check failed", e.getMessage(), e);
                             }
                         }
                 );
@@ -134,6 +124,10 @@ public class ImageLabelDetector implements MethodChannel.MethodCallHandler {
             instances.put(id, imageLabeler);
         }
 
+        startImageLabelDetector(imageLabeler, inputImage, result);
+    }
+
+    private void startImageLabelDetector(ImageLabeler imageLabeler, InputImage inputImage, MethodChannel.Result result) {
         imageLabeler.process(inputImage)
                 .addOnSuccessListener(imageLabels -> {
                     List<Map<String, Object>> labels = new ArrayList<>(imageLabels.size());

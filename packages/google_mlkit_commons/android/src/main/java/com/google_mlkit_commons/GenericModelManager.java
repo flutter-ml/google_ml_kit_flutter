@@ -13,7 +13,7 @@ public class GenericModelManager {
     private static final String CHECK = "check";
 
     public interface CheckModelIsDownloadedCallback {
-        void onModelDownloaded(Boolean isDownloaded);
+        void onCheckResult(Boolean isDownloaded);
 
         void onError(Exception e);
     }
@@ -30,7 +30,7 @@ public class GenericModelManager {
 
         switch (task) {
             case DOWNLOAD:
-                boolean isWifiReqRequired = Boolean.TRUE.equals(call.argument("wifi"));
+                boolean isWifiReqRequired = call.argument("wifi");
                 DownloadConditions downloadConditions;
                 if (isWifiReqRequired)
                     downloadConditions = new DownloadConditions.Builder().requireWifi().build();
@@ -46,7 +46,7 @@ public class GenericModelManager {
                         model,
                         new CheckModelIsDownloadedCallback() {
                             @Override
-                            public void onModelDownloaded(Boolean isDownloaded) {
+                            public void onCheckResult(Boolean isDownloaded) {
                                 result.success(isDownloaded);
                             }
 
@@ -67,7 +67,7 @@ public class GenericModelManager {
                 remoteModel,
                 new CheckModelIsDownloadedCallback() {
                     @Override
-                    public void onModelDownloaded(Boolean isDownloaded) {
+                    public void onCheckResult(Boolean isDownloaded) {
                         if (isDownloaded) {
                             result.success("success");
                             return;
@@ -89,7 +89,7 @@ public class GenericModelManager {
     public void deleteModel(RemoteModel remoteModel, final MethodChannel.Result result) {
         isModelDownloaded(remoteModel, new CheckModelIsDownloadedCallback() {
             @Override
-            public void onModelDownloaded(Boolean isDownloaded) {
+            public void onCheckResult(Boolean isDownloaded) {
                 if (!isDownloaded) {
                     result.success("success");
                     return;
@@ -109,8 +109,8 @@ public class GenericModelManager {
     public void isModelDownloaded(RemoteModel model, CheckModelIsDownloadedCallback callback) {
         try {
             remoteModelManager.isModelDownloaded(model)
-                    .addOnFailureListener(e -> callback.onError(e))
-                    .addOnSuccessListener(isDownloaded -> callback.onModelDownloaded(isDownloaded));
+                    .addOnFailureListener(callback::onError)
+                    .addOnSuccessListener(callback::onCheckResult);
         } catch (Exception e) {
             callback.onError(e);
         }

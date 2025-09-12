@@ -98,7 +98,7 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
                         remoteModel,
                         new GenericModelManager.CheckModelIsDownloadedCallback() {
                             @Override
-                            public void onModelDownloaded(Boolean isDownloaded) {
+                            public void onCheckResult(Boolean isDownloaded) {
                                 if (!isDownloaded) {
                                     result.error("Error Model has not been downloaded yet", "Model has not been downloaded yet", "Model has not been downloaded yet");
                                     return;
@@ -113,26 +113,16 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
 
                                 CustomObjectDetectorOptions customObjectDetectorOptions = builder.build();
 
-                                ObjectDetection.getClient(customObjectDetectorOptions).process(inputImage).addOnSuccessListener(detectedObjects -> {
-                                    List<Map<String, Object>> objects = new ArrayList<>();
-                                    for (DetectedObject detectedObject : detectedObjects) {
-                                        Map<String, Object> objectMap = new HashMap<>();
-                                        addData(objectMap,
-                                                detectedObject.getTrackingId(),
-                                                detectedObject.getBoundingBox(),
-                                                detectedObject.getLabels());
-                                        objects.add(objectMap);
-                                    }
-                                    result.success(objects);
-                                }).addOnFailureListener(e -> {
-                                    e.printStackTrace();
-                                    result.error("ObjectDetectionError", e.toString(), null);
-                                });
+                                startObjectDetection(
+                                        ObjectDetection.getClient(customObjectDetectorOptions),
+                                        inputImage,
+                                        result
+                                );
                             }
 
                             @Override
                             public void onError(Exception e) {
-
+                                result.error("Model download check failed", e.getMessage(), e);
                             }
                         }
                 );
@@ -146,6 +136,14 @@ public class ObjectDetector implements MethodChannel.MethodCallHandler {
             instances.put(id, objectDetector);
         }
 
+        startObjectDetection(objectDetector, inputImage, result);
+    }
+
+    private void startObjectDetection(
+            com.google.mlkit.vision.objects.ObjectDetector objectDetector,
+            InputImage inputImage,
+            MethodChannel.Result result
+    ) {
         objectDetector.process(inputImage).addOnSuccessListener(detectedObjects -> {
             List<Map<String, Object>> objects = new ArrayList<>();
             for (DetectedObject detectedObject : detectedObjects) {
