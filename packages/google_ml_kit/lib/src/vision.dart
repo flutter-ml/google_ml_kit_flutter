@@ -55,7 +55,8 @@ class Vision {
   /// Return an instance of [TextRecognizer].
   @Deprecated(
       'Use [google_mlkit_text_recognition] plugin instead of [google_ml_kit].')
-  TextRecognizer textRecognizer({script = TextRecognitionScript.latin}) {
+  TextRecognizer textRecognizer(
+      {TextRecognitionScript script = TextRecognitionScript.latin}) {
     return TextRecognizer(script: script);
   }
 

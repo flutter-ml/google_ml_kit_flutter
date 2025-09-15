@@ -105,16 +105,12 @@ class LocalObjectDetectorOptions extends ObjectDetectorOptions {
 
   /// Constructor to create an instance of [LocalObjectDetectorOptions].
   LocalObjectDetectorOptions(
-      {required DetectionMode mode,
+      {required super.mode,
       required this.modelPath,
-      required bool classifyObjects,
-      required bool multipleObjects,
+      required super.classifyObjects,
+      required super.multipleObjects,
       this.maximumLabelsPerObject = 10,
-      this.confidenceThreshold = 0.5})
-      : super(
-            mode: mode,
-            classifyObjects: classifyObjects,
-            multipleObjects: multipleObjects);
+      this.confidenceThreshold = 0.5});
 
   /// Returns a json representation of an instance of [LocalObjectDetectorOptions].
   @override
@@ -151,16 +147,12 @@ class FirebaseObjectDetectorOptions extends ObjectDetectorOptions {
 
   /// Constructor to create an instance of [FirebaseObjectDetectorOptions].
   FirebaseObjectDetectorOptions(
-      {required DetectionMode mode,
+      {required super.mode,
       required this.modelName,
-      required bool classifyObjects,
-      required bool multipleObjects,
+      required super.classifyObjects,
+      required super.multipleObjects,
       this.maximumLabelsPerObject = 10,
-      this.confidenceThreshold = 0.5})
-      : super(
-            mode: mode,
-            classifyObjects: classifyObjects,
-            multipleObjects: multipleObjects);
+      this.confidenceThreshold = 0.5});
 
   /// Returns a json representation of an instance of [FirebaseObjectDetectorOptions].
   @override

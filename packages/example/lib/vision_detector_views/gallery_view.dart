@@ -10,12 +10,11 @@ import 'utils.dart';
 
 class GalleryView extends StatefulWidget {
   GalleryView(
-      {Key? key,
+      {super.key,
       required this.title,
       this.text,
       required this.onImage,
-      required this.onDetectorViewModeChanged})
-      : super(key: key);
+      required this.onDetectorViewModeChanged});
 
   final String title;
   final String? text;

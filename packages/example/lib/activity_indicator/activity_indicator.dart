@@ -37,7 +37,7 @@ class Toast {
 class LoadingIndicator extends StatelessWidget {
   final String text;
 
-  const LoadingIndicator({Key? key, required this.text}) : super(key: key);
+  const LoadingIndicator({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
