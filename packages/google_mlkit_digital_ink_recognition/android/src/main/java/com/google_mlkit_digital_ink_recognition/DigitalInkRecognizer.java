@@ -3,15 +3,15 @@ package com.google_mlkit_digital_ink_recognition;
 import androidx.annotation.NonNull;
 
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.vision.digitalink.DigitalInkRecognition;
-import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModel;
-import com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier;
-import com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions;
-import com.google.mlkit.vision.digitalink.Ink;
-import com.google.mlkit.vision.digitalink.RecognitionCandidate;
-import com.google.mlkit.vision.digitalink.RecognitionContext;
-import com.google.mlkit.vision.digitalink.RecognitionResult;
-import com.google.mlkit.vision.digitalink.WritingArea;
+import com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognition;
+import com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognitionModel;
+import com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognitionModelIdentifier;
+import com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizerOptions;
+import com.google.mlkit.vision.digitalink.recognition.Ink;
+import com.google.mlkit.vision.digitalink.common.RecognitionCandidate;
+import com.google.mlkit.vision.digitalink.recognition.RecognitionContext;
+import com.google.mlkit.vision.digitalink.common.RecognitionResult;
+import com.google.mlkit.vision.digitalink.recognition.WritingArea;
 import com.google_mlkit_commons.GenericModelManager;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
     private static final String CLOSE = "vision#closeDigitalInkRecognizer";
     private static final String MANAGE = "vision#manageInkModels";
 
-    private final Map<String, com.google.mlkit.vision.digitalink.DigitalInkRecognizer> instances = new HashMap<>();
+    private final Map<String, com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer> instances = new HashMap<>();
     private final GenericModelManager genericModelManager = new GenericModelManager();
 
     @Override
@@ -60,7 +60,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
         }
 
         String id = call.argument("id");
-        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
+        com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer recognizer = instances.get(id);
         if (recognizer == null) {
             recognizer = DigitalInkRecognition.getClient(DigitalInkRecognizerOptions.builder(model).build());
             instances.put(id, recognizer);
@@ -137,7 +137,7 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
 
     private void closeDetector(MethodCall call) {
         String id = call.argument("id");
-        com.google.mlkit.vision.digitalink.DigitalInkRecognizer recognizer = instances.get(id);
+        com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer recognizer = instances.get(id);
         if (recognizer == null)
             return;
         recognizer.close();
