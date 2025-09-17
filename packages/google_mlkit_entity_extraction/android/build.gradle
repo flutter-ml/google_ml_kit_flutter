@@ -36,6 +36,6 @@ android {
     }
 
     dependencies {
-        implementation("com.google.mlkit:entity-extraction:16.0.0-beta5")
+        implementation("com.google.mlkit:entity-extraction:16.0.0-beta6")
     }
 }

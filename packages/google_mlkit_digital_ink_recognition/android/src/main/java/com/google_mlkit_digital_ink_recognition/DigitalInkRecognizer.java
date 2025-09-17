@@ -54,11 +54,33 @@ public class DigitalInkRecognizer implements MethodChannel.MethodCallHandler {
         DigitalInkRecognitionModel model = getModel(tag, result);
         if (model == null)
             return;
-        if (!genericModelManager.isModelDownloaded(model)) {
-            result.error("Model Error", "Model has not been downloaded yet ", null);
-            return;
-        }
 
+        genericModelManager.isModelDownloaded(
+                model,
+                new GenericModelManager.CheckModelIsDownloadedCallback() {
+                    @Override
+                    public void onCheckResult(Boolean isDownloaded) {
+                        if (!isDownloaded) {
+                            result.error("Model Error", "Model has not been downloaded yet ", null);
+                            return;
+                        }
+
+                        handleInkDetectionIfModelDownloaded(call, result, model);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        result.error("Model download check failed", e.toString(), e);
+                    }
+                }
+        );
+    }
+
+    private void handleInkDetectionIfModelDownloaded(
+            MethodCall call,
+            final MethodChannel.Result result,
+            DigitalInkRecognitionModel model
+    ) {
         String id = call.argument("id");
         com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer recognizer = instances.get(id);
         if (recognizer == null) {
