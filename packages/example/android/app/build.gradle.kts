@@ -8,7 +8,6 @@ plugins {
 android {
     namespace = "com.google.ml.kit.flutter.example"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -21,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId = "com.google.ml.kit.flutter.example"
-        minSdk = 24
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
