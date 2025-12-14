@@ -99,7 +99,7 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
                 ),
               ),
             ],
-            if (_result?.images.isNotEmpty == true) ...[
+            if (_result?.images?.isNotEmpty == true) ...[
               Padding(
                 padding: const EdgeInsets.only(
                     top: 16, bottom: 8, right: 8, left: 8),
@@ -108,7 +108,7 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
                     child: Text('Images [0]:')),
               ),
               SizedBox(
-                  height: 400, child: Image.file(File(_result!.images.first))),
+                  height: 400, child: Image.file(File(_result!.images!.first))),
             ],
           ],
         ),
@@ -117,13 +117,17 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
   }
 
   void startScan(DocumentFormat format) async {
+    const Set<DocumentFormat> documentFormats = {
+      DocumentFormat.jpeg,
+      DocumentFormat.pdf
+    };
     try {
       _result = null;
       setState(() {});
       _documentScanner?.close();
       _documentScanner = DocumentScanner(
         options: DocumentScannerOptions(
-          documentFormat: format,
+          documentFormats: documentFormats,
           mode: ScannerMode.full,
           isGalleryImport: false,
           pageLimit: 1,
