@@ -7,7 +7,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.0 <4.0.0"
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.22.0'
 
 dependencies:
   camera: ^0.11.1
@@ -16,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_pdfview: ^1.4.0
-  image_picker: ^1.1.2
+  image_picker: ^1.2.0
   path: ^1.9.1
   path_provider: ^2.1.5
 
@@ -58,7 +59,7 @@ dependency_overrides:
     path: ../google_mlkit_commons
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
 

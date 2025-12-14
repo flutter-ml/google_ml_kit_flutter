@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.7.0")
+        classpath("com.android.tools.build:gradle:8.13.0")
     }
 }
 
@@ -36,6 +36,6 @@ android {
     }
 
     dependencies {
-        implementation("com.google.mlkit:face-mesh-detection:16.0.0-beta2")
+        implementation("com.google.mlkit:face-mesh-detection:16.0.0-beta3")
     }
 }

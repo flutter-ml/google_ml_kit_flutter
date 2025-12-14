@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class TextFromWidgetView extends StatefulWidget {
-  const TextFromWidgetView({Key? key}) : super(key: key);
+  const TextFromWidgetView({super.key});
 
   @override
   State<TextFromWidgetView> createState() => _TextFromWidgetViewState();

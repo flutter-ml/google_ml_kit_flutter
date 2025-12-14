@@ -1,3 +1,6 @@
+## 0.14.2
+# Update Google's ML Kit Digital Ink Recognition to version 19
+
 ## 0.14.1
 
 * Increase android sdk compile version to 35
