@@ -95,16 +95,7 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler, PluginR
     private GmsDocumentScannerOptions parseOptions(Map<String, Object> options) {
         boolean isGalleryImportAllowed = (boolean) options.get("isGalleryImport");
         int pageLimit = (int) options.get("pageLimit");
-        int formats;
         List<String> formatStrings = (List<String>) options.get("formats");
-        if (formatStrings == null || formatStrings.isEmpty()) {
-            String singleFormat = (String) options.get("format");
-            if (singleFormat == null) {
-                singleFormat = "jpeg";
-            }
-            formatStrings = new ArrayList<>();
-            formatStrings.add(singleFormat);
-        }
         List<Integer> formatConstants = new ArrayList<>();
         for (String format: formatStrings) {
             switch (format) {
