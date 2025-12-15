@@ -55,7 +55,7 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 
 ### iOS
 
-This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
+This feature is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
 
 ### Android
 
