@@ -132,7 +132,12 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler, PluginR
 
         // Set formats
         if (!formatConstants.isEmpty()) {
-            builder.setResultFormats(formatConstants.get(0), formatConstants.stream().skip(1).mapToInt(Integer::intValue).toArray());
+            if(formatConstants.size() > 1) {
+                builder.setResultFormats(formatConstants.get(0), formatConstants.get(1));
+            } else {
+                builder.setResultFormats(formatConstants.get(0));
+            }
+
         }
         return builder.build();
     }
