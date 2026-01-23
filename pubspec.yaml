@@ -1,0 +1,42 @@
+name: _
+repository: https://github.com/flutter-ml/google_ml_kit_flutter
+workspace: 
+  - packages/example 
+  - packages/google_ml_kit
+  - packages/google_mlkit_barcode_scanning
+  - packages/google_mlkit_commons
+  - packages/google_mlkit_digital_ink_recognition 
+  - packages/google_mlkit_document_scanner
+  - packages/google_mlkit_entity_extraction
+  - packages/google_mlkit_face_detection
+  - packages/google_mlkit_face_mesh_detection
+  - packages/google_mlkit_image_labeling 
+  - packages/google_mlkit_language_id
+  - packages/google_mlkit_object_detection
+  - packages/google_mlkit_pose_detection
+  - packages/google_mlkit_selfie_segmentation
+  - packages/google_mlkit_smart_reply
+  - packages/google_mlkit_subject_segmentation 
+  - packages/google_mlkit_text_recognition
+  - packages/google_mlkit_translation
+
+environment: 
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
+
+dev_dependencies:
+  melos: ^7.3.0
+
+# melos: 
+#   command:
+#    version:
+#     # Only allow versioning to happen on master branch
+#     branch: master 
+#     # Generates a link to a prefilled Github release creation page.
+#     releaseUrl: true 
+#     includeCommentId: true 
+#     linkToCommits: true 
+
+#   bootstrap:
+#    environment:
+    

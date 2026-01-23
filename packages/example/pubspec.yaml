@@ -1,14 +1,14 @@
 name: google_ml_kit_example
 description: "Demonstrates how to use the google_ml_kit plugin."
-
+resolution: workspace
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
-  flutter: '>=3.22.0'
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   camera: ^0.11.1
@@ -21,42 +21,26 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.5
 
-  google_mlkit_commons: any
+  google_mlkit_commons:
   google_mlkit_barcode_scanning:
-    path: ../google_mlkit_barcode_scanning
   google_mlkit_digital_ink_recognition:
-    path: ../google_mlkit_digital_ink_recognition
   google_mlkit_document_scanner:
-    path: ../google_mlkit_document_scanner
   google_mlkit_face_detection:
-    path: ../google_mlkit_face_detection
   google_mlkit_face_mesh_detection:
-    path: ../google_mlkit_face_mesh_detection
   google_mlkit_image_labeling:
-    path: ../google_mlkit_image_labeling
   google_mlkit_object_detection:
-    path: ../google_mlkit_object_detection
   google_mlkit_pose_detection:
-    path: ../google_mlkit_pose_detection
   google_mlkit_selfie_segmentation:
-    path: ../google_mlkit_selfie_segmentation
   google_mlkit_subject_segmentation: 
-    path: ../google_mlkit_subject_segmentation
   google_mlkit_text_recognition:
-    path: ../google_mlkit_text_recognition
 
   google_mlkit_entity_extraction:
-    path: ../google_mlkit_entity_extraction
   google_mlkit_language_id:
-    path: ../google_mlkit_language_id
   google_mlkit_translation:
-    path: ../google_mlkit_translation
   google_mlkit_smart_reply:
-    path: ../google_mlkit_smart_reply
 
-dependency_overrides:
-  google_mlkit_commons:
-    path: ../google_mlkit_commons
+# dependency_overrides:
+#   google_mlkit_commons:
 
 dev_dependencies:
   flutter_lints: ^6.0.0
