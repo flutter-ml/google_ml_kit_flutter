@@ -55,6 +55,19 @@ dependencies:
   google_mlkit_smart_reply:
     path: ../google_mlkit_smart_reply
 
+  google_mlkit_genai_summarization:
+    path: ../google_mlkit_genai_summarization
+  google_mlkit_genai_proofreading:
+    path: ../google_mlkit_genai_proofreading
+  google_mlkit_genai_rewriting:
+    path: ../google_mlkit_genai_rewriting
+  google_mlkit_genai_image_description:
+    path: ../google_mlkit_genai_image_description
+  google_mlkit_genai_speech_recognition:
+    path: ../google_mlkit_genai_speech_recognition
+  google_mlkit_genai_prompt:
+    path: ../google_mlkit_genai_prompt
+
 dependency_overrides:
   google_mlkit_commons:
     path: ../google_mlkit_commons

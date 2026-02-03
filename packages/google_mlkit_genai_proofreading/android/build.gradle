@@ -1,0 +1,42 @@
+group = "com.google_mlkit_genai_proofreading"
+version = "1.0"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.13.0")
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    namespace = "com.google_mlkit_genai_proofreading"
+
+    compileSdk = 35
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdk = 26
+    }
+
+    dependencies {
+        implementation("com.google.mlkit:genai-proofreading:1.0.0-beta1")
+        implementation("com.google.guava:guava:31.1-android")
+    }
+}

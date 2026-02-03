@@ -51,5 +51,23 @@ flutter pub publish --dry-run
 cd ../google_mlkit_translation
 flutter pub publish --dry-run
 
+cd ../google_mlkit_genai_summarization
+flutter pub publish --dry-run
+
+cd ../google_mlkit_genai_proofreading
+flutter pub publish --dry-run
+
+cd ../google_mlkit_genai_rewriting
+flutter pub publish --dry-run
+
+cd ../google_mlkit_genai_image_description
+flutter pub publish --dry-run
+
+cd ../google_mlkit_genai_speech_recognition
+flutter pub publish --dry-run
+
+cd ../google_mlkit_genai_prompt
+flutter pub publish --dry-run
+
 cd ../google_ml_kit
 flutter pub publish --dry-run

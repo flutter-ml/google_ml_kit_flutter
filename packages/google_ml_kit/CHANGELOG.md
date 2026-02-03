@@ -1,3 +1,15 @@
+## 0.21.0
+
+* Add support for Google's ML Kit GenAI APIs:
+  - [google\_mlkit\_genai\_summarization](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_summarization) - Generate summaries of articles and conversations
+  - [google\_mlkit\_genai\_proofreading](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_proofreading) - Check grammar and spelling
+  - [google\_mlkit\_genai\_rewriting](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_rewriting) - Rewrite text in different styles
+  - [google\_mlkit\_genai\_image\_description](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_image_description) - Generate descriptions for images
+  - [google\_mlkit\_genai\_speech\_recognition](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_speech_recognition) - Transcribe speech to text
+  - [google\_mlkit\_genai\_prompt](https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_prompt) - Generate text content based on custom prompts
+* Update all native dependencies to latest versions
+* See individual package changelogs for specific version updates
+
 ## 0.20.1
 
 * Update all native dependencies to latest versions

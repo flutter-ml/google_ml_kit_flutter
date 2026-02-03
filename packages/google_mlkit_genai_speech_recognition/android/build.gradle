@@ -1,0 +1,42 @@
+group = "com.google_mlkit_genai_speech_recognition"
+version = "1.0"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.13.0")
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    namespace = "com.google_mlkit_genai_speech_recognition"
+
+    compileSdk = 35
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdk = 26
+    }
+
+    dependencies {
+        implementation("com.google.mlkit:genai-speech-recognition:1.0.0-alpha1")
+        implementation("com.google.guava:guava:31.1-android")
+    }
+}

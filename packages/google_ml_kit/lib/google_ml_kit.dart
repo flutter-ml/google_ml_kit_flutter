@@ -4,6 +4,12 @@ export 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_re
 export 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 export 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 export 'package:google_mlkit_face_mesh_detection/google_mlkit_face_mesh_detection.dart';
+export 'package:google_mlkit_genai_image_description/google_mlkit_genai_image_description.dart';
+export 'package:google_mlkit_genai_prompt/google_mlkit_genai_prompt.dart';
+export 'package:google_mlkit_genai_proofreading/google_mlkit_genai_proofreading.dart';
+export 'package:google_mlkit_genai_rewriting/google_mlkit_genai_rewriting.dart';
+export 'package:google_mlkit_genai_speech_recognition/google_mlkit_genai_speech_recognition.dart';
+export 'package:google_mlkit_genai_summarization/google_mlkit_genai_summarization.dart';
 export 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 export 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
 export 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
