@@ -42,10 +42,15 @@ class InputImage {
   }
 
   /// Creates an instance of [InputImage] using bytes.
-  factory InputImage.fromBytes(
-      {required Uint8List bytes, required InputImageMetadata metadata}) {
+  factory InputImage.fromBytes({
+    required Uint8List bytes,
+    required InputImageMetadata metadata,
+  }) {
     return InputImage._(
-        bytes: bytes, type: InputImageType.bytes, metadata: metadata);
+      bytes: bytes,
+      type: InputImageType.bytes,
+      metadata: metadata,
+    );
   }
 
   /// Creates an instance of [InputImage] from bitmap data.
@@ -97,21 +102,17 @@ class InputImage {
 
   /// Returns a json representation of an instance of [InputImage].
   Map<String, dynamic> toJson() => {
-        'bytes': bytes,
-        'type': type.name,
-        'path': filePath,
-        'metadata': metadata?.toJson(),
-        'bitmapData': bitmapData,
-        'rotation': rotation
-      };
+    'bytes': bytes,
+    'type': type.name,
+    'path': filePath,
+    'metadata': metadata?.toJson(),
+    'bitmapData': bitmapData,
+    'rotation': rotation,
+  };
 }
 
 /// The type of [InputImage].
-enum InputImageType {
-  file,
-  bytes,
-  bitmap,
-}
+enum InputImageType { file, bytes, bitmap }
 
 /// Data of image required when creating image from bytes.
 class InputImageMetadata {
@@ -151,12 +152,12 @@ class InputImageMetadata {
 
   /// Returns a json representation of an instance of [InputImageMetadata].
   Map<String, dynamic> toJson() => {
-        'width': size.width,
-        'height': size.height,
-        'rotation': rotation.rawValue,
-        'image_format': format.rawValue,
-        'bytes_per_row': bytesPerRow,
-      };
+    'width': size.width,
+    'height': size.height,
+    'rotation': rotation.rawValue,
+    'image_format': format.rawValue,
+    'bytes_per_row': bytesPerRow,
+  };
 }
 
 /// The camera rotation angle to be specified
@@ -164,7 +165,7 @@ enum InputImageRotation {
   rotation0deg,
   rotation90deg,
   rotation180deg,
-  rotation270deg
+  rotation270deg,
 }
 
 extension InputImageRotationValue on InputImageRotation {
@@ -183,8 +184,9 @@ extension InputImageRotationValue on InputImageRotation {
 
   static InputImageRotation? fromRawValue(int rawValue) {
     try {
-      return InputImageRotation.values
-          .firstWhere((element) => element.rawValue == rawValue);
+      return InputImageRotation.values.firstWhere(
+        (element) => element.rawValue == rawValue,
+      );
     } catch (_) {
       return null;
     }
@@ -228,8 +230,9 @@ extension InputImageFormatValue on InputImageFormat {
 
   static InputImageFormat? fromRawValue(int rawValue) {
     try {
-      return InputImageFormat.values
-          .firstWhere((element) => element.rawValue == rawValue);
+      return InputImageFormat.values.firstWhere(
+        (element) => element.rawValue == rawValue,
+      );
     } catch (_) {
       return null;
     }

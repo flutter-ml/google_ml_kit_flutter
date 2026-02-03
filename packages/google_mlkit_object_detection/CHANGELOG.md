@@ -1,3 +1,10 @@
+## 0.15.1
+
+* Update Android native library `com.google.mlkit:object-detection` to 17.0.2
+* Update Android native library `com.google.mlkit:object-detection-custom` to 17.0.2
+* Update iOS native library `GoogleMLKit/ObjectDetection` to 9.0.0
+* Update iOS native library `GoogleMLKit/ObjectDetectionCustom` to 9.0.0
+
 ## 0.15.0
 
 * Increase android sdk compile version to 35

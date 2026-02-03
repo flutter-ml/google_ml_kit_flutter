@@ -1,12 +1,12 @@
 name: google_mlkit_document_scanner
 description: "A Flutter plugin to use the ML Kit document scanner API to easily add a document scanner feature to your app."
-version: 0.4.0
+version: 0.4.1
 homepage: https://github.com/flutter-ml/google_ml_kit_flutter
 repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_document_scanner
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:

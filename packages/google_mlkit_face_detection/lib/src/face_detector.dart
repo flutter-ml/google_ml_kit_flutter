@@ -6,8 +6,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A face detector that detects faces in a given [InputImage].
 class FaceDetector {
-  static const services.MethodChannel _channel =
-      services.MethodChannel('google_mlkit_face_detector');
+  static const services.MethodChannel _channel = services.MethodChannel(
+    'google_mlkit_face_detector',
+  );
 
   /// The options for the face detector.
   final FaceDetectorOptions options;
@@ -21,11 +22,13 @@ class FaceDetector {
   /// Processes the given image for face detection.
   Future<List<Face>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeListMethod<dynamic>(
-        'vision#startFaceDetector', <String, dynamic>{
-      'options': options.toJson(),
-      'id': id,
-      'imageData': inputImage.toJson(),
-    });
+      'vision#startFaceDetector',
+      <String, dynamic>{
+        'options': options.toJson(),
+        'id': id,
+        'imageData': inputImage.toJson(),
+      },
+    );
 
     final List<Face> faces = <Face>[];
     for (final dynamic json in result!) {
@@ -55,8 +58,8 @@ class FaceDetectorOptions {
     this.enableTracking = false,
     this.minFaceSize = 0.1,
     this.performanceMode = FaceDetectorMode.fast,
-  })  : assert(minFaceSize >= 0.0),
-        assert(minFaceSize <= 1.0);
+  }) : assert(minFaceSize >= 0.0),
+       assert(minFaceSize <= 1.0);
 
   /// Whether to run additional classifiers for characterizing attributes.
   ///
@@ -87,13 +90,13 @@ class FaceDetectorOptions {
 
   /// Returns a json representation of an instance of [FaceDetectorOptions].
   Map<String, dynamic> toJson() => {
-        'enableClassification': enableClassification,
-        'enableLandmarks': enableLandmarks,
-        'enableContours': enableContours,
-        'enableTracking': enableTracking,
-        'minFaceSize': minFaceSize,
-        'mode': performanceMode.name,
-      };
+    'enableClassification': enableClassification,
+    'enableLandmarks': enableLandmarks,
+    'enableContours': enableContours,
+    'enableTracking': enableTracking,
+    'minFaceSize': minFaceSize,
+    'mode': performanceMode.name,
+  };
 }
 
 /// A human face detected in an image.
@@ -181,42 +184,46 @@ class Face {
 
   /// Returns an instance of [Face] from a given [json].
   factory Face.fromJson(Map<dynamic, dynamic> json) => Face(
-        boundingBox: RectJson.fromJson(json['rect']),
-        headEulerAngleX: json['headEulerAngleX'],
-        headEulerAngleY: json['headEulerAngleY'],
-        headEulerAngleZ: json['headEulerAngleZ'],
-        leftEyeOpenProbability: json['leftEyeOpenProbability'],
-        rightEyeOpenProbability: json['rightEyeOpenProbability'],
-        smilingProbability: json['smilingProbability'],
-        trackingId: json['trackingId'],
-        landmarks: Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
-            FaceLandmarkType.values,
-            FaceLandmarkType.values.map((FaceLandmarkType type) {
-          final List<dynamic>? pos = json['landmarks'][type.name];
-          return (pos == null)
-              ? null
-              : FaceLandmark(
-                  type: type,
-                  position: Point<int>(pos[0].toInt(), pos[1].toInt()),
-                );
-        })),
-        contours: Map<FaceContourType, FaceContour?>.fromIterables(
-            FaceContourType.values,
-            FaceContourType.values.map((FaceContourType type) {
-          /// added empty map to pass the tests
-          final List<dynamic>? arr =
-              (json['contours'] ?? <String, dynamic>{})[type.name];
-          return (arr == null)
-              ? null
-              : FaceContour(
-                  type: type,
-                  points: arr
-                      .map<Point<int>>((dynamic pos) =>
-                          Point<int>(pos[0].toInt(), pos[1].toInt()))
-                      .toList(),
-                );
-        })),
-      );
+    boundingBox: RectJson.fromJson(json['rect']),
+    headEulerAngleX: json['headEulerAngleX'],
+    headEulerAngleY: json['headEulerAngleY'],
+    headEulerAngleZ: json['headEulerAngleZ'],
+    leftEyeOpenProbability: json['leftEyeOpenProbability'],
+    rightEyeOpenProbability: json['rightEyeOpenProbability'],
+    smilingProbability: json['smilingProbability'],
+    trackingId: json['trackingId'],
+    landmarks: Map<FaceLandmarkType, FaceLandmark?>.fromIterables(
+      FaceLandmarkType.values,
+      FaceLandmarkType.values.map((FaceLandmarkType type) {
+        final List<dynamic>? pos = json['landmarks'][type.name];
+        return (pos == null)
+            ? null
+            : FaceLandmark(
+                type: type,
+                position: Point<int>(pos[0].toInt(), pos[1].toInt()),
+              );
+      }),
+    ),
+    contours: Map<FaceContourType, FaceContour?>.fromIterables(
+      FaceContourType.values,
+      FaceContourType.values.map((FaceContourType type) {
+        /// added empty map to pass the tests
+        final List<dynamic>? arr =
+            (json['contours'] ?? <String, dynamic>{})[type.name];
+        return (arr == null)
+            ? null
+            : FaceContour(
+                type: type,
+                points: arr
+                    .map<Point<int>>(
+                      (dynamic pos) =>
+                          Point<int>(pos[0].toInt(), pos[1].toInt()),
+                    )
+                    .toList(),
+              );
+      }),
+    ),
+  );
 }
 
 /// A landmark on a human face detected in an image.
@@ -253,10 +260,7 @@ class FaceContour {
 ///
 /// Accurate tends to detect more faces and may be more precise in determining
 /// values such as position, at the cost of speed.
-enum FaceDetectorMode {
-  accurate,
-  fast,
-}
+enum FaceDetectorMode { accurate, fast }
 
 /// Available face landmarks detected by [FaceDetector].
 enum FaceLandmarkType {
@@ -288,5 +292,5 @@ enum FaceContourType {
   noseBridge,
   noseBottom,
   leftCheek,
-  rightCheek
+  rightCheek,
 }

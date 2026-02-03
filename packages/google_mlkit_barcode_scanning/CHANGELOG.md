@@ -1,3 +1,8 @@
+## 0.14.2
+
+* Update Android native library `com.google.mlkit:barcode-scanning` to 17.3.0
+* Update iOS native library `GoogleMLKit/BarcodeScanning` to 9.0.0
+
 ## 0.14.1
 
 * Increase android sdk compile version to 35

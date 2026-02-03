@@ -1,3 +1,8 @@
+## 0.13.2
+
+* Update Android native library `com.google.mlkit:face-detection` to 16.1.7
+* Update iOS native library `GoogleMLKit/FaceDetection` to 9.0.0
+
 ## 0.13.1
 
 * Increase android sdk compile version to 35

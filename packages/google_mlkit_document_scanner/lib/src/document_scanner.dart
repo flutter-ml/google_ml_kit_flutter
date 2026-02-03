@@ -2,8 +2,9 @@ import 'package:flutter/services.dart';
 
 /// A document scanner that allows to convert physical documents into digital formats.
 class DocumentScanner {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_document_scanner');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_document_scanner',
+  );
 
   /// Instance id.
   final id = DateTime.now().microsecondsSinceEpoch.toString();
@@ -17,10 +18,9 @@ class DocumentScanner {
   /// Starts the document scanner UI flow.
   Future<DocumentScanningResult> scanDocument() async {
     final dynamic results = await _channel.invokeMapMethod<dynamic, dynamic>(
-        'vision#startDocumentScanner', <String, dynamic>{
-      'options': options.toJson(),
-      'id': id,
-    });
+      'vision#startDocumentScanner',
+      <String, dynamic>{'options': options.toJson(), 'id': id},
+    );
     return DocumentScanningResult.fromJson(results);
   }
 
@@ -56,25 +56,18 @@ class DocumentScannerOptions {
 
   /// Returns a json representation of an instance of [DocumentScannerOptions].
   Map<String, dynamic> toJson() => {
-        'pageLimit': pageLimit,
-        'formats': documentFormats.map((f) => f.name).toList(),
-        'mode': mode.name,
-        'isGalleryImport': isGalleryImport,
-      };
+    'pageLimit': pageLimit,
+    'formats': documentFormats.map((f) => f.name).toList(),
+    'mode': mode.name,
+    'isGalleryImport': isGalleryImport,
+  };
 }
 
 /// Result format for the scanner.
-enum DocumentFormat {
-  jpeg,
-  pdf,
-}
+enum DocumentFormat { jpeg, pdf }
 
 /// Scanner mode which determines what features are enabled.
-enum ScannerMode {
-  base,
-  filter,
-  full,
-}
+enum ScannerMode { base, filter, full }
 
 /// Result for document scanning.
 class DocumentScanningResult {
@@ -118,7 +111,9 @@ class DocumentScanningResultPdf {
   /// Returns an instance of [DocumentScanningResultPdf] from a given [json].
   factory DocumentScanningResultPdf.fromJson(Map<dynamic, dynamic> json) {
     return DocumentScanningResultPdf(
-        pageCount: json['pageCount'], uri: json['uri']);
+      pageCount: json['pageCount'],
+      uri: json['uri'],
+    );
   }
 
   @override

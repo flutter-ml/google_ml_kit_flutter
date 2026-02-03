@@ -1,3 +1,10 @@
+## 0.14.2
+
+* Update Android native library `com.google.mlkit:image-labeling` to 17.0.9
+* Update Android native library `com.google.mlkit:image-labeling-custom` to 17.0.3
+* Update iOS native library `GoogleMLKit/ImageLabeling` to 9.0.0
+* Update iOS native library `GoogleMLKit/ImageLabelingCustom` to 9.0.0
+
 ## 0.14.1
 
 * Increase android sdk compile version to 35

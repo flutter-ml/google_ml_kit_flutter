@@ -1,3 +1,8 @@
+## 0.4.2
+
+* Update Android native library `com.google.mlkit:face-mesh-detection` to 16.0.0-beta3
+* Update iOS native library `GoogleMLKit/FaceMeshDetection` to 9.0.0 (Note: iOS support is not available)
+
 ## 0.4.1
 
 * Increase android sdk compile version to 35

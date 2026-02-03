@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter (Example App)",
+      "request": "launch",
+      "type": "dart",
+      "program": "${workspaceFolder}/packages/example/lib/main.dart",
+      "cwd": "${workspaceFolder}/packages/example"
+    },
+    {
+      "name": "Flutter (Example App - Profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "${workspaceFolder}/packages/example/lib/main.dart",
+      "cwd": "${workspaceFolder}/packages/example"
+    },
+    {
+      "name": "Flutter (Example App - Release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "${workspaceFolder}/packages/example/lib/main.dart",
+      "cwd": "${workspaceFolder}/packages/example"
+    }
+  ]
+}

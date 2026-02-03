@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A detector for performing body-pose estimation.
 class PoseDetector {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_pose_detector');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_pose_detector',
+  );
 
   /// The options for the pose detector.
   final PoseDetectorOptions options;
@@ -19,11 +20,13 @@ class PoseDetector {
   /// It returns a list of [Pose].
   Future<List<Pose>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
-        'vision#startPoseDetector', <String, dynamic>{
-      'options': options.toJson(),
-      'id': id,
-      'imageData': inputImage.toJson()
-    });
+      'vision#startPoseDetector',
+      <String, dynamic>{
+        'options': options.toJson(),
+        'id': id,
+        'imageData': inputImage.toJson(),
+      },
+    );
 
     final List<Pose> poses = [];
     for (final pose in result) {
@@ -52,15 +55,13 @@ class PoseDetectorOptions {
   final PoseDetectionMode mode;
 
   /// Constructor to create an instance of [PoseDetectorOptions].
-  PoseDetectorOptions(
-      {this.model = PoseDetectionModel.base,
-      this.mode = PoseDetectionMode.stream});
+  PoseDetectorOptions({
+    this.model = PoseDetectionModel.base,
+    this.mode = PoseDetectionMode.stream,
+  });
 
   /// Returns a json representation of an instance of [PoseDetectorOptions].
-  Map<String, dynamic> toJson() => {
-        'model': model.name,
-        'mode': mode.name,
-      };
+  Map<String, dynamic> toJson() => {'model': model.name, 'mode': mode.name};
 }
 
 // Specifies whether to use base or accurate pose model.
@@ -115,7 +116,7 @@ enum PoseLandmarkType {
   leftHeel,
   rightHeel,
   leftFootIndex,
-  rightFootIndex
+  rightFootIndex,
 }
 
 /// Describes a pose detection result.

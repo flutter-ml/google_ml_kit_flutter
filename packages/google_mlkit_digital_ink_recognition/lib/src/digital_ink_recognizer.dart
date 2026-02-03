@@ -8,8 +8,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 /// Digital ink is the vector representation of what a user has written.
 /// It is composed of a sequence of strokes, each being a sequence of touch points (coordinates and timestamp).
 class DigitalInkRecognizer {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_digital_ink_recognizer');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_digital_ink_recognizer',
+  );
 
   /// Refers to language that is being processed.
   //  Note that model should be a BCP 47 language tag from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
@@ -24,15 +25,17 @@ class DigitalInkRecognizer {
 
   /// Performs a recognition of the text written on screen.
   /// It takes an instance of [Ink] which refers to the user input as a list of [Stroke].
-  Future<List<RecognitionCandidate>> recognize(Ink ink,
-      {DigitalInkRecognitionContext? context}) async {
+  Future<List<RecognitionCandidate>> recognize(
+    Ink ink, {
+    DigitalInkRecognitionContext? context,
+  }) async {
     final result = await _channel
         .invokeMethod('vision#startDigitalInkRecognizer', <String, dynamic>{
-      'id': id,
-      'ink': ink.toJson(),
-      'context': context?._isValid == true ? context?.toJson() : null,
-      'model': languageCode,
-    });
+          'id': id,
+          'ink': ink.toJson(),
+          'context': context?._isValid == true ? context?.toJson() : null,
+          'model': languageCode,
+        });
 
     final List<RecognitionCandidate> candidates = <RecognitionCandidate>[];
     for (final dynamic json in result) {
@@ -64,9 +67,9 @@ class DigitalInkRecognitionContext {
 
   /// Returns a json representation of an instance of [WritingArea].
   Map<String, dynamic> toJson() => {
-        'preContext': preContext,
-        'writingArea': writingArea?.toJson(),
-      };
+    'preContext': preContext,
+    'writingArea': writingArea?.toJson(),
+  };
 }
 
 /// The writing area is the area on the screen where the user can draw an ink.
@@ -81,10 +84,7 @@ class WritingArea {
   WritingArea({required this.width, required this.height});
 
   /// Returns a json representation of an instance of [WritingArea].
-  Map<String, dynamic> toJson() => {
-        'width': width,
-        'height': height,
-      };
+  Map<String, dynamic> toJson() => {'width': width, 'height': height};
 }
 
 /// Represents the user input as a collection of [Stroke] and serves as input for the handwriting recognition task.
@@ -94,8 +94,8 @@ class Ink {
 
   /// Returns a json representation of an instance of [Ink].
   Map<String, dynamic> toJson() => {
-        'strokes': strokes.map((stroke) => stroke.toJson()).toList(),
-      };
+    'strokes': strokes.map((stroke) => stroke.toJson()).toList(),
+  };
 }
 
 /// Represents a sequence of touch points between a pen (resp. touch) down and pen (resp. touch) up event.
@@ -105,8 +105,8 @@ class Stroke {
 
   /// Returns a json representation of an instance of [Stroke].
   Map<String, dynamic> toJson() => {
-        'points': points.map((point) => point.toJson()).toList(),
-      };
+    'points': points.map((point) => point.toJson()).toList(),
+  };
 }
 
 /// A single touch point from the user.
@@ -124,20 +124,17 @@ class StrokePoint {
   StrokePoint({required this.x, required this.y, required this.t});
 
   /// Returns a json representation of an instance of [StrokePoint].
-  Map<String, dynamic> toJson() => {
-        'x': x,
-        'y': y,
-        't': t,
-      };
+  Map<String, dynamic> toJson() => {'x': x, 'y': y, 't': t};
 }
 
 /// A subclass of [ModelManager] that manages [DigitalInkRecognitionModel] required to process the image.
 class DigitalInkRecognizerModelManager extends ModelManager {
   /// Constructor to create an instance of [DigitalInkRecognizerModelManager].
   DigitalInkRecognizerModelManager()
-      : super(
-            channel: DigitalInkRecognizer._channel,
-            method: 'vision#manageInkModels');
+    : super(
+        channel: DigitalInkRecognizer._channel,
+        method: 'vision#manageInkModels',
+      );
 }
 
 /// Individual recognition candidate.
@@ -157,8 +154,5 @@ class RecognitionCandidate {
 
   /// Returns an instance of [RecognitionCandidate] from a given [json].
   factory RecognitionCandidate.fromJson(Map<dynamic, dynamic> json) =>
-      RecognitionCandidate(
-        text: json['text'],
-        score: json['score'],
-      );
+      RecognitionCandidate(text: json['text'], score: json['score']);
 }

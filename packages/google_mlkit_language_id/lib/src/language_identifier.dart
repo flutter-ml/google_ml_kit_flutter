@@ -2,8 +2,9 @@ import 'package:flutter/services.dart';
 
 /// A class that identifies the main language or possible languages for the given text.
 class LanguageIdentifier {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_language_identifier');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_language_identifier',
+  );
 
   /// This code is returned when no language could be determined.
   final String undeterminedLanguageCode = 'und';
@@ -25,11 +26,11 @@ class LanguageIdentifier {
   Future<String> identifyLanguage(String text) async {
     final result = await _channel
         .invokeMethod('nlp#startLanguageIdentifier', <String, dynamic>{
-      'text': text,
-      'possibleLanguages': false,
-      'confidence': confidenceThreshold,
-      'id': id,
-    });
+          'text': text,
+          'possibleLanguages': false,
+          'confidence': confidenceThreshold,
+          'id': id,
+        });
 
     return result.toString();
   }
@@ -38,14 +39,15 @@ class LanguageIdentifier {
   /// If no language could be determined then [undeterminedLanguageCode] is returned.
   /// More information: https://developers.google.com/ml-kit/language/identification
   Future<List<IdentifiedLanguage>> identifyPossibleLanguages(
-      String text) async {
+    String text,
+  ) async {
     final result = await _channel
         .invokeMethod('nlp#startLanguageIdentifier', <String, dynamic>{
-      'text': text,
-      'possibleLanguages': true,
-      'confidence': confidenceThreshold,
-      'id': id,
-    });
+          'text': text,
+          'possibleLanguages': true,
+          'confidence': confidenceThreshold,
+          'id': id,
+        });
 
     final languages = <IdentifiedLanguage>[];
     for (final dynamic json in result) {

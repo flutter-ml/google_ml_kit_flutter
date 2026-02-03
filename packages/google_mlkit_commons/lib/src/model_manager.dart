@@ -29,7 +29,7 @@ class ModelManager {
     final result = await channel.invokeMethod(method, <String, dynamic>{
       'task': 'download',
       'model': model,
-      'wifi': isWifiRequired
+      'wifi': isWifiRequired,
     });
     return result.toString() == 'success';
   }

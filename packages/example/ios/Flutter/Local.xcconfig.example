@@ -1,0 +1,8 @@
+// Copy this file to Local.xcconfig and fill in your values
+// Local.xcconfig is gitignored and will not be committed
+
+// Your Apple Developer Team ID (found in https://developer.apple.com/account)
+DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE
+
+// Your app's bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.google.ml.kit.flutter.example

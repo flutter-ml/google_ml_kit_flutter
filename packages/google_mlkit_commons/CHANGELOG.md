@@ -1,3 +1,8 @@
+## 0.11.1
+
+* Update Android native library `com.google.mlkit:vision-common` to 17.3.0
+* Update iOS native library `MLKitVision` to 10.0.0
+
 ## 0.11.0
 
 * Increase android sdk compile version to 35

@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A detector that performs segmentation on a given [InputImage].
 class SubjectSegmenter {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_subject_segmentation');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_subject_segmentation',
+  );
 
   /// A unique identifier for the segmentation session, generated using the current timestamp
   final id = DateTime.now().microsecondsSinceEpoch.toString();
@@ -20,15 +21,18 @@ class SubjectSegmenter {
   /// Sends the [InputImage] data to the natvie platform via the method channel
   /// Returns the segmentation mask in the given image.
   Future<SubjectSegmentationResult> processImage(InputImage inputImage) async {
-    final results = await _channel
-        .invokeMethod('vision#startSubjectSegmenter', <String, dynamic>{
-      'id': id,
-      'imageData': inputImage.toJson(),
-      'options': options.toJson(),
-    });
+    final results = await _channel.invokeMethod(
+      'vision#startSubjectSegmenter',
+      <String, dynamic>{
+        'id': id,
+        'imageData': inputImage.toJson(),
+        'options': options.toJson(),
+      },
+    );
     // Convert the JSON response from the platform into a SubjectSegmentationResult instance.
-    final SubjectSegmentationResult masks =
-        SubjectSegmentationResult.fromJson(results);
+    final SubjectSegmentationResult masks = SubjectSegmentationResult.fromJson(
+      results,
+    );
     return masks;
   }
 
@@ -62,10 +66,10 @@ class SubjectSegmenterOptions {
 
   /// Returns a json representation of an instance of [SubjectSegmenterOptions].
   Map<String, dynamic> toJson() => {
-        'enableForegroundBitmap': enableForegroundBitmap,
-        'enableForegroundConfidenceMask': enableForegroundConfidenceMask,
-        'enableMultiSubjectBitmap': enableMultipleSubjects.toJson(),
-      };
+    'enableForegroundBitmap': enableForegroundBitmap,
+    'enableForegroundConfidenceMask': enableForegroundConfidenceMask,
+    'enableMultiSubjectBitmap': enableMultipleSubjects.toJson(),
+  };
 }
 
 /// A class to represent options for results in [Subject].
@@ -84,9 +88,9 @@ class SubjectResultOptions {
 
   /// Returns a json representation of an instance of [SubjectResultOptions].
   Map<String, dynamic> toJson() => {
-        'enableConfidenceMask': enableConfidenceMask,
-        'enableSubjectBitmap': enableSubjectBitmap,
-      };
+    'enableConfidenceMask': enableConfidenceMask,
+    'enableSubjectBitmap': enableSubjectBitmap,
+  };
 }
 
 /// A data class that represents the segmentation mask returned by the [SubjectSegmentationResult]
@@ -165,11 +169,11 @@ class Subject {
 
   /// Creates an instance of [Subject] from a given json.
   factory Subject.fromJson(Map<dynamic, dynamic> json) => Subject(
-        startX: json['startX'] as int,
-        startY: json['startY'] as int,
-        width: json['width'] as int,
-        height: json['height'] as int,
-        confidenceMask: json['confidenceMask'],
-        bitmap: json['bitmap'],
-      );
+    startX: json['startX'] as int,
+    startY: json['startY'] as int,
+    width: json['width'] as int,
+    height: json['height'] as int,
+    confidenceMask: json['confidenceMask'],
+    bitmap: json['bitmap'],
+  );
 }

@@ -1,3 +1,8 @@
+## 0.10.1
+
+* Update Android native library `com.google.mlkit:segmentation-selfie` to 16.0.0-beta6
+* Update iOS native library `GoogleMLKit/SegmentationSelfie` to 9.0.0
+
 ## 0.10.0
 
 * Increase android sdk compile version to 35

@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// An image labeler that processes and labels [InputImage].
 class ImageLabeler {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_image_labeler');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_image_labeler',
+  );
 
   /// The options for the image labeler.
   final ImageLabelerOptions options;
@@ -18,11 +19,13 @@ class ImageLabeler {
   /// Processes the given image for image labeling, it returns a List of [ImageLabel].
   Future<List<ImageLabel>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
-        'vision#startImageLabelDetector', <String, dynamic>{
-      'options': options.toJson(),
-      'id': id,
-      'imageData': inputImage.toJson()
-    });
+      'vision#startImageLabelDetector',
+      <String, dynamic>{
+        'options': options.toJson(),
+        'id': id,
+        'imageData': inputImage.toJson(),
+      },
+    );
     final imageLabels = <ImageLabel>[];
 
     for (final dynamic json in result) {
@@ -38,11 +41,7 @@ class ImageLabeler {
 }
 
 /// Type of [ImageLabeler].
-enum ImageLabelerType {
-  base,
-  local,
-  remote,
-}
+enum ImageLabelerType { base, local, remote }
 
 /// Base options for [ImageLabeler].
 class ImageLabelerOptions {
@@ -60,9 +59,9 @@ class ImageLabelerOptions {
 
   /// Returns a json representation of an instance of [ImageLabelerOptions].
   Map<String, dynamic> toJson() => {
-        'confidenceThreshold': confidenceThreshold,
-        'type': type.name,
-      };
+    'confidenceThreshold': confidenceThreshold,
+    'type': type.name,
+  };
 }
 
 /// Options for [ImageLabeler] using a custom local model.
@@ -79,17 +78,20 @@ class LocalLabelerOptions extends ImageLabelerOptions {
   final ImageLabelerType type = ImageLabelerType.local;
 
   /// Constructor to create an instance of [LocalLabelerOptions].
-  LocalLabelerOptions(
-      {super.confidenceThreshold, required this.modelPath, this.maxCount = 10});
+  LocalLabelerOptions({
+    super.confidenceThreshold,
+    required this.modelPath,
+    this.maxCount = 10,
+  });
 
   /// Returns a json representation of an instance of [LocalLabelerOptions].
   @override
   Map<String, dynamic> toJson() => {
-        'confidenceThreshold': confidenceThreshold,
-        'type': type.name,
-        'path': modelPath,
-        'maxCount': maxCount
-      };
+    'confidenceThreshold': confidenceThreshold,
+    'type': type.name,
+    'path': modelPath,
+    'maxCount': maxCount,
+  };
 }
 
 /// Options for [ImageLabeler] using a Firebase model.
@@ -106,26 +108,30 @@ class FirebaseLabelerOption extends ImageLabelerOptions {
   final ImageLabelerType type = ImageLabelerType.remote;
 
   /// Constructor to create an instance of [FirebaseLabelerOption].
-  FirebaseLabelerOption(
-      {super.confidenceThreshold, required this.modelName, this.maxCount = 10});
+  FirebaseLabelerOption({
+    super.confidenceThreshold,
+    required this.modelName,
+    this.maxCount = 10,
+  });
 
   /// Returns a json representation of an instance of [FirebaseLabelerOption].
   @override
   Map<String, dynamic> toJson() => {
-        'confidenceThreshold': confidenceThreshold,
-        'type': type.name,
-        'modelName': modelName,
-        'maxCount': maxCount
-      };
+    'confidenceThreshold': confidenceThreshold,
+    'type': type.name,
+    'modelName': modelName,
+    'maxCount': maxCount,
+  };
 }
 
 /// A subclass of [ModelManager] that manages [FirebaseModelSource] required to process the image.
 class FirebaseImageLabelerModelManager extends ModelManager {
   /// Constructor to create an instance of [FirebaseImageLabelerModelManager].
   FirebaseImageLabelerModelManager()
-      : super(
-            channel: ImageLabeler._channel,
-            method: 'vision#manageFirebaseModels');
+    : super(
+        channel: ImageLabeler._channel,
+        method: 'vision#manageFirebaseModels',
+      );
 }
 
 /// Represents a label detected in an image.
@@ -140,13 +146,16 @@ class ImageLabel {
   final int index;
 
   /// Constructor to create an instance of [ImageLabel].
-  ImageLabel(
-      {required this.confidence, required this.label, required this.index});
+  ImageLabel({
+    required this.confidence,
+    required this.label,
+    required this.index,
+  });
 
   /// Returns an instance of [ImageLabel] from a given [json].
   factory ImageLabel.fromJson(Map<dynamic, dynamic> json) => ImageLabel(
-        confidence: json['confidence'],
-        label: json['text'],
-        index: json['index'],
-      );
+    confidence: json['confidence'],
+    label: json['text'],
+    index: json['index'],
+  );
 }

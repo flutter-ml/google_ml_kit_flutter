@@ -5,8 +5,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A barcode scanner that scans and decodes barcodes from a given [InputImage].
 class BarcodeScanner {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_barcode_scanning');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_barcode_scanning',
+  );
 
   /// List that restrict the scan to specific barcode formats.
   final List<BarcodeFormat> formats;
@@ -23,7 +24,7 @@ class BarcodeScanner {
     final result = await _channel.invokeMethod('vision#startBarcodeScanner', {
       'formats': formats.map((f) => f.rawValue).toList(),
       'id': id,
-      'imageData': inputImage.toJson()
+      'imageData': inputImage.toJson(),
     });
 
     final barcodesList = <Barcode>[];
@@ -126,8 +127,9 @@ extension BarcodeFormatValue on BarcodeFormat {
 
   static BarcodeFormat fromRawValue(int rawValue) {
     return BarcodeFormat.values.firstWhere(
-        (element) => element.rawValue == rawValue,
-        orElse: () => BarcodeFormat.unknown);
+      (element) => element.rawValue == rawValue,
+      orElse: () => BarcodeFormat.unknown,
+    );
   }
 }
 
@@ -303,10 +305,10 @@ class BarcodeWifi extends BarcodeValue {
 
   /// Returns an instance of [BarcodeWifi] from a given [json].
   factory BarcodeWifi.fromJson(Map<dynamic, dynamic> json) => BarcodeWifi(
-        ssid: json['ssid'],
-        password: json['password'],
-        encryptionType: json['encryption'],
-      );
+    ssid: json['ssid'],
+    password: json['password'],
+    encryptionType: json['encryption'],
+  );
 }
 
 /// Stores url info of the bookmark obtained from a barcode.
@@ -321,10 +323,8 @@ class BarcodeUrl extends BarcodeValue {
   BarcodeUrl({this.url, this.title});
 
   /// Returns an instance of [BarcodeUrl] from a given [json].
-  factory BarcodeUrl.fromJson(Map<dynamic, dynamic> json) => BarcodeUrl(
-        url: json['url'],
-        title: json['title'],
-      );
+  factory BarcodeUrl.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeUrl(url: json['url'], title: json['title']);
 }
 
 /// The type of email for [BarcodeEmail.type].
@@ -358,11 +358,11 @@ class BarcodeEmail extends BarcodeValue {
 
   /// Returns an instance of [BarcodeEmail] from a given [json].
   factory BarcodeEmail.fromJson(Map<dynamic, dynamic> json) => BarcodeEmail(
-        type: BarcodeEmailType.values[json['emailType']],
-        address: json['address'],
-        body: json['body'],
-        subject: json['subject'],
-      );
+    type: BarcodeEmailType.values[json['emailType']],
+    address: json['address'],
+    body: json['body'],
+    subject: json['subject'],
+  );
 }
 
 /// The type of phone number for [BarcodePhone.type].
@@ -396,9 +396,9 @@ class BarcodePhone extends BarcodeValue {
 
   /// Returns an instance of [BarcodePhone] from a given [json].
   factory BarcodePhone.fromJson(Map<dynamic, dynamic> json) => BarcodePhone(
-        type: BarcodePhoneType.values[json['phoneType']],
-        number: json['number'],
-      );
+    type: BarcodePhoneType.values[json['phoneType']],
+    number: json['number'],
+  );
 }
 
 /// Stores an SMS message obtained from a barcode.
@@ -413,10 +413,8 @@ class BarcodeSMS extends BarcodeValue {
   BarcodeSMS({this.message, this.phoneNumber});
 
   /// Returns an instance of [BarcodeSMS] from a given [json].
-  factory BarcodeSMS.fromJson(Map<dynamic, dynamic> json) => BarcodeSMS(
-        message: json['message'],
-        phoneNumber: json['number'],
-      );
+  factory BarcodeSMS.fromJson(Map<dynamic, dynamic> json) =>
+      BarcodeSMS(message: json['message'], phoneNumber: json['number']);
 }
 
 /// Stores GPS coordinates obtained from a barcode.
@@ -432,10 +430,7 @@ class BarcodeGeoPoint extends BarcodeValue {
 
   /// Returns an instance of [BarcodeGeoPoint] from a given [json].
   factory BarcodeGeoPoint.fromJson(Map<dynamic, dynamic> json) =>
-      BarcodeGeoPoint(
-        latitude: json['latitude'],
-        longitude: json['longitude'],
-      );
+      BarcodeGeoPoint(latitude: json['latitude'], longitude: json['longitude']);
 }
 
 /// Stores driver’s license or ID card data representation obtained from a barcode.

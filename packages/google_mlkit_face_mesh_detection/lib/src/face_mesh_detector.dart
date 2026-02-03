@@ -5,8 +5,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A face mesh detector that detects a face mesh in a given [InputImage].
 class FaceMeshDetector {
-  static const services.MethodChannel _channel =
-      services.MethodChannel('google_mlkit_face_mesh_detector');
+  static const services.MethodChannel _channel = services.MethodChannel(
+    'google_mlkit_face_mesh_detector',
+  );
 
   /// Instance id.
   final id = DateTime.now().microsecondsSinceEpoch.toString();
@@ -20,11 +21,13 @@ class FaceMeshDetector {
   /// Processes the given image for face mesh detection.
   Future<List<FaceMesh>> processImage(InputImage inputImage) async {
     final result = await _channel.invokeListMethod<dynamic>(
-        'vision#startFaceMeshDetector', <String, dynamic>{
-      'id': id,
-      'option': option.index,
-      'imageData': inputImage.toJson(),
-    });
+      'vision#startFaceMeshDetector',
+      <String, dynamic>{
+        'id': id,
+        'option': option.index,
+        'imageData': inputImage.toJson(),
+      },
+    );
 
     final List<FaceMesh> meshes = <FaceMesh>[];
     for (final dynamic json in result!) {
@@ -54,41 +57,43 @@ class FaceMesh {
   final Map<FaceMeshContourType, List<FaceMeshPoint>?> contours;
 
   /// Creates a face mesh.
-  FaceMesh(
-      {required this.boundingBox,
-      required this.points,
-      required this.triangles,
-      required this.contours});
+  FaceMesh({
+    required this.boundingBox,
+    required this.points,
+    required this.triangles,
+    required this.contours,
+  });
 
   /// Returns an instance of [FaceMesh] from a given [json].
   factory FaceMesh.fromJson(Map<dynamic, dynamic> json) => FaceMesh(
-        boundingBox: RectJson.fromJson(json['rect']),
-        points: json['points']
-            .map((element) {
-              return FaceMeshPoint.fromJson(element);
-            })
-            .cast<FaceMeshPoint>()
-            .toList(),
-        triangles: json['triangles']
-            .map((element) {
-              return FaceMeshTriangle.fromJson(element);
-            })
-            .cast<FaceMeshTriangle>()
-            .toList(),
-        contours: Map<FaceMeshContourType, List<FaceMeshPoint>>.fromIterables(
-            FaceMeshContourType.values,
-            FaceMeshContourType.values.map((FaceMeshContourType type) {
-          final List<dynamic>? arr = (json['contours'] ?? {})[type.index];
-          return (arr == null)
-              ? []
-              : arr
+    boundingBox: RectJson.fromJson(json['rect']),
+    points: json['points']
+        .map((element) {
+          return FaceMeshPoint.fromJson(element);
+        })
+        .cast<FaceMeshPoint>()
+        .toList(),
+    triangles: json['triangles']
+        .map((element) {
+          return FaceMeshTriangle.fromJson(element);
+        })
+        .cast<FaceMeshTriangle>()
+        .toList(),
+    contours: Map<FaceMeshContourType, List<FaceMeshPoint>>.fromIterables(
+      FaceMeshContourType.values,
+      FaceMeshContourType.values.map((FaceMeshContourType type) {
+        final List<dynamic>? arr = (json['contours'] ?? {})[type.index];
+        return (arr == null)
+            ? []
+            : arr
                   .map((element) {
                     return FaceMeshPoint.fromJson(element);
                   })
                   .cast<FaceMeshPoint>()
                   .toList();
-        })),
-      );
+      }),
+    ),
+  );
 }
 
 /// Represents a 3D point in face mesh, by index and PointF3D.
@@ -115,11 +120,11 @@ class FaceMeshPoint {
 
   /// Returns an instance of [FaceMeshPoint] from a given [json].
   factory FaceMeshPoint.fromJson(Map<dynamic, dynamic> json) => FaceMeshPoint(
-        index: json['index'],
-        x: json['x'],
-        y: json['y'],
-        z: json['z'],
-      );
+    index: json['index'],
+    x: json['x'],
+    y: json['y'],
+    z: json['z'],
+  );
 }
 
 /// Represents a triangle with 3 generic points.
@@ -132,12 +137,13 @@ class FaceMeshTriangle {
 
   /// Returns an instance of [FaceMeshTriangle] from a given [json].
   factory FaceMeshTriangle.fromJson(List<dynamic> json) => FaceMeshTriangle(
-      points: json
-          .map((element) {
-            return FaceMeshPoint.fromJson(element);
-          })
-          .cast<FaceMeshPoint>()
-          .toList());
+    points: json
+        .map((element) {
+          return FaceMeshPoint.fromJson(element);
+        })
+        .cast<FaceMeshPoint>()
+        .toList(),
+  );
 }
 
 /// Options for [FaceMeshDetector].

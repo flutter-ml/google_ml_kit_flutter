@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A class that translates on device the given input text.
 class OnDeviceTranslator {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_on_device_translator');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_on_device_translator',
+  );
 
   /// The source language of the input.
   final TranslateLanguage sourceLanguage;
@@ -16,18 +17,20 @@ class OnDeviceTranslator {
   final id = DateTime.now().microsecondsSinceEpoch.toString();
 
   /// Constructor to create an instance of [OnDeviceTranslator].
-  OnDeviceTranslator(
-      {required this.sourceLanguage, required this.targetLanguage});
+  OnDeviceTranslator({
+    required this.sourceLanguage,
+    required this.targetLanguage,
+  });
 
   /// Translates the given [text] from the source language into the target language.
   Future<String> translateText(String text) async {
     final result = await _channel
         .invokeMethod('nlp#startLanguageTranslator', <String, dynamic>{
-      'id': id,
-      'text': text,
-      'source': sourceLanguage.bcpCode,
-      'target': targetLanguage.bcpCode
-    });
+          'id': id,
+          'text': text,
+          'source': sourceLanguage.bcpCode,
+          'target': targetLanguage.bcpCode,
+        });
 
     return result.toString();
   }
@@ -41,9 +44,10 @@ class OnDeviceTranslator {
 class OnDeviceTranslatorModelManager extends ModelManager {
   /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
   OnDeviceTranslatorModelManager()
-      : super(
-            channel: OnDeviceTranslator._channel,
-            method: 'nlp#manageLanguageModelModels');
+    : super(
+        channel: OnDeviceTranslator._channel,
+        method: 'nlp#manageLanguageModelModels',
+      );
 }
 
 /// All supported languages by on-device translation.
@@ -354,8 +358,9 @@ extension BCP47Code on TranslateLanguage {
 
   static TranslateLanguage? fromRawValue(String bcpCode) {
     try {
-      return TranslateLanguage.values
-          .firstWhere((element) => element.bcpCode == bcpCode);
+      return TranslateLanguage.values.firstWhere(
+        (element) => element.bcpCode == bcpCode,
+      );
     } catch (_) {
       return null;
     }

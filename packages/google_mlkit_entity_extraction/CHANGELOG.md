@@ -1,3 +1,8 @@
+## 0.15.3
+
+* Update Android native library `com.google.mlkit:entity-extraction` to 16.0.0-beta6
+* Update iOS native library `GoogleMLKit/EntityExtraction` to 9.0.0
+
 ## 0.15.2
 * Update dependencies
 

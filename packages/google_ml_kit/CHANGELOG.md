@@ -1,3 +1,8 @@
+## 0.20.1
+
+* Update all native dependencies to latest versions
+* See individual package changelogs for specific version updates
+
 ## 0.20.0
 
 * Increase android sdk compile version to 35

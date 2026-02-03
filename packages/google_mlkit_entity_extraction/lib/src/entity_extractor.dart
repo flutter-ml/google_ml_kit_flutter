@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A class that extracts entities from the given input text.
 class EntityExtractor {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_entity_extractor');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_entity_extractor',
+  );
 
   /// The language used when parsing entities in the text.
   final EntityExtractorLanguage language;
@@ -36,12 +37,14 @@ class EntityExtractor {
     };
 
     final result = await _channel.invokeMethod(
-        'nlp#startEntityExtractor', <String, dynamic>{
-      'parameters': parameters,
-      'id': id,
-      'text': text,
-      'language': language.name
-    });
+      'nlp#startEntityExtractor',
+      <String, dynamic>{
+        'parameters': parameters,
+        'id': id,
+        'text': text,
+        'language': language.name,
+      },
+    );
 
     final annotations = <EntityAnnotation>[];
     for (final dynamic json in result) {
@@ -59,9 +62,10 @@ class EntityExtractor {
 class EntityExtractorModelManager extends ModelManager {
   /// Constructor to create an instance of [EntityExtractorModelManager].
   EntityExtractorModelManager()
-      : super(
-            channel: EntityExtractor._channel,
-            method: 'nlp#manageEntityExtractionModels');
+    : super(
+        channel: EntityExtractor._channel,
+        method: 'nlp#manageEntityExtractionModels',
+      );
 }
 
 /// Languages supported by [EntityExtractor].
@@ -98,11 +102,12 @@ class EntityAnnotation {
   final List<Entity> entities;
 
   /// Constructor to create an instance of [EntityAnnotation].
-  EntityAnnotation(
-      {required this.start,
-      required this.end,
-      required this.text,
-      required this.entities});
+  EntityAnnotation({
+    required this.start,
+    required this.end,
+    required this.text,
+    required this.entities,
+  });
 
   /// Returns an instance of [EntityAnnotation] from a given [json].
   factory EntityAnnotation.fromJson(Map<dynamic, dynamic> json) {
@@ -120,43 +125,65 @@ class EntityAnnotation {
           entities.add(AddressEntity(raw));
           break;
         case EntityType.dateTime:
-          entities.add(DateTimeEntity(raw,
+          entities.add(
+            DateTimeEntity(
+              raw,
               dateTimeGranularity: DateTimeGranularity
                   .values[entity['dateTimeGranularity'].toInt()],
-              timestamp: entity['timestamp'].toInt()));
+              timestamp: entity['timestamp'].toInt(),
+            ),
+          );
           break;
         case EntityType.email:
           entities.add(EmailEntity(raw));
           break;
         case EntityType.flightNumber:
-          entities.add(FlightNumberEntity(raw,
-              airlineCode: entity['code'], flightNumber: entity['number']));
+          entities.add(
+            FlightNumberEntity(
+              raw,
+              airlineCode: entity['code'],
+              flightNumber: entity['number'],
+            ),
+          );
           break;
         case EntityType.iban:
-          entities.add(IbanEntity(raw,
-              iban: entity['iban'], countryCode: entity['code']));
+          entities.add(
+            IbanEntity(raw, iban: entity['iban'], countryCode: entity['code']),
+          );
           break;
         case EntityType.isbn:
           entities.add(IsbnEntity(raw, isbn: entity['isbn']));
           break;
         case EntityType.money:
-          entities.add(MoneyEntity(raw,
+          entities.add(
+            MoneyEntity(
+              raw,
               fractionPart: entity['fraction'].toInt(),
               integerPart: entity['integer'].toInt(),
-              unnormalizedCurrency: entity['unnormalized']));
+              unnormalizedCurrency: entity['unnormalized'],
+            ),
+          );
           break;
         case EntityType.paymentCard:
-          entities.add(PaymentCardEntity(raw,
+          entities.add(
+            PaymentCardEntity(
+              raw,
               network: PaymentCardNetwork.values[entity['network'].toInt()],
-              number: entity['number']));
+              number: entity['number'],
+            ),
+          );
           break;
         case EntityType.phone:
           entities.add(PhoneEntity(raw));
           break;
         case EntityType.trackingNumber:
-          entities.add(TrackingNumberEntity(raw,
+          entities.add(
+            TrackingNumberEntity(
+              raw,
               carrier: TrackingCarrier.values[entity['carrier'].toInt()],
-              number: entity['number']));
+              number: entity['number'],
+            ),
+          );
           break;
         case EntityType.url:
           entities.add(UrlEntity(raw));
@@ -164,10 +191,11 @@ class EntityAnnotation {
       }
     }
     return EntityAnnotation(
-        start: json['start'],
-        end: json['end'],
-        text: json['text'],
-        entities: entities);
+      start: json['start'],
+      end: json['end'],
+      text: json['text'],
+      entities: entities,
+    );
   }
 
   @override
@@ -211,7 +239,7 @@ abstract class Entity {
 class AddressEntity extends Entity {
   /// Constructor to create an instance of [AddressEntity].
   AddressEntity(String rawValue)
-      : super(rawValue: rawValue, type: EntityType.address);
+    : super(rawValue: rawValue, type: EntityType.address);
 }
 
 /// The precision of a timestamp that was extracted from text.
@@ -235,9 +263,11 @@ class DateTimeEntity extends Entity {
   final int timestamp;
 
   /// Constructor to create an instance of [DateTimeEntity].
-  DateTimeEntity(String rawValue,
-      {required this.dateTimeGranularity, required this.timestamp})
-      : super(rawValue: rawValue, type: EntityType.dateTime);
+  DateTimeEntity(
+    String rawValue, {
+    required this.dateTimeGranularity,
+    required this.timestamp,
+  }) : super(rawValue: rawValue, type: EntityType.dateTime);
 
   @override
   String toString() =>
@@ -248,7 +278,7 @@ class DateTimeEntity extends Entity {
 class EmailEntity extends Entity {
   /// Constructor to create an instance of [EmailEntity].
   EmailEntity(String rawValue)
-      : super(rawValue: rawValue, type: EntityType.email);
+    : super(rawValue: rawValue, type: EntityType.email);
 }
 
 /// An flight number entity extracted from text.
@@ -260,9 +290,11 @@ class FlightNumberEntity extends Entity {
   final String flightNumber;
 
   /// Constructor to create an instance of [FlightNumberEntity].
-  FlightNumberEntity(String rawValue,
-      {required this.airlineCode, required this.flightNumber})
-      : super(rawValue: rawValue, type: EntityType.flightNumber);
+  FlightNumberEntity(
+    String rawValue, {
+    required this.airlineCode,
+    required this.flightNumber,
+  }) : super(rawValue: rawValue, type: EntityType.flightNumber);
 
   @override
   String toString() =>
@@ -279,7 +311,7 @@ class IbanEntity extends Entity {
 
   /// Constructor to create an instance of [IbanEntity].
   IbanEntity(String rawValue, {required this.iban, required this.countryCode})
-      : super(rawValue: rawValue, type: EntityType.iban);
+    : super(rawValue: rawValue, type: EntityType.iban);
 
   @override
   String toString() =>
@@ -293,7 +325,7 @@ class IsbnEntity extends Entity {
 
   /// Constructor to create an instance of [IsbnEntity].
   IsbnEntity(String rawValue, {required this.isbn})
-      : super(rawValue: rawValue, type: EntityType.isbn);
+    : super(rawValue: rawValue, type: EntityType.isbn);
 
   @override
   String toString() => '{type: ${type.name}, isbn: $isbn}';
@@ -311,11 +343,12 @@ class MoneyEntity extends Entity {
   final String unnormalizedCurrency;
 
   /// Constructor to create an instance of [MoneyEntity].
-  MoneyEntity(String rawValue,
-      {required this.fractionPart,
-      required this.integerPart,
-      required this.unnormalizedCurrency})
-      : super(rawValue: rawValue, type: EntityType.money);
+  MoneyEntity(
+    String rawValue, {
+    required this.fractionPart,
+    required this.integerPart,
+    required this.unnormalizedCurrency,
+  }) : super(rawValue: rawValue, type: EntityType.money);
 
   @override
   String toString() => '{type: ${type.name}, currency: $unnormalizedCurrency}';
@@ -346,9 +379,11 @@ class PaymentCardEntity extends Entity {
   final String number;
 
   /// Constructor to create an instance of [PaymentCardEntity].
-  PaymentCardEntity(String rawValue,
-      {required this.network, required this.number})
-      : super(rawValue: rawValue, type: EntityType.paymentCard);
+  PaymentCardEntity(
+    String rawValue, {
+    required this.network,
+    required this.number,
+  }) : super(rawValue: rawValue, type: EntityType.paymentCard);
 
   @override
   String toString() =>
@@ -359,7 +394,7 @@ class PaymentCardEntity extends Entity {
 class PhoneEntity extends Entity {
   /// Constructor to create an instance of [PhoneEntity].
   PhoneEntity(String rawValue)
-      : super(rawValue: rawValue, type: EntityType.phone);
+    : super(rawValue: rawValue, type: EntityType.phone);
 }
 
 /// The supported parcel tracking carriers that can be detected.
@@ -387,9 +422,11 @@ class TrackingNumberEntity extends Entity {
   final String number;
 
   /// Constructor to create an instance of [TrackingNumberEntity].
-  TrackingNumberEntity(String rawValue,
-      {required this.carrier, required this.number})
-      : super(rawValue: rawValue, type: EntityType.trackingNumber);
+  TrackingNumberEntity(
+    String rawValue, {
+    required this.carrier,
+    required this.number,
+  }) : super(rawValue: rawValue, type: EntityType.trackingNumber);
 
   @override
   String toString() =>

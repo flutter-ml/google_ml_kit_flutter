@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+
+cd "$(dirname "$0")/.."
 cd packages
 
 cd google_mlkit_commons
@@ -57,4 +60,6 @@ cd ../example
 flutter pub get
 
 cd ios
-pod install
+# Remove Podfile.lock to ensure pods are updated when versions change
+rm -f Podfile.lock
+pod install --repo-update

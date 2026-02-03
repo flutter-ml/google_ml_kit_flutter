@@ -1,3 +1,8 @@
+## 0.13.1
+
+* Update Android native library `com.google.mlkit:translate` to 17.0.3
+* Update iOS native library `GoogleMLKit/Translate` to 9.0.0
+
 ## 0.13.0
 
 * Increase android sdk compile version to 35

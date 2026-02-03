@@ -3,8 +3,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A detector that performs segmentation on a given [InputImage].
 class SelfieSegmenter {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_selfie_segmenter');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_selfie_segmenter',
+  );
 
   /// The mode for the [Segmenter].
   /// The default value is [SegmenterMode.stream].
@@ -30,11 +31,11 @@ class SelfieSegmenter {
   Future<SegmentationMask?> processImage(InputImage inputImage) async {
     final result = await _channel
         .invokeMethod('vision#startSelfieSegmenter', <String, dynamic>{
-      'id': id,
-      'imageData': inputImage.toJson(),
-      'isStream': mode == SegmenterMode.stream,
-      'enableRawSizeMask': enableRawSizeMask,
-    });
+          'id': id,
+          'imageData': inputImage.toJson(),
+          'isStream': mode == SegmenterMode.stream,
+          'enableRawSizeMask': enableRawSizeMask,
+        });
 
     return result == null ? null : SegmentationMask.fromJson(result);
   }

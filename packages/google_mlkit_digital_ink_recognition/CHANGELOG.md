@@ -1,5 +1,7 @@
 ## 0.14.2
-# Update Google's ML Kit Digital Ink Recognition to version 19
+
+* Update Android native library `com.google.mlkit:digital-ink-recognition` to 19.0.0
+* Update iOS native library `GoogleMLKit/DigitalInkRecognition` to 9.0.0
 
 ## 0.14.1
 

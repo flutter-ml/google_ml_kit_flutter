@@ -3,6 +3,129 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-02-03
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.20.1`](#google_ml_kit---v0201)
+- [`google_mlkit_barcode_scanning` - `v0.14.2`](#google_mlkit_barcode_scanning---v0142)
+- [`google_mlkit_commons` - `v0.11.1`](#google_mlkit_commons---v0111)
+- [`google_mlkit_digital_ink_recognition` - `v0.14.2`](#google_mlkit_digital_ink_recognition---v0142)
+- [`google_mlkit_document_scanner` - `v0.4.1`](#google_mlkit_document_scanner---v041)
+- [`google_mlkit_entity_extraction` - `v0.15.3`](#google_mlkit_entity_extraction---v0153)
+- [`google_mlkit_face_detection` - `v0.13.2`](#google_mlkit_face_detection---v0132)
+- [`google_mlkit_face_mesh_detection` - `v0.4.2`](#google_mlkit_face_mesh_detection---v042)
+- [`google_mlkit_image_labeling` - `v0.14.2`](#google_mlkit_image_labeling---v0142)
+- [`google_mlkit_language_id` - `v0.13.1`](#google_mlkit_language_id---v0131)
+- [`google_mlkit_object_detection` - `v0.15.1`](#google_mlkit_object_detection---v0151)
+- [`google_mlkit_pose_detection` - `v0.14.1`](#google_mlkit_pose_detection---v0141)
+- [`google_mlkit_selfie_segmentation` - `v0.10.1`](#google_mlkit_selfie_segmentation---v0101)
+- [`google_mlkit_smart_reply` - `v0.13.1`](#google_mlkit_smart_reply---v0131)
+- [`google_mlkit_subject_segmentation` - `v0.0.3`](#google_mlkit_subject_segmentation---v003)
+- [`google_mlkit_text_recognition` - `v0.15.1`](#google_mlkit_text_recognition---v0151)
+- [`google_mlkit_translation` - `v0.13.1`](#google_mlkit_translation---v0131)
+
+---
+
+#### `google_ml_kit` - `v0.20.1`
+
+* Update all native dependencies to latest versions
+* See individual package changelogs for specific version updates
+
+#### `google_mlkit_barcode_scanning` - `v0.14.2`
+
+* Update Android native library `com.google.mlkit:barcode-scanning` to 17.3.0
+* Update iOS native library `GoogleMLKit/BarcodeScanning` to 9.0.0
+
+#### `google_mlkit_commons` - `v0.11.1`
+
+* Update Android native library `com.google.mlkit:vision-common` to 17.3.0
+* Update iOS native library `MLKitVision` to 10.0.0
+
+#### `google_mlkit_digital_ink_recognition` - `v0.14.2`
+
+* Update Android native library `com.google.mlkit:digital-ink-recognition` to 19.0.0
+* Update iOS native library `GoogleMLKit/DigitalInkRecognition` to 9.0.0
+
+#### `google_mlkit_document_scanner` - `v0.4.1`
+
+* Update Android native library `com.google.android.gms:play-services-mlkit-document-scanner` to 16.0.0
+* Note: iOS support is not available
+
+#### `google_mlkit_entity_extraction` - `v0.15.3`
+
+* Update Android native library `com.google.mlkit:entity-extraction` to 16.0.0-beta6
+* Update iOS native library `GoogleMLKit/EntityExtraction` to 9.0.0
+
+#### `google_mlkit_face_detection` - `v0.13.2`
+
+* Update Android native library `com.google.mlkit:face-detection` to 16.1.7
+* Update iOS native library `GoogleMLKit/FaceDetection` to 9.0.0
+
+#### `google_mlkit_face_mesh_detection` - `v0.4.2`
+
+* Update Android native library `com.google.mlkit:face-mesh-detection` to 16.0.0-beta3
+* Update iOS native library `GoogleMLKit/FaceMeshDetection` to 9.0.0 (Note: iOS support is not available)
+
+#### `google_mlkit_image_labeling` - `v0.14.2`
+
+* Update Android native library `com.google.mlkit:image-labeling` to 17.0.9
+* Update Android native library `com.google.mlkit:image-labeling-custom` to 17.0.3
+* Update iOS native library `GoogleMLKit/ImageLabeling` to 9.0.0
+* Update iOS native library `GoogleMLKit/ImageLabelingCustom` to 9.0.0
+
+#### `google_mlkit_language_id` - `v0.13.1`
+
+* Update Android native library `com.google.mlkit:language-id` to 17.0.6
+* Update iOS native library `GoogleMLKit/LanguageID` to 9.0.0
+
+#### `google_mlkit_object_detection` - `v0.15.1`
+
+* Update Android native library `com.google.mlkit:object-detection` to 17.0.2
+* Update Android native library `com.google.mlkit:object-detection-custom` to 17.0.2
+* Update iOS native library `GoogleMLKit/ObjectDetection` to 9.0.0
+* Update iOS native library `GoogleMLKit/ObjectDetectionCustom` to 9.0.0
+
+#### `google_mlkit_pose_detection` - `v0.14.1`
+
+* Update Android native library `com.google.mlkit:pose-detection` to 18.0.0-beta5
+* Update Android native library `com.google.mlkit:pose-detection-accurate` to 18.0.0-beta5
+* Update iOS native library `GoogleMLKit/PoseDetection` to 9.0.0
+* Update iOS native library `GoogleMLKit/PoseDetectionAccurate` to 9.0.0
+
+#### `google_mlkit_selfie_segmentation` - `v0.10.1`
+
+* Update Android native library `com.google.mlkit:segmentation-selfie` to 16.0.0-beta6
+* Update iOS native library `GoogleMLKit/SegmentationSelfie` to 9.0.0
+
+#### `google_mlkit_smart_reply` - `v0.13.1`
+
+* Update Android native library `com.google.mlkit:smart-reply` to 17.0.4
+* Update iOS native library `GoogleMLKit/SmartReply` to 9.0.0
+
+#### `google_mlkit_subject_segmentation` - `v0.0.3`
+
+* Update Android native library `com.google.android.gms:play-services-mlkit-subject-segmentation` to 16.0.0-beta1
+* Note: iOS support is not available
+
+#### `google_mlkit_text_recognition` - `v0.15.1`
+
+* Update Android native library `com.google.mlkit:text-recognition` to 16.0.1
+* Update Android native libraries `text-recognition-chinese`, `text-recognition-devanagari`, `text-recognition-japanese`, `text-recognition-korean` to 16.0.1
+* Update iOS native library `GoogleMLKit/TextRecognition` to 9.0.0
+* Update iOS native libraries `GoogleMLKit/TextRecognitionChinese`, `GoogleMLKit/TextRecognitionDevanagari`, `GoogleMLKit/TextRecognitionJapanese`, `GoogleMLKit/TextRecognitionKorean` to 9.0.0
+
+#### `google_mlkit_translation` - `v0.13.1`
+
+* Update Android native library `com.google.mlkit:translate` to 17.0.3
+* Update iOS native library `GoogleMLKit/Translate` to 9.0.0
+
+---
+
 ## 2025-03-20
 
 ### Changes

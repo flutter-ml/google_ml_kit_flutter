@@ -1,3 +1,10 @@
+## 0.15.1
+
+* Update Android native library `com.google.mlkit:text-recognition` to 16.0.1
+* Update Android native libraries `text-recognition-chinese`, `text-recognition-devanagari`, `text-recognition-japanese`, `text-recognition-korean` to 16.0.1
+* Update iOS native library `GoogleMLKit/TextRecognition` to 9.0.0
+* Update iOS native libraries `GoogleMLKit/TextRecognitionChinese`, `GoogleMLKit/TextRecognitionDevanagari`, `GoogleMLKit/TextRecognitionJapanese`, `GoogleMLKit/TextRecognitionKorean` to 9.0.0
+
 ## 0.15.0
 
 * Add an example showing how to extract text from a bitmap image with the new `InputImage.fromBitmap()` constructor.

@@ -1,3 +1,10 @@
+## 0.14.1
+
+* Update Android native library `com.google.mlkit:pose-detection` to 18.0.0-beta5
+* Update Android native library `com.google.mlkit:pose-detection-accurate` to 18.0.0-beta5
+* Update iOS native library `GoogleMLKit/PoseDetection` to 9.0.0
+* Update iOS native library `GoogleMLKit/PoseDetectionAccurate` to 9.0.0
+
 ## 0.14.0
 
 * Increase android sdk compile version to 35

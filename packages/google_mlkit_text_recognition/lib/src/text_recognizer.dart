@@ -6,8 +6,9 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 /// A text recognizer that recognizes text from a given [InputImage].
 class TextRecognizer {
-  static const services.MethodChannel _channel =
-      services.MethodChannel('google_mlkit_text_recognizer');
+  static const services.MethodChannel _channel = services.MethodChannel(
+    'google_mlkit_text_recognizer',
+  );
 
   /// Configurations for the language to be detected.
   final TextRecognitionScript script;
@@ -21,11 +22,13 @@ class TextRecognizer {
   /// Processes the given [InputImage]  for text recognition and returns a [RecognizedText] object.
   Future<RecognizedText> processImage(InputImage inputImage) async {
     final result = await _channel.invokeMethod(
-        'vision#startTextRecognizer', <String, dynamic>{
-      'id': id,
-      'imageData': inputImage.toJson(),
-      'script': script.index
-    });
+      'vision#startTextRecognizer',
+      <String, dynamic>{
+        'id': id,
+        'imageData': inputImage.toJson(),
+        'script': script.index,
+      },
+    );
     return RecognizedText.fromJson(result);
   }
 
@@ -35,13 +38,7 @@ class TextRecognizer {
 }
 
 /// Configurations for [TextRecognizer] for different languages.
-enum TextRecognitionScript {
-  latin,
-  chinese,
-  devanagiri,
-  japanese,
-  korean,
-}
+enum TextRecognitionScript { latin, chinese, devanagiri, japanese, korean }
 
 /// Recognized text in an image.
 class RecognizedText {
@@ -96,8 +93,9 @@ class TextBlock {
   factory TextBlock.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final boundingBox = RectJson.fromJson(json['rect']);
-    final recognizedLanguages =
-        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final recognizedLanguages = _listToRecognizedLanguages(
+      json['recognizedLanguages'],
+    );
     final cornerPoints = _listToCornerPoints(json['points']);
     final lines = <TextLine>[];
     for (final line in json['lines']) {
@@ -156,8 +154,9 @@ class TextLine {
     final boundingBox = RectJson.fromJson(json['rect']);
     final confidence = json['confidence'];
     final angle = json['angle'];
-    final recognizedLanguages =
-        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final recognizedLanguages = _listToRecognizedLanguages(
+      json['recognizedLanguages'],
+    );
     final cornerPoints = _listToCornerPoints(json['points']);
     final elements = <TextElement>[];
     for (final element in json['elements']) {
@@ -217,8 +216,9 @@ class TextElement {
   factory TextElement.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final boundingBox = RectJson.fromJson(json['rect']);
-    final recognizedLanguages =
-        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final recognizedLanguages = _listToRecognizedLanguages(
+      json['recognizedLanguages'],
+    );
     final cornerPoints = _listToCornerPoints(json['points']);
     final confidence = json['confidence'];
     final angle = json['angle'];
@@ -275,8 +275,9 @@ class TextSymbol {
   factory TextSymbol.fromJson(Map<dynamic, dynamic> json) {
     final text = json['text'];
     final boundingBox = RectJson.fromJson(json['rect']);
-    final recognizedLanguages =
-        _listToRecognizedLanguages(json['recognizedLanguages']);
+    final recognizedLanguages = _listToRecognizedLanguages(
+      json['recognizedLanguages'],
+    );
     final cornerPoints = _listToCornerPoints(json['points']);
     final confidence = json['confidence'];
     final angle = json['angle'];

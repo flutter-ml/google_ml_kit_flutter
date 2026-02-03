@@ -1,3 +1,8 @@
+## 0.13.1
+
+* Update Android native library `com.google.mlkit:language-id` to 17.0.6
+* Update iOS native library `GoogleMLKit/LanguageID` to 9.0.0
+
 ## 0.13.0
 
 * Increase android sdk compile version to 35

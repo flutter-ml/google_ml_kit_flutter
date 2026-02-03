@@ -2,8 +2,9 @@ import 'package:flutter/services.dart';
 
 /// A class that suggests smart replies for given input text.
 class SmartReply {
-  static const MethodChannel _channel =
-      MethodChannel('google_mlkit_smart_reply');
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_smart_reply',
+  );
 
   final List<Message> _conversation = [];
 
@@ -15,16 +16,23 @@ class SmartReply {
 
   /// Adds a [Message] to the [conversation] for local user.
   void addMessageToConversationFromLocalUser(
-      String message, int timestamp) async {
-    _conversation
-        .add(Message(text: message, timestamp: timestamp, userId: 'local'));
+    String message,
+    int timestamp,
+  ) async {
+    _conversation.add(
+      Message(text: message, timestamp: timestamp, userId: 'local'),
+    );
   }
 
   /// Adds a [Message] to the [conversation] for a remote user.
   void addMessageToConversationFromRemoteUser(
-      String message, int timestamp, String userId) async {
-    _conversation
-        .add(Message(text: message, timestamp: timestamp, userId: userId));
+    String message,
+    int timestamp,
+    String userId,
+  ) async {
+    _conversation.add(
+      Message(text: message, timestamp: timestamp, userId: userId),
+    );
   }
 
   /// Clears the [conversation].
@@ -36,14 +44,18 @@ class SmartReply {
   Future<SmartReplySuggestionResult> suggestReplies() async {
     if (_conversation.isEmpty) {
       return SmartReplySuggestionResult(
-          status: SmartReplySuggestionResultStatus.noReply, suggestions: []);
+        status: SmartReplySuggestionResultStatus.noReply,
+        suggestions: [],
+      );
     }
 
-    final result =
-        await _channel.invokeMethod('nlp#startSmartReply', <String, dynamic>{
-      'id': id,
-      'conversation': _conversation.map((message) => message.toJson()).toList()
-    });
+    final result = await _channel
+        .invokeMethod('nlp#startSmartReply', <String, dynamic>{
+          'id': id,
+          'conversation': _conversation
+              .map((message) => message.toJson())
+              .toList(),
+        });
 
     return SmartReplySuggestionResult.fromJson(result);
   }
@@ -69,18 +81,14 @@ class Message {
 
   /// Returns a json representation of an instance of [Message].
   Map<String, dynamic> toJson() => {
-        'message': text,
-        'timestamp': timestamp,
-        'userId': userId,
-      };
+    'message': text,
+    'timestamp': timestamp,
+    'userId': userId,
+  };
 }
 
 /// Specifies the status of the smart reply result.
-enum SmartReplySuggestionResultStatus {
-  success,
-  notSupportedLanguage,
-  noReply,
-}
+enum SmartReplySuggestionResultStatus { success, notSupportedLanguage, noReply }
 
 /// An object that contains the smart reply suggestion results.
 class SmartReplySuggestionResult {
@@ -108,7 +116,7 @@ class SmartReplySuggestionResult {
 
   /// Returns a json representation of an instance of [SmartReplySuggestionResult].
   Map<String, dynamic> toJson() => {
-        'status': status.name,
-        'suggestions': suggestions,
-      };
+    'status': status.name,
+    'suggestions': suggestions,
+  };
 }

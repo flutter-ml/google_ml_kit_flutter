@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'MLKitVision'
+  s.dependency 'MLKitVision', '~> 10.0.0'
   s.platform = :ios, '15.5'
   s.ios.deployment_target = '15.5'
   s.static_framework = true
