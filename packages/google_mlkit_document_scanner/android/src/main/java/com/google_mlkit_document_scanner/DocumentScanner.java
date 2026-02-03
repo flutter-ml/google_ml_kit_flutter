@@ -95,17 +95,21 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler, PluginR
     private GmsDocumentScannerOptions parseOptions(Map<String, Object> options) {
         boolean isGalleryImportAllowed = (boolean) options.get("isGalleryImport");
         int pageLimit = (int) options.get("pageLimit");
-        int format;
-        switch ((String) Objects.requireNonNull(options.get("format"))) {
-            case "pdf":
-                format = GmsDocumentScannerOptions.RESULT_FORMAT_PDF;
-                break;
-            case "jpeg":
-                format = GmsDocumentScannerOptions.RESULT_FORMAT_JPEG;
-                break;
-            default:
-                throw new IllegalArgumentException("Not a format:" + options.get("format"));
+        List<String> formatStrings = (List<String>) options.get("formats");
+        List<Integer> formatConstants = new ArrayList<>();
+        for (String format: formatStrings) {
+            switch (format) {
+                case "pdf":
+                    formatConstants.add(GmsDocumentScannerOptions.RESULT_FORMAT_PDF);
+                    break;
+                case "jpeg":
+                    formatConstants.add(GmsDocumentScannerOptions.RESULT_FORMAT_JPEG);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Not a format:" + options.get("format"));
+            }
         }
+
         int mode;
         switch ((String) options.get("mode")) {
             case "base":
@@ -120,7 +124,21 @@ public class DocumentScanner implements MethodChannel.MethodCallHandler, PluginR
             default:
                 throw new IllegalArgumentException("Not a mode:" + options.get("mode"));
         }
-        GmsDocumentScannerOptions.Builder builder = new GmsDocumentScannerOptions.Builder().setGalleryImportAllowed(isGalleryImportAllowed).setPageLimit(pageLimit).setResultFormats(format).setScannerMode(mode);
+        GmsDocumentScannerOptions.Builder builder = new GmsDocumentScannerOptions
+                .Builder()
+                .setGalleryImportAllowed(isGalleryImportAllowed)
+                .setPageLimit(pageLimit)
+                .setScannerMode(mode);
+
+        // Set formats
+        if (!formatConstants.isEmpty()) {
+            if(formatConstants.size() > 1) {
+                builder.setResultFormats(formatConstants.get(0), formatConstants.get(1));
+            } else {
+                builder.setResultFormats(formatConstants.get(0));
+            }
+
+        }
         return builder.build();
     }
 

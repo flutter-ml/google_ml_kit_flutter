@@ -35,7 +35,7 @@ class DocumentScanner {
 class DocumentScannerOptions {
   /// Constructor for [DocumentScannerOptions].
   DocumentScannerOptions({
-    this.documentFormat = DocumentFormat.jpeg,
+    this.documentFormats = const {DocumentFormat.jpeg},
     this.pageLimit = 1,
     this.mode = ScannerMode.full,
     this.isGalleryImport = false,
@@ -46,7 +46,7 @@ class DocumentScannerOptions {
 
   /// Sets scanner result formats.
   /// Available formats: PDF, JPG and default format is JPG.
-  final DocumentFormat documentFormat;
+  final Set<DocumentFormat> documentFormats;
 
   /// Sets the scanner mode which determines what features are enabled. default = ScannerModel.full.
   final ScannerMode mode;
@@ -57,7 +57,7 @@ class DocumentScannerOptions {
   /// Returns a json representation of an instance of [DocumentScannerOptions].
   Map<String, dynamic> toJson() => {
         'pageLimit': pageLimit,
-        'format': documentFormat.name,
+        'formats': documentFormats.map((f) => f.name).toList(),
         'mode': mode.name,
         'isGalleryImport': isGalleryImport,
       };
@@ -82,7 +82,7 @@ class DocumentScanningResult {
   final DocumentScanningResultPdf? pdf;
 
   /// Returns the scanned images or null if `DocumentFormat.jpeg` was not specified when creating the scanner options.
-  final List<String> images;
+  final List<String>? images;
 
   /// Constructor to create an instance of [DocumentScanningResult].
   DocumentScanningResult({required this.pdf, required this.images});

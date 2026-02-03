@@ -55,7 +55,7 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 
 ### iOS
 
-This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
+This feature is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
 
 ### Android
 
@@ -70,8 +70,13 @@ This feature is still in Beta, and it is only available for Android. Stay tune f
 #### Create an instance of `DocumentScannerOptions`
 
 ```dart
+// set output document formats
+const Set<DocumentFormat> documentFormats = {
+    DocumentFormat.jpeg,
+    DocumentFormat.pdf
+};
 DocumentScannerOptions documentOptions = DocumentScannerOptions(
-  documentFormat: DocumentFormat.jpeg, // set output document format
+  documentFormats: documentFormats, 
   mode: ScannerMode.filter, // to control what features are enabled
   pageLimit: 1, // setting a limit to the number of pages scanned
   isGalleryImport: true, // importing from the photo gallery
