@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_genai_prompt/Sources/google_mlkit_genai_prompt/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_genai_prompt/Sources/google_mlkit_genai_prompt/include/**/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '15.5'
   s.ios.deployment_target = '15.5'

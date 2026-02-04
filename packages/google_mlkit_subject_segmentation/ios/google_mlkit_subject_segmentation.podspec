@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_subject_segmentation/Sources/google_mlkit_subject_segmentation/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_subject_segmentation/Sources/google_mlkit_subject_segmentation/include/**/*.h'
   s.dependency 'Flutter'
   #   s.dependency 'GoogleMLKit/SubjectSegmentation', '~> 6.0.0'
   s.platform = :ios, '15.5'

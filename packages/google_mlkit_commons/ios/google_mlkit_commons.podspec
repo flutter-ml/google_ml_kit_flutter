@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_commons/Sources/google_mlkit_commons/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_commons/Sources/google_mlkit_commons/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'MLKitVision', '~> 10.0.0'
   s.platform = :ios, '15.5'

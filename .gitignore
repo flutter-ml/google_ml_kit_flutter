@@ -75,6 +75,11 @@ example/android/app/google-services.json
 xcuserdata/
 **/.flutter-plugins-dependencies
 
+# Swift Package Manager
+.build/
+.swiftpm/
+!.gitkeep
+
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3

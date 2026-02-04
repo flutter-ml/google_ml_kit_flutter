@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_barcode_scanning/Sources/google_mlkit_barcode_scanning/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_barcode_scanning/Sources/google_mlkit_barcode_scanning/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/BarcodeScanning', '~> 9.0.0'
   s.dependency 'google_mlkit_commons'

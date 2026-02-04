@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_smart_reply/Sources/google_mlkit_smart_reply/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_smart_reply/Sources/google_mlkit_smart_reply/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/SmartReply', '~> 9.0.0'
   s.dependency 'google_mlkit_commons'

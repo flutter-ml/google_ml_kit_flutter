@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'Multiple Authors'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'google_mlkit_pose_detection/Sources/google_mlkit_pose_detection/**/*.{h,m}'
+  s.public_header_files = 'google_mlkit_pose_detection/Sources/google_mlkit_pose_detection/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/PoseDetection', '~> 9.0.0'
   s.dependency 'GoogleMLKit/PoseDetectionAccurate', '~> 9.0.0'
