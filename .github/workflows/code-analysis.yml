@@ -95,6 +95,30 @@ jobs:
         working-directory: ./packages/google_mlkit_subject_segmentation
         run: flutter pub get
 
+      - name: Install dependencies for google_mlkit_genai_summarization
+        working-directory: ./packages/google_mlkit_genai_summarization
+        run: flutter pub get
+
+      - name: Install dependencies for google_mlkit_genai_proofreading
+        working-directory: ./packages/google_mlkit_genai_proofreading
+        run: flutter pub get
+
+      - name: Install dependencies for google_mlkit_genai_rewriting
+        working-directory: ./packages/google_mlkit_genai_rewriting
+        run: flutter pub get
+
+      - name: Install dependencies for google_mlkit_genai_image_description
+        working-directory: ./packages/google_mlkit_genai_image_description
+        run: flutter pub get
+
+      - name: Install dependencies for google_mlkit_genai_speech_recognition
+        working-directory: ./packages/google_mlkit_genai_speech_recognition
+        run: flutter pub get
+
+      - name: Install dependencies for google_mlkit_genai_prompt
+        working-directory: ./packages/google_mlkit_genai_prompt
+        run: flutter pub get
+
       - name: Install dependencies for example
         working-directory: ./packages/example
         run: flutter pub get

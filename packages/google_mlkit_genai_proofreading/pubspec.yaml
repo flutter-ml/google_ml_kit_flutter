@@ -1,0 +1,28 @@
+name: google_mlkit_genai_proofreading
+description: "A Flutter plugin to use Google's ML Kit GenAI Proofreading API to check grammar and spelling."
+version: 0.1.0
+homepage: https://github.com/flutter-ml/google_ml_kit_flutter
+repository: https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_genai_proofreading
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_commons: ^0.11.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.google_mlkit_genai_proofreading
+        pluginClass: GoogleMlKitGenaiProofreadingPlugin
+      ios:
+        pluginClass: GoogleMlKitGenaiProofreadingPlugin

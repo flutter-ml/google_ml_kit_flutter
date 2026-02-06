@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 Packages with changes:
 
-- [`google_ml_kit` - `v0.20.1`](#google_ml_kit---v0201)
+- [`google_ml_kit` - `v0.21.0`](#google_ml_kit---v0210)
 - [`google_mlkit_barcode_scanning` - `v0.14.2`](#google_mlkit_barcode_scanning---v0142)
 - [`google_mlkit_commons` - `v0.11.1`](#google_mlkit_commons---v0111)
 - [`google_mlkit_digital_ink_recognition` - `v0.14.2`](#google_mlkit_digital_ink_recognition---v0142)
@@ -19,6 +19,12 @@ Packages with changes:
 - [`google_mlkit_entity_extraction` - `v0.15.3`](#google_mlkit_entity_extraction---v0153)
 - [`google_mlkit_face_detection` - `v0.13.2`](#google_mlkit_face_detection---v0132)
 - [`google_mlkit_face_mesh_detection` - `v0.4.2`](#google_mlkit_face_mesh_detection---v042)
+- [`google_mlkit_genai_image_description` - `v0.1.0`](#google_mlkit_genai_image_description---v010)
+- [`google_mlkit_genai_proofreading` - `v0.1.0`](#google_mlkit_genai_proofreading---v010)
+- [`google_mlkit_genai_prompt` - `v0.1.0`](#google_mlkit_genai_prompt---v010)
+- [`google_mlkit_genai_rewriting` - `v0.1.0`](#google_mlkit_genai_rewriting---v010)
+- [`google_mlkit_genai_speech_recognition` - `v0.1.0`](#google_mlkit_genai_speech_recognition---v010)
+- [`google_mlkit_genai_summarization` - `v0.1.0`](#google_mlkit_genai_summarization---v010)
 - [`google_mlkit_image_labeling` - `v0.14.2`](#google_mlkit_image_labeling---v0142)
 - [`google_mlkit_language_id` - `v0.13.1`](#google_mlkit_language_id---v0131)
 - [`google_mlkit_object_detection` - `v0.15.1`](#google_mlkit_object_detection---v0151)
@@ -31,10 +37,74 @@ Packages with changes:
 
 ---
 
-#### `google_ml_kit` - `v0.20.1`
+#### `google_ml_kit` - `v0.21.0`
 
+* Add support for Google's ML Kit GenAI APIs:
+  - `google_mlkit_genai_summarization` - Generate summaries of articles and conversations
+  - `google_mlkit_genai_proofreading` - Check grammar and spelling
+  - `google_mlkit_genai_rewriting` - Rewrite text in different styles
+  - `google_mlkit_genai_image_description` - Generate descriptions for images
+  - `google_mlkit_genai_speech_recognition` - Transcribe speech to text
+  - `google_mlkit_genai_prompt` - Generate text content based on custom prompts
 * Update all native dependencies to latest versions
 * See individual package changelogs for specific version updates
+
+#### `google_mlkit_genai_summarization` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Summarization API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Generate summaries of articles and conversations
+  - Support for multiple input types (article, conversation)
+  - Support for multiple output types (1-3 bullet points)
+  - Support for multiple languages (English, Japanese, Korean)
+  - Feature status checking and downloading
+
+#### `google_mlkit_genai_proofreading` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Proofreading API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Check grammar and spelling in text
+  - Support for multiple input types (keyboard, voice)
+  - Support for multiple languages (English, Japanese, French, German, Italian, Spanish, Korean)
+  - Feature status checking and downloading
+
+#### `google_mlkit_genai_rewriting` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Rewriting API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Rewrite text in different styles (formal, concise, emoji)
+  - Support for multiple languages (English, Japanese, Korean)
+  - Feature status checking and downloading
+
+#### `google_mlkit_genai_image_description` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Image Description API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Generate descriptions for images
+  - Support for multiple image input formats
+  - Feature status checking and downloading
+
+#### `google_mlkit_genai_speech_recognition` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Speech Recognition API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Transcribe speech to text in real time
+  - Streaming recognition support
+  - Feature status checking
+
+#### `google_mlkit_genai_prompt` - `v0.1.0`
+
+* Initial release of Google's ML Kit GenAI Prompt API for Flutter
+* Support for Android platform (API level 26+)
+* Features:
+  - Generate text content based on custom prompts
+  - Support for text-only and multimodal (image + text) prompts
+  - Feature status checking and downloading
 
 #### `google_mlkit_barcode_scanning` - `v0.14.2`
 

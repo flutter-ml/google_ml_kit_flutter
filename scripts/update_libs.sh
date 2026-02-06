@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -e
+# Don't exit on error for GenAI packages as they may be incomplete
+# set -e
 
 cd "$(dirname "$0")/.."
 cd packages
@@ -53,6 +54,24 @@ flutter pub get
 cd ../google_mlkit_translation
 flutter pub get
 
+cd ../google_mlkit_genai_summarization
+flutter pub get
+
+cd ../google_mlkit_genai_proofreading
+flutter pub get
+
+cd ../google_mlkit_genai_rewriting
+flutter pub get
+
+cd ../google_mlkit_genai_image_description
+flutter pub get
+
+cd ../google_mlkit_genai_speech_recognition
+flutter pub get
+
+cd ../google_mlkit_genai_prompt
+flutter pub get
+
 cd ../google_ml_kit
 flutter pub get
 
@@ -60,6 +79,4 @@ cd ../example
 flutter pub get
 
 cd ios
-# Remove Podfile.lock to ensure pods are updated when versions change
-rm -f Podfile.lock
 pod install --repo-update

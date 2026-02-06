@@ -40,6 +40,21 @@ Go to each plugin listed bellow to read about their documentation and requiremen
 | [Smart Reply](https://developers.google.com/ml-kit/language/smart-reply)                    | [google_mlkit_smart_reply](https://pub.dev/packages/google_mlkit_smart_reply) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_smart_reply)](https://pub.dev/packages/google_mlkit_smart_reply)                         | ✅      | ✅  |
 | [Entity Extraction (Beta)](https://developers.google.com/ml-kit/language/entity-extraction) | [google_mlkit_entity_extraction](https://pub.dev/packages/google_mlkit_entity_extraction) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_entity_extraction)](https://pub.dev/packages/google_mlkit_entity_extraction) | ✅      | ✅  |
 
+### GenAI APIs
+
+> **⚠️ Important:** GenAI APIs are built on top of AICore and will not support all Android devices. These APIs require devices with AICore support. Please check device compatibility before using these features in production.
+>
+> **⚠️ Production Disclaimer:** Using GenAI plugins in production is the responsibility of the developers consuming the plugins, not the authors. The authors provide these plugins as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using these plugins in production environments.
+
+| Feature                                                                                     | Plugin                                                                                                                                                                                                                           | Android | iOS |
+|---------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
+| [Summarization (Beta)](https://developers.google.com/ml-kit/genai/summarization)          | [google_mlkit_genai_summarization](https://pub.dev/packages/google_mlkit_genai_summarization) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_summarization)](https://pub.dev/packages/google_mlkit_genai_summarization) | ✅      | ❌  |
+| [Proofreading (Beta)](https://developers.google.com/ml-kit/genai/proofreading)            | [google_mlkit_genai_proofreading](https://pub.dev/packages/google_mlkit_genai_proofreading) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_proofreading)](https://pub.dev/packages/google_mlkit_genai_proofreading) | ✅      | ❌  |
+| [Rewriting (Beta)](https://developers.google.com/ml-kit/genai/rewriting)                  | [google_mlkit_genai_rewriting](https://pub.dev/packages/google_mlkit_genai_rewriting) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_rewriting)](https://pub.dev/packages/google_mlkit_genai_rewriting) | ✅      | ❌  |
+| [Image Description (Beta)](https://developers.google.com/ml-kit/genai/image-description) | [google_mlkit_genai_image_description](https://pub.dev/packages/google_mlkit_genai_image_description) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_image_description)](https://pub.dev/packages/google_mlkit_genai_image_description) | ✅      | ❌  |
+| [Speech Recognition (Alpha)](https://developers.google.com/ml-kit/genai/speech-recognition) | [google_mlkit_genai_speech_recognition](https://pub.dev/packages/google_mlkit_genai_speech_recognition) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_speech_recognition)](https://pub.dev/packages/google_mlkit_genai_speech_recognition) | ✅      | ❌  |
+| [Prompt (Beta)](https://developers.google.com/ml-kit/genai/prompt)                        | [google_mlkit_genai_prompt](https://pub.dev/packages/google_mlkit_genai_prompt) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_prompt)](https://pub.dev/packages/google_mlkit_genai_prompt) | ✅      | ❌  |
+
 ## Requirements
 
 ### iOS

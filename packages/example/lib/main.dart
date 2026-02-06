@@ -85,9 +85,78 @@ class Home extends StatelessWidget {
                       CustomCard('Entity Extraction', EntityExtractionView()),
                     ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  if (Platform.isAndroid)
+                    ExpansionTile(
+                      title: const Text('GenAI APIs'),
+                      children: [
+                        CustomCard('Summarization',
+                            _GenAIPlaceholderView('Summarization')),
+                        CustomCard('Proofreading',
+                            _GenAIPlaceholderView('Proofreading')),
+                        CustomCard(
+                            'Rewriting', _GenAIPlaceholderView('Rewriting')),
+                        CustomCard('Image Description',
+                            _GenAIPlaceholderView('Image Description')),
+                        CustomCard('Speech Recognition',
+                            _GenAIPlaceholderView('Speech Recognition')),
+                        CustomCard('Prompt', _GenAIPlaceholderView('Prompt')),
+                      ],
+                    ),
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GenAIPlaceholderView extends StatelessWidget {
+  final String featureName;
+
+  const _GenAIPlaceholderView(this.featureName);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('$featureName (GenAI)'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.info_outline,
+                size: 64,
+                color: Colors.blue,
+              ),
+              SizedBox(height: 16),
+              Text(
+                '$featureName API',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              SizedBox(height: 16),
+              Text(
+                'This GenAI feature is available on Android devices with API level 26 or higher.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Implementation coming soon.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontStyle: FontStyle.italic,
+                    ),
+              ),
+            ],
           ),
         ),
       ),
