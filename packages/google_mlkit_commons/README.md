@@ -83,6 +83,8 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to 
 - targetSdkVersion: 35
 - compileSdkVersion: 35
 
+**⚠️ Production Disclaimer:** Using this plugin in production is the responsibility of the developers consuming the plugin, not the authors. The authors provide this plugin as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using this plugin in production environments.
+
 ## Usage
 
 ### Creating an `InputImage`

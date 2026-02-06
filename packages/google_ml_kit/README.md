@@ -42,6 +42,10 @@ Go to each plugin listed bellow to read about their documentation and requiremen
 
 ### GenAI APIs
 
+> **⚠️ Important:** GenAI APIs are built on top of AICore and will not support all Android devices. These APIs require devices with AICore support. Please check device compatibility before using these features in production.
+>
+> **⚠️ Production Disclaimer:** Using GenAI plugins in production is the responsibility of the developers consuming the plugins, not the authors. The authors provide these plugins as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using these plugins in production environments.
+
 | Feature                                                                                     | Plugin                                                                                                                                                                                                                           | Android | iOS |
 |---------------------------------------------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --- |
 | [Summarization (Beta)](https://developers.google.com/ml-kit/genai/summarization)          | [google_mlkit_genai_summarization](https://pub.dev/packages/google_mlkit_genai_summarization) [![Pub Version](https://img.shields.io/pub/v/google_mlkit_genai_summarization)](https://pub.dev/packages/google_mlkit_genai_summarization) | ✅      | ❌  |

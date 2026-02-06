@@ -83,6 +83,8 @@ Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to 
 - targetSdkVersion: 35
 - compileSdkVersion: 35
 
+**⚠️ Production Disclaimer:** Using this plugin in production is the responsibility of the developers consuming the plugin, not the authors. The authors provide this plugin as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using this plugin in production environments.
+
 ### Usage guidelines for ML Kit on-device translation
 
 In order to use Google's on-device Translation API in your application, you need to comply with the following guidelines. These guidelines may change from time to time, and without prior notice from Google. Your continued use of the on-device Translation API is contingent upon your adherence to these guidelines. If you're uncomfortable with any of these branding guidelines, discontinue your use of the API and [contact Google](https://developers.google.com/ml-kit/community) with your concerns. See more about the usage guidelines [here](https://developers.google.com/ml-kit/language/translation/translation-terms).

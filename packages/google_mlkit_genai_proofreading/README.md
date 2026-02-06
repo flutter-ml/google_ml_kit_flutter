@@ -23,6 +23,10 @@ A Flutter plugin to use [Google's ML Kit GenAI Proofreading API](https://develop
 - targetSdkVersion: 35
 - compileSdkVersion: 35
 
+**⚠️ Important:** This API is built on top of AICore and will not support all Android devices. It requires devices with AICore support. Please check device compatibility before using this feature in production.
+
+**⚠️ Production Disclaimer:** Using this plugin in production is the responsibility of the developers consuming the plugin, not the authors. The authors provide this plugin as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using this plugin in production environments.
+
 **Note:** This API is currently only available on Android. iOS support may be added in the future.
 
 ## Usage
