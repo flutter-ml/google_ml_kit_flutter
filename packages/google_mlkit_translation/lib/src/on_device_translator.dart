@@ -1,11 +1,11 @@
-import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+
+import 'pigeon.dart';
 
 /// A class that translates on device the given input text.
 class OnDeviceTranslator {
-  static const MethodChannel _channel = MethodChannel(
-    'google_mlkit_on_device_translator',
-  );
+  /// The Pigeon API instance
+  static final _api = OnDeviceTranslatorApi();
 
   /// The source language of the input.
   final TranslateLanguage sourceLanguage;
@@ -22,32 +22,58 @@ class OnDeviceTranslator {
     required this.targetLanguage,
   });
 
-  /// Translates the given [text] from the source language into the target language.
+  /// Translates the given [text] from the source language into target language.
   Future<String> translateText(String text) async {
-    final result = await _channel
-        .invokeMethod('nlp#startLanguageTranslator', <String, dynamic>{
-          'id': id,
-          'text': text,
-          'source': sourceLanguage.bcpCode,
-          'target': targetLanguage.bcpCode,
-        });
+    final request = TranslateRequest(
+      id: id,
+      text: text,
+      sourceLanguage: sourceLanguage.bcpCode,
+      targetLanguage: targetLanguage.bcpCode,
+    );
 
-    return result.toString();
+    return await _api.translateText(request);
   }
 
-  /// Closes the translator and releases its resources.
-  Future<void> close() =>
-      _channel.invokeMethod('nlp#closeLanguageTranslator', {'id': id});
+  /// Closes the translator and releases its resources
+  Future<void> close() async {
+    final request = CloseTranslatorRequest(id: id);
+    _api.closeTranslator(request);
+  }
 }
 
-/// A subclass of [ModelManager] that manages [TranslateRemoteModel] required to process the image.
-class OnDeviceTranslatorModelManager extends ModelManager {
-  /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
-  OnDeviceTranslatorModelManager()
-    : super(
-        channel: OnDeviceTranslator._channel,
-        method: 'nlp#manageLanguageModelModels',
-      );
+/// A subclass of [ModelManager] that manages translation models
+class OnDeviceTranslatorModelManager {
+  static final _api = OnDeviceTranslatorApi();
+
+  /// Downloads a language model
+  Future<bool> downloadModel(TranslateLanguage language) async {
+    final request = ModelManagementRequest(
+      model: language.bcpCode,
+      task: 'download',
+    );
+    final response = await _api.manageModel(request);
+    return response.success;
+  }
+
+  /// Deletes a language model
+  Future<bool> deleteModel(TranslateLanguage language) async {
+    final request = ModelManagementRequest(
+      model: language.bcpCode,
+      task: 'delete',
+    );
+    final response = await _api.manageModel(request);
+    return response.success;
+  }
+
+  /// Checks if a model is downloaded
+  Future<bool> isModelDownloaded(TranslateLanguage language) async {
+    final request = ModelManagementRequest(
+      model: language.bcpCode,
+      task: 'check',
+    );
+    final response = await _api.manageModel(request);
+    return response.success;
+  }
 }
 
 /// All supported languages by on-device translation.
