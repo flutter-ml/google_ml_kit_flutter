@@ -1,46 +1,37 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'pigeon.dart';
 
 /// A class to manage remote models.
 class ModelManager {
-  /// The method name to be called.
-  final String method;
+  final ModelManagerApi _api;
 
-  /// The channel used to manage the remote model.
-  final MethodChannel channel;
-
-  /// Constructor to create an instance of [ModelManager].
-  ModelManager({required this.channel, required this.method});
+  /// Constructor to create an instance of [ModelManager]
+  /// If [api] is not provided, uses the default generate API.
+  ModelManager({ModelManagerApi? api}) : _api = api ?? ModelManagerApi();
 
   /// Checks whether a model is downloaded or not.
   Future<bool> isModelDownloaded(String model) async {
-    final result = await channel.invokeMethod(method, <String, dynamic>{
-      'task': 'check',
-      'model': model,
-    });
-    return result as bool;
+    return await _api.isModelDownloaded(model);
   }
 
-  /// Downloads a model.
+  /// Downloads a model
   /// Returns true if model downloads successfully or model is already downloaded.
-  /// On failing to download it throws an error.
+  /// On failing to download it thros an error.
   Future<bool> downloadModel(String model, {bool isWifiRequired = true}) async {
-    final result = await channel.invokeMethod(method, <String, dynamic>{
-      'task': 'download',
-      'model': model,
-      'wifi': isWifiRequired,
-    });
-    return result.toString() == 'success';
+    final request = ModelManagementReqest(
+      task: 'download',
+      model: model,
+      isWifiRequired: isWifiRequired,
+    );
+    final response = await _api.downloadModel(request);
+    return response.success;
   }
 
-  /// Deletes a model.
-  /// Returns true if model is deleted successfully or model is not present.
+  // Deletes a model
+  /// Returns true if model is deleted successfully or model is not present
   Future<bool> deleteModel(String model) async {
-    final result = await channel.invokeMethod(method, <String, dynamic>{
-      'task': 'delete',
-      'model': model,
-    });
-    return result.toString() == 'success';
+    final response = await _api.deleteModel(model);
+    return response.success;
   }
 }

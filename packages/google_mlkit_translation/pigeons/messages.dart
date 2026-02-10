@@ -51,7 +51,4 @@ abstract class OnDeviceTranslatorApi {
   String translateText(TranslateRequest request);
 
   void closeTranslator(CloseTranslatorRequest request);
-
-  @async
-  ModelManagementResponse manageModel(ModelManagementRequest request);
 }

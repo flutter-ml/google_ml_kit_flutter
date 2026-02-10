@@ -42,38 +42,9 @@ class OnDeviceTranslator {
 }
 
 /// A subclass of [ModelManager] that manages translation models
-class OnDeviceTranslatorModelManager {
-  static final _api = OnDeviceTranslatorApi();
-
-  /// Downloads a language model
-  Future<bool> downloadModel(TranslateLanguage language) async {
-    final request = ModelManagementRequest(
-      model: language.bcpCode,
-      task: 'download',
-    );
-    final response = await _api.manageModel(request);
-    return response.success;
-  }
-
-  /// Deletes a language model
-  Future<bool> deleteModel(TranslateLanguage language) async {
-    final request = ModelManagementRequest(
-      model: language.bcpCode,
-      task: 'delete',
-    );
-    final response = await _api.manageModel(request);
-    return response.success;
-  }
-
-  /// Checks if a model is downloaded
-  Future<bool> isModelDownloaded(TranslateLanguage language) async {
-    final request = ModelManagementRequest(
-      model: language.bcpCode,
-      task: 'check',
-    );
-    final response = await _api.manageModel(request);
-    return response.success;
-  }
+class OnDeviceTranslatorModelManager extends ModelManager {
+  /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
+  OnDeviceTranslatorModelManager({super.api});
 }
 
 /// All supported languages by on-device translation.
