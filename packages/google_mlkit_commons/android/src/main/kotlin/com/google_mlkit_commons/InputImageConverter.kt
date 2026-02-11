@@ -15,7 +15,8 @@ import java.nio.IntBuffer
 object InputImageConverter {
 
     // Returns an [InputImage] from the image data received
-    fun getInoutImageFromData(
+    @JvmStatic
+    fun getInputImageFromData(
         imageData: Map<String, Any>,
         context: Context,
         result: MethodChannel.Result

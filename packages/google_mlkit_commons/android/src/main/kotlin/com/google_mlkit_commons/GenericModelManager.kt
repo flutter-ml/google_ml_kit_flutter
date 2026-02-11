@@ -10,7 +10,7 @@ import java.lang.reflect.Method
 class GenericModelManager {
 
     interface  CheckModelIsDownloadedCallback {
-        fun onCheckResult(isDownloaded: Boolean)
+        fun onCheckResult(isDownloaded: Boolean?)
         fun onError(e: Exception)
     }
 
@@ -45,7 +45,7 @@ class GenericModelManager {
             CHECK -> isModelDownloaded(
                 model,
                 object: CheckModelIsDownloadedCallback {
-                    override fun onCheckResult (isDownloaded: Boolean) {
+                    override fun onCheckResult (isDownloaded: Boolean?) {
                         result.success(isDownloaded)
                     }
 
@@ -66,8 +66,8 @@ class GenericModelManager {
         isModelDownloaded(
             remoteModel,
             object: CheckModelIsDownloadedCallback {
-                override fun onCheckResult(isDownloaded: Boolean) {
-                    if (isDownloaded) {
+                override fun onCheckResult(isDownloaded: Boolean?) {
+                    if (isDownloaded == true) {
                         result.success("success")
                         return
                     }
@@ -100,8 +100,8 @@ class GenericModelManager {
         isModelDownloaded(
             remoteModel,
             object: CheckModelIsDownloadedCallback {
-                override fun onCheckResult(isDownloaded: Boolean) {
-                    if (!isDownloaded) {
+                override fun onCheckResult(isDownloaded: Boolean?) {
+                    if (isDownloaded != true) {
                         result.success("success")
                         return
                     }
