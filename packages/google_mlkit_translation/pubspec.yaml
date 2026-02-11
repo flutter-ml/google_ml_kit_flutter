@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   google_mlkit_commons: ^0.11.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
