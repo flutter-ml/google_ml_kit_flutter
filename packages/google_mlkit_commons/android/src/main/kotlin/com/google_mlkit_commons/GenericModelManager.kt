@@ -3,107 +3,117 @@ package com.google_mlkit_commons
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.common.model.RemoteModel
 import com.google.mlkit.common.model.RemoteModelManager
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import java.lang.reflect.Method
 
-open class GenericModelManager: ModelManagerApi {
+class GenericModelManager {
+
+    interface  CheckModelIsDownloadedCallback {
+        fun onCheckResult(isDownloaded: Boolean)
+        fun onError(e: Exception)
+    }
 
     val remoteModelManager: RemoteModelManager = RemoteModelManager.getInstance()
 
-    override fun isModelDownloaded(
-        model: String,
-        callback: (Result<Boolean>) -> Unit
-    ) {
-        try {
-            val remoteModel = createRemoteModel(model)
-
-            remoteModelManager.isModelDownloaded(remoteModel)
-                .addOnSuccessListener { isDownloaded ->
-                    callback(Result.success(isDownloaded))
-                }
-                .addOnFailureListener { exception ->
-                    callback(Result.failure(exception))
-                }
-        } catch(e: Exception) {
-            callback(Result.failure(e))
-        }
+    companion object {
+        private const val DOWNLOAD = "download"
+        private const val DELETE = "delete"
+        private const val CHECK = "check"
     }
 
-    override fun downloadModel(
-        request: ModelManagementRequest,
-        callback: (Result<ModelManagementResponse>) -> Unit
-    ) {
-        val remoteModel = createRemoteModel(request.model)
+    fun manageModel(model: RemoteModel, call: MethodCall, result: MethodChannel.Result) {
+        val task: String? = call.argument("task")
 
-        // First check if the model is already downloaded
-        remoteModelManager.isModelDownloaded(remoteModel)
-            .addOnSuccessListener {  isDownloaded ->
-                if (isDownloaded) {
-                    callback(Result.success(
-                        ModelManagementResponse(success = true, message = null)
-                    ))
-                    return@addOnSuccessListener
-                }
+        if (task == null) {
+            result.notImplemented()
+            return
+        }
 
-                // Download the model
-                val downloadConditions = if (request.isWifiRequired ?: false) {
+        when (task) {
+            DOWNLOAD -> {
+                val isWifiReqRequired: Boolean = call.argument("wifi") ?: false
+                val downloadConditions = if (isWifiReqRequired) {
                     DownloadConditions.Builder().requireWifi().build()
                 } else {
                     DownloadConditions.Builder().build()
                 }
+                downloadModel(model, downloadConditions, result)
+            }
 
-                remoteModelManager.download(remoteModel, downloadConditions)
-                    .addOnSuccessListener {
-                        callback(Result.success(
-                            ModelManagementResponse(success =  true, message = null)
-                        ))
+            DELETE -> deleteModel(model, result)
+            CHECK -> isModelDownloaded(
+                model,
+                object: CheckModelIsDownloadedCallback {
+                    override fun onCheckResult (isDownloaded: Boolean) {
+                        result.success(isDownloaded)
                     }
-                    .addOnFailureListener { exception ->
-                        callback(Result.success(
-                            ModelManagementResponse(success =  false, message = exception.message)
-                        ))
+
+                    override  fun onError(e: Exception) {
+                        result.error("error", e.toString(), null)
                     }
-            }
-            .addOnFailureListener { exception ->
-                callback(Result.success(
-                    ModelManagementResponse(success =  false, message = exception.message)
-                ))
-            }
+                }
+            )
+            else -> result.notImplemented()
+        }
     }
 
-    override fun deleteModel(
-        model: String,
-        callback: (Result<ModelManagementResponse>) -> Unit
+    fun downloadModel (
+        remoteModel: RemoteModel,
+        downloadConditions: DownloadConditions,
+        result: MethodChannel.Result
     ) {
-        val remoteModel = createRemoteModel(model)
+        isModelDownloaded(
+            remoteModel,
+            object: CheckModelIsDownloadedCallback {
+                override fun onCheckResult(isDownloaded: Boolean) {
+                    if (isDownloaded) {
+                        result.success("success")
+                        return
+                    }
 
-        // First check if the model exists
-        remoteModelManager.isModelDownloaded(remoteModel)
-            .addOnSuccessListener {  isDownloaded ->
-                if (!isDownloaded) {
-                    callback(Result.success(ModelManagementResponse(success =  true, message = null)))
-                    return@addOnSuccessListener
+                    remoteModelManager.download(remoteModel, downloadConditions)
+                        .addOnSuccessListener { result.success("success") }
+                        .addOnFailureListener { exception ->  result.error("error", exception.toString(), null) }
+
                 }
 
-                // Delete the model
-                remoteModelManager.deleteDownloadedModel(remoteModel)
-                    .addOnSuccessListener {
-                        callback(Result.success(
-                            ModelManagementResponse(success = true, message = null)
-                        ))
-                    }
-                    .addOnFailureListener { exception ->
-                        callback(Result.success(
-                            ModelManagementResponse(success = false, message =  exception.message)
-                        ))
-                    }
+                override fun onError(e: Exception) {
+                    result.error("error", e.toString(), null)
+                }
             }
-            .addOnFailureListener {  exception ->
-                callback(Result.success(
-                    ModelManagementResponse(success = false, message = exception.message)
-                ))
-            }
+        )
     }
 
-    protected open fun createRemoteModel(modelName: String) : RemoteModel {
-        throw NotImplementedError("Subclasses must implement createRemoteModel")
+
+    fun isModelDownloaded (model: RemoteModel, callback: CheckModelIsDownloadedCallback) {
+        try {
+            remoteModelManager.isModelDownloaded(model)
+                .addOnFailureListener { exception ->  callback.onError(exception) }
+                .addOnSuccessListener { isModelDownloaded -> callback.onCheckResult(isModelDownloaded) }
+        } catch (e: Exception) {
+            callback.onError(e)
+        }
+    }
+
+    fun deleteModel(remoteModel: RemoteModel, result: MethodChannel.Result) {
+        isModelDownloaded(
+            remoteModel,
+            object: CheckModelIsDownloadedCallback {
+                override fun onCheckResult(isDownloaded: Boolean) {
+                    if (!isDownloaded) {
+                        result.success("success")
+                        return
+                    }
+                    remoteModelManager.deleteDownloadedModel(remoteModel)
+                        .addOnSuccessListener { result.success("success") }
+                        .addOnFailureListener { exception ->  result.error("error", exception.toString(), null) }
+                }
+
+                override fun onError(e: Exception) {
+                    result.error("error", e.toString(), null)
+                }
+            }
+        )
     }
 }

@@ -1,11 +1,11 @@
+import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
-
-import 'pigeon.dart';
 
 /// A class that translates on device the given input text.
 class OnDeviceTranslator {
-  /// The Pigeon API instance
-  static final _api = OnDeviceTranslatorApi();
+  static const MethodChannel _channel = MethodChannel(
+    'google_mlkit_on_device_translator',
+  );
 
   /// The source language of the input.
   final TranslateLanguage sourceLanguage;
@@ -22,29 +22,32 @@ class OnDeviceTranslator {
     required this.targetLanguage,
   });
 
-  /// Translates the given [text] from the source language into target language.
+  /// Translates the given [text] from the source language into the target language.
   Future<String> translateText(String text) async {
-    final request = TranslateRequest(
-      id: id,
-      text: text,
-      sourceLanguage: sourceLanguage.bcpCode,
-      targetLanguage: targetLanguage.bcpCode,
-    );
+    final result = await _channel
+        .invokeMethod('nlp#startLanguageTranslator', <String, dynamic>{
+          'id': id,
+          'text': text,
+          'source': sourceLanguage.bcpCode,
+          'target': targetLanguage.bcpCode,
+        });
 
-    return await _api.translateText(request);
+    return result.toString();
   }
 
-  /// Closes the translator and releases its resources
-  Future<void> close() async {
-    final request = CloseTranslatorRequest(id: id);
-    _api.closeTranslator(request);
-  }
+  /// Closes the translator and releases its resources.
+  Future<void> close() =>
+      _channel.invokeMethod('nlp#closeLanguageTranslator', {'id': id});
 }
 
-/// A subclass of [ModelManager] that manages translation models
+/// A subclass of [ModelManager] that manages [TranslateRemoteModel] required to process the image.
 class OnDeviceTranslatorModelManager extends ModelManager {
   /// Constructor to create an instance of [OnDeviceTranslatorModelManager].
-  OnDeviceTranslatorModelManager({super.api});
+  OnDeviceTranslatorModelManager()
+    : super(
+        channel: OnDeviceTranslator._channel,
+        method: 'nlp#manageLanguageModelModels',
+      );
 }
 
 /// All supported languages by on-device translation.

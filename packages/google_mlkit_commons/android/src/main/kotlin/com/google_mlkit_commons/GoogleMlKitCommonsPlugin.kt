@@ -1,19 +1,28 @@
 package com.google_mlkit_commons
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
 
-class GoogleMlKitCommonsPlugin: FlutterPlugin {
+class GoogleMlKitCommonsPlugin: FlutterPlugin, MethodChannel.MethodCallHandler {
+    private lateinit var channel: MethodChannel
 
-    private var genericModelManager: GenericModelManager? = null
-
-    override fun onAttachedToEngine(flutterPluginBinding: FlutterPluginBinding) {
-        genericModelManager = GenericModelManager()
-        ModelManagerApi.setUp(flutterPluginBinding.binaryMessenger, genericModelManager)
+    companion object {
+        private const val CHANNEL_NAME = "google_mlkit_commons"
     }
 
-    override fun onDetachedFromEngine(binding: FlutterPluginBinding) {
-        ModelManagerApi.setUp(binding.binaryMessenger,null)
-        genericModelManager = null
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
+        channel.setMethodCallHandler(this)
     }
+
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+       channel.setMethodCallHandler(null)
+    }
+
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        result.notImplemented()
+    }
+
+
 }
