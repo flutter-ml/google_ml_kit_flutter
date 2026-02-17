@@ -1,0 +1,3 @@
+# ktlint: allow underscore in package names (Flutter plugin convention, e.g. com.google_mlkit_commons)
+[*.{kt,kts}]
+ktlint_standard_package-name = disabled

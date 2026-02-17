@@ -128,3 +128,9 @@ jobs:
 
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .
+
+      # Statically analyze Kotlin code (e.g. google_mlkit_commons Android) with ktlint.
+      - name: Install ktlint
+        run: brew install ktlint
+      - name: Run ktlint on Kotlin code
+        run: ktlint

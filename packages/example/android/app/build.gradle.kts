@@ -33,7 +33,7 @@ android {
     }
 
     aaptOptions {
-        noCompress("tflite")  // Your model's file extension: "tflite", "lite", etc.
+        noCompress("tflite") // Your model's file extension: "tflite", "lite", etc.
     }
 }
 
