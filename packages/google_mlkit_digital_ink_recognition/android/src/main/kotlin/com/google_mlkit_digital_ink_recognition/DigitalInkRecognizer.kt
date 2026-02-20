@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 class DigitalInkRecognizer : MethodChannel.MethodCallHandler {
-    private val instances = mutableMapOf<String, com.google_mlkit_digital_ink_recognition.DigitalInkRecognizer>()
+    private val instances = mutableMapOf<String, com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer>()
     private val genericModelManager = GenericModelManager()
 
     companion object {
@@ -51,13 +51,13 @@ class DigitalInkRecognizer : MethodChannel.MethodCallHandler {
         result: MethodChannel.Result,
     ) {
         val tag = call.argument<String>("model")
-        val model = getModel(tag, result) ?: return
+        val model = getModel(tag!!, result) ?: return
 
         genericModelManager.isModelDownloaded(
             model,
             object : GenericModelManager.CheckModelIsDownloadedCallback {
-                override fun onCheckResult(isDownloaded: Boolean) {
-                    if (!isDownloaded) {
+                override fun onCheckResult(isDownloaded: Boolean?) {
+                    if (isDownloaded == false) {
                         result.error("Model Error", "Model has not been downloaded yet", null)
                         return
                     }
