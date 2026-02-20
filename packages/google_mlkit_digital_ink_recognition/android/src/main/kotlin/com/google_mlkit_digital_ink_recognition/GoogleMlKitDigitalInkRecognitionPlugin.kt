@@ -4,11 +4,13 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class GoogleMlKitDigitalInkRecognitionPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
+class GoogleMlKitDigitalInkRecognitionPlugin :
+    FlutterPlugin,
+    MethodChannel.MethodCallHandler {
     private lateinit var channel: MethodChannel
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-       channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
         channel.setMethodCallHandler(DigitalInkRecognizer())
     }
 
@@ -18,7 +20,7 @@ class GoogleMlKitDigitalInkRecognitionPlugin : FlutterPlugin, MethodChannel.Meth
 
     override fun onMethodCall(
         call: MethodCall,
-        result: MethodChannel.Result
+        result: MethodChannel.Result,
     ) {
         result.notImplemented()
     }
@@ -26,5 +28,4 @@ class GoogleMlKitDigitalInkRecognitionPlugin : FlutterPlugin, MethodChannel.Meth
     companion object {
         private const val CHANNEL_NAME = "google_mlkit_digital_ink_recognition"
     }
-
 }
