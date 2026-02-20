@@ -2,6 +2,7 @@ group = "com.google_mlkit_digital_ink_recognition"
 version = "1.0"
 
 buildscript {
+    ext.kotlin_version = "2.2.20"
     repositories {
         google()
         mavenCentral()
@@ -9,6 +10,7 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:8.13.0")
+        classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0')
     }
 }
 
@@ -20,6 +22,7 @@ rootProject.allprojects {
 }
 
 apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 
 android {
     namespace = "com.google_mlkit_digital_ink_recognition"
@@ -31,11 +34,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+    }
+
     defaultConfig {
         minSdk = 21
     }
 
     dependencies {
         implementation("com.google.mlkit:digital-ink-recognition:19.0.0")
+        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }
