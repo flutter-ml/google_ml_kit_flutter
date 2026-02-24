@@ -1,18 +1,18 @@
-package com.google_mlkit_face_detection
+package com.google_mlkit_face_mesh_detection
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodChannel
 
-class GoogleMlKitFaceDetectionPlugin : FlutterPlugin {
+class GoogleMlKitFaceMeshDetectionPlugin : FlutterPlugin {
     private lateinit var channel: MethodChannel
 
     companion object {
-        private const val CHANNEL_NAME = "google_mlkit_face_detector"
+        private const val CHANNEL_NAME = "google_mlkit_face_mesh_detector"
     }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL_NAME)
-        channel.setMethodCallHandler(FaceDetector(flutterPluginBinding.applicationContext))
+        channel.setMethodCallHandler(FaceMeshDetector(flutterPluginBinding.applicationContext))
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
