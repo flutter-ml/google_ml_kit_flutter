@@ -18,6 +18,4 @@ class GoogleMlKitGenaiPromptPlugin : FlutterPlugin {
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
-
-
 }
