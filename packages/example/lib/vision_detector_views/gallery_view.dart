@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -116,9 +115,9 @@ class _GalleryViewState extends State<GalleryView> {
   }
 
   Future _getImageAsset() async {
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-    final assets = manifestMap.keys
+    final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final List<String> assets = assetManifest
+        .listAssets()
         .where((String key) => key.contains('images/'))
         .where((String key) =>
             key.contains('.jpg') ||
