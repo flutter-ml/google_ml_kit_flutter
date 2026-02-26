@@ -13,6 +13,7 @@ import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google_mlkit_commons.GenericModelManager
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import com.google_mlkit_commons.InputImageConverter
 
 class ObjectDetector(
     private val context: Context,
@@ -54,7 +55,10 @@ class ObjectDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val imageData = call.argument<Map<String, Any>>("imageData")
+        val imageData = call.argument<Map<String, Any>>("imageData") ?: run {
+            result.error("ObjectDetectorError", "imageData is null", null) 
+            return 
+        }
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
@@ -96,8 +100,8 @@ class ObjectDetector(
                     genericModelManager.isModelDownloaded(
                         remoteModel,
                         object : GenericModelManager.CheckModelIsDownloadedCallback {
-                            override fun onCheckResult(isDownloaded: Boolean) {
-                                if (!isDownloaded) {
+                            override fun onCheckResult(isDownloaded: Boolean?) {
+                                if (isDownloaded != true) {
                                     result.error(
                                         "Error Model has not been downloaded yet",
                                         "Model has not been downloaded yet",
@@ -243,7 +247,11 @@ class ObjectDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val firebaseModelSource = FirebaseModelSource.Builder(call.argument("model")).build()
+        val modelName = call.argument<String>("model") ?: run {
+            result.error("ObjectDetectorError", "Model name is null", null) 
+            return
+        }
+        val firebaseModelSource = FirebaseModelSource.Builder(modelName).build()
         val model = CustomRemoteModel.Builder(firebaseModelSource).build()
         genericModelManager.manageModel(model, call, result)
     }

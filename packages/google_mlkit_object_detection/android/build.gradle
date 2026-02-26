@@ -50,6 +50,5 @@ android {
         implementation("com.google.mlkit:object-detection:17.0.2")
         implementation("com.google.mlkit:object-detection-custom:17.0.2")
         implementation("com.google.mlkit:linkfirebase:17.0.0")
-        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

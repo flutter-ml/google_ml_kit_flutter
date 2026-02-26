@@ -1,4 +1,4 @@
-package com.kotlin
+package com.google_mlkit_language_id
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodChannel

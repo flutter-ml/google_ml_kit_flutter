@@ -1,4 +1,4 @@
-package com.kotlin
+package com.google_mlkit_language_id
 
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.languageid.LanguageIdentificationOptions

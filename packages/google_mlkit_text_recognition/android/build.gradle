@@ -52,6 +52,5 @@ android {
         compileOnly("com.google.mlkit:text-recognition-devanagari:16.0.1")
         compileOnly("com.google.mlkit:text-recognition-japanese:16.0.1")
         compileOnly("com.google.mlkit:text-recognition-korean:16.0.1")
-        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

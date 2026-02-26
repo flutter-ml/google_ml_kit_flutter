@@ -51,6 +51,5 @@ android {
         implementation("com.google.mlkit:genai-prompt:1.0.0-beta1")
         implementation("com.google.guava:guava:31.1-android")
         implementation("androidx.concurrent:concurrent-futures:1.2.0")
-        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

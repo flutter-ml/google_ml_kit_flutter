@@ -43,7 +43,11 @@ class PoseDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val imageData = call.argument<Map<String, Any>>("imageData")
+        val imageData = call.argument<Map<String, Any>>("imageData") ?: run {
+            result.error("PoseDetectorError", "imageData is null", null) 
+            return
+        }
+        
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return

@@ -50,6 +50,5 @@ android {
         implementation("com.google.mlkit:image-labeling:17.0.9")
         implementation("com.google.mlkit:image-labeling-custom:17.0.3")
         implementation("com.google.mlkit:linkfirebase:17.0.0")
-        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

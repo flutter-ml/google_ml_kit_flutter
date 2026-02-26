@@ -48,6 +48,5 @@ android {
 
     dependencies {
         implementation("com.google.mlkit:digital-ink-recognition:19.0.0")
-        implementation files('/Users/bensonarafat/development/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }

@@ -1,6 +1,5 @@
 package com.google_mlkit_genai_image_description
 
-import android.R.attr.bitmap
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -154,8 +153,9 @@ class ImageDescriber(
                             intBuffer.put((a shl 24) or (r shl 16) or (g shl 8) or b)
                         }
                         intBuffer.rewind()
-                        bitmap.copyPixelsFromBuffer(intBuffer)
-                        return bitmap
+                        val createdBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                        createdBitmap.copyPixelsFromBuffer(intBuffer)
+                        return createdBitmap
                     }
                 } catch (e: Exception) {
                     Log.e("ImageError", "Error creating bitmap from raw data", e)
