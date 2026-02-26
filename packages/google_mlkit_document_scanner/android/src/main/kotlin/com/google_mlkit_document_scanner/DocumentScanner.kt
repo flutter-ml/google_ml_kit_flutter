@@ -141,7 +141,7 @@ class DocumentScanner(
                 }
 
                 Activity.RESULT_CANCELED -> {
-                    pendingResult?.error(TAG, "Operation cancel", null)
+                    pendingResult?.error(TAG, "Operation cancelled", null)
                 }
 
                 else -> {

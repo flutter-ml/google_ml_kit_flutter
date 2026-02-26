@@ -59,6 +59,10 @@ class ImageDescriber(
                 closeImageDescriber(call)
                 result.success(null)
             }
+
+            else -> {
+                result.notImplemented()
+            }
         }
     }
 

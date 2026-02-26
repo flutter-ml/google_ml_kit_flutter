@@ -53,6 +53,10 @@ class Proofreader(
                 closeProofreader(call)
                 result.success(null)
             }
+
+            else -> {
+                result.notImplemented()
+            }
         }
     }
 

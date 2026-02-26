@@ -71,7 +71,7 @@ class SubjectSegmenter(
     ) {
         val imageData =
             call.argument<Map<String, Any>>("imageData") ?: run {
-                result.error("SubjectSegmenterError", "imageData is nulll", null)
+                result.error("SubjectSegmenterError", "imageData is null", null)
                 return
             }
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
