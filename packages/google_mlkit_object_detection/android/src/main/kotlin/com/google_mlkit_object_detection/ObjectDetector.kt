@@ -11,9 +11,9 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google_mlkit_commons.GenericModelManager
+import com.google_mlkit_commons.InputImageConverter
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import com.google_mlkit_commons.InputImageConverter
 
 class ObjectDetector(
     private val context: Context,
@@ -55,10 +55,11 @@ class ObjectDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val imageData = call.argument<Map<String, Any>>("imageData") ?: run {
-            result.error("ObjectDetectorError", "imageData is null", null) 
-            return 
-        }
+        val imageData =
+            call.argument<Map<String, Any>>("imageData") ?: run {
+                result.error("ObjectDetectorError", "imageData is null", null)
+                return
+            }
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
@@ -247,10 +248,11 @@ class ObjectDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val modelName = call.argument<String>("model") ?: run {
-            result.error("ObjectDetectorError", "Model name is null", null) 
-            return
-        }
+        val modelName =
+            call.argument<String>("model") ?: run {
+                result.error("ObjectDetectorError", "Model name is null", null)
+                return
+            }
         val firebaseModelSource = FirebaseModelSource.Builder(modelName).build()
         val model = CustomRemoteModel.Builder(firebaseModelSource).build()
         genericModelManager.manageModel(model, call, result)

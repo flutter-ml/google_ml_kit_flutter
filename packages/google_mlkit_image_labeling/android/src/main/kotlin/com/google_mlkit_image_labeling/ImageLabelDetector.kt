@@ -8,8 +8,8 @@ import com.google.mlkit.vision.label.ImageLabeler
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
-import com.google_mlkit_commons.InputImageConverter
 import com.google_mlkit_commons.GenericModelManager
+import com.google_mlkit_commons.InputImageConverter
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
@@ -53,10 +53,11 @@ class ImageLabelDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val imageData = call.argument<Map<String, Any>>("imageData") ?: run {
-            result.error("ImageLabelDetectorError", "imageData is null", null) 
-            return
-        }
+        val imageData =
+            call.argument<Map<String, Any>>("imageData") ?: run {
+                result.error("ImageLabelDetectorError", "imageData is null", null)
+                return
+            }
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
@@ -182,10 +183,11 @@ class ImageLabelDetector(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val modelName = call.argument<String>("model") ?: run {
-            result.error("ImageLabelDetectorError", "Model name is null", null) 
-            return
-        }
+        val modelName =
+            call.argument<String>("model") ?: run {
+                result.error("ImageLabelDetectorError", "Model name is null", null)
+                return
+            }
         val firebaseModelSource = FirebaseModelSource.Builder(modelName).build()
         val model = CustomRemoteModel.Builder(firebaseModelSource).build()
         genericModelManager.manageModel(model, call, result)

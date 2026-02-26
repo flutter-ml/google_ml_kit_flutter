@@ -63,11 +63,12 @@ class BarcodeScanner(
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
-        val imageData = call.argument<Map<String, Any>>("imageData") ?: run {
-            result.error("BarcodeDetectorError", "imageData is null", null) 
-            return
-        }
-        
+        val imageData =
+            call.argument<Map<String, Any>>("imageData") ?: run {
+                result.error("BarcodeDetectorError", "imageData is null", null)
+                return
+            }
+
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id")!!
