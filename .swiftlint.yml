@@ -1,0 +1,13 @@
+# Exclude generated / third-party paths
+excluded:
+  - packages/example/ios/Flutter/ephemeral
+
+function_body_length:
+  warning: 90
+  error: 120
+function_parameter_count:
+  warning: 6
+  error: 8
+cyclomatic_complexity:
+  warning: 20
+  error: 30

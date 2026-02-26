@@ -15,4 +15,21 @@ else
     ktlint --format
 fi
 
+# Lint Swift code (iOS plugins) with SwiftLint (https://github.com/realm/SwiftLint)
+# Apple Silicon Homebrew installs to /opt/homebrew/bin
+if [[ "$(uname -m)" == arm64 ]]; then
+    export PATH="/opt/homebrew/bin:$PATH"
+fi
+if ! command -v swiftlint &>/dev/null; then
+    echo "swiftlint is not installed. Install it with:"
+    echo "  brew install swiftlint"
+    exit 1
+fi
+swiftlint lint --fix
+SWIFTLINT_OUTPUT=$(swiftlint lint 2>&1) || true
+echo "$SWIFTLINT_OUTPUT"
+if echo "$SWIFTLINT_OUTPUT" | grep -qE "Found [1-9][0-9]* violations?"; then
+    exit 1
+fi
+
 printf '\033[34m%s\033[0m\n' "All checks passed: formatting and linting successful."
