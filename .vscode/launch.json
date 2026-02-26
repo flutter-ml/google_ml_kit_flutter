@@ -2,14 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter (Example App)",
+      "name": "Example App - Debug",
       "request": "launch",
       "type": "dart",
       "program": "${workspaceFolder}/packages/example/lib/main.dart",
       "cwd": "${workspaceFolder}/packages/example"
     },
     {
-      "name": "Flutter (Example App - Profile)",
+      "name": "Example App - Profile",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
@@ -17,7 +17,7 @@
       "cwd": "${workspaceFolder}/packages/example"
     },
     {
-      "name": "Flutter (Example App - Release)",
+      "name": "Example App - Release",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",

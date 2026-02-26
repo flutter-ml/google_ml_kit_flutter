@@ -10,10 +10,9 @@ Pod::Spec.new do |s|
   s.description      = pubspec['description']
   s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
-  s.author           = 'Multiple Authors'
+  s.author           = 'flutter-ml.dev'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'Classes/**/*.swift'
   s.dependency 'Flutter'
   # s.dependency 'GoogleMLKit/DocumentScanner', '~> 5.0.0'
   s.platform = :ios, '15.5'
