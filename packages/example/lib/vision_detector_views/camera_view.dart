@@ -417,6 +417,7 @@ class _CameraViewState extends State<CameraView> {
       offset += bytes.length;
     }
 
-    return buffer;
+    // Return a view limited to the actual number of bytes written for this frame.
+    return Uint8List.sublistView(buffer, 0, totalBytes);
   }
 }
