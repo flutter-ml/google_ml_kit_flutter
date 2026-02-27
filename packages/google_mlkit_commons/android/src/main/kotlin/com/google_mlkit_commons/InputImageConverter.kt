@@ -2,6 +2,7 @@ package com.google_mlkit_commons
 
 import android.content.Context
 import android.graphics.ImageFormat
+import android.media.ImageWriter
 import android.net.Uri
 import android.util.Log
 import com.google.mlkit.vision.common.InputImage
@@ -10,7 +11,10 @@ import java.io.File
 import java.io.IOException
 import java.nio.IntBuffer
 
-object InputImageConverter {
+object InputImageConverter : AutoCloseable {
+
+    lateinit var imageWriter: ImageWriter
+
     // Returns an [InputImage] from the image data received
     @JvmStatic
     fun getInputImageFromData(
@@ -177,4 +181,8 @@ object InputImageConverter {
             result.error("InputImageConverterError", e.toString(), e)
             null
         }
+
+    override fun close() {
+        imageWriter.close()
+    }
 }

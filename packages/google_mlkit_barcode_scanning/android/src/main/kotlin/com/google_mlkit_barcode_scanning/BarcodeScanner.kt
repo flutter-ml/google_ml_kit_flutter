@@ -68,8 +68,8 @@ class BarcodeScanner(
                 result.error("BarcodeDetectorError", "imageData is null", null)
                 return
             }
-
-        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
+        val converter = InputImageConverter()
+        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id")!!
         val scanner = instances.getOrPut(id) { initialize(call) }
@@ -213,7 +213,7 @@ class BarcodeScanner(
                 result.success(barcodeList)
             }.addOnFailureListener { e ->
                 result.error("BarcodeDetectorError", e.toString(), null)
-            }
+            }.addOnCompleteListener { converter.close() }
     }
 
     private fun getPoints(cornerPoints: Array<Point>) =
