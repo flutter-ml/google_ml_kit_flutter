@@ -163,13 +163,13 @@ object InputImageConverter {
                 }
 
                 ImageFormat.YUV_420_888 -> {
-                    // Convert YUV_420_88 bytes to an InputImage using NV21-compatible format.
+                    // Convert YUV_420_888 bytes to an InputImage using the reported image format.
                     InputImage.fromByteArray(
                         data,
                         width,
                         height,
                         rotationDegrees,
-                        ImageFormat.NV21,
+                        ImageFormat,
                     )
                 }
 

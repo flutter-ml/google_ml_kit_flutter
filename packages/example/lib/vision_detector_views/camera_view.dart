@@ -395,16 +395,7 @@ class _CameraViewState extends State<CameraView> {
   Uint8List _concatenatePlanes(CameraImage image) {
     final WriteBuffer buffer = WriteBuffer();
     for (final Plane plane in image.planes) {
-      final int rowStride = plane.bytesPerRow;
-      final int pixelStride = plane.bytesPerPixel ?? 1;
-      final int width = image.width;
-      final int height = (plane.bytes.length / rowStride).floor();
-
-      for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-          buffer.putUint8(plane.bytes[row * rowStride + col * pixelStride]);
-        }
-      }
+      buffer.putUint8List(plane.bytes);
     }
     return buffer.done().buffer.asUint8List();
   }
