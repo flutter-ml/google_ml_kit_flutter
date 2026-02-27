@@ -2,14 +2,10 @@ package com.google_mlkit_commons
 
 import android.content.Context
 import android.graphics.ImageFormat
-import android.graphics.SurfaceTexture
 import android.media.Image
-import android.media.ImageWriter
 import android.net.Uri
 import android.os.Build
 import android.util.Log
-import android.view.Surface
-import androidx.annotation.RequiresApi
 import com.google.mlkit.vision.common.InputImage
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -17,9 +13,7 @@ import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
 
-object InputImageConverter : AutoCloseable {
-    private var writer: ImageWriter? = null
-
+object InputImageConverter {
     // Returns an [InputImage] from the image data received
     @JvmStatic
     fun getInputImageFromData(
@@ -149,7 +143,6 @@ object InputImageConverter : AutoCloseable {
         return InputImage.fromBitmap(bitmap, rotation)
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun handleBytesImage(
         imageData: Map<String, Any>,
         result: MethodChannel.Result,
@@ -173,47 +166,21 @@ object InputImageConverter : AutoCloseable {
                 }
 
                 ImageFormat.YUV_420_888 -> {
-                    // fromByteArray does NOT support YUV_420_**; must be fromMediaImage
-                    writer =
-                        ImageWriter
-                            .Builder(Surface(SurfaceTexture(true)))
-                            .setWidthAndHeight(width, height)
-                            .setImageFormat(imageFormat)
-                            .build()
-
-                    val image: Image =
-                        writer!!.dequeueInputImage()
-                            ?: run {
-                                result.error(
-                                    "InputImageConverterError",
-                                    "failed to allocate space for input image",
-                                    null,
-                                )
-                                return null
-                            }
-                    val planes = image.planes
-
-                    // Y plan
-                    val yBuffer: ByteBuffer = planes[0].buffer
-                    yBuffer.put(data, 0, width * height)
-
-                    // U plan
-                    val uBuffer: ByteBuffer = planes[1].buffer
-                    val uOffset = width * height
-                    uBuffer.put(data, uOffset, (width * height) / 4)
-
-                    // V Plan
-                    val vBuffer: ByteBuffer = planes[2].buffer
-                    val vOffset = uOffset + (width * height) / 4
-                    vBuffer.put(data, vOffset, (width * height) / 4)
-
-                    InputImage.fromMediaImage(image, rotationDegrees)
+                    // Convert YUV_420_88 bytes to an InputImage using NV21-compatible format.
+                    InputImage.fromByteArray(
+                        data,
+                        width,
+                        height,
+                        rotationDegrees,
+                        ImageFormat.NV21,
+                    )
                 }
 
                 else -> {
                     result.error(
-                        "InputImageConverterError",
-                        "ImageFormat is not supported.",
+                        "InputImageConverterError.",
+                        "ImageFormat $imageFormat is not supported. Supported formats are: " +
+                            "${ImageFormat.NV21}, ${ImageFormat.YV12}, ${ImageFormat.YUV_420_888}.",
                         null,
                     )
                     null
@@ -225,9 +192,4 @@ object InputImageConverter : AutoCloseable {
             result.error("InputImageConverterError", e.toString(), e)
             null
         }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun close() {
-        writer?.close()
-    }
 }

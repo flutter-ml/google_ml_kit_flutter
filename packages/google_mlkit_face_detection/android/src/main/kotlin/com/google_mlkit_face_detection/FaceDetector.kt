@@ -49,8 +49,7 @@ class FaceDetector(
                 result.error("FaceDetectorError", "imageData is null", null)
                 return
             }
-        val converter = InputImageConverter()
-        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
+        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id")!!
         val detector =
@@ -91,7 +90,7 @@ class FaceDetector(
                 result.success(faces)
             }.addOnFailureListener { e ->
                 result.error("FaceDetectorError", e.toString(), null)
-            }.addOnCompleteListener { converter.close() }
+            }
     }
 
     private fun parseOptions(options: Map<String, Any>): FaceDetectorOptions {

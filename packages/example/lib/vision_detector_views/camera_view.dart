@@ -361,7 +361,7 @@ class _CameraViewState extends State<CameraView> {
       print('could not find format from raw value: ${image.format.raw}');
       return null;
     }
-    // Validate format depending on plaform
+    // Validate format depending on platform
     final androidSupportedFormats = [
       InputImageFormat.nv21,
       InputImageFormat.yv12,
@@ -393,17 +393,19 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Uint8List _concatenatePlanes(CameraImage image) {
-    int length = 0;
-    for (final Plane p in image.planes) {
-      length += p.bytes.length;
-    }
+    final WriteBuffer buffer = WriteBuffer();
+    for (final Plane plane in image.planes) {
+      final int rowStride = plane.bytesPerRow;
+      final int pixelStride = plane.bytesPerPixel ?? 1;
+      final int width = image.width;
+      final int height = (plane.bytes.length / rowStride).floor();
 
-    final Uint8List bytes = Uint8List(length);
-    int offset = 0;
-    for (final Plane p in image.planes) {
-      bytes.setRange(offset, offset + p.bytes.length, p.bytes);
-      offset += p.bytes.length;
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+          buffer.putUint8(plane.bytes[row * rowStride + col * pixelStride]);
+        }
+      }
     }
-    return bytes;
+    return buffer.done().buffer.asUint8List();
   }
 }

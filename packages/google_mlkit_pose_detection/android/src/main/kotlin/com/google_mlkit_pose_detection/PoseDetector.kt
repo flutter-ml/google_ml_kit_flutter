@@ -48,8 +48,7 @@ class PoseDetector(
                 result.error("PoseDetectorError", "imageData is null", null)
                 return
             }
-        val converter = InputImageConverter()
-        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
+        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
         var poseDetector = instances[id]
@@ -107,7 +106,7 @@ class PoseDetector(
                 result.success(array)
             }.addOnFailureListener { e ->
                 result.error("PoseDetectorError", e.toString(), null)
-            }.addOnCompleteListener { converter.close() }
+            }
     }
 
     private fun closeDetector(call: MethodCall) {
