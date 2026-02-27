@@ -392,11 +392,31 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
+  // Reusable buffer to avoid per-frame allocations when concatenating planes.
+  Uint8List? _reusablePlaneBuffer;
+
   Uint8List _concatenatePlanes(CameraImage image) {
-    final WriteBuffer buffer = WriteBuffer();
-    for (final Plane plane in image.planes) {
-      buffer.putUint8List(plane.bytes);
+    // Calculate the total number of bytes across all planes.
+    final int totalBytes = image.planes.fold<int>(
+      0,
+      (int sum, Plane plane) => sum + plane.bytes.length,
+    );
+
+    // Ensure the reusable buffer is allocated and large enough.
+    var buffer = _reusablePlaneBuffer;
+    if (buffer == null || buffer.length < totalBytes) {
+      buffer = Uint8List(totalBytes);
+      _reusablePlaneBuffer = buffer;
     }
-    return buffer.done().buffer.asUint8List();
+
+    // Copy each plane's bytes into the reusable buffer.
+    var offset = 0;
+    for (final Plane plane in image.planes) {
+      final bytes = plane.bytes;
+      buffer.setRange(offset, offset + bytes.length, bytes);
+      offset += bytes.length;
+    }
+
+    return buffer;
   }
 }
