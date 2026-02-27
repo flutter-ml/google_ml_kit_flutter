@@ -9,7 +9,6 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
-import java.nio.IntBuffer
 
 object InputImageConverter {
     // Returns an [InputImage] from the image data received
