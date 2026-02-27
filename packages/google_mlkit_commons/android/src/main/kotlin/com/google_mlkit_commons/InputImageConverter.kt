@@ -169,7 +169,7 @@ object InputImageConverter {
                         width,
                         height,
                         rotationDegrees,
-                        ImageFormat,
+                        imageFormat,
                     )
                 }
 
