@@ -74,7 +74,8 @@ class SubjectSegmenter(
                 result.error("SubjectSegmenterError", "imageData is null", null)
                 return
             }
-        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
+        val converter = InputImageConverter()
+        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
         val segmenter = instances.getOrPut(id) { initialize(call) }
@@ -83,6 +84,7 @@ class SubjectSegmenter(
             .process(inputImage)
             .addOnSuccessListener { processResult(it, result) }
             .addOnFailureListener { e -> result.error("Subject segmentation failure!", e.message, e) }
+            .addOnCompleteListener { converter.close() }
     }
 
     private fun initialize(call: MethodCall): com.google.mlkit.vision.segmentation.subject.SubjectSegmenter {

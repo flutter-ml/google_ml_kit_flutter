@@ -58,7 +58,8 @@ class TextRecognizer(
         result: MethodChannel.Result,
     ) {
         val imageData = call.argument<Map<String, Any>>("imageData") ?: return
-        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
+        val converter = InputImageConverter()
+        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
         val textRecognizer =
@@ -133,7 +134,7 @@ class TextRecognizer(
                 result.success(textResult)
             }.addOnFailureListener { e ->
                 result.error("TextRecognizerError", e.toString(), null)
-            }
+            }.addOnCompleteListener { converter.close() }
     }
 
     private fun addData(

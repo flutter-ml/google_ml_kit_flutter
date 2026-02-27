@@ -48,8 +48,8 @@ class FaceMeshDetector(
                 result.error("FaceMeshDetectorError", "imageData is null", null)
                 return
             }
-
-        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
+        val converter = InputImageConverter()
+        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id")!!
         var detector = instances[id]
@@ -128,7 +128,7 @@ class FaceMeshDetector(
                 result.success(faceMeshes)
             }.addOnFailureListener { e ->
                 result.error("FaceMeshDetectorError", e.toString(), null)
-            }
+            }.addOnCompleteListener { converter.close() }
     }
 
     private fun pointsToList(points: List<FaceMeshPoint>): List<Map<String, Any>> = points.map { pointToMap(it) }

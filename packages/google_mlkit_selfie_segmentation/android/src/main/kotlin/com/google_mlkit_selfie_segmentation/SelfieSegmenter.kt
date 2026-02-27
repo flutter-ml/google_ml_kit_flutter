@@ -66,7 +66,8 @@ class SelfieSegmenter(
                 result.error("SelfieSegmenterError", "imageData is null", null)
                 return
             }
-        val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
+        val converter = InputImageConverter()
+        val inputImage = converter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
         val segmenter = instances.getOrPut(id) { initialize(call) }
@@ -94,7 +95,7 @@ class SelfieSegmenter(
                 )
             }.addOnFailureListener { e ->
                 result.error("Selfie segmentation failed!", e.message, e)
-            }
+            }.addOnCompleteListener { converter.close() }
     }
 
     private fun closeDetector(call: MethodCall) {
