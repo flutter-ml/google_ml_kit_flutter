@@ -175,7 +175,7 @@ object InputImageConverter {
 
                 else -> {
                     result.error(
-                        "InputImageConverterError.",
+                        "InputImageConverterError",
                         "ImageFormat $imageFormat is not supported. Supported formats are: " +
                             "${ImageFormat.NV21}, ${ImageFormat.YV12}, ${ImageFormat.YUV_420_888}.",
                         null,
