@@ -163,7 +163,7 @@ object InputImageConverter {
                 }
 
                 ImageFormat.YUV_420_888 -> {
-                    // Convert YUV_420_888 bytes to an InputImage using the reported image format.
+                    // Create an InputImage directly from a YUV_420_888 byte array using the reported image format.
                     InputImage.fromByteArray(
                         data,
                         width,
