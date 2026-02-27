@@ -374,8 +374,8 @@ class _CameraViewState extends State<CameraView> {
       return null;
     }
 
-    // Compile a flat list  of all image data. For image formats with multiple planes,
-    // Takes some copying.
+    // Compile a flat list of all image data. For image formats with multiple planes,
+    // this involves copying the plane bytes into a single buffer.
     final Uint8List bytes = image.planes.length == 1
         ? image.planes.first.bytes
         : _concatenatePlanes(image);
