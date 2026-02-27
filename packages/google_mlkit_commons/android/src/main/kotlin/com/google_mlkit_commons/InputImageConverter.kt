@@ -2,9 +2,7 @@ package com.google_mlkit_commons
 
 import android.content.Context
 import android.graphics.ImageFormat
-import android.media.Image
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import com.google.mlkit.vision.common.InputImage
 import io.flutter.plugin.common.MethodChannel
