@@ -374,22 +374,78 @@ class _CameraViewState extends State<CameraView> {
       return null;
     }
 
-    // Compile a flat list of all image data. For image formats with multiple planes,
-    // this involves copying the plane bytes into a single buffer.
-    final Uint8List bytes = image.planes.length == 1
-        ? image.planes.first.bytes
-        : _concatenatePlanes(image);
+    InputImageFormat resolvedFormat = format;
+    final Uint8List bytes;
 
-    // compose InputImage using bytes
+    if (image.planes.length == 1) {
+      bytes = image.planes.first.bytes;
+    } else if (Platform.isAndroid &&
+        (format == InputImageFormat.yuv_420_888 ||
+            format == InputImageFormat.yv12) &&
+        image.planes.length == 3) {
+      bytes = _convertYUV420ToNV21(image);
+      resolvedFormat = InputImageFormat.nv21;
+    } else {
+      bytes = _concatenatePlanes(image);
+    }
+
     return InputImage.fromBytes(
       bytes: bytes,
       metadata: InputImageMetadata(
         size: Size(image.width.toDouble(), image.height.toDouble()),
-        rotation: rotation, // used only in Android
-        format: format, // used only in iOS
-        bytesPerRow: image.planes.first.bytesPerRow, // used only in iOS
+        rotation: rotation,
+        format: resolvedFormat,
+        bytesPerRow: image.planes.first.bytesPerRow,
       ),
     );
+  }
+
+  Uint8List _convertYUV420ToNV21(CameraImage image) {
+    final int width = image.width;
+    final int height = image.height;
+    final int ySize = width * height;
+    final int uvSize = ySize ~/ 2;
+    final Uint8List nv21 = Uint8List(ySize + uvSize);
+
+    // Copy Y (luma) plane, stripping row stride padding.
+    final Plane yPlane = image.planes[0];
+    int destIndex = 0;
+    for (int row = 0; row < height; row++) {
+      final int srcRowStart = row * yPlane.bytesPerRow;
+      nv21.setRange(destIndex, destIndex + width, yPlane.bytes, srcRowStart);
+      destIndex += width;
+    }
+
+    // Interleave V and U (chroma) planes into NV21 (VU) order,
+    // stripping row and pixel stride padding.
+    final Plane uPlane = image.planes[1];
+    final Plane vPlane = image.planes[2];
+    final int uvPixelStride = uPlane.bytesPerPixel ?? 1;
+    final int vPixelStride = vPlane.bytesPerPixel ?? 1;
+
+    assert(
+      uvPixelStride == 1 || uvPixelStride == 2,
+      'Unexpected U plane pixel stride: $uvPixelStride',
+    );
+    assert(
+      vPixelStride == 1 || vPixelStride == 2,
+      'Unexpected V plane pixel stride: $vPixelStride',
+    );
+
+    int uvIndex = ySize;
+    for (int row = 0; row < height ~/ 2; row++) {
+      final int uRowStart = row * uPlane.bytesPerRow;
+      final int vRowStart = row * vPlane.bytesPerRow;
+      for (int col = 0; col < width ~/ 2; col++) {
+        final int uIndex = uRowStart + col * uvPixelStride;
+        final int vIndex = vRowStart + col * vPixelStride;
+        // NV21 interleaves V then U.
+        nv21[uvIndex++] = vPlane.bytes[vIndex];
+        nv21[uvIndex++] = uPlane.bytes[uIndex];
+      }
+    }
+
+    return nv21;
   }
 
   // Reusable buffer to avoid per-frame allocations when concatenating planes.
