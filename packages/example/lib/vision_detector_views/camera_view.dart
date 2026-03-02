@@ -423,6 +423,12 @@ class _CameraViewState extends State<CameraView> {
     final int uvPixelStride = uPlane.bytesPerPixel ?? 1;
     final int vPixelStride = vPlane.bytesPerPixel ?? 1;
 
+    if (uvPixelStride != 1 && uvPixelStride != 2) {
+      throw StateError('Unexpected U plane pixel stride: $uvPixelStride');
+    }
+    if (vPixelStride != 1 && vPixelStride != 2) {
+      throw StateError('Unexpected V plane pixel stride: $vPixelStride');
+    }
     int uvIndex = ySize;
     for (int row = 0; row < height ~/ 2; row++) {
       final int uRowStart = row * uPlane.bytesPerRow;
