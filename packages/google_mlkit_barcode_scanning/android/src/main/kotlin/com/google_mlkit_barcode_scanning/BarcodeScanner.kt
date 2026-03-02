@@ -68,6 +68,7 @@ class BarcodeScanner(
                 result.error("BarcodeDetectorError", "imageData is null", null)
                 return
             }
+            
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id")!!
