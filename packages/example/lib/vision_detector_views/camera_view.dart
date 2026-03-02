@@ -357,29 +357,126 @@ class _CameraViewState extends State<CameraView> {
 
     // get image format
     final format = InputImageFormatValue.fromRawValue(image.format.raw);
-    // validate format depending on platform
-    // only supported formats:
-    // * nv21 for Android
-    // * bgra8888 for iOS
-    if (format == null ||
-        (Platform.isAndroid && format != InputImageFormat.nv21) ||
+    if (format == null) {
+      print('could not find format from raw value: ${image.format.raw}');
+      return null;
+    }
+    // Validate format depending on platform
+    const androidSupportedFormats = [
+      InputImageFormat.nv21,
+      InputImageFormat.yv12,
+      InputImageFormat.yuv_420_888
+    ];
+
+    if ((Platform.isAndroid && !androidSupportedFormats.contains(format)) ||
         (Platform.isIOS && format != InputImageFormat.bgra8888)) {
+      print('image format is not supported: $format');
       return null;
     }
 
-    // since format is constraint to nv21 or bgra8888, both only have one plane
-    if (image.planes.length != 1) return null;
-    final plane = image.planes.first;
+    InputImageFormat resolvedFormat = format;
+    final Uint8List bytes;
 
-    // compose InputImage using bytes
+    if (image.planes.length == 1) {
+      bytes = image.planes.first.bytes;
+    } else if (Platform.isAndroid &&
+        (format == InputImageFormat.yuv_420_888 ||
+            format == InputImageFormat.yv12) &&
+        image.planes.length == 3) {
+      bytes = _convertYUV420ToNV21(image);
+      resolvedFormat = InputImageFormat.nv21;
+    } else {
+      bytes = _concatenatePlanes(image);
+    }
+
     return InputImage.fromBytes(
-      bytes: plane.bytes,
+      bytes: bytes,
       metadata: InputImageMetadata(
         size: Size(image.width.toDouble(), image.height.toDouble()),
-        rotation: rotation, // used only in Android
-        format: format, // used only in iOS
-        bytesPerRow: plane.bytesPerRow, // used only in iOS
+        rotation: rotation,
+        format: resolvedFormat,
+        bytesPerRow: image.planes.first.bytesPerRow,
       ),
     );
+  }
+
+  // Reusable buffer to avoid per-frame allocations when concatenating planes.
+  Uint8List? _reusablePlaneBuffer;
+
+  Uint8List _concatenatePlanes(CameraImage image) {
+    // Calculate the total number of bytes across all planes.
+    final int totalBytes = image.planes.fold<int>(
+      0,
+      (int sum, Plane plane) => sum + plane.bytes.length,
+    );
+
+    // Ensure the reusable buffer is allocated and large enough.
+    var buffer = _reusablePlaneBuffer;
+    if (buffer == null || buffer.length < totalBytes) {
+      buffer = Uint8List(totalBytes);
+      _reusablePlaneBuffer = buffer;
+    }
+
+    // Copy each plane's bytes into the reusable buffer.
+    var offset = 0;
+    for (final Plane plane in image.planes) {
+      final bytes = plane.bytes;
+      buffer.setRange(offset, offset + bytes.length, bytes);
+      offset += bytes.length;
+    }
+
+    // Return the reusable buffer directly when sizes match, or a zero-copy view otherwise.
+    if (totalBytes == buffer.length) {
+      return buffer;
+    }
+    return Uint8List.sublistView(buffer, 0, totalBytes);
+  }
+
+  Uint8List? _reusableNv21Buffer;
+  int _lastNv21Size = 0;
+  Uint8List _convertYUV420ToNV21(CameraImage image) {
+    final int width = image.width;
+    final int height = image.height;
+    final int ySize = width * height;
+    final int uvSize = ySize ~/ 2;
+    final int requiredSize = ySize + uvSize;
+
+    if (_reusableNv21Buffer == null || _lastNv21Size != requiredSize) {
+      _reusableNv21Buffer = Uint8List(requiredSize);
+      _lastNv21Size = requiredSize;
+    }
+
+    final Uint8List nv21 = _reusableNv21Buffer!;
+
+    // Copy Y plane (strip row padding)
+    final Plane yPlane = image.planes[0];
+    int destIndex = 0;
+    for (int row = 0; row < height; row++) {
+      final int srcRowStart = row * yPlane.bytesPerRow;
+      nv21.setRange(destIndex, destIndex + width, yPlane.bytes, srcRowStart);
+      destIndex += width;
+    }
+
+    // Interleave V and U planes into NV21 (VU order)
+    final Plane uPlane = image.planes[1];
+    final Plane vPlane = image.planes[2];
+    final int uvPixelStride = uPlane.bytesPerPixel ?? 1;
+    final int vPixelStride = vPlane.bytesPerPixel ?? 1;
+
+    int uvIndex = ySize;
+    for (int row = 0; row < height ~/ 2; row++) {
+      final int uRowStart = row * uPlane.bytesPerRow;
+      final int vRowStart = row * vPlane.bytesPerRow;
+
+      for (int col = 0; col < width ~/ 2; col++) {
+        final int uIndex = uRowStart + col * uvPixelStride;
+        final int vIndex = vRowStart + col * vPixelStride;
+
+        nv21[uvIndex++] = vPlane.bytes[vIndex];
+        nv21[uvIndex++] = uPlane.bytes[uIndex];
+      }
+    }
+
+    return nv21;
   }
 }

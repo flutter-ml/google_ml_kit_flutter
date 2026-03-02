@@ -157,19 +157,33 @@ object InputImageConverter {
 
             val height = metaData["height"]?.toString()?.toDouble()?.toInt() ?: throw IllegalArgumentException("Height is null")
 
-            if (
-                imageFormat == ImageFormat.NV21 ||
-                imageFormat == ImageFormat.YUV_420_888 ||
-                imageFormat == ImageFormat.YV12
-            ) {
-                InputImage.fromByteArray(data, width, height, rotationDegrees, imageFormat)
-            } else {
-                result.error(
-                    "InputImageConverterError",
-                    "ImageFormat is not supported. Supported: NV21(17), YUV_420_888(35), YV12. Got: $imageFormat",
-                    null,
-                )
-                null
+            when (imageFormat) {
+                ImageFormat.NV21, ImageFormat.YV12 -> {
+                    InputImage.fromByteArray(data, width, height, rotationDegrees, imageFormat)
+                }
+
+                ImageFormat.YUV_420_888 -> {
+                    // Create an InputImage directly from a YUV_420_888 byte array using the reported image format.
+                    InputImage.fromByteArray(
+                        data,
+                        width,
+                        height,
+                        rotationDegrees,
+                        imageFormat,
+                    )
+                }
+
+                else -> {
+                    result.error(
+                        "InputImageConverterError",
+                        "ImageFormat $imageFormat is not supported. Supported formats are: " +
+                            "NV21 (${ImageFormat.NV21}), " +
+                            "YV12 (${ImageFormat.YV12}), " +
+                            "YUV_420_888 (${ImageFormat.YUV_420_888}).",
+                        null,
+                    )
+                    null
+                }
             }
         } catch (e: Exception) {
             Log.e("ImageError", "Getting Image failed")
