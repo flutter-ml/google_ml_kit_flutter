@@ -362,7 +362,7 @@ class _CameraViewState extends State<CameraView> {
       return null;
     }
     // Validate format depending on platform
-    final androidSupportedFormats = [
+    const androidSupportedFormats = [
       InputImageFormat.nv21,
       InputImageFormat.yv12,
       InputImageFormat.yuv_420_888
@@ -423,15 +423,6 @@ class _CameraViewState extends State<CameraView> {
     final int uvPixelStride = uPlane.bytesPerPixel ?? 1;
     final int vPixelStride = vPlane.bytesPerPixel ?? 1;
 
-    assert(
-      uvPixelStride == 1 || uvPixelStride == 2,
-      'Unexpected U plane pixel stride: $uvPixelStride',
-    );
-    assert(
-      vPixelStride == 1 || vPixelStride == 2,
-      'Unexpected V plane pixel stride: $vPixelStride',
-    );
-
     int uvIndex = ySize;
     for (int row = 0; row < height ~/ 2; row++) {
       final int uRowStart = row * uPlane.bytesPerRow;
@@ -473,7 +464,6 @@ class _CameraViewState extends State<CameraView> {
       offset += bytes.length;
     }
 
-    // Return a view limited to the actual number of bytes written for this frame.
-    return Uint8List.sublistView(buffer, 0, totalBytes);
+    return buffer.sublist(0, totalBytes);
   }
 }
