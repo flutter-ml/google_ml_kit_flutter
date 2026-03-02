@@ -470,6 +470,10 @@ class _CameraViewState extends State<CameraView> {
       offset += bytes.length;
     }
 
-    return buffer.sublist(0, totalBytes);
+    // Return the reusable buffer directly when sizes match, or a zero-copy view otherwise.
+    if (totalBytes == buffer.length) {
+      return buffer;
+    }
+    return Uint8List.sublistView(buffer, 0, totalBytes);
   }
 }
