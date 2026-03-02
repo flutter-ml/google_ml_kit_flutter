@@ -48,7 +48,7 @@ class PoseDetector(
                 result.error("PoseDetectorError", "imageData is null", null)
                 return
             }
-            
+
         val inputImage = InputImageConverter.getInputImageFromData(imageData, context, result) ?: return
 
         val id = call.argument<String>("id") ?: return
