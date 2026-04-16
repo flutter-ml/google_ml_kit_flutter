@@ -61,7 +61,7 @@ class DocumentScanner(
         if (scanner == null) {
             val options =
                 call.argument<Map<String, Any>>("options") ?: run {
-                    result.error(TAG, "Invalid options", null)
+                    consumePendingResult()?.error(TAG, "Invalid options", null)
                     return
                 }
             val scannerOptions = parseOptions(options)
@@ -76,10 +76,10 @@ class DocumentScanner(
                 try {
                     activity.startIntentSenderForResult(intentSender, START_DOCUMENT_ACTIVITY, null, 0, 0, 0)
                 } catch (e: IntentSender.SendIntentException) {
-                    result.error(TAG, "Failed to start document scanner", null)
+                    consumePendingResult()?.error(TAG, "Failed to start document scanner", null)
                 }
             }.addOnFailureListener {
-                result.error(TAG, "Failed to start document scanner", null)
+                consumePendingResult()?.error(TAG, "Failed to start document scanner", null)
             }
     }
 
@@ -141,11 +141,11 @@ class DocumentScanner(
                 }
 
                 Activity.RESULT_CANCELED -> {
-                    pendingResult?.error(TAG, "Operation cancelled", null)
+                    consumePendingResult()?.error(TAG, "Operation cancelled", null)
                 }
 
                 else -> {
-                    pendingResult?.error(TAG, "Unknown Error", null)
+                    consumePendingResult()?.error(TAG, "Unknown Error", null)
                 }
             }
             return true
@@ -154,6 +154,8 @@ class DocumentScanner(
     }
 
     private fun handleScanningResult(result: GmsDocumentScanningResult) {
+        val reply = consumePendingResult() ?: return
+
         val resultMap = HashMap<String, Any?>()
 
         val pdf = result.pdf
@@ -174,6 +176,18 @@ class DocumentScanner(
             resultMap["images"] = null
         }
 
-        pendingResult?.success(resultMap)
+        reply.success(resultMap)
+    }
+
+    /**
+     * Atomically returns the current [pendingResult] and clears the field, so a subsequent
+     * duplicate callback (e.g. a redelivered activity result on some OEM builds) cannot submit
+     * a second reply on the same [MethodChannel.Result] and trigger
+     * `IllegalStateException: Reply already submitted`.
+     */
+    private fun consumePendingResult(): MethodChannel.Result? {
+        val reply = pendingResult
+        pendingResult = null
+        return reply
     }
 }
