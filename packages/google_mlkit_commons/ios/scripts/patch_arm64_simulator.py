@@ -1,42 +1,11 @@
 #!/usr/bin/env python3
-"""
-Re-label the arm64 device slice of Google ML Kit static frameworks as
-iOS Simulator, so they link on Apple Silicon iOS 26+ simulators without
-requiring Rosetta 2.
+"""Re-label the arm64 device slice of Google ML Kit static frameworks as
+iOS Simulator. Walks every .o member of the arm64 archive and flips
+LC_BUILD_VERSION.platform from 2 (iOS) to 7 (iOS Simulator); no
+instructions or symbols are touched. Same approach as arm64-to-sim.
+Idempotent. See packages/google_mlkit_commons/README.md (iOS section).
 
-Background
-----------
-The frameworks Google ships under the GoogleMLKit/* CocoaPods only contain
-two slices: ``arm64`` (built for iOS device, platform=2) and ``x86_64``
-(iOS Simulator, platform=7). Their podspecs therefore set
-``EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64`` so Xcode does not try to
-link the device slice into a simulator build.
-
-On Apple Silicon Macs running iOS 26+ simulators, Apple no longer
-auto-translates ``x86_64`` simulator binaries through Rosetta 2 by default,
-which makes ``flutter run`` fail with::
-
-    Unable to find a destination matching the provided destination specifier
-
-Until Google publishes proper ``arm64-iphonesimulator`` slices (tracked in
-https://issuetracker.google.com/issues/178965151), this script applies the
-same in-place modification that the well-known ``arm64-to-sim`` tool uses:
-it walks every ``.o`` member of the arm64 static archive and changes the
-``LC_BUILD_VERSION.platform`` field from ``2`` (iOS) to ``7``
-(iOS Simulator). No instructions, symbols or metadata other than the
-single 4-byte platform field are touched.
-
-Usage
------
-::
-
-    python3 patch_arm64_simulator.py <Pods/MLKitFoo> [<Pods/MLKitBar> ...]
-
-Each path must be the directory that contains
-``Frameworks/<PodName>.framework/<PodName>``.
-
-Idempotent: running it twice is a no-op (after the first pass nothing in
-the arm64 slice still claims platform=iOS).
+Usage: python3 patch_arm64_simulator.py <Pods/MLKitFoo> [<Pods/MLKitBar> ...]
 """
 
 import os
@@ -55,8 +24,6 @@ CPU_TYPE_ARM64 = 0x0100000c
 
 
 def _patch_macho_object(buf):
-    """Patch LC_BUILD_VERSION.platform in a single Mach-O 64 object/dylib.
-    Returns ``(new_buf, was_patched)``."""
     if len(buf) < 32:
         return buf, False
     magic = struct.unpack_from('<I', buf, 0)[0]
@@ -82,8 +49,6 @@ def _patch_macho_object(buf):
 
 
 def _patch_static_archive(archive_path):
-    """Patch every arm64 Mach-O member of a BSD ``ar`` archive in place.
-    Returns the number of members modified."""
     with open(archive_path, 'rb') as f:
         data = f.read()
     if data[:8] != b'!<arch>\n':
@@ -123,7 +88,6 @@ def _patch_static_archive(archive_path):
 
 
 def _patch_thin(path):
-    """Patch a non-fat file: either a Mach-O 64 binary or an ``ar`` archive."""
     with open(path, 'rb') as f:
         head = f.read(8)
     if head[:8] == b'!<arch>\n':
@@ -140,7 +104,6 @@ def _patch_thin(path):
 
 
 def _patch_fat_binary(fat_path):
-    """Detect file type and patch the arm64 slice. Returns total patched count."""
     with open(fat_path, 'rb') as f:
         head = f.read(4)
     if len(head) < 4:
@@ -172,7 +135,6 @@ def _patch_fat_binary(fat_path):
 
 
 def _find_framework_binary(pod_dir):
-    """For ``Pods/<PodName>/``, return ``<PodName>.framework/<PodName>``."""
     fw_dir = os.path.join(pod_dir, 'Frameworks')
     if not os.path.isdir(fw_dir):
         return None

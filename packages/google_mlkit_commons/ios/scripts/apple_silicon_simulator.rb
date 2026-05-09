@@ -1,44 +1,7 @@
-# Helper to make Google ML Kit pods build for Apple Silicon iOS Simulators.
-#
-# Why this exists
-# ---------------
-# The frameworks Google publishes under the `GoogleMLKit/*` CocoaPods only ship
-# `arm64-iphoneos` and `x86_64-iphonesimulator` slices. Their podspecs set
-# `EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64`, which on Apple Silicon Macs
-# running iOS 26+ simulators (where Rosetta is not available by default)
-# breaks `flutter run` with:
-#
-#     Unable to find a destination matching the provided destination specifier
-#
-# Until Google publishes proper `arm64-iphonesimulator` slices (tracked in
-# https://issuetracker.google.com/issues/178965151), this helper applies a
-# well-known workaround at `pod install` time:
-#
-#   1. Re-labels the `arm64` device slice of every ML Kit framework binary
-#      as iOS Simulator (only the 4-byte `LC_BUILD_VERSION.platform` field is
-#      modified — same approach the `arm64-to-sim` tool uses).
-#   2. Strips `EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64` from the
-#      generated xcconfig files so the user's app target is allowed to build
-#      for `arm64-iphonesimulator`.
-#
-# This is opt-in. Add a single line inside your existing `post_install` block:
-#
-#     require File.expand_path(
-#       '.symlinks/plugins/google_mlkit_commons/ios/scripts/apple_silicon_simulator',
-#       __dir__,
-#     )
-#     post_install do |installer|
-#       # ...your existing post_install code...
-#       mlkit_apple_silicon_simulator_patch(installer)
-#     end
-#
-# Notes
-# -----
-# * Idempotent: running `pod install` multiple times is safe (the patcher
-#   skips slices that already report platform=iOS Simulator).
-# * Affects only the simulator build. Device builds are untouched.
-# * Modifies vendored binaries inside `Pods/` only; nothing in your app or in
-#   pub.dev caches is altered.
+# Opt-in Podfile helper that lets Google ML Kit pods build for Apple Silicon
+# iOS 26+ simulators. See packages/google_mlkit_commons/README.md (iOS
+# section) for rationale and usage. Upstream Google bug:
+# https://issuetracker.google.com/issues/178965151
 
 def mlkit_apple_silicon_simulator_patch(installer)
   pods_dir = File.expand_path(installer.sandbox.root.to_s)
