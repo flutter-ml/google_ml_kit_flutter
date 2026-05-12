@@ -2,6 +2,7 @@ import Flutter
 import MLKitVision
 import UIKit
 import CoreGraphics
+import CoreMedia
 import CoreVideo
 
 // MARK: - VisionImage from Flutter imageData
@@ -111,20 +112,46 @@ extension VisionImage {
     return pxBuffer
   }
 
+  // Wraps a CVPixelBuffer in a CMSampleBuffer and feeds it to MLKit via
+  // VisionImage(buffer:). The previous implementation created a fresh CIContext
+  // per frame and called createCGImage(_:from:); each call inserts a
+  // CI::SurfaceCacheEntry that the system never releases under sustained
+  // camera streaming, leaking ~3.5 MiB of IOSurface memory per call (300+ MiB
+  // per minute on 720p BGRA). VisionImage(buffer:) bypasses CoreImage entirely
+  // and is the same path Google's official MLKit iOS sample uses
+  // (googlesamples/mlkit CameraViewController.swift).
   private static func pixelBufferToVisionImage(_ pixelBufferRef: CVPixelBuffer) -> VisionImage? {
-    let ciImage = CIImage(cvPixelBuffer: pixelBufferRef)
-    let context = CIContext(options: nil)
-    let width = CVPixelBufferGetWidth(pixelBufferRef)
-    let height = CVPixelBufferGetHeight(pixelBufferRef)
-    guard let cgImage = context.createCGImage(
-      ciImage,
-      from: CGRect(x: 0, y: 0, width: width, height: height)
-    ) else {
+    var formatDesc: CMVideoFormatDescription?
+    let formatStatus = CMVideoFormatDescriptionCreateForImageBuffer(
+      allocator: kCFAllocatorDefault,
+      imageBuffer: pixelBufferRef,
+      formatDescriptionOut: &formatDesc
+    )
+    guard formatStatus == noErr, let formatDescription = formatDesc else {
       return nil
     }
-    // Swift ARC manages CGImage; UIImage(cgImage:) retains it.
-    let uiImage = UIImage(cgImage: cgImage)
-    return VisionImage(image: uiImage)
+
+    var timing = CMSampleTimingInfo(
+      duration: .invalid,
+      presentationTimeStamp: .zero,
+      decodeTimeStamp: .invalid
+    )
+    var sampleBuffer: CMSampleBuffer?
+    let sampleStatus = CMSampleBufferCreateForImageBuffer(
+      allocator: kCFAllocatorDefault,
+      imageBuffer: pixelBufferRef,
+      dataReady: true,
+      makeDataReadyCallback: nil,
+      refcon: nil,
+      formatDescription: formatDescription,
+      sampleTiming: &timing,
+      sampleBufferOut: &sampleBuffer
+    )
+    guard sampleStatus == noErr, let sampleBuffer = sampleBuffer else {
+      return nil
+    }
+
+    return VisionImage(buffer: sampleBuffer)
   }
 
   private static func bitmapToVisionImage(_ imageDict: [String: Any]) -> VisionImage? {
