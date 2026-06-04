@@ -26,11 +26,11 @@ let package = Package(
 	.target(
 	  name: "google_mlkit_selfie_segmentation",
 	  dependencies: [
-	    .product(name: "MLKitSegmentationSelfie", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitSegmentationCommon", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLImage", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitVision", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "Common", package: "GoogleMLKitSwiftPM"),
+	    .product(name: "MLKitSegmentationSelfie", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitSegmentationCommon", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLImage", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitVision", package: "google-mlkit-swiftpm"),
+	    .product(name: "Common", package: "google-mlkit-swiftpm"),
 	  ],
 	  path: "../Classes"
 	)

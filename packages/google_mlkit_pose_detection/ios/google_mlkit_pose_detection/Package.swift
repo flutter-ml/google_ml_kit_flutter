@@ -26,12 +26,12 @@ let package = Package(
 	    .target(
 	        name: "google_mlkit_pose_detection",
 	        dependencies: [
-	            .product(name: "MLKitPoseDetection", package: "GoogleMLKitSwiftPM"),
-	            .product(name: "MLKitPoseDetectionCommon", package: "GoogleMLKitSwiftPM"),
-	            .product(name: "MLKitPoseDetectionAccurate", package: "GoogleMLKitSwiftPM"),
-	            .product(name: "MLKitVision", package: "GoogleMLKitSwiftPM"),
-	            .product(name: "MLImage", package: "GoogleMLKitSwiftPM"),
-	            .product(name: "Common", package: "GoogleMLKitSwiftPM"),
+	            .product(name: "MLKitPoseDetection", package: "google-mlkit-swiftpm"),
+	            .product(name: "MLKitPoseDetectionCommon", package: "google-mlkit-swiftpm"),
+	            .product(name: "MLKitPoseDetectionAccurate", package: "google-mlkit-swiftpm"),
+	            .product(name: "MLKitVision", package: "google-mlkit-swiftpm"),
+	            .product(name: "MLImage", package: "google-mlkit-swiftpm"),
+	            .product(name: "Common", package: "google-mlkit-swiftpm"),
 	        ],
 	        path: "../Classes"
 	    )

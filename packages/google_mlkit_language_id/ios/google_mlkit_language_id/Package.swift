@@ -26,12 +26,12 @@ let package = Package(
 	.target(
 	  name: "google_mlkit_language_id",
 	  dependencies: [
-	    .product(name: "MLKitLanguageID", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitNaturalLanguage", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitXenoCommon", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitCommon", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "GoogleToolboxForMac", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "Common", package: "GoogleMLKitSwiftPM"),
+	    .product(name: "MLKitLanguageID", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitNaturalLanguage", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitXenoCommon", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitCommon", package: "google-mlkit-swiftpm"),
+	    .product(name: "GoogleToolboxForMac", package: "google-mlkit-swiftpm"),
+	    .product(name: "Common", package: "google-mlkit-swiftpm"),
 	  ],
 	  path: "../Classes"
 	)

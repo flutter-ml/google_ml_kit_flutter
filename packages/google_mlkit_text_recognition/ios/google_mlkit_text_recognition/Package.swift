@@ -26,11 +26,11 @@ let package = Package(
 	.target(
 	  name: "google_mlkit_text_recognition",
 	  dependencies: [
-	    .product(name: "MLKitTextRecognition", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitTextRecognitionCommon", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLImage", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "MLKitVision", package: "GoogleMLKitSwiftPM"),
-	    .product(name: "Common", package: "GoogleMLKitSwiftPM"),
+	    .product(name: "MLKitTextRecognition", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitTextRecognitionCommon", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLImage", package: "google-mlkit-swiftpm"),
+	    .product(name: "MLKitVision", package: "google-mlkit-swiftpm"),
+	    .product(name: "Common", package: "google-mlkit-swiftpm"),
 	  ],
 	  path: "../Classes"
 	)
