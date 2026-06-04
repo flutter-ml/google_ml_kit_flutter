@@ -104,6 +104,14 @@ Then re-run `pod install`. The example app under `packages/example` is wired up 
 
 The helper only changes vendored binaries inside `Pods/` and the `EXCLUDED_ARCHS` line in pod-generated xcconfigs. Device builds and release builds are unaffected. Remove the two lines to revert.
 
+#### Swift Package Manager (SPM) Support
+
+This plugin supports Swift Package Manager for iOS, which is the recommended way to manage iOS dependencies in Flutter 3.44+. CocoaPods support is deprecated and will be removed in future Flutter versions.
+
+No additional configuration is needed - Flutter will automatically detect and use the `Package.swift` file when building for iOS. The plugin uses the community-maintained [d-date/google-mlkit-swiftpm](https://github.com/d-date/google-mlkit-swiftpm) package for ML Kit binary dependencies.
+
+For more information, see: https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-plugin-authors
+
 ### Android
 
 - minSdkVersion: 21
