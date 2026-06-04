@@ -80,7 +80,9 @@ def _patch_static_archive(archive_path):
         if patched:
             n_patched += 1
         out += header + new_body
-        pos = body_end + (body_end & 1)  # 2-byte alignment
+        if size & 1:
+            out += data[body_end:body_end + 1]
+        pos = body_end + (size & 1)  # 2-byte alignment
     if n_patched > 0:
         with open(archive_path, 'wb') as f:
             f.write(bytes(out))
