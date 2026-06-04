@@ -77,6 +77,33 @@ end
 
 Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to something newer but not older.
 
+#### Apple Silicon iOS Simulator (iOS 26+)
+
+Google's `GoogleMLKit/*` pods only ship `arm64-iphoneos` and `x86_64-iphonesimulator` slices and exclude `arm64` from simulator builds. On Apple Silicon Macs running iOS 26+ simulators (where Rosetta 2 is no longer the default for the iOS Simulator) this makes `flutter run` fail with `Unable to find a destination matching the provided destination specifier`. Issue tracked upstream by Google: https://issuetracker.google.com/issues/178965151.
+
+Until proper `arm64-iphonesimulator` slices are published, this plugin ships an **opt-in** Podfile helper that, on every build, relabels the arm64 slice's `LC_BUILD_VERSION.platform` to match the target you are building for — iOS Simulator for simulator builds, iOS for device builds (the same swap used by the well-known [`arm64-to-sim`](https://github.com/bogo/arm64-to-sim) tool). It also strips `EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64` from the generated xcconfigs.
+
+To enable it, add two lines to your iOS `Podfile`:
+
+```ruby
+# Near the top, after `require ... podhelper ...`:
+require File.expand_path(
+  '.symlinks/plugins/google_mlkit_commons/ios/scripts/apple_silicon_simulator',
+  __dir__,
+)
+
+post_install do |installer|
+  # ...your existing post_install code...
+
+  # Add this line at the end:
+  mlkit_apple_silicon_simulator_patch(installer)
+end
+```
+
+Then re-run `pod install`. The example app under `packages/example` is wired up this way.
+
+Because the relabel runs per build and matches the target automatically, the same `pod install` works for **both** the simulator and physical devices — no manual revert is needed when you switch between them. The helper only touches the arm64 slice of the vendored ML Kit binaries inside `Pods/` and the `EXCLUDED_ARCHS` line in pod-generated xcconfigs. To fully revert, remove the two lines and reinstall the pods with `pod deintegrate && pod install` (a plain `pod install` re-adds the `EXCLUDED_ARCHS` line and removes the build phase, but does not restore the original platform label baked into the cached binaries by the last build).
+
 ### Android
 
 - minSdkVersion: 21
