@@ -77,6 +77,33 @@ end
 
 Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 15.5, you can set it to something newer but not older.
 
+#### Apple Silicon iOS Simulator (iOS 26+)
+
+Google's `GoogleMLKit/*` pods only ship `arm64-iphoneos` and `x86_64-iphonesimulator` slices and exclude `arm64` from simulator builds. On Apple Silicon Macs running iOS 26+ simulators (where Rosetta 2 is no longer the default for the iOS Simulator) this makes `flutter run` fail with `Unable to find a destination matching the provided destination specifier`. Issue tracked upstream by Google: https://issuetracker.google.com/issues/178965151.
+
+Until proper `arm64-iphonesimulator` slices are published, this plugin ships an **opt-in** Podfile helper that re-labels the existing arm64 device slice as iOS Simulator (the same `LC_BUILD_VERSION.platform` swap used by the well-known [`arm64-to-sim`](https://github.com/bogo/arm64-to-sim) tool) and strips the `EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64` from the generated xcconfigs.
+
+To enable it, add two lines to your iOS `Podfile`:
+
+```ruby
+# Near the top, after `require ... podhelper ...`:
+require File.expand_path(
+  '.symlinks/plugins/google_mlkit_commons/ios/scripts/apple_silicon_simulator',
+  __dir__,
+)
+
+post_install do |installer|
+  # ...your existing post_install code...
+
+  # Add this line at the end:
+  mlkit_apple_silicon_simulator_patch(installer)
+end
+```
+
+Then re-run `pod install`. The example app under `packages/example` is wired up this way.
+
+The helper only changes vendored binaries inside `Pods/` and the `EXCLUDED_ARCHS` line in pod-generated xcconfigs. Device builds and release builds are unaffected. Remove the two lines to revert.
+
 ### Android
 
 - minSdkVersion: 21
