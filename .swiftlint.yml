@@ -1,6 +1,9 @@
 # Exclude generated / third-party paths
 excluded:
   - packages/example/ios/Flutter/ephemeral
+  - packages/example/ios/.symlinks
+  - packages/example/ios/Pods
+  - packages/example/build
 
 function_body_length:
   warning: 90
