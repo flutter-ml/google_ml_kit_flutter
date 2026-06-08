@@ -27,7 +27,7 @@ apply plugin: "kotlin-android"
 android {
     namespace = "com.google_mlkit_smart_reply"
 
-    compileSdk = 35
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
