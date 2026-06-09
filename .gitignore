@@ -29,6 +29,10 @@
 .pub/
 **/build/
 
+# Swift Package Manager
+**/.build/
+**/.swiftpm/
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
