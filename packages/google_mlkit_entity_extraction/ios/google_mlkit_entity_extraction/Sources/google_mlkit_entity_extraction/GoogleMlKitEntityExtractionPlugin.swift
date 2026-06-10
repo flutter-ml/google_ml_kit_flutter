@@ -64,7 +64,7 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
             }
 
             let entityExtractor: EntityExtractor
-            if let existing = instances[uid] {
+            if let existing = instances[uid] as? EntityExtractor {
                 entityExtractor = existing
             } else {
                 guard let language = args["language"] as? String else {
@@ -232,9 +232,10 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
             let modelIdentifier = EntityExtractionModelIdentifier(rawValue: modelTag)
             let model = EntityExtractorRemoteModel.entityExtractorRemoteModel(
                 identifier: modelIdentifier)
-            let manager = GenericModelManager()
-            genericModelManager = manager
-            manager.manage(model: model, call: call, result: result)
+            if genericModelManager == nil {
+                genericModelManager = GenericModelManager()
+            }
+            genericModelManager?.manage(model: model, call: call, result: result)
         }
     #endif
 }

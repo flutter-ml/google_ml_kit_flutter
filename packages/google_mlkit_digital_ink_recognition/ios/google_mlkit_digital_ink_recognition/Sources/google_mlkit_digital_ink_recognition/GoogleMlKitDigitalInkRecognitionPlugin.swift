@@ -85,7 +85,7 @@ public class GoogleMlKitDigitalInkRecognitionPlugin: NSObject, FlutterPlugin {
             }
 
             let recognizer: DigitalInkRecognizer
-            if let existing = instances[uid] {
+            if let existing = instances[uid] as? DigitalInkRecognizer {
                 recognizer = existing
             } else {
                 let options = DigitalInkRecognizerOptions(model: model)
@@ -182,9 +182,10 @@ public class GoogleMlKitDigitalInkRecognitionPlugin: NSObject, FlutterPlugin {
                 return
             }
             let model = DigitalInkRecognitionModel(modelIdentifier: identifier)
-            let manager = GenericModelManager()
-            genericModelManager = manager
-            manager.manage(model: model, call: call, result: result)
+            if genericModelManager == nil {
+                genericModelManager = GenericModelManager()
+            }
+            genericModelManager?.manage(model: model, call: call, result: result)
         }
     #endif
 }

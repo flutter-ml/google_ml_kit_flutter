@@ -19,7 +19,7 @@ let package = Package(
         .target(
             name: "google_mlkit_entity_extraction",
             dependencies: [
-                .product(name: "google-mlkit-commons", package: "google_mlkit_commons")
+                .product(name: "google-mlkit-commons", package: "google-mlkit-commons")
             ],
             path: "Sources/google_mlkit_entity_extraction"
         )
