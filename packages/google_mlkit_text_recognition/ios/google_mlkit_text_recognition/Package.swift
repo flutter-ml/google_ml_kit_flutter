@@ -24,7 +24,7 @@ let package = Package(
             name: "google_mlkit_text_recognition",
             dependencies: [
                 .product(name: "MLKitTextRecognition", package: "google-mlkit-swiftpm"),
-                .product(name: "google-mlkit-commons", package: "google-mlkit-commons"),
+                .product(name: "google-mlkit-commons", package: "google_mlkit_commons"),
             ],
             path: "Sources/google_mlkit_text_recognition"
         )

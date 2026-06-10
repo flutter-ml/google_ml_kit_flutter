@@ -25,7 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "MLKitPoseDetection", package: "google-mlkit-swiftpm"),
                 .product(name: "MLKitPoseDetectionAccurate", package: "google-mlkit-swiftpm"),
-                .product(name: "google-mlkit-commons", package: "google-mlkit-commons"),
+                .product(name: "google-mlkit-commons", package: "google_mlkit_commons"),
             ],
             path: "Sources/google_mlkit_pose_detection"
         )
