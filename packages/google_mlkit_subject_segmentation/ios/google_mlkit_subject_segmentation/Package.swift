@@ -3,22 +3,22 @@
 import PackageDescription
 
 let package = Package(
-  name: "google-mlkit-subject-segmentation",
-  platforms: [
-    .iOS("15.0")
-  ],
-  products: [
-    .library(
-      name: "google-mlkit-subject-segmentation",
-      targets: ["google_mlkit_subject_segmentation"])
-  ],
-  dependencies: [
+    name: "google-mlkit-subject-segmentation",
+    platforms: [
+        .iOS("15.5")
+    ],
+    products: [
+        .library(
+            name: "google-mlkit-subject-segmentation",
+            targets: ["google_mlkit_subject_segmentation"])
+    ],
+    dependencies: [
 
-  ],
-  targets: [
-    .target(
-      name: "google_mlkit_subject_segmentation",
-      path: "Sources/google_mlkit_subject_segmentation"
-    )
-  ]
+    ],
+    targets: [
+        .target(
+            name: "google_mlkit_subject_segmentation",
+            path: "Sources/google_mlkit_subject_segmentation"
+        )
+    ]
 )

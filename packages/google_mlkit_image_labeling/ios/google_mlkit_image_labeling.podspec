@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'flutter-ml.dev'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*.swift'
+  s.source_files = 'google_mlkit_image_labeling/Sources/google_mlkit_image_labeling/**/*.swift'
   s.dependency 'Flutter'
   s.dependency 'GoogleMLKit/ImageLabeling', '~> 9.0.0'
   s.dependency 'GoogleMLKit/ImageLabelingCustom', '~> 9.0.0'

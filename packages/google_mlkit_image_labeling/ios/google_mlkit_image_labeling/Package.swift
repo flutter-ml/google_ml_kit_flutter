@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "google-mlkit-image-labeling",
     platforms: [
-        .iOS("15.0")
+        .iOS("15.5")
     ],
     products: [
         .library(
