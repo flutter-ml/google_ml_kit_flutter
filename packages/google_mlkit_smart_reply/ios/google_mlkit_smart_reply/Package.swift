@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_smart_reply"])
     ],
     dependencies: [
-        .package(path: "../google_mlkit_commons"),
+        .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             from: "9.0.0"

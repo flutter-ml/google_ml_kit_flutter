@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_face_mesh_detection"])
     ],
     dependencies: [
-        .package(path: "../google_mlkit_commons")
+        .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons")
     ],
     targets: [
         .target(

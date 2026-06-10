@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_entity_extraction"])
     ],
     dependencies: [
-        .package(path: "../google_mlkit_commons")
+        .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons")
     ],
     targets: [
         .target(
