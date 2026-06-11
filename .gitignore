@@ -32,6 +32,8 @@
 # Swift Package Manager
 **/.build/
 **/.swiftpm/
+# SPM lock files for library packages (not the main app)
+**/packages/google_mlkit_*/ios/google_mlkit_*/Package.resolved
 
 # Android related
 **/android/**/gradle-wrapper.jar
