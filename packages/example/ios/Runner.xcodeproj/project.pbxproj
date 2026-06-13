@@ -59,13 +59,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5AF1CF50FEB2DDD24045D4DC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +78,6 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
-				5AF1CF50FEB2DDD24045D4DC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,7 +118,6 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-								B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */,
 			);
 			buildRules = (
 			);
@@ -166,7 +157,7 @@
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
-				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */,
+				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */,
 			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
@@ -238,20 +229,7 @@
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif ! command -v swiftlint &>/dev/null; then\n    echo \"warning: swiftlint not found. Install with: brew install swiftlint\"\n    exit 0\nfi\nREPO_ROOT=\"${SRCROOT}/../../..\"\ncd \"$REPO_ROOT\" && swiftlint lint --fix && swiftlint lint --config \"$REPO_ROOT/.swiftlint.yml\"\n";
 			showEnvVarsInLog = 0;
 		};
-B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Fix TextRecognition Model";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FRAMEWORK_DYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionCommon\"\nFULL_DYLIB_GZ=\"${SRCROOT}/MLKitTextRecognitionCommon.full.dylib.gz\"\nif [ -f \"$FRAMEWORK_DYLIB\" ] && [ -f \"$FULL_DYLIB_GZ\" ]; then\n    echo \"Replacing thin MLKitTextRecognitionCommon with full version (includes model data)\"\n    gunzip -c \"$FULL_DYLIB_GZ\" > \"$FRAMEWORK_DYLIB\"\n    FRAMEWORK_DIR=\"$(dirname \"$(dirname \"$FRAMEWORK_DYLIB\")\")\"\n    if [ -n \"$EXPANDED_CODE_SIGN_IDENTITY\" ] && [ \"$EXPANDED_CODE_SIGN_IDENTITY\" != \"-\" ]; then\n        codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" --timestamp=none \"$FRAMEWORK_DIR\"\n    else\n        codesign --force --sign - \"$FRAMEWORK_DIR\"\n    fi\nfi";
-		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		97C146EA1CF9000F007C117D /* Sources */ = {
@@ -348,6 +326,7 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 2D3QTPZG5J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -355,14 +334,17 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = ("-ObjC", "-all_load");
-								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-								PRODUCT_NAME = "$(TARGET_NAME)";
-								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-								SWIFT_VERSION = 5.0;
-								VERSIONING_SYSTEM = "apple-generic";
-							};
-							name = Profile;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Profile;
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -490,6 +472,7 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 2D3QTPZG5J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -497,11 +480,14 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = ("-ObjC", "-all_load");
-								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-								PRODUCT_NAME = "$(TARGET_NAME)";
-								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-								SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -514,6 +500,7 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 2D3QTPZG5J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -521,14 +508,17 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = ("-ObjC", "-all_load");
-								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-								PRODUCT_NAME = "$(TARGET_NAME)";
-								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-								SWIFT_VERSION = 5.0;
-								VERSIONING_SYSTEM = "apple-generic";
-							};
-							name = Release;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -556,7 +546,7 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */ = {
+		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage;
 		};
