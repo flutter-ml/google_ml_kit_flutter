@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = 'flutter-ml.dev'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*.swift'
+  s.source_files = 'google_mlkit_subject_segmentation/Sources/google_mlkit_subject_segmentation/**/*.swift'
   s.dependency 'Flutter'
   #   s.dependency 'GoogleMLKit/SubjectSegmentation', '~> 6.0.0'
   s.platform = :ios, '15.5'

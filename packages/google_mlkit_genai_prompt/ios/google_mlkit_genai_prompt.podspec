@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.authors          = 'flutter-ml.dev'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*.swift'
+  s.source_files = 'google_mlkit_genai_prompt/Sources/google_mlkit_genai_prompt/**/*.swift'
   s.dependency 'Flutter'
   s.platform = :ios, '15.5'
   s.ios.deployment_target = '15.5'
