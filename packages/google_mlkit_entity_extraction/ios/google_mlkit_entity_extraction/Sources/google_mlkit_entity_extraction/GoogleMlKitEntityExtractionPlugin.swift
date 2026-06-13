@@ -92,8 +92,7 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
             if let locale = valueAsString(parameters["locale"]), !locale.isEmpty {
                 params.preferredLocale = Locale(identifier: locale)
             }
-            if let filtersValues = valueAsNumberArray(parameters["filters"]), !filtersValues.isEmpty
-            {
+            if let filtersValues = valueAsNumberArray(parameters["filters"]), !filtersValues.isEmpty {
                 let filters: Set<EntityType> = Set(
                     filtersValues.compactMap { numberToEntityType($0.intValue) })
                 params.typesFilter = filters
@@ -129,7 +128,7 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
                             "text": substring,
                             "start": range.location,
                             "end": range.location + range.length,
-                            "entities": entities,
+                            "entities": entities
                         ]
                     }
                     result(allAnnotations)
@@ -157,14 +156,13 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
         private func entityToDictionary(text: String, entity: Entity) -> [String: Any] {
             var entityData: [String: Any] = [
                 "type": entityTypeToNumber(entity.entityType),
-                "raw": String(describing: entity),
+                "raw": String(describing: entity)
             ]
             if entity.entityType == .dateTime, let dateTimeEntity = entity.dateTimeEntity {
                 entityData["dateTimeGranularity"] = dateTimeEntity.dateTimeGranularity.rawValue
                 entityData["timestamp"] = dateTimeEntity.dateTime.timeIntervalSince1970 * 1000
             } else if entity.entityType == .flightNumber,
-                let flightEntity = entity.flightNumberEntity
-            {
+                let flightEntity = entity.flightNumberEntity {
                 entityData["code"] = flightEntity.airlineCode
                 entityData["number"] = flightEntity.flightNumber
             } else if entity.entityType == .IBAN, let ibanEntity = entity.ibanEntity {
@@ -176,8 +174,7 @@ public class GoogleMlKitEntityExtractionPlugin: NSObject, FlutterPlugin {
                 entityData["network"] = cardEntity.paymentCardNetwork.rawValue
                 entityData["number"] = cardEntity.paymentCardNumber
             } else if entity.entityType == .trackingNumber,
-                let trackingEntity = entity.trackingNumberEntity
-            {
+                let trackingEntity = entity.trackingNumberEntity {
                 entityData["carrier"] = trackingEntity.parcelCarrier.rawValue
                 entityData["number"] = trackingEntity.parcelTrackingNumber
             } else if entity.entityType == .money, let moneyEntity = entity.moneyEntity {

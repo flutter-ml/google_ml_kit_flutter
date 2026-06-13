@@ -121,8 +121,7 @@ public class GoogleMlKitDigitalInkRecognitionPlugin: NSObject, FlutterPlugin {
                 var writingArea: WritingArea?
                 if let writingAreaMap = ctx["writingArea"] as? [String: Any],
                     let width = writingAreaMap["width"] as? NSNumber,
-                    let height = writingAreaMap["height"] as? NSNumber
-                {
+                    let height = writingAreaMap["height"] as? NSNumber {
                     writingArea = WritingArea(width: width.floatValue, height: height.floatValue)
                 }
                 context = DigitalInkRecognitionContext(
@@ -147,7 +146,7 @@ public class GoogleMlKitDigitalInkRecognitionPlugin: NSObject, FlutterPlugin {
                 let candidates = recognitionResult.candidates.map { candidate in
                     [
                         "text": candidate.text,
-                        "score": candidate.score?.doubleValue ?? 0,
+                        "score": candidate.score?.doubleValue ?? 0
                     ] as [String: Any]
                 }
                 result(candidates)

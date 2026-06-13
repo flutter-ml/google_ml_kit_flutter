@@ -97,7 +97,7 @@ public class GoogleMlKitObjectDetectionPlugin: NSObject, FlutterPlugin {
                     [
                         "index": label.index,
                         "text": label.text,
-                        "confidence": label.confidence,
+                        "confidence": label.confidence
                     ] as [String: Any]
                 }
                 var data: [String: Any] = [
@@ -105,9 +105,9 @@ public class GoogleMlKitObjectDetectionPlugin: NSObject, FlutterPlugin {
                         "left": Double(object.frame.origin.x),
                         "top": Double(object.frame.origin.y),
                         "right": Double(object.frame.origin.x + object.frame.size.width),
-                        "bottom": Double(object.frame.origin.y + object.frame.size.height),
+                        "bottom": Double(object.frame.origin.y + object.frame.size.height)
                     ] as [String: Double],
-                    "labels": labels,
+                    "labels": labels
                 ]
                 if let trackingID = object.trackingID {
                     data["trackingId"] = trackingID
@@ -119,8 +119,7 @@ public class GoogleMlKitObjectDetectionPlugin: NSObject, FlutterPlugin {
     }
 
     private func createDetector(from dictionary: [String: Any], result: @escaping FlutterResult)
-        -> ObjectDetector?
-    {
+        -> ObjectDetector? {
         let type = dictionary["type"] as? String ?? "base"
         switch type {
         case "base":

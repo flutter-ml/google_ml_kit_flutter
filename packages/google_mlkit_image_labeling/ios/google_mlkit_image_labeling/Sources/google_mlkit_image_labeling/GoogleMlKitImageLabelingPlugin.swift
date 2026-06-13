@@ -149,7 +149,7 @@ public class GoogleMlKitImageLabelingPlugin: NSObject, FlutterPlugin {
                 [
                     "confidence": label.confidence,
                     "index": label.index,
-                    "text": label.text,
+                    "text": label.text
                 ] as [String: Any]
             }
             result(labelData)
