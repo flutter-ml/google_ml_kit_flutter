@@ -24,6 +24,10 @@ let package = Package(
             name: "google_mlkit_text_recognition",
             dependencies: [
                 .product(name: "MLKitTextRecognition", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitTextRecognitionChinese", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitTextRecognitionDevanagari", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitTextRecognitionJapanese", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitTextRecognitionKorean", package: "google-mlkit-swiftpm"),
                 // Note: The `package` value uses the DIRECTORY name ("google_mlkit_commons"), not the
                 // Package.swift `name` field ("google-mlkit-commons"). For local path dependencies, SPM
                 // derives the package identity from the directory name, not the `name` field.
