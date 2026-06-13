@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
-            from: "9.0.0"
+            from: "9.0.0-1"
         )
     ],
     targets: [
