@@ -341,13 +341,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Profile;
+				OTHER_LDFLAGS = "-ObjC";
+								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+								PRODUCT_NAME = "$(TARGET_NAME)";
+								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+								SWIFT_VERSION = 5.0;
+								VERSIONING_SYSTEM = "apple-generic";
+							};
+							name = Profile;
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -482,10 +483,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				OTHER_LDFLAGS = "-ObjC";
+								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+								PRODUCT_NAME = "$(TARGET_NAME)";
+								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+								SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -505,13 +507,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
+				OTHER_LDFLAGS = "-ObjC";
+								PRODUCT_BUNDLE_IDENTIFIER = com.example.googleMlKitExample;
+								PRODUCT_NAME = "$(TARGET_NAME)";
+								SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
+								SWIFT_VERSION = 5.0;
+								VERSIONING_SYSTEM = "apple-generic";
+							};
+							name = Release;
 		};
 /* End XCBuildConfiguration section */
 
