@@ -126,6 +126,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+								B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */,
 			);
 			buildRules = (
 			);
@@ -237,7 +238,20 @@
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif ! command -v swiftlint &>/dev/null; then\n    echo \"warning: swiftlint not found. Install with: brew install swiftlint\"\n    exit 0\nfi\nREPO_ROOT=\"${SRCROOT}/../../..\"\ncd \"$REPO_ROOT\" && swiftlint lint --fix && swiftlint lint --config \"$REPO_ROOT/.swiftlint.yml\"\n";
 			showEnvVarsInLog = 0;
 		};
-/* End PBXShellScriptBuildPhase section */
+B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Fix TextRecognition Model";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FRAMEWORK_DYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionCommon\"\nFULL_DYLIB_GZ=\"${SRCROOT}/MLKitTextRecognitionCommon.full.dylib.gz\"\nif [ -f \"$FRAMEWORK_DYLIB\" ] && [ -f \"$FULL_DYLIB_GZ\" ]; then\n    echo \"Replacing thin MLKitTextRecognitionCommon with full version (includes model data)\"\n    gunzip -c \"$FULL_DYLIB_GZ\" > \"$FRAMEWORK_DYLIB\"\nfi";
+		};
 
 /* Begin PBXSourcesBuildPhase section */
 		97C146EA1CF9000F007C117D /* Sources */ = {
