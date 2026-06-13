@@ -250,7 +250,7 @@ B3CD2BE409E146F9B1BCCEAF /* Fix TextRecognition Model */ = {
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FRAMEWORK_DYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionCommon\"\nFULL_DYLIB_GZ=\"${SRCROOT}/MLKitTextRecognitionCommon.full.dylib.gz\"\nif [ -f \"$FRAMEWORK_DYLIB\" ] && [ -f \"$FULL_DYLIB_GZ\" ]; then\n    echo \"Replacing thin MLKitTextRecognitionCommon with full version (includes model data)\"\n    gunzip -c \"$FULL_DYLIB_GZ\" > \"$FRAMEWORK_DYLIB\"\nfi";
+			shellScript = "FRAMEWORK_DYLIB=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLKitTextRecognitionCommon.framework/MLKitTextRecognitionCommon\"\nFULL_DYLIB_GZ=\"${SRCROOT}/MLKitTextRecognitionCommon.full.dylib.gz\"\nif [ -f \"$FRAMEWORK_DYLIB\" ] && [ -f \"$FULL_DYLIB_GZ\" ]; then\n    echo \"Replacing thin MLKitTextRecognitionCommon with full version (includes model data)\"\n    gunzip -c \"$FULL_DYLIB_GZ\" > \"$FRAMEWORK_DYLIB\"\n    FRAMEWORK_DIR=\"$(dirname \"$(dirname \"$FRAMEWORK_DYLIB\")\")\"\n    if [ -n \"$EXPANDED_CODE_SIGN_IDENTITY\" ] && [ \"$EXPANDED_CODE_SIGN_IDENTITY\" != \"-\" ]; then\n        codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" --timestamp=none \"$FRAMEWORK_DIR\"\n    else\n        codesign --force --sign - \"$FRAMEWORK_DIR\"\n    fi\nfi";
 		};
 
 /* Begin PBXSourcesBuildPhase section */
