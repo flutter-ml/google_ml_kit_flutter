@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		19BEEF351D804C298C54516F /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 185FF648C8C3525E10052A2C /* libPods-Runner.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
@@ -30,14 +31,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07F1C45CAB683E2489041B44 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		185FF648C8C3525E10052A2C /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFA3C8F1D35360C0083082F /* Profile.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Profile.xcconfig; path = Flutter/Profile.xcconfig; sourceTree = "<group>"; };
+		8A014A7A90898F823F3D4B3D /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		923A943AD1A8668FF24F5D59 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */,
+				19BEEF351D804C298C54516F /* libPods-Runner.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,8 +68,19 @@
 		5AF1CF50FEB2DDD24045D4DC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				8A014A7A90898F823F3D4B3D /* Pods-Runner.debug.xcconfig */,
+				923A943AD1A8668FF24F5D59 /* Pods-Runner.release.xcconfig */,
+				07F1C45CAB683E2489041B44 /* Pods-Runner.profile.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8B326F84B2536FFF50DFEFD3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				185FF648C8C3525E10052A2C /* libPods-Runner.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
@@ -86,6 +103,7 @@
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				5AF1CF50FEB2DDD24045D4DC /* Pods */,
+				8B326F84B2536FFF50DFEFD3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +137,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
+				80DABC9846A6DDC8F0D21E5C /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				A7B8C9D0E1F2A3B4C5D6E7F8 /* SwiftLint */,
 				97C146EA1CF9000F007C117D /* Sources */,
@@ -126,6 +145,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+				0B0823EF0E30F27C01C5808D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -134,51 +154,7 @@
 			name = Runner;
 			packageProductDependencies = (
 				78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */,
-			
-			E381CFBB599EE313D76916CB /* E381CFBB599EE313D76916CB */,
-
-			2BC5A038DC549C68F6397A64 /* 2BC5A038DC549C68F6397A64 */,
-
-			0BEECA16642A426EE982E3F8 /* 0BEECA16642A426EE982E3F8 */,
-
-			64A4268FF4DF504D0348BD8F /* 64A4268FF4DF504D0348BD8F */,
-
-			2671744D8C388042AC70B2B2 /* 2671744D8C388042AC70B2B2 */,
-
-			5403D845A1F0CEE324EDEC63 /* 5403D845A1F0CEE324EDEC63 */,
-
-			4E597BA8FB3CB959CD16D111 /* 4E597BA8FB3CB959CD16D111 */,
-
-			7C1462B1BB255D9314212844 /* 7C1462B1BB255D9314212844 */,
-
-			3B18FD4AE6667568E94F7517 /* 3B18FD4AE6667568E94F7517 */,
-
-			41BE46E0A4E44D27D6BCB65A /* 41BE46E0A4E44D27D6BCB65A */,
-
-			801399EF61E9C33E660C5A67 /* 801399EF61E9C33E660C5A67 */,
-
-			AE080670823DA3AEDAE412C6 /* AE080670823DA3AEDAE412C6 */,
-
-			1E7A6E6838350F1133EDFBEB /* 1E7A6E6838350F1133EDFBEB */,
-
-			C73603FE33D838BBDBB60F3E /* C73603FE33D838BBDBB60F3E */,
-
-			AF3AA7322BE88AD7FD5633EC /* AF3AA7322BE88AD7FD5633EC */,
-
-			CD324B97EEF945594E649D3F /* CD324B97EEF945594E649D3F */,
-
-			BD7D6D398D18A24241635428 /* BD7D6D398D18A24241635428 */,
-
-			FE08C395B13BD7766C6E08FE /* FE08C395B13BD7766C6E08FE */,
-
-			7DD063CB18632991A38DF3E4 /* 7DD063CB18632991A38DF3E4 */,
-
-			F2D4E1323068DCA6E9F1E9E0 /* F2D4E1323068DCA6E9F1E9E0 */,
-
-			AD97BD04CDA6594C5875426C /* AD97BD04CDA6594C5875426C */,
-
-			2B1892C0B18B4ECAEC7B821F /* 2B1892C0B18B4ECAEC7B821F */,
-		);
+			);
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
@@ -210,30 +186,7 @@
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
 				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "FlutterGeneratedPluginSwiftPackage" */,
-			
-			DB4FDE6AF3C538D740D087E9 /* XCLocalSwiftPackageReference "google_mlkit_pose_detection" */,
-			11B3AA3DCA89E03D006FFCEF /* XCLocalSwiftPackageReference "google_mlkit_language_id" */,
-			C2E9F60B7DBF77027F18E770 /* XCLocalSwiftPackageReference "google_mlkit_face_mesh_detection" */,
-			DE5C37C1EA38D0AFF611761B /* XCLocalSwiftPackageReference "google_mlkit_digital_ink_recognition" */,
-			F9F5190A94C8934F08DE34A3 /* XCLocalSwiftPackageReference "google_mlkit_genai_rewriting" */,
-			62696B3DFE2EB53A787DA2C6 /* XCLocalSwiftPackageReference "google_mlkit_commons" */,
-			22D1CEDAE881E717833F0435 /* XCLocalSwiftPackageReference "google_mlkit_genai_prompt" */,
-			31A1A27579B511EC56F94AAB /* XCLocalSwiftPackageReference "google_mlkit_genai_image_description" */,
-			B0DE28E67513C4BCA862E150 /* XCLocalSwiftPackageReference "google_mlkit_genai_summarization" */,
-			5D46B15D5B49185102C5996E /* XCLocalSwiftPackageReference "google_mlkit_subject_segmentation" */,
-			B0246843553B42A8E99AC791 /* XCLocalSwiftPackageReference "google_mlkit_genai_speech_recognition" */,
-			AD8582B433E242D66AE5F393 /* XCLocalSwiftPackageReference "google_mlkit_document_scanner" */,
-			AF9E2F5CDF2B2610DE7CD187 /* XCLocalSwiftPackageReference "google_mlkit_barcode_scanning" */,
-			9F0215B734D009D43B14D683 /* XCLocalSwiftPackageReference "google_mlkit_object_detection" */,
-			C4C8C6A141297A1F2DA7F741 /* XCLocalSwiftPackageReference "google_mlkit_genai_proofreading" */,
-			9AD48C09202E028B1633DD4F /* XCLocalSwiftPackageReference "google_mlkit_face_detection" */,
-			9F673DCB06A54C21B4315872 /* XCLocalSwiftPackageReference "google_mlkit_image_labeling" */,
-			78B841AC49A59160EC9197E0 /* XCLocalSwiftPackageReference "google_mlkit_selfie_segmentation" */,
-			D82BED911CE297412EB91005 /* XCLocalSwiftPackageReference "google_mlkit_entity_extraction" */,
-			0DC882DCDD06D8043D0BAA17 /* XCLocalSwiftPackageReference "google_mlkit_smart_reply" */,
-			C637448BE2576B2455B35AE1 /* XCLocalSwiftPackageReference "google_mlkit_text_recognition" */,
-			63A6D7F8278666D3E04BD463 /* XCLocalSwiftPackageReference "google_mlkit_translation" */,
-		);
+			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -258,6 +211,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0B0823EF0E30F27C01C5808D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -273,6 +243,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+		};
+		80DABC9846A6DDC8F0D21E5C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Runner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -618,189 +610,6 @@
 			productName = FlutterGeneratedPluginSwiftPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-		/* Begin XCLocalSwiftPackageReference section (added by script) */
-		DB4FDE6AF3C538D740D087E9 /* XCLocalSwiftPackageReference "google_mlkit_pose_detection" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_pose_detection/ios/google_mlkit_pose_detection";
-		};
-		11B3AA3DCA89E03D006FFCEF /* XCLocalSwiftPackageReference "google_mlkit_language_id" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_language_id/ios/google_mlkit_language_id";
-		};
-		C2E9F60B7DBF77027F18E770 /* XCLocalSwiftPackageReference "google_mlkit_face_mesh_detection" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_face_mesh_detection/ios/google_mlkit_face_mesh_detection";
-		};
-		DE5C37C1EA38D0AFF611761B /* XCLocalSwiftPackageReference "google_mlkit_digital_ink_recognition" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_digital_ink_recognition/ios/google_mlkit_digital_ink_recognition";
-		};
-		F9F5190A94C8934F08DE34A3 /* XCLocalSwiftPackageReference "google_mlkit_genai_rewriting" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_rewriting/ios/google_mlkit_genai_rewriting";
-		};
-		62696B3DFE2EB53A787DA2C6 /* XCLocalSwiftPackageReference "google_mlkit_commons" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_commons/ios/google_mlkit_commons";
-		};
-		22D1CEDAE881E717833F0435 /* XCLocalSwiftPackageReference "google_mlkit_genai_prompt" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_prompt/ios/google_mlkit_genai_prompt";
-		};
-		31A1A27579B511EC56F94AAB /* XCLocalSwiftPackageReference "google_mlkit_genai_image_description" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_image_description/ios/google_mlkit_genai_image_description";
-		};
-		B0DE28E67513C4BCA862E150 /* XCLocalSwiftPackageReference "google_mlkit_genai_summarization" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_summarization/ios/google_mlkit_genai_summarization";
-		};
-		5D46B15D5B49185102C5996E /* XCLocalSwiftPackageReference "google_mlkit_subject_segmentation" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_subject_segmentation/ios/google_mlkit_subject_segmentation";
-		};
-		B0246843553B42A8E99AC791 /* XCLocalSwiftPackageReference "google_mlkit_genai_speech_recognition" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_speech_recognition/ios/google_mlkit_genai_speech_recognition";
-		};
-		AD8582B433E242D66AE5F393 /* XCLocalSwiftPackageReference "google_mlkit_document_scanner" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_document_scanner/ios/google_mlkit_document_scanner";
-		};
-		AF9E2F5CDF2B2610DE7CD187 /* XCLocalSwiftPackageReference "google_mlkit_barcode_scanning" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_barcode_scanning/ios/google_mlkit_barcode_scanning";
-		};
-		9F0215B734D009D43B14D683 /* XCLocalSwiftPackageReference "google_mlkit_object_detection" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_object_detection/ios/google_mlkit_object_detection";
-		};
-		C4C8C6A141297A1F2DA7F741 /* XCLocalSwiftPackageReference "google_mlkit_genai_proofreading" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_genai_proofreading/ios/google_mlkit_genai_proofreading";
-		};
-		9AD48C09202E028B1633DD4F /* XCLocalSwiftPackageReference "google_mlkit_face_detection" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_face_detection/ios/google_mlkit_face_detection";
-		};
-		9F673DCB06A54C21B4315872 /* XCLocalSwiftPackageReference "google_mlkit_image_labeling" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_image_labeling/ios/google_mlkit_image_labeling";
-		};
-		78B841AC49A59160EC9197E0 /* XCLocalSwiftPackageReference "google_mlkit_selfie_segmentation" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_selfie_segmentation/ios/google_mlkit_selfie_segmentation";
-		};
-		D82BED911CE297412EB91005 /* XCLocalSwiftPackageReference "google_mlkit_entity_extraction" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_entity_extraction/ios/google_mlkit_entity_extraction";
-		};
-		0DC882DCDD06D8043D0BAA17 /* XCLocalSwiftPackageReference "google_mlkit_smart_reply" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_smart_reply/ios/google_mlkit_smart_reply";
-		};
-		C637448BE2576B2455B35AE1 /* XCLocalSwiftPackageReference "google_mlkit_text_recognition" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_text_recognition/ios/google_mlkit_text_recognition";
-		};
-		63A6D7F8278666D3E04BD463 /* XCLocalSwiftPackageReference "google_mlkit_translation" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../google_mlkit_translation/ios/google_mlkit_translation";
-		};
-		/* End XCLocalSwiftPackageReference section */
-
-		/* Begin XCSwiftPackageProductDependency section (added by script) */
-		E381CFBB599EE313D76916CB /* google-mlkit-pose-detection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-pose-detection";
-		};
-		2BC5A038DC549C68F6397A64 /* google-mlkit-language-id */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-language-id";
-		};
-		0BEECA16642A426EE982E3F8 /* google-mlkit-face-mesh-detection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-face-mesh-detection";
-		};
-		64A4268FF4DF504D0348BD8F /* google-mlkit-digital-ink-recognition */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-digital-ink-recognition";
-		};
-		2671744D8C388042AC70B2B2 /* google-mlkit-genai-rewriting */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-rewriting";
-		};
-		5403D845A1F0CEE324EDEC63 /* google-mlkit-commons */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-commons";
-		};
-		4E597BA8FB3CB959CD16D111 /* google-mlkit-genai-prompt */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-prompt";
-		};
-		7C1462B1BB255D9314212844 /* google-mlkit-genai-image-description */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-image-description";
-		};
-		3B18FD4AE6667568E94F7517 /* google-mlkit-genai-summarization */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-summarization";
-		};
-		41BE46E0A4E44D27D6BCB65A /* google-mlkit-subject-segmentation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-subject-segmentation";
-		};
-		801399EF61E9C33E660C5A67 /* google-mlkit-genai-speech-recognition */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-speech-recognition";
-		};
-		AE080670823DA3AEDAE412C6 /* google-mlkit-document-scanner */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-document-scanner";
-		};
-		1E7A6E6838350F1133EDFBEB /* google-mlkit-barcode-scanning */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-barcode-scanning";
-		};
-		C73603FE33D838BBDBB60F3E /* google-mlkit-object-detection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-object-detection";
-		};
-		AF3AA7322BE88AD7FD5633EC /* google-mlkit-genai-proofreading */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-genai-proofreading";
-		};
-		CD324B97EEF945594E649D3F /* google-mlkit-face-detection */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-face-detection";
-		};
-		BD7D6D398D18A24241635428 /* google-mlkit-image-labeling */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-image-labeling";
-		};
-		FE08C395B13BD7766C6E08FE /* google-mlkit-selfie-segmentation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-selfie-segmentation";
-		};
-		7DD063CB18632991A38DF3E4 /* google-mlkit-entity-extraction */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-entity-extraction";
-		};
-		F2D4E1323068DCA6E9F1E9E0 /* google-mlkit-smart-reply */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-smart-reply";
-		};
-		AD97BD04CDA6594C5875426C /* google-mlkit-text-recognition */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-text-recognition";
-		};
-		2B1892C0B18B4ECAEC7B821F /* google-mlkit-translation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "google-mlkit-translation";
-		};
-		/* End XCSwiftPackageProductDependency section */
-
 	};
 	rootObject = 97C146E61CF9000F007C117D /* Project object */;
 }
