@@ -4,5 +4,4 @@
    <FileRef
       location = "group:Runner.xcodeproj">
    </FileRef>
-  <!-- Pods workspace entry removed during SPM migration. The project now opens the Xcode project directly. -->
 </Workspace>
