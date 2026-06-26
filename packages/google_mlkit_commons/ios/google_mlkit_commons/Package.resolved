@@ -3,9 +3,9 @@
     {
       "identity" : "google-mlkit-swiftpm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/d-date/google-mlkit-swiftpm",
+      "location" : "https://github.com/arrrrny/google-mlkit-swiftpm",
       "state" : {
-        "revision" : "7aefa43c5105f28b9a8f9a48f7a115524a101186",
+        "revision" : "838706d90c761b50fedcfc79aee8e1bc4a39af1a",
         "version" : "9.0.0"
       }
     },
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleUtilities.git",
       "state" : {
-        "revision" : "60da361632d0de02786f709bdc0c4df340f7613e",
-        "version" : "8.1.0"
+        "revision" : "c46e5f8b7c23265f17c24ca7f9fa1b13ded7a822",
+        "version" : "8.1.1"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
       "state" : {
-        "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
-        "version" : "2.4.0"
+        "revision" : "f4a19a3c313dc2616c70bb49d29a799fb16be837",
+        "version" : "2.4.1"
       }
     }
   ],
