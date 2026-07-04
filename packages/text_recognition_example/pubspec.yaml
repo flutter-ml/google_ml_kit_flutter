@@ -1,0 +1,24 @@
+name: text_recognition_example
+description: "Text recognition example using camera + google_mlkit_text_recognition."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_mlkit_text_recognition:
+    path: ../google_mlkit_text_recognition
+
+dependency_overrides:
+  google_mlkit_commons:
+    path: ../google_mlkit_commons
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
