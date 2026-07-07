@@ -4,6 +4,13 @@ excluded:
   - packages/example/ios/.symlinks
   - packages/example/ios/Pods
   - packages/example/build
+  - "**/ephemeral"
+  - "**/.symlinks"
+  - "**/Pods"
+  - "**/build"
+  - "**/.build"
+  - "**/.swiftpm"
+
 
 function_body_length:
   warning: 90
