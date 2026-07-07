@@ -1,3 +1,10 @@
+## 0.14.0
+
+* Migrate Android implementation from Java to Kotlin.
+* Migrate iOS implementation from Objective-C to Swift.
+* Bump Android compileSdk to 36 for AGP 9 compatibility.
+* Enable support for Apple Silicon simulator on iOS 26+.
+
 ## 0.13.1
 
 * Update Android native library `com.google.mlkit:translate` to 17.0.3

@@ -3,6 +3,200 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-07-07
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.22.0`](#google_ml_kit---v0220)
+- [`google_mlkit_commons` - `v0.12.0`](#google_mlkit_commons---v0120)
+- [`google_mlkit_barcode_scanning` - `v0.15.0`](#google_mlkit_barcode_scanning---v0150)
+- [`google_mlkit_digital_ink_recognition` - `v0.15.0`](#google_mlkit_digital_ink_recognition---v0150)
+- [`google_mlkit_document_scanner` - `v0.5.0`](#google_mlkit_document_scanner---v050)
+- [`google_mlkit_entity_extraction` - `v0.16.0`](#google_mlkit_entity_extraction---v0160)
+- [`google_mlkit_face_detection` - `v0.14.0`](#google_mlkit_face_detection---v0140)
+- [`google_mlkit_face_mesh_detection` - `v0.5.0`](#google_mlkit_face_mesh_detection---v050)
+- [`google_mlkit_genai_image_description` - `v0.2.0`](#google_mlkit_genai_image_description---v020)
+- [`google_mlkit_genai_prompt` - `v0.2.0`](#google_mlkit_genai_prompt---v020)
+- [`google_mlkit_genai_proofreading` - `v0.2.0`](#google_mlkit_genai_proofreading---v020)
+- [`google_mlkit_genai_rewriting` - `v0.2.0`](#google_mlkit_genai_rewriting---v020)
+- [`google_mlkit_genai_speech_recognition` - `v0.2.0`](#google_mlkit_genai_speech_recognition---v020)
+- [`google_mlkit_genai_summarization` - `v0.2.0`](#google_mlkit_genai_summarization---v020)
+- [`google_mlkit_image_labeling` - `v0.15.0`](#google_mlkit_image_labeling---v0150)
+- [`google_mlkit_language_id` - `v0.14.0`](#google_mlkit_language_id---v0140)
+- [`google_mlkit_object_detection` - `v0.16.0`](#google_mlkit_object_detection---v0160)
+- [`google_mlkit_pose_detection` - `v0.15.0`](#google_mlkit_pose_detection---v0150)
+- [`google_mlkit_selfie_segmentation` - `v0.11.0`](#google_mlkit_selfie_segmentation---v0110)
+- [`google_mlkit_smart_reply` - `v0.14.0`](#google_mlkit_smart_reply---v0140)
+- [`google_mlkit_subject_segmentation` - `v0.1.0`](#google_mlkit_subject_segmentation---v010)
+- [`google_mlkit_text_recognition` - `v0.16.0`](#google_mlkit_text_recognition---v0160)
+- [`google_mlkit_translation` - `v0.14.0`](#google_mlkit_translation---v0140)
+
+---
+
+#### `google_ml_kit` - `v0.22.0`
+
+* Update all dependencies to latest versions
+
+#### `google_mlkit_commons` - `v0.12.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Optimize InputImage conversion and enhance image format validation
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_barcode_scanning` - `v0.15.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_digital_ink_recognition` - `v0.15.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_document_scanner` - `v0.5.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS plugin stub from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+* Note: iOS support is still not available
+
+#### `google_mlkit_entity_extraction` - `v0.16.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_face_detection` - `v0.14.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_face_mesh_detection` - `v0.5.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_image_description` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_prompt` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_proofreading` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_rewriting` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_speech_recognition` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_genai_summarization` - `v0.2.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_image_labeling` - `v0.15.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_language_id` - `v0.14.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_object_detection` - `v0.16.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_pose_detection` - `v0.15.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_selfie_segmentation` - `v0.11.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_smart_reply` - `v0.14.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_subject_segmentation` - `v0.1.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_text_recognition` - `v0.16.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
+#### `google_mlkit_translation` - `v0.14.0`
+
+* Migrate Android implementation from Java to Kotlin
+* Migrate iOS implementation from Objective-C to Swift
+* Bump Android compileSdk to 36 for AGP 9 compatibility
+* Enable support for Apple Silicon simulator on iOS 26+
+
 ## 2026-02-03
 
 ### Changes

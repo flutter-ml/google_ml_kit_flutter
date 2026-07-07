@@ -1,3 +1,10 @@
+## 0.1.0
+
+* Migrate Android implementation from Java to Kotlin.
+* Migrate iOS implementation from Objective-C to Swift.
+* Bump Android compileSdk to 36 for AGP 9 compatibility.
+* Enable support for Apple Silicon simulator on iOS 26+.
+
 ## 0.0.3
 
 * Update Android native library `com.google.android.gms:play-services-mlkit-subject-segmentation` to 16.0.0-beta1

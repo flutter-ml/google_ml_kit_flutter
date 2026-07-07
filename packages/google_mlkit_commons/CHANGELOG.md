@@ -1,3 +1,11 @@
+## 0.12.0
+
+* Migrate Android implementation from Java to Kotlin.
+* Migrate iOS implementation from Objective-C to Swift.
+* Optimize InputImage conversion and enhance image format validation.
+* Bump Android compileSdk to 36 for AGP 9 compatibility.
+* Enable support for Apple Silicon simulator on iOS 26+.
+
 ## 0.11.1
 
 * Update Android native library `com.google.mlkit:vision-common` to 17.3.0

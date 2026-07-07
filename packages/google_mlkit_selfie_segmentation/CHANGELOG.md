@@ -1,3 +1,10 @@
+## 0.11.0
+
+* Migrate Android implementation from Java to Kotlin.
+* Migrate iOS implementation from Objective-C to Swift.
+* Bump Android compileSdk to 36 for AGP 9 compatibility.
+* Enable support for Apple Silicon simulator on iOS 26+.
+
 ## 0.10.1
 
 * Update Android native library `com.google.mlkit:segmentation-selfie` to 16.0.0-beta6

@@ -1,3 +1,10 @@
+## 0.15.0
+
+* Migrate Android implementation from Java to Kotlin.
+* Migrate iOS implementation from Objective-C to Swift.
+* Bump Android compileSdk to 36 for AGP 9 compatibility.
+* Enable support for Apple Silicon simulator on iOS 26+.
+
 ## 0.14.2
 
 * Update Android native library `com.google.mlkit:barcode-scanning` to 17.3.0

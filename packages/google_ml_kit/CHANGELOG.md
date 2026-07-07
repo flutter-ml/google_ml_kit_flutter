@@ -1,3 +1,7 @@
+## 0.22.0
+
+* Update all dependencies to latest versions.
+
 ## 0.21.0
 
 * Add support for Google's ML Kit GenAI APIs:
