@@ -87,3 +87,6 @@ android/.settings/org.eclipse.buildship.core.prefs
 example/android/.project
 example/android/.settings/org.eclipse.buildship.core.prefs
 android/.classpath
+
+# Swift Package Manager
+**/.build/

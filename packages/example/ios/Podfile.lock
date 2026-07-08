@@ -11,8 +11,6 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/DigitalInkRecognition (~> 9.0.0)
-  - google_mlkit_document_scanner (0.5.0):
-    - Flutter
   - google_mlkit_entity_extraction (0.16.0):
     - Flutter
     - google_mlkit_commons
@@ -24,18 +22,6 @@ PODS:
   - google_mlkit_face_mesh_detection (0.5.0):
     - Flutter
     - google_mlkit_commons
-  - google_mlkit_genai_image_description (0.2.0):
-    - Flutter
-  - google_mlkit_genai_prompt (0.2.0):
-    - Flutter
-  - google_mlkit_genai_proofreading (0.2.0):
-    - Flutter
-  - google_mlkit_genai_rewriting (0.2.0):
-    - Flutter
-  - google_mlkit_genai_speech_recognition (0.2.0):
-    - Flutter
-  - google_mlkit_genai_summarization (0.2.0):
-    - Flutter
   - google_mlkit_image_labeling (0.15.0):
     - Flutter
     - google_mlkit_commons
@@ -63,8 +49,6 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/SmartReply (~> 9.0.0)
-  - google_mlkit_subject_segmentation (0.1.0):
-    - Flutter
   - google_mlkit_text_recognition (0.16.0):
     - Flutter
     - google_mlkit_commons
@@ -280,23 +264,15 @@ DEPENDENCIES:
   - google_mlkit_barcode_scanning (from `.symlinks/plugins/google_mlkit_barcode_scanning/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_digital_ink_recognition (from `.symlinks/plugins/google_mlkit_digital_ink_recognition/ios`)
-  - google_mlkit_document_scanner (from `.symlinks/plugins/google_mlkit_document_scanner/ios`)
   - google_mlkit_entity_extraction (from `.symlinks/plugins/google_mlkit_entity_extraction/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - google_mlkit_face_mesh_detection (from `.symlinks/plugins/google_mlkit_face_mesh_detection/ios`)
-  - google_mlkit_genai_image_description (from `.symlinks/plugins/google_mlkit_genai_image_description/ios`)
-  - google_mlkit_genai_prompt (from `.symlinks/plugins/google_mlkit_genai_prompt/ios`)
-  - google_mlkit_genai_proofreading (from `.symlinks/plugins/google_mlkit_genai_proofreading/ios`)
-  - google_mlkit_genai_rewriting (from `.symlinks/plugins/google_mlkit_genai_rewriting/ios`)
-  - google_mlkit_genai_speech_recognition (from `.symlinks/plugins/google_mlkit_genai_speech_recognition/ios`)
-  - google_mlkit_genai_summarization (from `.symlinks/plugins/google_mlkit_genai_summarization/ios`)
   - google_mlkit_image_labeling (from `.symlinks/plugins/google_mlkit_image_labeling/ios`)
   - google_mlkit_language_id (from `.symlinks/plugins/google_mlkit_language_id/ios`)
   - google_mlkit_object_detection (from `.symlinks/plugins/google_mlkit_object_detection/ios`)
   - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
   - google_mlkit_selfie_segmentation (from `.symlinks/plugins/google_mlkit_selfie_segmentation/ios`)
   - google_mlkit_smart_reply (from `.symlinks/plugins/google_mlkit_smart_reply/ios`)
-  - google_mlkit_subject_segmentation (from `.symlinks/plugins/google_mlkit_subject_segmentation/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
   - google_mlkit_translation (from `.symlinks/plugins/google_mlkit_translation/ios`)
   - GoogleMLKit/TextRecognitionChinese (~> 9.0.0)
@@ -355,26 +331,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
   google_mlkit_digital_ink_recognition:
     :path: ".symlinks/plugins/google_mlkit_digital_ink_recognition/ios"
-  google_mlkit_document_scanner:
-    :path: ".symlinks/plugins/google_mlkit_document_scanner/ios"
   google_mlkit_entity_extraction:
     :path: ".symlinks/plugins/google_mlkit_entity_extraction/ios"
   google_mlkit_face_detection:
     :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
   google_mlkit_face_mesh_detection:
     :path: ".symlinks/plugins/google_mlkit_face_mesh_detection/ios"
-  google_mlkit_genai_image_description:
-    :path: ".symlinks/plugins/google_mlkit_genai_image_description/ios"
-  google_mlkit_genai_prompt:
-    :path: ".symlinks/plugins/google_mlkit_genai_prompt/ios"
-  google_mlkit_genai_proofreading:
-    :path: ".symlinks/plugins/google_mlkit_genai_proofreading/ios"
-  google_mlkit_genai_rewriting:
-    :path: ".symlinks/plugins/google_mlkit_genai_rewriting/ios"
-  google_mlkit_genai_speech_recognition:
-    :path: ".symlinks/plugins/google_mlkit_genai_speech_recognition/ios"
-  google_mlkit_genai_summarization:
-    :path: ".symlinks/plugins/google_mlkit_genai_summarization/ios"
   google_mlkit_image_labeling:
     :path: ".symlinks/plugins/google_mlkit_image_labeling/ios"
   google_mlkit_language_id:
@@ -387,8 +349,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_selfie_segmentation/ios"
   google_mlkit_smart_reply:
     :path: ".symlinks/plugins/google_mlkit_smart_reply/ios"
-  google_mlkit_subject_segmentation:
-    :path: ".symlinks/plugins/google_mlkit_subject_segmentation/ios"
   google_mlkit_text_recognition:
     :path: ".symlinks/plugins/google_mlkit_text_recognition/ios"
   google_mlkit_translation:
@@ -399,23 +359,15 @@ SPEC CHECKSUMS:
   google_mlkit_barcode_scanning: f69335a73c797a582d5effc61175d1721020d770
   google_mlkit_commons: b4dfe2f6ae4cbf24010dc6640a28984d01343c86
   google_mlkit_digital_ink_recognition: 7ba68bd88a6f1bb321454b77f2332a3a8e9db898
-  google_mlkit_document_scanner: baffd57d91ee74fd3a3679333fa654e79f8dc71f
   google_mlkit_entity_extraction: 0602ccc425d159bb8a3435e07ca0639f35ab9aa3
   google_mlkit_face_detection: 21baa82ab858694c846f0e0bfa64e3a3ca7bceda
   google_mlkit_face_mesh_detection: 436c4003d9a6f7a61a0538b64b45139c5feb5313
-  google_mlkit_genai_image_description: fac85a9ba24be59abfce7261c4e55e90d55dcd66
-  google_mlkit_genai_prompt: 477018689e78e7d374a1e3c61a1e58d5e3ed8b41
-  google_mlkit_genai_proofreading: fbcdd3627afbc83bb230f8fe60bd148024e4a9c9
-  google_mlkit_genai_rewriting: 94032658687ba979c302344fbc4f059257e31dcb
-  google_mlkit_genai_speech_recognition: ce8b62e04dc7925f41ffe8110910c5b5a25d015e
-  google_mlkit_genai_summarization: 6b50983d7023b3ca006ce70c8674160f3c9c1aff
   google_mlkit_image_labeling: 16690f4e44478c86a2864b5072483e4c5d0cc95c
   google_mlkit_language_id: 7ae5712981c787d4ddc8b9e2055f981b1e31bc00
   google_mlkit_object_detection: 9758969345a4daf5da1f77509b9874dda866efb3
   google_mlkit_pose_detection: a486c984c5db4e5c57cf8f1053660e3f3d84964c
   google_mlkit_selfie_segmentation: 7fc41b3ef8ba238abf8dc76724da50e44de8aaf0
   google_mlkit_smart_reply: 6544aafaa1543907b9bf233de3d01176d4f0c8c6
-  google_mlkit_subject_segmentation: 01ec466fea1b4b9eaaaf45e5745825e28055755c
   google_mlkit_text_recognition: 9b164471713e3afdb4c129cabe6d1d64fef7e817
   google_mlkit_translation: 32f759ac50c38fc2eada2cf15fefc86b38faf0f7
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
