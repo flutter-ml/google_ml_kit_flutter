@@ -26,6 +26,6 @@ class GoogleMlKitDigitalInkRecognitionPlugin :
     }
 
     companion object {
-        private const val CHANNEL_NAME = "google_mlkit_digital_ink_recognition"
+        private const val CHANNEL_NAME = "google_mlkit_digital_ink_recognizer"
     }
 }
