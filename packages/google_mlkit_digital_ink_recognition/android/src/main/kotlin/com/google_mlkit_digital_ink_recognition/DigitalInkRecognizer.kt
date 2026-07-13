@@ -173,6 +173,14 @@ class DigitalInkRecognizer : MethodChannel.MethodCallHandler {
         call: MethodCall,
         result: MethodChannel.Result,
     ) {
+        val tag =
+            call.argument<String>("model")
+                ?: run {
+                    result.error("invalid_args", "Missing model argument", null)
+                    return
+                }
+        val model = getModel(tag, result) ?: return
+        genericModelManager.manageModel(model, call, result)
     }
 
     private fun closeDetector(call: MethodCall) {
