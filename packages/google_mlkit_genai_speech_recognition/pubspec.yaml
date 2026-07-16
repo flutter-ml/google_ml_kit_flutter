@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiSpeechRecognitionPlugin
       ios:
         pluginClass: GoogleMlKitGenaiSpeechRecognitionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_speech_recognition

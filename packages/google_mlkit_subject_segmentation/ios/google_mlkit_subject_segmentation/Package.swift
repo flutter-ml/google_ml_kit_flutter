@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_subject_segmentation"])
     ],
     dependencies: [
-
+        
     ],
     targets: [
         .target(

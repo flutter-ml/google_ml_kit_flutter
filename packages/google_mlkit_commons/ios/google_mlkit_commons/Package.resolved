@@ -3,10 +3,10 @@
     {
       "identity" : "google-mlkit-swiftpm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arrrrny/google-mlkit-swiftpm",
+      "location" : "https://github.com/mdata-group/google-mlkit-swiftpm",
       "state" : {
-        "revision" : "83e2f4e1ea4ce0986979ee7b2bbbfa7bd9ddf576",
-        "version" : "9.0.0-textfix5"
+        "revision" : "9f25322b887502499c80a7f083de14aea55d34ef",
+        "version" : "9.0.0-simfix2"
       }
     },
     {

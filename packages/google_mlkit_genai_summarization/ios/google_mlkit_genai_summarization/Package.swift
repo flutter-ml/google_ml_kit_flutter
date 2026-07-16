@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_genai_summarization"])
     ],
     dependencies: [
-
+        
     ],
     targets: [
         .target(

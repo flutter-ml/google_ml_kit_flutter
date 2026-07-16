@@ -25,3 +25,5 @@ flutter:
         pluginClass: GoogleMlKitLanguageIdPlugin
       ios:
         pluginClass: GoogleMlKitLanguageIdPlugin
+        swiftPackage:
+          path: ios/google_mlkit_language_id

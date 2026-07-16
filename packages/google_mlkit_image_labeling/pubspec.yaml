@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitImageLabelingPlugin
       ios:
         pluginClass: GoogleMlKitImageLabelingPlugin
+        swiftPackage:
+          path: ios/google_mlkit_image_labeling

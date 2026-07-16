@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitTranslationPlugin
       ios:
         pluginClass: GoogleMlKitTranslationPlugin
+        swiftPackage:
+          path: ios/google_mlkit_translation

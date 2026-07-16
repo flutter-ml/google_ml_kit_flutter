@@ -13,7 +13,7 @@ let package = Package(
             targets: ["google_mlkit_genai_speech_recognition"])
     ],
     dependencies: [
-
+        
     ],
     targets: [
         .target(
