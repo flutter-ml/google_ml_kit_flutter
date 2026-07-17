@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitPoseDetectionPlugin
       ios:
         pluginClass: GoogleMlKitPoseDetectionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_pose_detection

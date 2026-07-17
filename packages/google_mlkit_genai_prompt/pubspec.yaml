@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiPromptPlugin
       ios:
         pluginClass: GoogleMlKitGenaiPromptPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_prompt

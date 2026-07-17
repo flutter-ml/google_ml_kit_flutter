@@ -25,3 +25,5 @@ flutter:
         pluginClass: GoogleMlKitSmartReplyPlugin
       ios:
         pluginClass: GoogleMlKitSmartReplyPlugin
+        swiftPackage:
+          path: ios/google_mlkit_smart_reply

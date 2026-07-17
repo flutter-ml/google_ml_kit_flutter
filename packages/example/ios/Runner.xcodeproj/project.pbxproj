@@ -335,7 +335,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-all_load",
+					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -480,7 +480,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-all_load",
+					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -507,7 +507,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-all_load",
+					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
