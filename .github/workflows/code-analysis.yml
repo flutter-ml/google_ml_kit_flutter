@@ -20,11 +20,11 @@ jobs:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-java@v5.6.0
         with:
-          java-version: 11
+          java-version: 17
           distribution: temurin
       - uses: subosito/flutter-action@v2.23.0
         with:
-          flutter-version: '3.35.3'
+          flutter-version: '3.44.8'
           cache: true
 
       - name: Install dependencies for google_ml_kit
@@ -140,3 +140,61 @@ jobs:
         run: brew install swiftlint
       - name: Run SwiftLint on Swift code
         run: swiftlint lint
+
+  build-android:
+    name: Build Android example without plugin KGP warnings
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v5.6.0
+        with:
+          java-version: 17
+          distribution: temurin
+      - uses: subosito/flutter-action@v2.23.0
+        with:
+          flutter-version: '3.44.8'
+          cache: true
+      - name: Install dependencies
+        working-directory: ./packages/example
+        run: flutter pub get
+      - name: Build Android example
+        working-directory: ./packages/example
+        shell: bash
+        run: |
+          set -o pipefail
+          flutter build apk --debug 2>&1 | tee android-build.log
+          ! grep -F "plugins that apply Kotlin Gradle Plugin" android-build.log
+
+  # Flutter only supports enabling AGP 9's built-in Kotlin from 3.47 onward.
+  # Keep this beta lane until 3.47 is stable, then pin the stable release.
+  build-android-built-in-kotlin:
+    name: Build Android example with AGP 9 built-in Kotlin
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v5.6.0
+        with:
+          java-version: 21
+          distribution: temurin
+      - uses: subosito/flutter-action@v2.23.0
+        with:
+          flutter-version: '3.47.0-0.2.pre'
+          channel: beta
+          cache: true
+      - name: Enable AGP 9 built-in Kotlin
+        working-directory: ./packages/example
+        shell: bash
+        run: |
+          perl -pi -e 's/version "8\.13\.0"/version "9.3.1"/' android/settings.gradle.kts
+          perl -pi -e 's/gradle-8\.14\.3-all\.zip/gradle-9.6.1-all.zip/' android/gradle/wrapper/gradle-wrapper.properties
+          perl -pi -e 's/android\.builtInKotlin=false/android.builtInKotlin=true/' android/gradle.properties
+      - name: Install dependencies
+        working-directory: ./packages/example
+        run: flutter pub get
+      - name: Build Android example
+        working-directory: ./packages/example
+        shell: bash
+        run: |
+          set -o pipefail
+          flutter build apk --debug 2>&1 | tee android-build.log
+          ! grep -E 'plugins that apply Kotlin Gradle Plugin|applies the Kotlin Gradle Plugin|KGP\) was unsuccessful' android-build.log
