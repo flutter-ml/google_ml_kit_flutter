@@ -89,15 +89,18 @@ class _DigitalInkViewState extends State<DigitalInkView> {
                 onPanUpdate: (DragUpdateDetails details) {
                   setState(() {
                     final RenderObject? object = context.findRenderObject();
-                    final localPosition = (object as RenderBox?)
-                        ?.globalToLocal(details.localPosition);
+                    final localPosition = (object as RenderBox?)?.globalToLocal(
+                      details.localPosition,
+                    );
                     if (localPosition != null) {
                       _points = List.from(_points)
-                        ..add(StrokePoint(
-                          x: localPosition.dx,
-                          y: localPosition.dy,
-                          t: DateTime.now().millisecondsSinceEpoch,
-                        ));
+                        ..add(
+                          StrokePoint(
+                            x: localPosition.dx,
+                            y: localPosition.dy,
+                            t: DateTime.now().millisecondsSinceEpoch,
+                          ),
+                        );
                     }
                     if (_ink.strokes.isNotEmpty) {
                       _ink.strokes.last.points = _points.toList();
@@ -126,31 +129,24 @@ class _DigitalInkViewState extends State<DigitalInkView> {
   }
 
   Widget _buildDropdown() => DropdownButton<String>(
-        value: _language,
-        icon: const Icon(Icons.arrow_downward),
-        elevation: 16,
-        style: const TextStyle(color: Colors.blue),
-        underline: Container(
-          height: 2,
-          color: Colors.blue,
-        ),
-        onChanged: (String? lang) {
-          if (lang != null) {
-            setState(() {
-              _language = lang;
-              _digitalInkRecognizer.close();
-              _digitalInkRecognizer =
-                  DigitalInkRecognizer(languageCode: _language);
-            });
-          }
-        },
-        items: _languages.map<DropdownMenuItem<String>>((lang) {
-          return DropdownMenuItem<String>(
-            value: lang,
-            child: Text(lang),
-          );
-        }).toList(),
-      );
+    value: _language,
+    icon: const Icon(Icons.arrow_downward),
+    elevation: 16,
+    style: const TextStyle(color: Colors.blue),
+    underline: Container(height: 2, color: Colors.blue),
+    onChanged: (String? lang) {
+      if (lang != null) {
+        setState(() {
+          _language = lang;
+          _digitalInkRecognizer.close();
+          _digitalInkRecognizer = DigitalInkRecognizer(languageCode: _language);
+        });
+      }
+    },
+    items: _languages.map<DropdownMenuItem<String>>((lang) {
+      return DropdownMenuItem<String>(value: lang, child: Text(lang));
+    }).toList(),
+  );
 
   void _clearPad() {
     setState(() {
@@ -162,41 +158,43 @@ class _DigitalInkViewState extends State<DigitalInkView> {
 
   Future<void> _isModelDownloaded() async {
     Toast().show(
-        'Checking if model is downloaded...',
-        _modelManager
-            .isModelDownloaded(_language)
-            .then((value) => value ? 'downloaded' : 'not downloaded'),
-        context,
-        this);
+      'Checking if model is downloaded...',
+      _modelManager
+          .isModelDownloaded(_language)
+          .then((value) => value ? 'downloaded' : 'not downloaded'),
+      context,
+      this,
+    );
   }
 
   Future<void> _deleteModel() async {
     Toast().show(
-        'Deleting model...',
-        _modelManager
-            .deleteModel(_language)
-            .then((value) => value ? 'success' : 'failed'),
-        context,
-        this);
+      'Deleting model...',
+      _modelManager
+          .deleteModel(_language)
+          .then((value) => value ? 'success' : 'failed'),
+      context,
+      this,
+    );
   }
 
   Future<void> _downloadModel() async {
     Toast().show(
-        'Downloading model...',
-        _modelManager
-            .downloadModel(_language)
-            .then((value) => value ? 'success' : 'failed'),
-        context,
-        this);
+      'Downloading model...',
+      _modelManager
+          .downloadModel(_language)
+          .then((value) => value ? 'success' : 'failed'),
+      context,
+      this,
+    );
   }
 
   Future<void> _recogniseText() async {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Recognizing'),
-            ),
-        barrierDismissible: true);
+      context: context,
+      builder: (context) => AlertDialog(title: Text('Recognizing')),
+      barrierDismissible: true,
+    );
     try {
       final candidates = await _digitalInkRecognizer.recognize(_ink);
       _recognizedText = '';
@@ -205,9 +203,9 @@ class _DigitalInkViewState extends State<DigitalInkView> {
       }
       setState(() {});
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.toString()),
-      ));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     }
     Navigator.pop(context);
   }
@@ -229,8 +227,11 @@ class Signature extends CustomPainter {
       for (int i = 0; i < stroke.points.length - 1; i++) {
         final p1 = stroke.points[i];
         final p2 = stroke.points[i + 1];
-        canvas.drawLine(Offset(p1.x.toDouble(), p1.y.toDouble()),
-            Offset(p2.x.toDouble(), p2.y.toDouble()), paint);
+        canvas.drawLine(
+          Offset(p1.x.toDouble(), p1.y.toDouble()),
+          Offset(p2.x.toDouble(), p2.y.toDouble()),
+          paint,
+        );
       }
     }
   }

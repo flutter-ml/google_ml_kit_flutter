@@ -27,10 +27,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: Home());
   }
 }
 
@@ -57,7 +54,9 @@ class Home extends StatelessWidget {
                       CustomCard('Face Detection', FaceDetectorView()),
                       if (Platform.isAndroid)
                         CustomCard(
-                            'Face Mesh Detection', FaceMeshDetectorView()),
+                          'Face Mesh Detection',
+                          FaceMeshDetectorView(),
+                        ),
                       CustomCard('Image Labeling', ImageLabelView()),
                       CustomCard('Object Detection', ObjectDetectorView()),
                       CustomCard('Text Recognition', TextRecognizerView()),
@@ -69,39 +68,49 @@ class Home extends StatelessWidget {
                         CustomCard('Document Scanner', DocumentScannerView()),
                       if (Platform.isAndroid)
                         CustomCard(
-                            'Subject Segmentation', SubjectSegmenterView())
+                          'Subject Segmentation',
+                          SubjectSegmenterView(),
+                        ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   ExpansionTile(
                     title: const Text('Natural Language APIs'),
                     children: [
                       CustomCard('Language ID', LanguageIdentifierView()),
                       CustomCard(
-                          'On-device Translation', LanguageTranslatorView()),
+                        'On-device Translation',
+                        LanguageTranslatorView(),
+                      ),
                       CustomCard('Smart Reply', SmartReplyView()),
                       CustomCard('Entity Extraction', EntityExtractionView()),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   if (Platform.isAndroid)
                     ExpansionTile(
                       title: const Text('GenAI APIs'),
                       children: [
-                        CustomCard('Summarization',
-                            _GenAIPlaceholderView('Summarization')),
-                        CustomCard('Proofreading',
-                            _GenAIPlaceholderView('Proofreading')),
                         CustomCard(
-                            'Rewriting', _GenAIPlaceholderView('Rewriting')),
-                        CustomCard('Image Description',
-                            _GenAIPlaceholderView('Image Description')),
-                        CustomCard('Speech Recognition',
-                            _GenAIPlaceholderView('Speech Recognition')),
+                          'Summarization',
+                          _GenAIPlaceholderView('Summarization'),
+                        ),
+                        CustomCard(
+                          'Proofreading',
+                          _GenAIPlaceholderView('Proofreading'),
+                        ),
+                        CustomCard(
+                          'Rewriting',
+                          _GenAIPlaceholderView('Rewriting'),
+                        ),
+                        CustomCard(
+                          'Image Description',
+                          _GenAIPlaceholderView('Image Description'),
+                        ),
+                        CustomCard(
+                          'Speech Recognition',
+                          _GenAIPlaceholderView('Speech Recognition'),
+                        ),
                         CustomCard('Prompt', _GenAIPlaceholderView('Prompt')),
                       ],
                     ),
@@ -123,20 +132,14 @@ class _GenAIPlaceholderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$featureName (GenAI)'),
-      ),
+      appBar: AppBar(title: Text('$featureName (GenAI)')),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.info_outline,
-                size: 64,
-                color: Colors.blue,
-              ),
+              Icon(Icons.info_outline, size: 64, color: Colors.blue),
               SizedBox(height: 16),
               Text(
                 '$featureName API',
@@ -152,9 +155,9 @@ class _GenAIPlaceholderView extends StatelessWidget {
               Text(
                 'Implementation coming soon.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontStyle: FontStyle.italic,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
               ),
             ],
           ),
@@ -184,12 +187,18 @@ class CustomCard extends StatelessWidget {
         ),
         onTap: () {
           if (!featureCompleted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    const Text('This feature has not been implemented yet')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text(
+                  'This feature has not been implemented yet',
+                ),
+              ),
+            );
           } else {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => _viewPage));
+              context,
+              MaterialPageRoute(builder: (context) => _viewPage),
+            );
           }
         },
       ),

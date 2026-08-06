@@ -33,15 +33,18 @@ class ObjectDetectorPainter extends CustomPainter {
     for (final DetectedObject detectedObject in _objects) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
-            textAlign: TextAlign.left,
-            fontSize: 16,
-            textDirection: TextDirection.ltr),
+          textAlign: TextAlign.left,
+          fontSize: 16,
+          textDirection: TextDirection.ltr,
+        ),
       );
       builder.pushStyle(
-          ui.TextStyle(color: Colors.lightGreenAccent, background: background));
+        ui.TextStyle(color: Colors.lightGreenAccent, background: background),
+      );
       if (detectedObject.labels.isNotEmpty) {
-        final label = detectedObject.labels
-            .reduce((a, b) => a.confidence > b.confidence ? a : b);
+        final label = detectedObject.labels.reduce(
+          (a, b) => a.confidence > b.confidence ? a : b,
+        );
         builder.addText('${label.text} ${label.confidence}\n');
       }
       builder.pop();
@@ -75,22 +78,17 @@ class ObjectDetectorPainter extends CustomPainter {
         cameraLensDirection,
       );
 
-      canvas.drawRect(
-        Rect.fromLTRB(left, top, right, bottom),
-        paint,
-      );
+      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint);
 
       canvas.drawParagraph(
         builder.build()
-          ..layout(ParagraphConstraints(
-            width: (right - left).abs(),
-          )),
+          ..layout(ParagraphConstraints(width: (right - left).abs())),
         Offset(
-            Platform.isAndroid &&
-                    cameraLensDirection == CameraLensDirection.front
-                ? right
-                : left,
-            top),
+          Platform.isAndroid && cameraLensDirection == CameraLensDirection.front
+              ? right
+              : left,
+          top,
+        ),
       );
     }
   }

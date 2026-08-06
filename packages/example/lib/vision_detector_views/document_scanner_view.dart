@@ -17,10 +17,13 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
   DocumentScanner? _documentScanner;
   DocumentScanningResult? _result;
   static final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-      list.map<MenuEntry>((String name) => MenuEntry(
-          value: name,
-          label:
-              name == 'Select option' ? name : 'Scan ${name.toUpperCase()}')));
+    list.map<MenuEntry>(
+      (String name) => MenuEntry(
+        value: name,
+        label: name == 'Select option' ? name : 'Scan ${name.toUpperCase()}',
+      ),
+    ),
+  );
   @override
   void dispose() {
     _documentScanner?.close();
@@ -43,37 +46,39 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.document_scanner_outlined,
-                    size: 50,
-                  ),
+                  Icon(Icons.document_scanner_outlined, size: 50),
                   SizedBox(width: 8),
                   DropdownMenu<String>(
-                      initialSelection: list.first,
-                      onSelected: (String? value) {
-                        if (value != null) {
-                          if (value == 'pdf') {
-                            startScan({DocumentFormat.pdf});
-                          }
-                          if (value == 'jpeg') {
-                            startScan({DocumentFormat.jpeg});
-                          }
-                          if (value == 'pdf-jpeg') {
-                            startScan(
-                                {DocumentFormat.pdf, DocumentFormat.jpeg});
-                          }
+                    initialSelection: list.first,
+                    onSelected: (String? value) {
+                      if (value != null) {
+                        if (value == 'pdf') {
+                          startScan({DocumentFormat.pdf});
                         }
-                      },
-                      dropdownMenuEntries: menuEntries),
+                        if (value == 'jpeg') {
+                          startScan({DocumentFormat.jpeg});
+                        }
+                        if (value == 'pdf-jpeg') {
+                          startScan({DocumentFormat.pdf, DocumentFormat.jpeg});
+                        }
+                      }
+                    },
+                    dropdownMenuEntries: menuEntries,
+                  ),
                 ],
               ),
               if (_result?.pdf != null) ...[
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 16, bottom: 8, right: 8, left: 8),
+                    top: 16,
+                    bottom: 8,
+                    right: 8,
+                    left: 8,
+                  ),
                   child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('PDF Document:')),
+                    alignment: Alignment.centerLeft,
+                    child: Text('PDF Document:'),
+                  ),
                 ),
                 SizedBox(
                   height: 300,
@@ -89,14 +94,20 @@ class _DocumentScannerViewState extends State<DocumentScannerView> {
               if (_result?.images?.isNotEmpty == true) ...[
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 16, bottom: 8, right: 8, left: 8),
+                    top: 16,
+                    bottom: 8,
+                    right: 8,
+                    left: 8,
+                  ),
                   child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Images [0]:')),
+                    alignment: Alignment.centerLeft,
+                    child: Text('Images [0]:'),
+                  ),
                 ),
                 SizedBox(
-                    height: 400,
-                    child: Image.file(File(_result!.images!.first))),
+                  height: 400,
+                  child: Image.file(File(_result!.images!.first)),
+                ),
               ],
             ],
           ),

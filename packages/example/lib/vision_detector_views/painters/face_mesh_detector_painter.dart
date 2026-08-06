@@ -60,10 +60,7 @@ class FaceMeshDetectorPainter extends CustomPainter {
         cameraLensDirection,
       );
 
-      canvas.drawRect(
-        Rect.fromLTRB(left, top, right, bottom),
-        paint1,
-      );
+      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint1);
 
       void paintTriangle(FaceMeshTriangle triangle) {
         final List<Offset> cornerPoints = <Offset>[];

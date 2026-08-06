@@ -82,7 +82,8 @@ class _ImageLabelViewState extends State<ImageLabelView> {
     } else {
       String text = 'Labels found: ${labels.length}\n\n';
       for (final label in labels) {
-        text += 'Label: ${label.label}, '
+        text +=
+            'Label: ${label.label}, '
             'Confidence: ${label.confidence.toStringAsFixed(2)}\n\n';
       }
       _text = text;

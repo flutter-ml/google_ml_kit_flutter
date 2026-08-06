@@ -28,9 +28,7 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Text From Widget Example'),
-      ),
+      appBar: AppBar(title: const Text('Text From Widget Example')),
       body: Column(
         children: [
           Expanded(
@@ -98,8 +96,9 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
 
     try {
       // Get the RenderObject from the GlobalKey
-      final RenderRepaintBoundary? boundary = _widgetKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary?;
+      final RenderRepaintBoundary? boundary =
+          _widgetKey.currentContext?.findRenderObject()
+              as RenderRepaintBoundary?;
 
       if (boundary == null) {
         setState(() {
@@ -113,8 +112,9 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
       final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
 
       // Convert to byte data in raw RGBA format
-      final ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+      final ByteData? byteData = await image.toByteData(
+        format: ui.ImageByteFormat.rawRgba,
+      );
 
       if (byteData == null) {
         setState(() {
@@ -134,8 +134,9 @@ class _TextFromWidgetViewState extends State<TextFromWidgetView> {
       );
 
       // Process the image with the text recognizer
-      final RecognizedText recognizedText =
-          await _textRecognizer.processImage(inputImage);
+      final RecognizedText recognizedText = await _textRecognizer.processImage(
+        inputImage,
+      );
 
       setState(() {
         _extractedText = recognizedText.text.isNotEmpty

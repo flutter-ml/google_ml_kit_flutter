@@ -60,34 +60,32 @@ class FaceDetectorPainter extends CustomPainter {
         cameraLensDirection,
       );
 
-      canvas.drawRect(
-        Rect.fromLTRB(left, top, right, bottom),
-        paint1,
-      );
+      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint1);
 
       void paintContour(FaceContourType type) {
         final contour = face.contours[type];
         if (contour?.points != null) {
           for (final Point point in contour!.points) {
             canvas.drawCircle(
-                Offset(
-                  translateX(
-                    point.x.toDouble(),
-                    size,
-                    imageSize,
-                    rotation,
-                    cameraLensDirection,
-                  ),
-                  translateY(
-                    point.y.toDouble(),
-                    size,
-                    imageSize,
-                    rotation,
-                    cameraLensDirection,
-                  ),
+              Offset(
+                translateX(
+                  point.x.toDouble(),
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
                 ),
-                1,
-                paint1);
+                translateY(
+                  point.y.toDouble(),
+                  size,
+                  imageSize,
+                  rotation,
+                  cameraLensDirection,
+                ),
+              ),
+              1,
+              paint1,
+            );
           }
         }
       }
@@ -96,24 +94,25 @@ class FaceDetectorPainter extends CustomPainter {
         final landmark = face.landmarks[type];
         if (landmark?.position != null) {
           canvas.drawCircle(
-              Offset(
-                translateX(
-                  landmark!.position.x.toDouble(),
-                  size,
-                  imageSize,
-                  rotation,
-                  cameraLensDirection,
-                ),
-                translateY(
-                  landmark.position.y.toDouble(),
-                  size,
-                  imageSize,
-                  rotation,
-                  cameraLensDirection,
-                ),
+            Offset(
+              translateX(
+                landmark!.position.x.toDouble(),
+                size,
+                imageSize,
+                rotation,
+                cameraLensDirection,
               ),
-              2,
-              paint2);
+              translateY(
+                landmark.position.y.toDouble(),
+                size,
+                imageSize,
+                rotation,
+                cameraLensDirection,
+              ),
+            ),
+            2,
+            paint2,
+          );
         }
       }
 

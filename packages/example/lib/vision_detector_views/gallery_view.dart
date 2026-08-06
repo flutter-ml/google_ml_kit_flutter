@@ -8,12 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'utils.dart';
 
 class GalleryView extends StatefulWidget {
-  GalleryView(
-      {super.key,
-      required this.title,
-      this.text,
-      required this.onImage,
-      required this.onDetectorViewModeChanged});
+  GalleryView({
+    super.key,
+    required this.title,
+    this.text,
+    required this.onImage,
+    required this.onDetectorViewModeChanged,
+  });
 
   final String title;
   final String? text;
@@ -39,68 +40,68 @@ class _GalleryViewState extends State<GalleryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: widget.onDetectorViewModeChanged,
-                child: Icon(
-                  Platform.isIOS ? Icons.camera_alt_outlined : Icons.camera,
-                ),
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: widget.onDetectorViewModeChanged,
+              child: Icon(
+                Platform.isIOS ? Icons.camera_alt_outlined : Icons.camera,
               ),
             ),
-          ],
-        ),
-        body: _galleryBody());
+          ),
+        ],
+      ),
+      body: _galleryBody(),
+    );
   }
 
   Widget _galleryBody() {
-    return ListView(shrinkWrap: true, children: [
-      _image != null
-          ? SizedBox(
-              height: 400,
-              width: 400,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Image.file(_image!),
-                ],
-              ),
-            )
-          : Icon(
-              Icons.image,
-              size: 200,
-            ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          onPressed: _getImageAsset,
-          child: Text('From Assets'),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('From Gallery'),
-          onPressed: () => _getImage(ImageSource.gallery),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('Take a picture'),
-          onPressed: () => _getImage(ImageSource.camera),
-        ),
-      ),
-      if (_image != null)
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        _image != null
+            ? SizedBox(
+                height: 400,
+                width: 400,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[Image.file(_image!)],
+                ),
+              )
+            : Icon(Icons.image, size: 200),
         Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-              '${_path == null ? '' : 'Image path: $_path'}\n\n${widget.text ?? ''}'),
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ElevatedButton(
+            onPressed: _getImageAsset,
+            child: Text('From Assets'),
+          ),
         ),
-    ]);
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ElevatedButton(
+            child: Text('From Gallery'),
+            onPressed: () => _getImage(ImageSource.gallery),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ElevatedButton(
+            child: Text('Take a picture'),
+            onPressed: () => _getImage(ImageSource.camera),
+          ),
+        ),
+        if (_image != null)
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              '${_path == null ? '' : 'Image path: $_path'}\n\n${widget.text ?? ''}',
+            ),
+          ),
+      ],
+    );
   }
 
   Future _getImage(ImageSource source) async {
@@ -119,57 +120,60 @@ class _GalleryViewState extends State<GalleryView> {
     final List<String> assets = assetManifest
         .listAssets()
         .where((String key) => key.contains('images/'))
-        .where((String key) =>
-            key.contains('.jpg') ||
-            key.contains('.jpeg') ||
-            key.contains('.png') ||
-            key.contains('.webp'))
+        .where(
+          (String key) =>
+              key.contains('.jpg') ||
+              key.contains('.jpeg') ||
+              key.contains('.png') ||
+              key.contains('.webp'),
+        )
         .toList();
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Select image',
-                    style: TextStyle(fontSize: 20),
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Select image', style: TextStyle(fontSize: 20)),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.7,
                   ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.7),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for (final path in assets)
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.of(context).pop();
-                                _processFile(await getAssetPath(path));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(path),
-                              ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (final path in assets)
+                          GestureDetector(
+                            onTap: () async {
+                              Navigator.of(context).pop();
+                              _processFile(await getAssetPath(path));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(path),
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
                   ),
-                  ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Cancel')),
-                ],
-              ),
+                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancel'),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Future _processFile(String path) async {

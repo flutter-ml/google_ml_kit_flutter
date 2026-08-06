@@ -13,8 +13,9 @@ class FaceMeshDetectorView extends StatefulWidget {
 }
 
 class _FaceMeshDetectorViewState extends State<FaceMeshDetectorView> {
-  final FaceMeshDetector _meshDetector =
-      FaceMeshDetector(option: FaceMeshDetectorOptions.faceMesh);
+  final FaceMeshDetector _meshDetector = FaceMeshDetector(
+    option: FaceMeshDetectorOptions.faceMesh,
+  );
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
@@ -34,10 +35,11 @@ class _FaceMeshDetectorViewState extends State<FaceMeshDetectorView> {
       return Scaffold(
         appBar: AppBar(title: Text('Under construction')),
         body: Center(
-            child: Text(
-          'Not implemented yet for iOS :(\nTry Android',
-          textAlign: TextAlign.center,
-        )),
+          child: Text(
+            'Not implemented yet for iOS :(\nTry Android',
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
     return DetectorView(
