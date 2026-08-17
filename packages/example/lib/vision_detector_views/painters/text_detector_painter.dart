@@ -33,12 +33,14 @@ class TextRecognizerPainter extends CustomPainter {
     for (final textBlock in recognizedText.blocks) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
-            textAlign: TextAlign.left,
-            fontSize: 16,
-            textDirection: TextDirection.ltr),
+          textAlign: TextAlign.left,
+          fontSize: 16,
+          textDirection: TextDirection.ltr,
+        ),
       );
       builder.pushStyle(
-          ui.TextStyle(color: Colors.lightGreenAccent, background: background));
+        ui.TextStyle(color: Colors.lightGreenAccent, background: background),
+      );
       builder.addText(textBlock.text);
       builder.pop();
 
@@ -112,7 +114,8 @@ class TextRecognizerPainter extends CustomPainter {
                     rotation,
                     cameraLensDirection,
                   );
-                  y = size.height -
+                  y =
+                      size.height -
                       translateY(
                         point.x.toDouble(),
                         size,
@@ -133,7 +136,8 @@ class TextRecognizerPainter extends CustomPainter {
                   y = size.height - y;
                   break;
                 case InputImageRotation.rotation90deg:
-                  x = size.width -
+                  x =
+                      size.width -
                       translateX(
                         point.y.toDouble(),
                         size,
@@ -165,15 +169,13 @@ class TextRecognizerPainter extends CustomPainter {
 
       canvas.drawParagraph(
         builder.build()
-          ..layout(ParagraphConstraints(
-            width: (right - left).abs(),
-          )),
+          ..layout(ParagraphConstraints(width: (right - left).abs())),
         Offset(
-            Platform.isAndroid &&
-                    cameraLensDirection == CameraLensDirection.front
-                ? right
-                : left,
-            top),
+          Platform.isAndroid && cameraLensDirection == CameraLensDirection.front
+              ? right
+              : left,
+          top,
+        ),
       );
     }
   }

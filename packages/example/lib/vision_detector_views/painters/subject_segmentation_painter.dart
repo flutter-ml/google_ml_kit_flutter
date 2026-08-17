@@ -36,20 +36,20 @@ class SubjectSegmentationPainter extends CustomPainter {
           final int absoluteY = startY;
 
           final int tx = translateX(
-                  absoluteX.toDouble(),
-                  size,
-                  Size(imageSize.width.toDouble(), imageSize.height.toDouble()),
-                  rotation,
-                  cameraLensDirection)
-              .round();
+            absoluteX.toDouble(),
+            size,
+            Size(imageSize.width.toDouble(), imageSize.height.toDouble()),
+            rotation,
+            cameraLensDirection,
+          ).round();
 
           final int ty = translateY(
-                  absoluteY.toDouble(),
-                  size,
-                  Size(imageSize.width.toDouble(), imageSize.height.toDouble()),
-                  rotation,
-                  cameraLensDirection)
-              .round();
+            absoluteY.toDouble(),
+            size,
+            Size(imageSize.width.toDouble(), imageSize.height.toDouble()),
+            rotation,
+            cameraLensDirection,
+          ).round();
 
           final double opacity = confidences[(y * subjectWidth) + x] * 0.5;
           paint.color = color.withAlpha((opacity * 255).round());

@@ -33,12 +33,14 @@ class BarcodeDetectorPainter extends CustomPainter {
     for (final Barcode barcode in barcodes) {
       final ParagraphBuilder builder = ParagraphBuilder(
         ParagraphStyle(
-            textAlign: TextAlign.left,
-            fontSize: 16,
-            textDirection: TextDirection.ltr),
+          textAlign: TextAlign.left,
+          fontSize: 16,
+          textDirection: TextDirection.ltr,
+        ),
       );
       builder.pushStyle(
-          ui.TextStyle(color: Colors.lightGreenAccent, background: background));
+        ui.TextStyle(color: Colors.lightGreenAccent, background: background),
+      );
       builder.addText('${barcode.displayValue}');
       builder.pop();
 
@@ -103,15 +105,13 @@ class BarcodeDetectorPainter extends CustomPainter {
 
       canvas.drawParagraph(
         builder.build()
-          ..layout(ParagraphConstraints(
-            width: (right - left).abs(),
-          )),
+          ..layout(ParagraphConstraints(width: (right - left).abs())),
         Offset(
-            Platform.isAndroid &&
-                    cameraLensDirection == CameraLensDirection.front
-                ? right
-                : left,
-            top),
+          Platform.isAndroid && cameraLensDirection == CameraLensDirection.front
+              ? right
+              : left,
+          top,
+        ),
       );
     }
   }

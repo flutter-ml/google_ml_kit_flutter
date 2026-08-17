@@ -2,7 +2,6 @@ group = "com.google_mlkit_selfie_segmentation"
 version = "1.0"
 
 buildscript {
-    ext.kotlin_version = "2.2.20"
     repositories {
         google()
         mavenCentral()
@@ -10,7 +9,6 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:8.13.0")
-        classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20')
     }
 }
 
@@ -22,7 +20,12 @@ rootProject.allprojects {
 }
 
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
+}
 
 android {
     namespace = "com.google_mlkit_selfie_segmentation"
@@ -32,10 +35,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = '11'
     }
 
     sourceSets {

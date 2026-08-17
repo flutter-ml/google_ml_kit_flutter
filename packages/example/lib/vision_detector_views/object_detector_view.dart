@@ -26,17 +26,17 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     'fruits': 'object_labeler_fruits.tflite',
     'flowers': 'object_labeler_flowers.tflite',
     'birds': 'lite-model_aiy_vision_classifier_birds_V1_3.tflite',
+
     // https://tfhub.dev/google/lite-model/aiy/vision/classifier/birds_V1/3
-
     'food': 'lite-model_aiy_vision_classifier_food_V1_1.tflite',
+
     // https://tfhub.dev/google/lite-model/aiy/vision/classifier/food_V1/1
-
     'plants': 'lite-model_aiy_vision_classifier_plants_V1_3.tflite',
+
     // https://tfhub.dev/google/lite-model/aiy/vision/classifier/plants_V1/3
-
     'mushrooms': 'lite-model_models_mushroom-identification_v1_1.tflite',
-    // https://tfhub.dev/bohemian-visual-recognition-alliance/lite-model/models/mushroom-identification_v1/1
 
+    // https://tfhub.dev/bohemian-visual-recognition-alliance/lite-model/models/mushroom-identification_v1/1
     'landmarks':
         'lite-model_on_device_vision_classifier_landmarks_classifier_north_america_V1_1.tflite',
     // https://tfhub.dev/google/lite-model/on_device_vision/classifier/landmarks_classifier_north_america_V1/1
@@ -52,19 +52,21 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        DetectorView(
-          title: 'Object Detector',
-          customPaint: _customPaint,
-          text: _text,
-          onImage: _processImage,
-          initialCameraLensDirection: _cameraLensDirection,
-          onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
-          onCameraFeedReady: _initializeDetector,
-          initialDetectionMode: DetectorViewMode.values[_mode.index],
-          onDetectorViewModeChanged: _onScreenModeChanged,
-        ),
-        Positioned(
+      body: Stack(
+        children: [
+          DetectorView(
+            title: 'Object Detector',
+            customPaint: _customPaint,
+            text: _text,
+            onImage: _processImage,
+            initialCameraLensDirection: _cameraLensDirection,
+            onCameraLensDirectionChanged: (value) =>
+                _cameraLensDirection = value,
+            onCameraFeedReady: _initializeDetector,
+            initialDetectionMode: DetectorViewMode.values[_mode.index],
+            onDetectorViewModeChanged: _onScreenModeChanged,
+          ),
+          Positioned(
             top: 30,
             left: 100,
             right: 100,
@@ -72,46 +74,47 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
               children: [
                 Spacer(),
                 Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: _buildDropdown(),
-                    )),
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: _buildDropdown(),
+                  ),
+                ),
                 Spacer(),
               ],
-            )),
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildDropdown() => DropdownButton<int>(
-        value: _option,
-        icon: const Icon(Icons.arrow_downward),
-        elevation: 16,
-        style: const TextStyle(color: Colors.blue),
-        underline: Container(
-          height: 2,
-          color: Colors.blue,
-        ),
-        onChanged: (int? option) {
-          if (option != null) {
-            setState(() {
-              _option = option;
-              _initializeDetector();
-            });
-          }
-        },
-        items: List<int>.generate(_options.length, (i) => i)
-            .map<DropdownMenuItem<int>>((option) {
+    value: _option,
+    icon: const Icon(Icons.arrow_downward),
+    elevation: 16,
+    style: const TextStyle(color: Colors.blue),
+    underline: Container(height: 2, color: Colors.blue),
+    onChanged: (int? option) {
+      if (option != null) {
+        setState(() {
+          _option = option;
+          _initializeDetector();
+        });
+      }
+    },
+    items: List<int>.generate(_options.length, (i) => i)
+        .map<DropdownMenuItem<int>>((option) {
           return DropdownMenuItem<int>(
             value: option,
             child: Text(_options.keys.toList()[option]),
           );
-        }).toList(),
-      );
+        })
+        .toList(),
+  );
 
   void _onScreenModeChanged(DetectorViewMode mode) {
     switch (mode) {

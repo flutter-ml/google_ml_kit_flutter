@@ -12,8 +12,9 @@ class PoseDetectorView extends StatefulWidget {
 }
 
 class _PoseDetectorViewState extends State<PoseDetectorView> {
-  final PoseDetector _poseDetector =
-      PoseDetector(options: PoseDetectorOptions());
+  final PoseDetector _poseDetector = PoseDetector(
+    options: PoseDetectorOptions(),
+  );
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;

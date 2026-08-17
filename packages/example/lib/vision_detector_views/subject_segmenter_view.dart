@@ -53,8 +53,9 @@ class _SubjectSegmenterViewState extends State<SubjectSegmenterView> {
     setState(() {
       _text = '';
     });
-    final SubjectSegmentationResult mask =
-        await _segmenter.processImage(inputImage);
+    final SubjectSegmentationResult mask = await _segmenter.processImage(
+      inputImage,
+    );
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = SubjectSegmentationPainter(

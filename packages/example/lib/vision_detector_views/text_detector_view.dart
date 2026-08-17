@@ -29,16 +29,18 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        DetectorView(
-          title: 'Text Detector',
-          customPaint: _customPaint,
-          text: _text,
-          onImage: _processImage,
-          initialCameraLensDirection: _cameraLensDirection,
-          onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
-        ),
-        Positioned(
+      body: Stack(
+        children: [
+          DetectorView(
+            title: 'Text Detector',
+            customPaint: _customPaint,
+            text: _text,
+            onImage: _processImage,
+            initialCameraLensDirection: _cameraLensDirection,
+            onCameraLensDirectionChanged: (value) =>
+                _cameraLensDirection = value,
+          ),
+          Positioned(
             top: 30,
             left: 100,
             right: 100,
@@ -46,47 +48,48 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
               children: [
                 Spacer(),
                 Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: _buildDropdown(),
-                    )),
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: _buildDropdown(),
+                  ),
+                ),
                 Spacer(),
               ],
-            )),
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildDropdown() => DropdownButton<TextRecognitionScript>(
-        value: _script,
-        icon: const Icon(Icons.arrow_downward),
-        elevation: 16,
-        style: const TextStyle(color: Colors.blue),
-        underline: Container(
-          height: 2,
-          color: Colors.blue,
-        ),
-        onChanged: (TextRecognitionScript? script) {
-          if (script != null) {
-            setState(() {
-              _script = script;
-              _textRecognizer.close();
-              _textRecognizer = TextRecognizer(script: _script);
-            });
-          }
-        },
-        items: TextRecognitionScript.values
-            .map<DropdownMenuItem<TextRecognitionScript>>((script) {
+    value: _script,
+    icon: const Icon(Icons.arrow_downward),
+    elevation: 16,
+    style: const TextStyle(color: Colors.blue),
+    underline: Container(height: 2, color: Colors.blue),
+    onChanged: (TextRecognitionScript? script) {
+      if (script != null) {
+        setState(() {
+          _script = script;
+          _textRecognizer.close();
+          _textRecognizer = TextRecognizer(script: _script);
+        });
+      }
+    },
+    items: TextRecognitionScript.values
+        .map<DropdownMenuItem<TextRecognitionScript>>((script) {
           return DropdownMenuItem<TextRecognitionScript>(
             value: script,
             child: Text(script.name),
           );
-        }).toList(),
-      );
+        })
+        .toList(),
+  );
 
   Future<void> _processImage(InputImage inputImage) async {
     if (!_canProcess) return;
