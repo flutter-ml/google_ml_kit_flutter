@@ -1,0 +1,81 @@
+#!/bin/bash
+# Pre-commit hook for besties_app
+# Enforces formatting, static analysis, string localization cleanup, secret protection, and git hygiene.
+
+set -e
+
+# Ensure PATH includes Flutter, Dart, Homebrew, and user bins when invoked by GUI Git clients (Fork, VS Code, Tower, etc.)
+export PATH="$HOME/workspace/flutter/bin:$HOME/development/flutter/bin:$HOME/flutter/bin:/opt/homebrew/bin:/usr/local/bin:$HOME/.pub-cache/bin:$PATH"
+
+echo "🔍 Running pre-commit checks..."
+
+# ------------------------------------------------------------------------------
+# 1. Secret & Sensitive File Leak Prevention
+# ------------------------------------------------------------------------------
+echo "🔒 Check 1/5: Checking for secrets and sensitive files..."
+STAGED_SECRETS=$(git diff --cached --name-only | grep -E '^\.env$|\.env\.|\.pem$|\.key$|google-services\.json$|GoogleService-Info\.plist$' || true)
+if [ -n "$STAGED_SECRETS" ]; then
+  echo "❌ Error: Attempting to commit sensitive/secret files:"
+  echo "$STAGED_SECRETS"
+  echo "Please unstage these files before committing."
+  exit 1
+fi
+
+STAGED_DIFF=$(git diff --cached --diff-filter=ACM || true)
+if [ -n "$STAGED_DIFF" ]; then
+  if echo "$STAGED_DIFF" | grep -q -E -e '-----BEGIN (RSA|OPENSSH|PRIVATE) KEY-----|AKIA[0-9A-Z]{16}'; then
+    echo "❌ Error: Hardcoded private keys or AWS access keys detected in staged changes!"
+    exit 1
+  fi
+fi
+
+# ------------------------------------------------------------------------------
+# 2. Git Hygiene Checks (Conflict Markers)
+# ------------------------------------------------------------------------------
+echo "🧹 Check 2/5: Checking git hygiene and conflict markers..."
+if [ -n "$STAGED_DIFF" ]; then
+  if echo "$STAGED_DIFF" | grep -q -E -e '^(<<<<<<<|=======|>>>>>>>)'; then
+    echo "❌ Error: Unresolved merge conflict markers (<<<<<<< / ======= / >>>>>>>) detected in staged files!"
+    exit 1
+  fi
+fi
+
+# ------------------------------------------------------------------------------
+# 3. Dart Code Formatting
+# ------------------------------------------------------------------------------
+echo "🎨 Check 3/5: Checking Dart code formatting..."
+STAGED_DART_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.dart$' || true)
+if [ -n "$STAGED_DART_FILES" ]; then
+  # Filter out generated files
+  HANDWRITTEN_DART=$(echo "$STAGED_DART_FILES" | grep -v -E '\.g\.dart$|\.freezed\.dart$|lib/generated/' || true)
+  if [ -n "$HANDWRITTEN_DART" ]; then
+    if ! dart format --set-exit-if-changed $HANDWRITTEN_DART > /dev/null 2>&1; then
+      echo "❌ Error: Unformatted Dart code detected in staged files:"
+      dart format --set-exit-if-changed $HANDWRITTEN_DART
+      echo ""
+      echo "Run 'dart format lib' to format your code before committing."
+      exit 1
+    fi
+  fi
+fi
+
+# ------------------------------------------------------------------------------
+# 4. Localization Pruning & ARB Generation
+# ------------------------------------------------------------------------------
+echo "🌐 Check 4/5: Running localization cleanup & intl generation..."
+if [ -f "scripts/cleanup_strings" ]; then
+  python3 scripts/cleanup_strings
+fi
+
+# ------------------------------------------------------------------------------
+# 5. Static Analysis (flutter analyze)
+# ------------------------------------------------------------------------------
+echo "📊 Check 5/5: Running static code analysis (flutter analyze)..."
+if ! flutter analyze lib > /dev/null 2>&1; then
+  echo "❌ Error: 'flutter analyze' found lint or code errors:"
+  flutter analyze lib
+  exit 1
+fi
+
+echo "✅ All 5 pre-commit checks passed successfully!"
+exit 0

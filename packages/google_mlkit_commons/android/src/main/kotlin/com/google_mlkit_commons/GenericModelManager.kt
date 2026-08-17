@@ -5,7 +5,6 @@ import com.google.mlkit.common.model.RemoteModel
 import com.google.mlkit.common.model.RemoteModelManager
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import java.lang.reflect.Method
 
 class GenericModelManager {
     interface CheckModelIsDownloadedCallback {

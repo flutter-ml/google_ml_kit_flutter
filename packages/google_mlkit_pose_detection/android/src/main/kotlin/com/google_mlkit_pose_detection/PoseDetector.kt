@@ -2,7 +2,6 @@ package com.google_mlkit_pose_detection
 
 import android.content.Context
 import com.google.mlkit.vision.pose.PoseDetection
-import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
 import com.google_mlkit_commons.InputImageConverter

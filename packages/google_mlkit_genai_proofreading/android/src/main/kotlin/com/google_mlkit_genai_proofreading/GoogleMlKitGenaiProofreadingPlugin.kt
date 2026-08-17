@@ -1,8 +1,6 @@
 package com.google_mlkit_genai_proofreading
 
-import android.content.Context
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 class GoogleMlKitGenaiProofreadingPlugin : FlutterPlugin {
