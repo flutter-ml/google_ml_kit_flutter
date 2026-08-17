@@ -1,3 +1,12 @@
+## 0.12.1
+
+* Update `google_mlkit_commons` dependency to `^0.13.0`.
+
+## 0.12.0
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
 ## 0.11.0
 
 * Migrate Android implementation from Java to Kotlin.

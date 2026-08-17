@@ -3,6 +3,157 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-08-17
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v0.23.1`](#google_ml_kit---v0231)
+- [`google_mlkit_commons` - `v0.13.0`](#google_mlkit_commons---v0130)
+- [`google_mlkit_barcode_scanning` - `v0.16.1`](#google_mlkit_barcode_scanning---v0161)
+- [`google_mlkit_digital_ink_recognition` - `v0.16.1`](#google_mlkit_digital_ink_recognition---v0161)
+- [`google_mlkit_document_scanner` - `v0.6.1`](#google_mlkit_document_scanner---v061)
+- [`google_mlkit_entity_extraction` - `v0.17.1`](#google_mlkit_entity_extraction---v0171)
+- [`google_mlkit_face_detection` - `v0.15.1`](#google_mlkit_face_detection---v0151)
+- [`google_mlkit_face_mesh_detection` - `v0.6.1`](#google_mlkit_face_mesh_detection---v061)
+- [`google_mlkit_genai_image_description` - `v0.3.1`](#google_mlkit_genai_image_description---v031)
+- [`google_mlkit_genai_prompt` - `v0.3.1`](#google_mlkit_genai_prompt---v031)
+- [`google_mlkit_genai_proofreading` - `v0.3.1`](#google_mlkit_genai_proofreading---v031)
+- [`google_mlkit_genai_rewriting` - `v0.3.1`](#google_mlkit_genai_rewriting---v031)
+- [`google_mlkit_genai_speech_recognition` - `v0.3.1`](#google_mlkit_genai_speech_recognition---v031)
+- [`google_mlkit_genai_summarization` - `v0.3.1`](#google_mlkit_genai_summarization---v031)
+- [`google_mlkit_image_labeling` - `v0.16.1`](#google_mlkit_image_labeling---v0161)
+- [`google_mlkit_language_id` - `v0.15.1`](#google_mlkit_language_id---v0151)
+- [`google_mlkit_object_detection` - `v0.17.1`](#google_mlkit_object_detection---v0171)
+- [`google_mlkit_pose_detection` - `v0.16.1`](#google_mlkit_pose_detection---v0161)
+- [`google_mlkit_selfie_segmentation` - `v0.12.1`](#google_mlkit_selfie_segmentation---v0121)
+- [`google_mlkit_smart_reply` - `v0.15.1`](#google_mlkit_smart_reply---v0151)
+- [`google_mlkit_subject_segmentation` - `v0.2.1`](#google_mlkit_subject_segmentation---v021)
+- [`google_mlkit_text_recognition` - `v0.17.1`](#google_mlkit_text_recognition---v0171)
+- [`google_mlkit_translation` - `v0.15.1`](#google_mlkit_translation---v0151)
+
+---
+
+#### `google_ml_kit` - `v0.23.1`
+
+* Update all dependencies to latest versions
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_commons` - `v0.13.0`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_barcode_scanning` - `v0.16.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_digital_ink_recognition` - `v0.16.1`
+
+* Fix method channel name
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_document_scanner` - `v0.6.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_entity_extraction` - `v0.17.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_face_detection` - `v0.15.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_face_mesh_detection` - `v0.6.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_image_description` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_prompt` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_proofreading` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_rewriting` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_speech_recognition` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_genai_summarization` - `v0.3.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_image_labeling` - `v0.16.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_language_id` - `v0.15.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_object_detection` - `v0.17.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_pose_detection` - `v0.16.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_selfie_segmentation` - `v0.12.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_smart_reply` - `v0.15.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_subject_segmentation` - `v0.2.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_text_recognition` - `v0.17.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+#### `google_mlkit_translation` - `v0.15.1`
+
+* Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)
+* Bump minimum Flutter SDK constraint to >=3.44.0 and Dart SDK to ^3.12.0
+
+
 ## 2026-07-07
 
 ### Changes
