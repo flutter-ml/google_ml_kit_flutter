@@ -113,7 +113,7 @@ public class GoogleMlKitDigitalInkRecognitionPlugin: NSObject, FlutterPlugin {
       let candidates = recognitionResult.candidates.map { candidate in
         [
           "text": candidate.text,
-          "score": candidate.score?.doubleValue ?? 0
+          "score": candidate.score?.doubleValue ?? 0.0
         ] as [String: Any]
       }
       result(candidates)
