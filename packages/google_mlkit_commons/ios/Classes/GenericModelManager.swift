@@ -42,18 +42,22 @@ public class GenericModelManager: NSObject {
           ))
           return
         }
+        // ML Kit does not post these notifications with the model as sender; the model is only
+        // available in userInfo. Observe all senders and match the model there (as in the ML Kit docs).
         let successToken = NotificationCenter.default.addObserver(
           forName: Notification.Name.mlkitModelDownloadDidSucceed,
-          object: model,
+          object: nil,
           queue: .main
-        ) { [weak self] _ in
+        ) { [weak self] notification in
+          guard GenericModelManager.notification(notification, isFor: model) else { return }
           self?.completeDownload(key: key, success: true)
         }
         let failToken = NotificationCenter.default.addObserver(
           forName: Notification.Name.mlkitModelDownloadDidFail,
-          object: model,
+          object: nil,
           queue: .main
-        ) { [weak self] _ in
+        ) { [weak self] notification in
+          guard GenericModelManager.notification(notification, isFor: model) else { return }
           self?.completeDownload(key: key, success: false)
         }
         pendingDownloads[key] = PendingDownload(
@@ -87,6 +91,14 @@ public class GenericModelManager: NSObject {
     default:
       result(FlutterMethodNotImplemented)
     }
+  }
+
+  /// Whether a model download notification refers to `model`, read from
+  /// `userInfo[ModelDownloadUserInfoKey.remoteModel]`.
+  private static func notification(_ notification: Notification, isFor model: RemoteModel) -> Bool {
+    guard let downloaded = notification.userInfo?[ModelDownloadUserInfoKey.remoteModel.rawValue]
+      as? RemoteModel else { return false }
+    return downloaded == model
   }
 
   /// Removes observers for this download and invokes the stored callback once. Called on main queue.
