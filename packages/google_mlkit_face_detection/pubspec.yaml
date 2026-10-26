@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitFaceDetectionPlugin
       ios:
         pluginClass: GoogleMlKitFaceDetectionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_face_detection

@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitObjectDetectionPlugin
       ios:
         pluginClass: GoogleMlKitObjectDetectionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_object_detection

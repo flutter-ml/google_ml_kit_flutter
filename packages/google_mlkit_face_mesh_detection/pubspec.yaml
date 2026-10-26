@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitFaceMeshDetectionPlugin
       ios:
         pluginClass: GoogleMlKitFaceMeshDetectionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_face_mesh_detection

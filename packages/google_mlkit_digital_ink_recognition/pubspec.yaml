@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitDigitalInkRecognitionPlugin
       ios:
         pluginClass: GoogleMlKitDigitalInkRecognitionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_digital_ink_recognition

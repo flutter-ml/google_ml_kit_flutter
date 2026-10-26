@@ -77,6 +77,3 @@ flutter pub get
 
 cd ../example
 flutter pub get
-
-cd ios
-pod install --repo-update

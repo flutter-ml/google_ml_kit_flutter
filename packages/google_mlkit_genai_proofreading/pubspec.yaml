@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiProofreadingPlugin
       ios:
         pluginClass: GoogleMlKitGenaiProofreadingPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_proofreading

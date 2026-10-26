@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiSummarizationPlugin
       ios:
         pluginClass: GoogleMlKitGenaiSummarizationPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_summarization

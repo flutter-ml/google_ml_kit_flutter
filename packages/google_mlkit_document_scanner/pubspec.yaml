@@ -25,3 +25,5 @@ flutter:
         pluginClass: GoogleMlKitDocumentScannerPlugin
       ios:
         pluginClass: GoogleMlKitDocumentScannerPlugin
+        swiftPackage:
+          path: ios/google_mlkit_document_scanner

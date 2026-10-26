@@ -25,3 +25,5 @@ flutter:
         pluginClass: GoogleMlKitCommonsPlugin
       ios:
         pluginClass: GoogleMlKitCommonsPlugin
+        swiftPackage:
+          path: ios/google_mlkit_commons

@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiImageDescriptionPlugin
       ios:
         pluginClass: GoogleMlKitGenaiImageDescriptionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_image_description
