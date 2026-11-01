@@ -14,6 +14,25 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		6A6525349B807151E4CBD5A9 /* ChineseOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */; };
+		181EC92F31C1FBC6792E01AE /* DevanagariOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */; };
+		8E1F6D8642E24FFB300DC9EA /* GoogleMVFaceDetectorResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */; };
+		3BFB00E9B12258414939E8B1 /* JapaneseOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */; };
+		953FF3F3AD3543B916FE3931 /* KoreanOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */; };
+		B450C60FB65C5C19B5783B4F /* LatinOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */; };
+		9B2E77CFAD83A633F2C9AFF3 /* MLKitDigitalInkRecognition_resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */; };
+		F5764F0BFCEA9CE20FF4BF6A /* MLKitImageLabelingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */; };
+		74C97CED35F3243DEAF5E521 /* MLKitObjectDetectionCommonResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 38249E73DDAA2FE562FEF84B /* MLKitObjectDetectionCommonResources.bundle */; };
+		F5227809E567AF9368C37CAD /* MLKitObjectDetectionResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74B823B3639C534739443E21 /* MLKitObjectDetectionResources.bundle */; };
+		94BC3382906770B6F5672EB5 /* MLKitPoseDetectionAccurateResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04E5E4DF33B8A06031428198 /* MLKitPoseDetectionAccurateResources.bundle */; };
+		1B14B56C7FEF4B8F588C594B /* MLKitPoseDetectionCommonResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD57F9FF296C9CBC6EE9E5C2 /* MLKitPoseDetectionCommonResources.bundle */; };
+		3F06A134FDA25C01CCAA04B4 /* MLKitPoseDetectionFastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 67BFFEBB011293D7DE22715B /* MLKitPoseDetectionFastResources.bundle */; };
+		3E600CC9774A81EF8E5E3B75 /* MLKitSegmentationCommonResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4D29CB7D06A484BED41E2248 /* MLKitSegmentationCommonResources.bundle */; };
+		CA50A6EF74EED61EF83F6745 /* MLKitSegmentationSelfieResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DE737E387B638A3F676FC7DF /* MLKitSegmentationSelfieResources.bundle */; };
+		B4661A3203C3563D9756C166 /* MLKitTranslate_resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4E9024F913ECDAF042920C79 /* MLKitTranslate_resource.bundle */; };
+		79798AEBB3545E3E7D889613 /* MLKitXenoResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CF8A58959EF3B8CA0612D576 /* MLKitXenoResources.bundle */; };
+		59228F4A1111A8B508992DA8 /* PredictOnDeviceResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CEC8EA45954DD19FC7780402 /* PredictOnDeviceResource.bundle */; };
+		1A37462F77D905D2FF2C95DC /* PredictOnDevice_resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D295FDD2B3D052CE2C18A8BF /* PredictOnDevice_resource.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +64,25 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = ChineseOCRResources.bundle; sourceTree = "<group>"; };
+		69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = DevanagariOCRResources.bundle; sourceTree = "<group>"; };
+		F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = GoogleMVFaceDetectorResources.bundle; sourceTree = "<group>"; };
+		098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = JapaneseOCRResources.bundle; sourceTree = "<group>"; };
+		38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = KoreanOCRResources.bundle; sourceTree = "<group>"; };
+		BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = LatinOCRResources.bundle; sourceTree = "<group>"; };
+		5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitDigitalInkRecognition_resource.bundle; sourceTree = "<group>"; };
+		A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitImageLabelingResources.bundle; sourceTree = "<group>"; };
+		38249E73DDAA2FE562FEF84B /* MLKitObjectDetectionCommonResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitObjectDetectionCommonResources.bundle; sourceTree = "<group>"; };
+		74B823B3639C534739443E21 /* MLKitObjectDetectionResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitObjectDetectionResources.bundle; sourceTree = "<group>"; };
+		04E5E4DF33B8A06031428198 /* MLKitPoseDetectionAccurateResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitPoseDetectionAccurateResources.bundle; sourceTree = "<group>"; };
+		CD57F9FF296C9CBC6EE9E5C2 /* MLKitPoseDetectionCommonResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitPoseDetectionCommonResources.bundle; sourceTree = "<group>"; };
+		67BFFEBB011293D7DE22715B /* MLKitPoseDetectionFastResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitPoseDetectionFastResources.bundle; sourceTree = "<group>"; };
+		4D29CB7D06A484BED41E2248 /* MLKitSegmentationCommonResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitSegmentationCommonResources.bundle; sourceTree = "<group>"; };
+		DE737E387B638A3F676FC7DF /* MLKitSegmentationSelfieResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitSegmentationSelfieResources.bundle; sourceTree = "<group>"; };
+		4E9024F913ECDAF042920C79 /* MLKitTranslate_resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitTranslate_resource.bundle; sourceTree = "<group>"; };
+		CF8A58959EF3B8CA0612D576 /* MLKitXenoResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitXenoResources.bundle; sourceTree = "<group>"; };
+		CEC8EA45954DD19FC7780402 /* PredictOnDeviceResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = PredictOnDeviceResource.bundle; sourceTree = "<group>"; };
+		D295FDD2B3D052CE2C18A8BF /* PredictOnDevice_resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = PredictOnDevice_resource.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +116,7 @@
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
+				55173D0837960B1C3732427E /* MLKit Bundles */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +141,32 @@
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		55173D0837960B1C3732427E /* MLKit Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */,
+				69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */,
+				F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */,
+				098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */,
+				38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */,
+				BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */,
+				5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */,
+				A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */,
+				38249E73DDAA2FE562FEF84B /* MLKitObjectDetectionCommonResources.bundle */,
+				74B823B3639C534739443E21 /* MLKitObjectDetectionResources.bundle */,
+				04E5E4DF33B8A06031428198 /* MLKitPoseDetectionAccurateResources.bundle */,
+				CD57F9FF296C9CBC6EE9E5C2 /* MLKitPoseDetectionCommonResources.bundle */,
+				67BFFEBB011293D7DE22715B /* MLKitPoseDetectionFastResources.bundle */,
+				4D29CB7D06A484BED41E2248 /* MLKitSegmentationCommonResources.bundle */,
+				DE737E387B638A3F676FC7DF /* MLKitSegmentationSelfieResources.bundle */,
+				4E9024F913ECDAF042920C79 /* MLKitTranslate_resource.bundle */,
+				CF8A58959EF3B8CA0612D576 /* MLKitXenoResources.bundle */,
+				CEC8EA45954DD19FC7780402 /* PredictOnDeviceResource.bundle */,
+				D295FDD2B3D052CE2C18A8BF /* PredictOnDevice_resource.bundle */,
+			);
+			path = mlkit_bundles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +242,25 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				6A6525349B807151E4CBD5A9 /* ChineseOCRResources.bundle in Resources */,
+				181EC92F31C1FBC6792E01AE /* DevanagariOCRResources.bundle in Resources */,
+				8E1F6D8642E24FFB300DC9EA /* GoogleMVFaceDetectorResources.bundle in Resources */,
+				3BFB00E9B12258414939E8B1 /* JapaneseOCRResources.bundle in Resources */,
+				953FF3F3AD3543B916FE3931 /* KoreanOCRResources.bundle in Resources */,
+				B450C60FB65C5C19B5783B4F /* LatinOCRResources.bundle in Resources */,
+				9B2E77CFAD83A633F2C9AFF3 /* MLKitDigitalInkRecognition_resource.bundle in Resources */,
+				F5764F0BFCEA9CE20FF4BF6A /* MLKitImageLabelingResources.bundle in Resources */,
+				74C97CED35F3243DEAF5E521 /* MLKitObjectDetectionCommonResources.bundle in Resources */,
+				F5227809E567AF9368C37CAD /* MLKitObjectDetectionResources.bundle in Resources */,
+				94BC3382906770B6F5672EB5 /* MLKitPoseDetectionAccurateResources.bundle in Resources */,
+				1B14B56C7FEF4B8F588C594B /* MLKitPoseDetectionCommonResources.bundle in Resources */,
+				3F06A134FDA25C01CCAA04B4 /* MLKitPoseDetectionFastResources.bundle in Resources */,
+				3E600CC9774A81EF8E5E3B75 /* MLKitSegmentationCommonResources.bundle in Resources */,
+				CA50A6EF74EED61EF83F6745 /* MLKitSegmentationSelfieResources.bundle in Resources */,
+				B4661A3203C3563D9756C166 /* MLKitTranslate_resource.bundle in Resources */,
+				79798AEBB3545E3E7D889613 /* MLKitXenoResources.bundle in Resources */,
+				59228F4A1111A8B508992DA8 /* PredictOnDeviceResource.bundle in Resources */,
+				1A37462F77D905D2FF2C95DC /* PredictOnDevice_resource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +419,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-all_load",
 					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
@@ -480,6 +565,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-all_load",
 					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
@@ -507,6 +593,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-all_load",
 					
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";

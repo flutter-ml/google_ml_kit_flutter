@@ -3,6 +3,10 @@ analyzer:
     - build/**
     - android/**
     - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 include: ../google_ml_kit/analysis_options.yaml
 
 linter:

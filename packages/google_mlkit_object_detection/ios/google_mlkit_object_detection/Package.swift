@@ -15,8 +15,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons"),
         .package(
-            url: "https://github.com/mdata-group/google-mlkit-swiftpm",
-            exact: "9.0.0-simfix2"
+            url: "https://github.com/d-date/google-mlkit-swiftpm",
+            exact: "9.0.2"
         )
     ],
     targets: [
