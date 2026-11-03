@@ -21,6 +21,22 @@ To run the iOS example app, you need to configure your Apple Developer Team and 
 > [!WARNING]
 > Do not modify `DEVELOPMENT_TEAM` or `PRODUCT_BUNDLE_IDENTIFIER` directly within the Xcode project settings, and do not commit any changes to the project files regarding these variables. Use only the `Local.xcconfig` file for these configurations, as it is gitignored and ensures personal credentials/identifiers are not checked into the repository.
 
+### ML Kit resource bundles (required for iOS)
+
+The iOS build uses ML Kit through Swift Package Manager (see
+[`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm)).
+SwiftPM cannot ship the model files inside the frameworks, so the resource
+bundles are downloaded separately and are **not committed** (they are gitignored).
+
+Before building for iOS, download them once:
+
+```bash
+cd ios
+./download_mlkit_bundles.sh        # defaults to ML Kit 9.0.2
+```
+
+Run it again after cloning a fresh copy or after the ML Kit version changes.
+
 ## Getting Started with Flutter
 
 A few resources to get you started if this is your first Flutter project:
