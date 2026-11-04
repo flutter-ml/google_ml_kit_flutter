@@ -1,11 +1,11 @@
-# Google's ML Kit Document scanner for Flutter
+# Google's ML Kit Document Scanner for Flutter
 
 [![Pub Version](https://img.shields.io/pub/v/google_mlkit_document_scanner)](https://pub.dev/packages/google_mlkit_document_scanner)
 [![analysis](https://github.com/flutter-ml/google_ml_kit_flutter/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/flutter-ml/google_ml_kit_flutter/actions)
-[![Star on Github](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
+[![Star on GitHub](https://img.shields.io/github/stars/flutter-ml/google_ml_kit_flutter.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/flutter-ml/google_ml_kit_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-> **_NOTE: This feature is still in Beta, and it is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues)._**
+> **_NOTE: This feature is still in Beta, and it is only available for Android. Stay tuned for updates on [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues)._**
 
 A Flutter plugin to use [Google's ML Kit Document Scanner](https://developers.google.com/ml-kit/vision/doc-scanner) to digitize physical documents, which allows users to convert physical documents into digital formats. ML Kit's document scanner API provides a comprehensive solution with a high-quality, consistent UI flow across Android apps and devices. Once the document scanner flow is triggered from your app, users retain full control over the scanning process. They can optionally crop the scanned documents, apply filters, remove shadows or stains, and easily send the digitized files back to your app.
 
@@ -14,18 +14,18 @@ The UI flow, ML models and other large resources are delivered using Google Play
 - Low binary size impact (all ML models and large resources are downloaded centrally in Google Play services).
 - No camera permission is required - the document scanner leverages the Google Play services' camera permission, and users are in control of which files to share back with your app.
 
-Key capabilities
+### Key capabilities
 
 - High-quality and consistent user interface for digitizing physical documents.
 - Automatic capture with document detection.
 - Accurate edge detection for optimal crop results.
 - Automatic rotation detection to show documents upright.
 - No camera permission is needed from your app.
-- Low apk binary size impact.
+- Low APK binary size impact.
 
-Customization
+### Customization
 
-The document scanner API provides a high-quality fully fledged UI flow that is consistent across Android apps. However, there is also room to customize some aspects of the user experience
+The document scanner API provides a high-quality fully fledged UI flow that is consistent across Android apps. However, there is also room to customize some aspects of the user experience:
 
 - Maximum number of pages
 - Gallery import
@@ -33,19 +33,19 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 
 **PLEASE READ THIS** before continuing or posting a [new issue](https://github.com/flutter-ml/google_ml_kit_flutter/issues):
 
-- [Google's ML Kit](https://developers.google.com/ml-kit) was build only for mobile platforms: iOS and Android apps. Web or any other platform is not supported, you can request support for those platform to Google in [their repo](https://github.com/googlesamples/mlkit/issues).
+- [Google's ML Kit](https://developers.google.com/ml-kit) was built only for mobile platforms: iOS and Android apps. Web or any other platform is not supported, you can request support for those platforms to Google in [their repo](https://github.com/googlesamples/mlkit/issues).
 
 - This plugin is not sponsored or maintained by Google. The [authors](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/AUTHORS) are developers excited about Machine Learning that wanted to expose Google's native APIs to Flutter.
 
-- Google's ML Kit APIs are only developed natively for iOS and Android. This plugin uses Flutter Platform Channels as explained [here](https://docs.flutter.dev/development/platform-integration/platform-channels).
+- Google's ML Kit APIs are only developed natively for iOS and Android. This plugin uses Flutter Platform Channels as explained [here](https://docs.flutter.dev/platform-integration/platform-channels).
 
   Messages are passed between the client (the app/plugin) and host (platform) using platform channels as illustrated in this diagram:
 
   <p align="center" width="100%">
-    <img src="https://docs.flutter.dev/assets/images/docs/PlatformChannels.png"> 
+    <img src="https://docs.flutter.dev/assets/images/docs/PlatformChannels.png">
   </p>
 
-  Messages and responses are passed asynchronously, to ensure the user interface remains responsive. To read more about platform channels go [here](https://docs.flutter.dev/development/platform-integration/platform-channels).
+  Messages and responses are passed asynchronously, to ensure the user interface remains responsive. To read more about platform channels go [here](https://docs.flutter.dev/platform-integration/platform-channels).
 
   Because this plugin uses platform channels, no Machine Learning processing is done in Flutter/Dart, all the calls are passed to the native platform using `MethodChannel` in Android and `FlutterMethodChannel` in iOS, and executed using Google's native APIs. Think of this plugin as a bridge between your app and Google's native ML Kit APIs. This plugin only passes the call to the native API and the processing is done by Google's API. It is important that you understand this concept when it comes to debugging errors for your ML model and/or app.
 
@@ -55,13 +55,13 @@ The document scanner API provides a high-quality fully fledged UI flow that is c
 
 ### iOS
 
-This feature is only available for Android. Stay tune for updates in [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
+This feature is still in Beta, and it is only available for Android. Stay tuned for updates on [Google's website](https://developers.google.com/ml-kit/vision/doc-scanner) and request the feature [here](https://github.com/googlesamples/mlkit/issues).
 
 ### Android
 
 - minSdkVersion: 21
-- targetSdkVersion: 35
-- compileSdkVersion: 35
+- targetSdkVersion: 36
+- compileSdkVersion: 36
 
 **⚠️ Production Disclaimer:** Using this plugin in production is the responsibility of the developers consuming the plugin, not the authors. The authors provide this plugin as-is and are not responsible for any issues, failures, or compatibility problems that may arise from using this plugin in production environments.
 
@@ -78,8 +78,8 @@ const Set<DocumentFormat> documentFormats = {
     DocumentFormat.pdf
 };
 DocumentScannerOptions documentOptions = DocumentScannerOptions(
-  documentFormats: documentFormats, 
-  mode: ScannerMode.filter, // to control what features are enabled
+  documentFormats: documentFormats,
+  mode: ScannerMode.filter, // ScannerMode.full, ScannerMode.filter, or ScannerMode.base
   pageLimit: 1, // setting a limit to the number of pages scanned
   isGalleryImport: true, // importing from the photo gallery
 );
@@ -97,8 +97,8 @@ The scanner returns objects for the scanned document.
 
 ```dart
 DocumentScanningResult result = await documentScanner.scanDocument();
-final pdf = result.pdf; // A PDF object.
-final images = result.images;  // A list with the paths to the images.
+final pdf = result.pdf; // A DocumentScanningResultPdf? object (pdf?.uri, pdf?.pageCount).
+final images = result.images; // A list with the paths to the images.
 ```
 
 #### Release resources with `close()`
@@ -115,5 +115,5 @@ Find the example app [here](https://github.com/flutter-ml/google_ml_kit_flutter/
 
 Contributions are welcome.
 In case of any problems look at [existing issues](https://github.com/flutter-ml/google_ml_kit_flutter/issues), if you cannot find anything related to your problem then open an issue.
-Create an issue before opening a [pull request](https://github.com/flutter-ml/google_ml_kit_flutter/pulls) for non trivial fixes.
+Create an issue before opening a [pull request](https://github.com/flutter-ml/google_ml_kit_flutter/pulls) for non-trivial fixes.
 In case of trivial fixes open a [pull request](https://github.com/flutter-ml/google_ml_kit_flutter/pulls) directly.
