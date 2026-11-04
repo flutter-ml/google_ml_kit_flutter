@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitSubjectSegmentationPlugin
       ios:
         pluginClass: GoogleMlKitSubjectSegmentationPlugin
+        swiftPackage:
+          path: ios/google_mlkit_subject_segmentation

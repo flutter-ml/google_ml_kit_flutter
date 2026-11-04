@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitGenaiRewritingPlugin
       ios:
         pluginClass: GoogleMlKitGenaiRewritingPlugin
+        swiftPackage:
+          path: ios/google_mlkit_genai_rewriting

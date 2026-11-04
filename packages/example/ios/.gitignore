@@ -28,6 +28,10 @@ Flutter/flutter_export_environment.sh
 ServiceDefinitions.json
 Runner/GeneratedPluginRegistrant.*
 
+# ML Kit resource bundles (models) are large binaries; fetch them with
+# ./download_mlkit_bundles.sh instead of committing them.
+mlkit_bundles/
+
 # Exceptions to above rules.
 !default.mode1v3
 !default.mode2v3

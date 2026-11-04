@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitTextRecognitionPlugin
       ios:
         pluginClass: GoogleMlKitTextRecognitionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_text_recognition

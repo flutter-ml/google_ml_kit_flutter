@@ -26,3 +26,5 @@ flutter:
         pluginClass: GoogleMlKitEntityExtractionPlugin
       ios:
         pluginClass: GoogleMlKitEntityExtractionPlugin
+        swiftPackage:
+          path: ios/google_mlkit_entity_extraction
