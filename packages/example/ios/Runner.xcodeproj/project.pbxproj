@@ -14,11 +14,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		6A6525349B807151E4CBD5A9 /* ChineseOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */; };
-		181EC92F31C1FBC6792E01AE /* DevanagariOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */; };
 		8E1F6D8642E24FFB300DC9EA /* GoogleMVFaceDetectorResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */; };
-		3BFB00E9B12258414939E8B1 /* JapaneseOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */; };
-		953FF3F3AD3543B916FE3931 /* KoreanOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */; };
 		B450C60FB65C5C19B5783B4F /* LatinOCRResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */; };
 		9B2E77CFAD83A633F2C9AFF3 /* MLKitDigitalInkRecognition_resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */; };
 		F5764F0BFCEA9CE20FF4BF6A /* MLKitImageLabelingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */; };
@@ -64,11 +60,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = ChineseOCRResources.bundle; sourceTree = "<group>"; };
-		69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = DevanagariOCRResources.bundle; sourceTree = "<group>"; };
 		F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = GoogleMVFaceDetectorResources.bundle; sourceTree = "<group>"; };
-		098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = JapaneseOCRResources.bundle; sourceTree = "<group>"; };
-		38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = KoreanOCRResources.bundle; sourceTree = "<group>"; };
 		BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = LatinOCRResources.bundle; sourceTree = "<group>"; };
 		5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitDigitalInkRecognition_resource.bundle; sourceTree = "<group>"; };
 		A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cbundle; path = MLKitImageLabelingResources.bundle; sourceTree = "<group>"; };
@@ -146,11 +138,7 @@
 		55173D0837960B1C3732427E /* MLKit Bundles */ = {
 			isa = PBXGroup;
 			children = (
-				8594E3977394BA4C14BFE8A0 /* ChineseOCRResources.bundle */,
-				69573D1208C65BD852D7E805 /* DevanagariOCRResources.bundle */,
 				F1A2A72646541651B5CFFB5F /* GoogleMVFaceDetectorResources.bundle */,
-				098AD05BC0F1FC98A45C1E35 /* JapaneseOCRResources.bundle */,
-				38418B26BA08FD09FD7D633A /* KoreanOCRResources.bundle */,
 				BE02B2E4BD2EA4C510B35CE4 /* LatinOCRResources.bundle */,
 				5E0AA031C7739255EF2C92D0 /* MLKitDigitalInkRecognition_resource.bundle */,
 				A6F53A2ECCF58DD165854159 /* MLKitImageLabelingResources.bundle */,
@@ -242,11 +230,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
-				6A6525349B807151E4CBD5A9 /* ChineseOCRResources.bundle in Resources */,
-				181EC92F31C1FBC6792E01AE /* DevanagariOCRResources.bundle in Resources */,
 				8E1F6D8642E24FFB300DC9EA /* GoogleMVFaceDetectorResources.bundle in Resources */,
-				3BFB00E9B12258414939E8B1 /* JapaneseOCRResources.bundle in Resources */,
-				953FF3F3AD3543B916FE3931 /* KoreanOCRResources.bundle in Resources */,
 				B450C60FB65C5C19B5783B4F /* LatinOCRResources.bundle in Resources */,
 				9B2E77CFAD83A633F2C9AFF3 /* MLKitDigitalInkRecognition_resource.bundle in Resources */,
 				F5764F0BFCEA9CE20FF4BF6A /* MLKitImageLabelingResources.bundle in Resources */,
