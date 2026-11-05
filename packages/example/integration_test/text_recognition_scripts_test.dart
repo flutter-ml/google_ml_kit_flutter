@@ -1,13 +1,14 @@
-// Baseline integration tests for text recognition script handling.
+// Integration tests for text recognition script handling.
 //
-// Captures the CURRENT behaviour of the SPM-migrated plugin so that later
-// changes (e.g. slimming the iOS plugin to Latin-only, or adding per-script
-// add-on packages) can be verified against a known baseline:
+// Verifies behaviour across Latin and non-Latin scripts:
 //
-//   * Latin script (text1.png) must always be recognized.
-//   * A non-Latin script (Japanese, text2.png) is recognized when its
-//     language library + OCR resource bundle are present, and must degrade
-//     gracefully (empty result, no crash) when they are not.
+//   * Latin script (text1.png) is always recognized on both platforms.
+//   * Non-Latin script (Japanese, text2.png):
+//     - On Android (where `com.google.mlkit:text-recognition-japanese` is
+//       included in the example app), CJK characters are recognized.
+//     - On iOS (which links only the base Latin `MLKitTextRecognition`
+//       library), the plugin gracefully falls back to the Latin recognizer
+//       without crashing and recognizes the Latin lines in the image.
 //
 // Run with:
 //   cd packages/example
@@ -65,7 +66,7 @@ Future<void> main() async {
       });
     });
 
-    testWidgets('japanese script recognizes Japanese text (text2.png)', (
+    testWidgets('japanese script on mixed Japanese/Latin image (text2.png)', (
       tester,
     ) async {
       await tester.runAsync(() async {
@@ -76,21 +77,17 @@ Future<void> main() async {
           final recognized = await recognizer.processImage(
             await inputImageFromAsset('assets/images/text2.png'),
           );
-          // Three possible outcomes depending on the build:
-          //   * CJK text        -> Japanese framework + bundle present;
-          //   * Latin-only text -> graceful fallback to the Latin recognizer
-          //                        (old CocoaPods behaviour after the SPM
-          //                        migration slimmed the plugin);
-          //   * empty text      -> also acceptable graceful degradation.
-          // The hard requirement is: no crash.
           final text = recognized.text.trim();
           debugPrint('japanese OCR: "$text"');
-          if (text.isEmpty) {
-            debugPrint('-> degradation: empty result');
-          } else if (containsCjk(text)) {
-            debugPrint('-> full support: CJK recognized');
-          } else {
-            debugPrint('-> degradation: Latin-only fallback text');
+
+          // text2.png contains both Japanese and Latin lines, so both the
+          // Japanese recognizer (Android) and the Latin fallback recognizer
+          // (iOS) must produce non-empty text without crashing.
+          expect(text, isNotEmpty);
+          if (Platform.isAndroid) {
+            expect(containsCjk(text), isTrue);
+          } else if (Platform.isIOS) {
+            expect(containsCjk(text), isFalse);
           }
         } finally {
           await recognizer.close();
@@ -98,23 +95,27 @@ Future<void> main() async {
       });
     });
 
-    testWidgets('auto-detect (default options) on Japanese text (text2.png)', (
-      tester,
-    ) async {
-      await tester.runAsync(() async {
-        final recognizer = TextRecognizer();
-        try {
-          final recognized = await recognizer.processImage(
-            await inputImageFromAsset('assets/images/text2.png'),
-          );
-          // The image also contains a Latin line, so the default
-          // auto-detecting recognizer should always produce some text.
-          expect(recognized.text.trim(), isNotEmpty);
-          debugPrint('auto-detect on text2.png: "${recognized.text}"');
-        } finally {
-          await recognizer.close();
-        }
-      });
-    });
+    testWidgets(
+      'default script (latin) on mixed Japanese/Latin image (text2.png)',
+      (tester) async {
+        await tester.runAsync(() async {
+          // TextRecognizer() defaults to TextRecognitionScript.latin.
+          final recognizer = TextRecognizer();
+          try {
+            final recognized = await recognizer.processImage(
+              await inputImageFromAsset('assets/images/text2.png'),
+            );
+            // The image also contains Latin lines, so the default Latin
+            // recognizer should recognize them and never return empty text.
+            final text = recognized.text.trim();
+            expect(text, isNotEmpty);
+            expect(containsCjk(text), isFalse);
+            debugPrint('default (latin) on text2.png: "$text"');
+          } finally {
+            await recognizer.close();
+          }
+        });
+      },
+    );
   });
 }
