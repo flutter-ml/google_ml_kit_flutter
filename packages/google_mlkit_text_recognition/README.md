@@ -44,7 +44,7 @@ This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-s
    - `-ObjC`
    - `-all_load`
 
-2. **ML Kit Resource Bundles**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download the OCR resource bundle(s) for the scripts your app uses (`LatinOCRResources.bundle`, `ChineseOCRResources.bundle`, `DevanagariOCRResources.bundle`, `JapaneseOCRResources.bundle`, `KoreanOCRResources.bundle`) from the [`d-date/google-mlkit-swiftpm` v9.0.2 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.2) and add them to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
+2. **ML Kit Resource Bundle**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download `LatinOCRResources.bundle` from the [`d-date/google-mlkit-swiftpm` v9.0.2 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.2) and add it to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
 
 ### Android
 
@@ -58,13 +58,17 @@ This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-s
 
 The ML Kit Text Recognition API can recognize text in any Chinese, Devanagari, Japanese, Korean and Latin character set. Supported languages can be found [here](https://developers.google.com/ml-kit/vision/text-recognition/v2/languages).
 
+**Platform note:** on **iOS** only the Latin character set is currently supported; on **Android** all five scripts are available (the non-Latin ones as optional dependencies, see below).
+
 ## Usage
 
 ### Text Recognition
 
 #### Adding language package dependencies
 
-For the **iOS** platform, all five script recognition libraries (`MLKitTextRecognition`, `MLKitTextRecognitionChinese`, `MLKitTextRecognitionDevanagari`, `MLKitTextRecognitionJapanese`, `MLKitTextRecognitionKorean`) are included via Swift Package Manager. Ensure the corresponding OCR resource `.bundle` (`LatinOCRResources.bundle`, `ChineseOCRResources.bundle`, `DevanagariOCRResources.bundle`, `JapaneseOCRResources.bundle`, `KoreanOCRResources.bundle`) is added to your Xcode `Runner` target's **Copy Bundle Resources** phase.
+For the **iOS** platform, only the base script recognition library (`MLKitTextRecognition`, Latin character set) is included via Swift Package Manager. Ensure `LatinOCRResources.bundle` is added to your Xcode `Runner` target's **Copy Bundle Resources** phase.
+
+Recognizing other scripts on iOS (Chinese, Devanagari, Japanese, Korean) is **not supported yet**: if you request one of them, the plugin gracefully falls back to the Latin recognizer (it never crashes, but non-Latin text is not recognized). Per-script support on iOS is planned to be offered via separate add-on packages.
 
 For the **Android** platform, by default this package only bundles Latin character recognition. If you need to recognize other scripts on Android, add the required dependency to your `android/app/build.gradle` (or `android/app/build.gradle.kts`) file:
 
