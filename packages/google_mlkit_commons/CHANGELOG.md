@@ -1,3 +1,9 @@
+## 1.0.0
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`).
+* Fix iOS model download never completing in `GenericModelManager`.
+* Update documentation and package description.
+
 ## 0.13.0
 
 * Migrate Android plugin build to AGP built-in Kotlin support (`compilerOptions`)

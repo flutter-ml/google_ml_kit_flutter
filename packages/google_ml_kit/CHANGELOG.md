@@ -1,3 +1,9 @@
+## 1.0.0
+
+* Migrate iOS plugins from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`).
+* Update all plugin dependencies to their latest versions.
+* Update documentation.
+
 ## 0.23.1
 
 * Update `google_mlkit_commons` dependency to `^0.13.0`.

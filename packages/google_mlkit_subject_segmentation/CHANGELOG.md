@@ -1,3 +1,9 @@
+## 0.3.0
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager.
+* Update `google_mlkit_commons` dependency to `^1.0.0`.
+* Update documentation and package description.
+
 ## 0.2.1
 
 * Update `google_mlkit_commons` dependency to `^0.13.0`.

@@ -3,6 +3,176 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-11-05
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v1.0.0`](#google_ml_kit---v100)
+- [`google_mlkit_commons` - `v1.0.0`](#google_mlkit_commons---v100)
+- [`google_mlkit_barcode_scanning` - `v1.0.0`](#google_mlkit_barcode_scanning---v100)
+- [`google_mlkit_digital_ink_recognition` - `v1.0.0`](#google_mlkit_digital_ink_recognition---v100)
+- [`google_mlkit_document_scanner` - `v0.7.0`](#google_mlkit_document_scanner---v070)
+- [`google_mlkit_entity_extraction` - `v1.0.0`](#google_mlkit_entity_extraction---v100)
+- [`google_mlkit_face_detection` - `v1.0.0`](#google_mlkit_face_detection---v100)
+- [`google_mlkit_face_mesh_detection` - `v0.7.0`](#google_mlkit_face_mesh_detection---v070)
+- [`google_mlkit_genai_image_description` - `v0.4.0`](#google_mlkit_genai_image_description---v040)
+- [`google_mlkit_genai_prompt` - `v0.4.0`](#google_mlkit_genai_prompt---v040)
+- [`google_mlkit_genai_proofreading` - `v0.4.0`](#google_mlkit_genai_proofreading---v040)
+- [`google_mlkit_genai_rewriting` - `v0.4.0`](#google_mlkit_genai_rewriting---v040)
+- [`google_mlkit_genai_speech_recognition` - `v0.4.0`](#google_mlkit_genai_speech_recognition---v040)
+- [`google_mlkit_genai_summarization` - `v0.4.0`](#google_mlkit_genai_summarization---v040)
+- [`google_mlkit_image_labeling` - `v1.0.0`](#google_mlkit_image_labeling---v100)
+- [`google_mlkit_language_id` - `v1.0.0`](#google_mlkit_language_id---v100)
+- [`google_mlkit_object_detection` - `v1.0.0`](#google_mlkit_object_detection---v100)
+- [`google_mlkit_pose_detection` - `v1.0.0`](#google_mlkit_pose_detection---v100)
+- [`google_mlkit_selfie_segmentation` - `v1.0.0`](#google_mlkit_selfie_segmentation---v100)
+- [`google_mlkit_smart_reply` - `v1.0.0`](#google_mlkit_smart_reply---v100)
+- [`google_mlkit_subject_segmentation` - `v0.3.0`](#google_mlkit_subject_segmentation---v030)
+- [`google_mlkit_text_recognition` - `v1.0.0`](#google_mlkit_text_recognition---v100)
+- [`google_mlkit_translation` - `v1.0.0`](#google_mlkit_translation---v100)
+
+---
+
+#### `google_ml_kit` - `v1.0.0`
+
+* Migrate iOS plugins from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update all plugin dependencies to their latest versions
+* Update documentation
+
+#### `google_mlkit_commons` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Fix iOS model download never completing in `GenericModelManager`
+* Update documentation and package description
+
+#### `google_mlkit_barcode_scanning` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_digital_ink_recognition` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Fix iOS digital ink recognition score handling when the model omits scores
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_document_scanner` - `v0.7.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update documentation
+
+#### `google_mlkit_entity_extraction` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation and package description
+
+#### `google_mlkit_face_detection` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_face_mesh_detection` - `v0.7.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_image_description` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_prompt` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_proofreading` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_rewriting` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_speech_recognition` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_genai_summarization` - `v0.4.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_image_labeling` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_language_id` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update documentation
+
+#### `google_mlkit_object_detection` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_pose_detection` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_selfie_segmentation` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation and package description
+
+#### `google_mlkit_smart_reply` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update documentation
+
+#### `google_mlkit_subject_segmentation` - `v0.3.0`
+
+* Migrate iOS plugin stub from CocoaPods to Swift Package Manager
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation and package description
+
+#### `google_mlkit_text_recognition` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`), linking the base Latin text recognition library by default
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
+#### `google_mlkit_translation` - `v1.0.0`
+
+* Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`)
+* Update `google_mlkit_commons` dependency to `^1.0.0`
+* Update documentation
+
 ## 2026-08-17
 
 ### Changes
