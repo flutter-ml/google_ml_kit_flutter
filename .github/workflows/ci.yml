@@ -51,12 +51,13 @@ jobs:
       - uses: ./.github/actions/flutter-setup
 
       # Pre-install the NDK so Gradle doesn't download it mid-build;
-      # sdkmanager downloads have been observed to flake (corrupt zip).
-      # Keep in sync with flutter.ndkVersion.
+      # a failed CDN download then breaks this small step instead of the
+      # whole build. sdkmanager is not on the PATH, hence the full path.
+      # Keep the version in sync with flutter.ndkVersion.
       - name: Install Android NDK
-        uses: android-actions/setup-android@v3
-        with:
-          ndk: 28.2.13676358
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" --install "ndk;28.2.13676358"
 
       - name: Install dependencies
         working-directory: packages/example
@@ -112,12 +113,13 @@ jobs:
       - uses: ./.github/actions/flutter-setup
 
       # Pre-install the NDK so Gradle doesn't download it mid-build;
-      # sdkmanager downloads have been observed to flake (corrupt zip).
-      # Keep in sync with flutter.ndkVersion.
+      # a failed CDN download then breaks this small step instead of the
+      # whole build. sdkmanager is not on the PATH, hence the full path.
+      # Keep the version in sync with flutter.ndkVersion.
       - name: Install Android NDK
-        uses: android-actions/setup-android@v3
-        with:
-          ndk: 28.2.13676358
+        run: |
+          sdk_root="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" --install "ndk;28.2.13676358"
 
       - name: Install dependencies
         working-directory: packages/example
