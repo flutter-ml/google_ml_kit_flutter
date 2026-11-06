@@ -1,3 +1,7 @@
+## 1.0.1
+
+* `GenericModelManager` is no longer an `NSObject` subclass (it is only used from Swift).
+
 ## 1.0.0
 
 * Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`).

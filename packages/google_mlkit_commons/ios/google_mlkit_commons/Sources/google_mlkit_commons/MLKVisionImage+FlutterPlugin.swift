@@ -11,7 +11,6 @@ import CoreVideo
 
 extension VisionImage {
   /// Creates a VisionImage from method-channel imageData. Returns nil for invalid/missing data instead of crashing.
-  @objc(visionImageFromData:)
   public static func visionImage(from imageData: [String: Any]) -> VisionImage? {
     guard let imageType = imageData["type"] as? String else {
       return nil

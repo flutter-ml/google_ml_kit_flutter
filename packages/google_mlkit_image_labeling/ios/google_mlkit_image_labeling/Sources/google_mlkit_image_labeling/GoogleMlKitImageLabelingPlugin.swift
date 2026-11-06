@@ -4,7 +4,6 @@ import MLKitImageLabeling
 import MLKitImageLabelingCommon
 import MLKitImageLabelingCustom
 import MLKitVision
-import google_mlkit_commons
 
 #if canImport(MLKitLinkFirebase)
     import MLKitLinkFirebase

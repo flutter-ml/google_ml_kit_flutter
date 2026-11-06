@@ -1,5 +1,4 @@
 import Flutter
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitFaceMeshDetectionPlugin: NSObject, FlutterPlugin {

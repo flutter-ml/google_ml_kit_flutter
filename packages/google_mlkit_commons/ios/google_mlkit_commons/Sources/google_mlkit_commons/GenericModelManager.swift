@@ -1,8 +1,7 @@
 import Flutter
 import MLKitCommon
 
-@objc
-public class GenericModelManager: NSObject {
+public class GenericModelManager {
   /// Tracks observer tokens and callback per in-flight download so we remove observers and avoid overwriting callbacks.
   private var pendingDownloads: [ObjectIdentifier: PendingDownload] = [:]
   /// Observer tokens by key so we can always remove them in completeDownload,
@@ -10,7 +9,6 @@ public class GenericModelManager: NSObject {
   private var observerTokensByKey: [ObjectIdentifier: (success: NSObjectProtocol, fail: NSObjectProtocol)] = [:]
   private let pendingDownloadsLock = NSLock()
 
-  @objc(manageModel:call:result:)
   public func manage(
     model: RemoteModel,
     call: FlutterMethodCall,

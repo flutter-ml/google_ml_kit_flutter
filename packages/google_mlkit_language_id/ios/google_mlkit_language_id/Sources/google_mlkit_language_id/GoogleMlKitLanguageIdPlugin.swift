@@ -1,6 +1,5 @@
 import Flutter
 import MLKitLanguageID
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitLanguageIdPlugin: NSObject, FlutterPlugin {

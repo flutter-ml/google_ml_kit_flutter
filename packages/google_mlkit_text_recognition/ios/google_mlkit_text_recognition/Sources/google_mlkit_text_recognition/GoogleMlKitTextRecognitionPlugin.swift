@@ -2,7 +2,6 @@ import Flutter
 import MLKitVision
 import MLKitTextRecognition
 import MLKitTextRecognitionCommon
-import google_mlkit_commons
 #if canImport(MLKitTextRecognitionChinese)
 import MLKitTextRecognitionChinese
 #endif

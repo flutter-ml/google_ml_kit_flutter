@@ -2,7 +2,6 @@ import Flutter
 import MLKitVision
 import MLKitSegmentationSelfie
 import MLKitSegmentationCommon
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitSelfieSegmentationPlugin: NSObject, FlutterPlugin {

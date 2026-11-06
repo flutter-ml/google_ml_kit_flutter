@@ -3,7 +3,6 @@ import MLKitVision
 import MLKitPoseDetection
 import MLKitPoseDetectionCommon
 import MLKitPoseDetectionAccurate
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitPoseDetectionPlugin: NSObject, FlutterPlugin {
