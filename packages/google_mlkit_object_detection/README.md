@@ -31,7 +31,7 @@ A Flutter plugin to use [Google's ML Kit Object Detection and Tracking](https://
 
 ### iOS
 
-- Minimum iOS Deployment Target: 15.5
+- Minimum iOS Deployment Target: 15.0
 - Xcode 15.3.0 or newer
 - Swift 5.9 (Swift Package Manager)
 - ML Kit does not support 32-bit architectures (i386 and armv7). ML Kit does support 64-bit architectures (x86_64 and arm64). Check this [list](https://developer.apple.com/support/required-device-capabilities/) to see if your device has the required device capabilities. More info [here](https://developers.google.com/ml-kit/migration/ios).

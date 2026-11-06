@@ -4,7 +4,6 @@ import MLKitObjectDetection
 import MLKitObjectDetectionCommon
 import MLKitObjectDetectionCustom
 import MLKitVision
-import google_mlkit_commons
 
 #if canImport(MLKitLinkFirebase)
     import MLKitLinkFirebase

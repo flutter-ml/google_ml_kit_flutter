@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "google-mlkit-barcode-scanning",
     platforms: [
-        .iOS("15.5")
+        .iOS("15.0")
     ],
     products: [
         .library(
@@ -13,7 +13,6 @@ let package = Package(
             targets: ["google_mlkit_barcode_scanning"])
     ],
     dependencies: [
-        .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             exact: "9.0.2"
@@ -24,7 +23,6 @@ let package = Package(
             name: "google_mlkit_barcode_scanning",
             dependencies: [
                 .product(name: "MLKitBarcodeScanning", package: "google-mlkit-swiftpm"),
-                .product(name: "google-mlkit-commons", package: "google_mlkit_commons")
             ],
             path: "Sources/google_mlkit_barcode_scanning"
         )

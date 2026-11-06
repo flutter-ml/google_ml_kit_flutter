@@ -1,7 +1,6 @@
 import Flutter
 import MLKitVision
 import MLKitFaceDetection
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitFaceDetectionPlugin: NSObject, FlutterPlugin {

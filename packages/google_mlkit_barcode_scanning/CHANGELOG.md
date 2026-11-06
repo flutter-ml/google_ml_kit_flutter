@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required.
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0.
+
 ## 1.0.0
 
 * Migrate iOS plugin from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`).

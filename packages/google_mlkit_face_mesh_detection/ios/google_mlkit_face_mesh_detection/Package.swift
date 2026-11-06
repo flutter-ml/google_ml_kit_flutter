@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "google-mlkit-face-mesh-detection",
     platforms: [
-        .iOS("15.5")
+        .iOS("15.0")
     ],
     products: [
         .library(
@@ -13,13 +13,11 @@ let package = Package(
             targets: ["google_mlkit_face_mesh_detection"])
     ],
     dependencies: [
-        .package(path: "../../../google_mlkit_commons/ios/google_mlkit_commons")
     ],
     targets: [
         .target(
             name: "google_mlkit_face_mesh_detection",
             dependencies: [
-                .product(name: "google-mlkit-commons", package: "google_mlkit_commons")
             ],
             path: "Sources/google_mlkit_face_mesh_detection"
         )

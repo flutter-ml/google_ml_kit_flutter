@@ -1,7 +1,6 @@
 import Flutter
 import MLKitVision
 import MLKitBarcodeScanning
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitBarcodeScanningPlugin: NSObject, FlutterPlugin {

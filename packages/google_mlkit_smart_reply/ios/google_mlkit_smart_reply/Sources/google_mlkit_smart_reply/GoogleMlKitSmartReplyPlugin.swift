@@ -1,6 +1,5 @@
 import Flutter
 import MLKitSmartReply
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitSmartReplyPlugin: NSObject, FlutterPlugin {

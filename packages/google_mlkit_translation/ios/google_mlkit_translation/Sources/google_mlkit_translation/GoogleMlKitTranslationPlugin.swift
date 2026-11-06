@@ -1,6 +1,5 @@
 import Flutter
 import MLKitTranslate
-import google_mlkit_commons
 
 @objc
 public class GoogleMlKitTranslationPlugin: NSObject, FlutterPlugin {

@@ -1,3 +1,7 @@
+## 0.7.1
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0).
+
 ## 0.7.0
 
 * Migrate iOS plugin stub from CocoaPods to Swift Package Manager.
