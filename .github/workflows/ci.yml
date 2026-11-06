@@ -126,7 +126,7 @@ jobs:
             cd packages/example
             # Install the app first so the permission grant below can target it.
             flutter build apk --debug
-            adb install app/build/app/outputs/flutter-apk/app-debug.apk
+            adb install build/app/outputs/flutter-apk/app-debug.apk
             # Let the camera smoke test in the suite run (best effort).
             adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
             flutter test integration_test/
