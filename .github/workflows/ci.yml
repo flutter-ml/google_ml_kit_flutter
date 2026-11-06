@@ -50,6 +50,14 @@ jobs:
 
       - uses: ./.github/actions/flutter-setup
 
+      # Pre-install the NDK so Gradle doesn't download it mid-build;
+      # sdkmanager downloads have been observed to flake (corrupt zip).
+      # Keep in sync with flutter.ndkVersion.
+      - name: Install Android NDK
+        uses: android-actions/setup-android@v3
+        with:
+          ndk: 28.2.13676358
+
       - name: Install dependencies
         working-directory: packages/example
         run: flutter pub get
@@ -102,6 +110,14 @@ jobs:
       - uses: actions/checkout@v7.0.1
 
       - uses: ./.github/actions/flutter-setup
+
+      # Pre-install the NDK so Gradle doesn't download it mid-build;
+      # sdkmanager downloads have been observed to flake (corrupt zip).
+      # Keep in sync with flutter.ndkVersion.
+      - name: Install Android NDK
+        uses: android-actions/setup-android@v3
+        with:
+          ndk: 28.2.13676358
 
       - name: Install dependencies
         working-directory: packages/example
