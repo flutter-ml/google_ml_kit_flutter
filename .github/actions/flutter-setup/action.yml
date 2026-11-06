@@ -1,0 +1,20 @@
+name: Flutter setup
+description: >
+  Installs Java 17 (Temurin) and the pinned Flutter version with dependency
+  caching. Reused by all workflows so the Flutter version is declared in one place.
+inputs:
+  flutter-version:
+    description: Flutter version to install (e.g. 3.44.0)
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v6.1.0
+      with:
+        java-version: '17'
+        distribution: temurin
+
+    - uses: subosito/flutter-action@v2.23.0
+      with:
+        flutter-version: ${{ inputs.flutter-version }}
+        cache: true
