@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "google_mlkit_entity_extraction",
             dependencies: [
-                .product(name: "MLKitEntityExtraction", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitEntityExtraction", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_entity_extraction"
         )

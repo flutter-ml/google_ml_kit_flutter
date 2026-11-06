@@ -23,7 +23,7 @@ let package = Package(
             name: "google_mlkit_image_labeling",
             dependencies: [
                 .product(name: "MLKitImageLabeling", package: "google-mlkit-swiftpm"),
-                .product(name: "MLKitImageLabelingCustom", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitImageLabelingCustom", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_image_labeling"
         )

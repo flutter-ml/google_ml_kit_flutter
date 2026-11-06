@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "google_mlkit_selfie_segmentation",
             dependencies: [
-                .product(name: "MLKitSegmentationSelfie", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitSegmentationSelfie", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_selfie_segmentation"
         )

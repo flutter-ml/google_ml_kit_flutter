@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "google_mlkit_barcode_scanning",
             dependencies: [
-                .product(name: "MLKitBarcodeScanning", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitBarcodeScanning", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_barcode_scanning"
         )

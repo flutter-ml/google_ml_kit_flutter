@@ -1,6 +1,7 @@
 ## 0.4.1
 
 * Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0).
+* Update `google_mlkit_commons` dependency to `^1.0.1`.
 
 ## 0.4.0
 

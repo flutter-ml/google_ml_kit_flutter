@@ -1,6 +1,7 @@
 ## 1.0.1
 
-* `GenericModelManager` is no longer an `NSObject` subclass (it is only used from Swift).
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0).
+* Remove `@objc` attributes from `GenericModelManager` and `VisionImage.visionImage(from:)` to avoid duplicate Objective-C runtime declarations across plugins.
 
 ## 1.0.0
 

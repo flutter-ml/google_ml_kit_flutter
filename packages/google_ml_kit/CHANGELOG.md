@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Update all plugin dependencies to their latest versions.
+* Lower the minimum iOS deployment target in documentation from 15.5 to 15.0.
+
 ## 1.0.0
 
 * Migrate iOS plugins from CocoaPods to Swift Package Manager (`d-date/google-mlkit-swiftpm` `9.0.2`).

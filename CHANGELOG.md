@@ -3,6 +3,165 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-11-06
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v1.0.1`](#google_ml_kit---v101)
+- [`google_mlkit_commons` - `v1.0.1`](#google_mlkit_commons---v101)
+- [`google_mlkit_barcode_scanning` - `v1.0.1`](#google_mlkit_barcode_scanning---v101)
+- [`google_mlkit_digital_ink_recognition` - `v1.0.1`](#google_mlkit_digital_ink_recognition---v101)
+- [`google_mlkit_document_scanner` - `v0.7.1`](#google_mlkit_document_scanner---v071)
+- [`google_mlkit_entity_extraction` - `v1.0.1`](#google_mlkit_entity_extraction---v101)
+- [`google_mlkit_face_detection` - `v1.0.1`](#google_mlkit_face_detection---v101)
+- [`google_mlkit_face_mesh_detection` - `v0.7.1`](#google_mlkit_face_mesh_detection---v071)
+- [`google_mlkit_genai_image_description` - `v0.4.1`](#google_mlkit_genai_image_description---v041)
+- [`google_mlkit_genai_prompt` - `v0.4.1`](#google_mlkit_genai_prompt---v041)
+- [`google_mlkit_genai_proofreading` - `v0.4.1`](#google_mlkit_genai_proofreading---v041)
+- [`google_mlkit_genai_rewriting` - `v0.4.1`](#google_mlkit_genai_rewriting---v041)
+- [`google_mlkit_genai_speech_recognition` - `v0.4.1`](#google_mlkit_genai_speech_recognition---v041)
+- [`google_mlkit_genai_summarization` - `v0.4.1`](#google_mlkit_genai_summarization---v041)
+- [`google_mlkit_image_labeling` - `v1.0.1`](#google_mlkit_image_labeling---v101)
+- [`google_mlkit_language_id` - `v1.0.1`](#google_mlkit_language_id---v101)
+- [`google_mlkit_object_detection` - `v1.0.1`](#google_mlkit_object_detection---v101)
+- [`google_mlkit_pose_detection` - `v1.0.1`](#google_mlkit_pose_detection---v101)
+- [`google_mlkit_selfie_segmentation` - `v1.0.1`](#google_mlkit_selfie_segmentation---v101)
+- [`google_mlkit_smart_reply` - `v1.0.1`](#google_mlkit_smart_reply---v101)
+- [`google_mlkit_subject_segmentation` - `v0.3.1`](#google_mlkit_subject_segmentation---v031)
+- [`google_mlkit_text_recognition` - `v1.0.1`](#google_mlkit_text_recognition---v101)
+- [`google_mlkit_translation` - `v1.0.1`](#google_mlkit_translation---v101)
+
+---
+
+#### `google_ml_kit` - `v1.0.1`
+
+* Update all plugin dependencies to their latest versions
+* Lower the minimum iOS deployment target in documentation from 15.5 to 15.0
+
+#### `google_mlkit_commons` - `v1.0.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Remove `@objc` attributes from `GenericModelManager` and `VisionImage.visionImage(from:)` to avoid duplicate Objective-C runtime declarations across plugins
+
+#### `google_mlkit_barcode_scanning` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_digital_ink_recognition` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_document_scanner` - `v0.7.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+
+#### `google_mlkit_entity_extraction` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_face_detection` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_face_mesh_detection` - `v0.7.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_image_description` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_prompt` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_proofreading` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_rewriting` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_speech_recognition` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_genai_summarization` - `v0.4.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_image_labeling` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_language_id` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912)
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+
+#### `google_mlkit_object_detection` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_pose_detection` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_selfie_segmentation` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_smart_reply` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912)
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+
+#### `google_mlkit_subject_segmentation` - `v0.3.1`
+
+* Lower the minimum iOS deployment target in the Swift package manifest from 15.5 to 15.0, matching the upstream ML Kit SPM package, so the plugin builds with the default `flutter create` deployment target (15.0)
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_text_recognition` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (see issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
+#### `google_mlkit_translation` - `v1.0.1`
+
+* Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912). The small shared helpers are now bundled directly with the plugin, and no `google_mlkit_commons` Swift package dependency is required
+* Note: apps using Swift Package Manager for plugins must set their iOS deployment target to at least 15.0
+* Update `google_mlkit_commons` dependency to `^1.0.1`
+
 ## 2026-11-05
 
 ### Changes

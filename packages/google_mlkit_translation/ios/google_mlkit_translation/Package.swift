@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "google_mlkit_translation",
             dependencies: [
-                .product(name: "MLKitTranslate", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitTranslate", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_translation"
         )

@@ -23,7 +23,7 @@ let package = Package(
             name: "google_mlkit_object_detection",
             dependencies: [
                 .product(name: "MLKitObjectDetection", package: "google-mlkit-swiftpm"),
-                .product(name: "MLKitObjectDetectionCustom", package: "google-mlkit-swiftpm"),
+                .product(name: "MLKitObjectDetectionCustom", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_object_detection"
         )
