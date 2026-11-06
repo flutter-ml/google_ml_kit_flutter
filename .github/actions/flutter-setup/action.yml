@@ -1,0 +1,35 @@
+name: Flutter setup
+description: >
+  Installs Java 17 (Temurin) and Flutter with dependency caching. The Flutter
+  version is taken from the flutter-version input or, if that is empty,
+  extracted from a pubspec.yaml (the example app by default), so workflows
+  don't repeat the extraction step.
+inputs:
+  flutter-version:
+    description: Flutter version to install (e.g. 3.44.0). If empty, extracted from version-file.
+    required: false
+    default: ''
+  version-file:
+    description: pubspec.yaml to extract the Flutter version from when flutter-version is empty.
+    required: false
+    default: packages/example/pubspec.yaml
+runs:
+  using: composite
+  steps:
+    - name: Extract Flutter version from ${{ inputs.version-file }}
+      if: ${{ inputs.flutter-version == '' }}
+      id: flutter-version
+      shell: bash
+      run: |
+        version=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' "${{ inputs.version-file }}" | tr -d "'\"=><")
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/setup-java@v6.1.0
+      with:
+        java-version: '17'
+        distribution: temurin
+
+    - uses: subosito/flutter-action@v2.23.0
+      with:
+        flutter-version: ${{ inputs.flutter-version || steps.flutter-version.outputs.version }}
+        cache: true
