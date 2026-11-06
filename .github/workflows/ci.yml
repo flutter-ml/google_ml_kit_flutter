@@ -1,0 +1,158 @@
+name: Tests & Builds
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - test
+      - chore
+  pull_request:
+    branches:
+      - master
+      - develop
+  # The integration-test job is heavy (emulator + ML Kit models), so it only
+  # runs on manual dispatch and the nightly schedule, not on every PR.
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *' # nightly at 03:00 UTC
+
+jobs:
+  unit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Extract Flutter version from pubspec.yaml
+        id: flutter-version
+        run: |
+          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
+          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/flutter-setup
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+
+      - name: Install dependencies for all packages
+        run: |
+          for d in packages/*/; do
+            (cd "$d" && flutter pub get) || exit 1
+          done
+
+      - name: Run unit tests
+        run: |
+          for d in packages/*/; do
+            if [ -d "$d/test" ]; then
+              (cd "$d" && flutter test) || exit 1
+            fi
+          done
+
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Extract Flutter version from pubspec.yaml
+        id: flutter-version
+        run: |
+          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
+          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/flutter-setup
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+
+      - name: Install dependencies
+        working-directory: packages/example
+        run: flutter pub get
+
+      # Compiles every plugin's Kotlin code through Gradle.
+      - name: Build APK (debug)
+        working-directory: packages/example
+        run: flutter build apk --debug
+
+  build-ios:
+    name: Build iOS app
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Extract Flutter version from pubspec.yaml
+        id: flutter-version
+        run: |
+          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
+          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/flutter-setup
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+
+      - name: Install dependencies
+        working-directory: packages/example
+        run: flutter pub get
+
+      # The ML Kit resource bundles are not committed; cache the download.
+      # Keep the version below in sync with download_mlkit_bundles.sh.
+      - name: Cache ML Kit resource bundles
+        id: mlkit-bundles
+        uses: actions/cache@v5
+        with:
+          path: packages/example/ios/mlkit_bundles
+          key: mlkit-bundles-9.0.2
+
+      - name: Download ML Kit resource bundles
+        if: steps.mlkit-bundles.outputs.cache-hit != 'true'
+        working-directory: packages/example/ios
+        run: ./download_mlkit_bundles.sh
+
+      # Compiles every plugin's Swift code and the SwiftPM dependencies.
+      - name: Build iOS app
+        working-directory: packages/example
+        run: flutter build ios --no-codesign
+
+  integration-tests:
+    name: Integration tests (Android emulator)
+    runs-on: ubuntu-latest
+    # Heavy job: only on manual runs and the nightly schedule.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Extract Flutter version from pubspec.yaml
+        id: flutter-version
+        run: |
+          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
+          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/flutter-setup
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+
+      - name: Install dependencies
+        working-directory: packages/example
+        run: flutter pub get
+
+      - name: Run integration tests on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: arm64-v8a
+          profile: pixel_7
+          cores: 4
+          ram-size: 4096
+          heap-size: 2048
+          data-size: 8192
+          disk-size: 8192
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -camera-back none -camera-front none
+          disable-animations: true
+          script: |
+            # Let the camera smoke test in the suite run (best effort).
+            adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
+            cd packages/example
+            flutter test integration_test/
