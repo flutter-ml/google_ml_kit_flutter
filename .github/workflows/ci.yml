@@ -86,7 +86,7 @@ jobs:
       # when the ML Kit version in the script changes.
       - name: Cache ML Kit resource bundles
         id: mlkit-bundles
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: packages/example/ios/mlkit_bundles
           key: mlkit-bundles-${{ hashFiles('packages/example/ios/download_mlkit_bundles.sh') }}
