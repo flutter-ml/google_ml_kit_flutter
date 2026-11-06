@@ -25,15 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - name: Extract Flutter version from pubspec.yaml
-        id: flutter-version
-        run: |
-          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
-          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
-
       - uses: ./.github/actions/flutter-setup
-        with:
-          flutter-version: ${{ steps.flutter-version.outputs.version }}
 
       - name: Install dependencies for all packages
         run: |
@@ -56,15 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - name: Extract Flutter version from pubspec.yaml
-        id: flutter-version
-        run: |
-          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
-          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
-
       - uses: ./.github/actions/flutter-setup
-        with:
-          flutter-version: ${{ steps.flutter-version.outputs.version }}
 
       - name: Install dependencies
         working-directory: packages/example
@@ -82,28 +66,21 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - name: Extract Flutter version from pubspec.yaml
-        id: flutter-version
-        run: |
-          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
-          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
-
       - uses: ./.github/actions/flutter-setup
-        with:
-          flutter-version: ${{ steps.flutter-version.outputs.version }}
 
       - name: Install dependencies
         working-directory: packages/example
         run: flutter pub get
 
       # The ML Kit resource bundles are not committed; cache the download.
-      # Keep the version below in sync with download_mlkit_bundles.sh.
+      # The key hashes the download script, so it invalidates automatically
+      # when the ML Kit version in the script changes.
       - name: Cache ML Kit resource bundles
         id: mlkit-bundles
         uses: actions/cache@v5
         with:
           path: packages/example/ios/mlkit_bundles
-          key: mlkit-bundles-9.0.2
+          key: mlkit-bundles-${{ hashFiles('packages/example/ios/download_mlkit_bundles.sh') }}
 
       - name: Download ML Kit resource bundles
         if: steps.mlkit-bundles.outputs.cache-hit != 'true'
@@ -124,15 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - name: Extract Flutter version from pubspec.yaml
-        id: flutter-version
-        run: |
-          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
-          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
-
       - uses: ./.github/actions/flutter-setup
-        with:
-          flutter-version: ${{ steps.flutter-version.outputs.version }}
 
       - name: Install dependencies
         working-directory: packages/example
@@ -142,17 +111,22 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
-          arch: arm64-v8a
+          # ubuntu-latest is x86_64, so the emulator must be x86_64 as well.
+          arch: x86_64
           profile: pixel_7
           cores: 4
           ram-size: 4096
           heap-size: 2048
           data-size: 8192
           disk-size: 8192
-          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -camera-back none -camera-front none
+          # Emulated (test-pattern) cameras so the camera smoke test can run.
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -camera-back emulated -camera-front emulated
           disable-animations: true
           script: |
+            cd packages/example
+            # Install the app first so the permission grant below can target it.
+            flutter build apk --debug
+            adb install app/build/app/outputs/flutter-apk/app-debug.apk
             # Let the camera smoke test in the suite run (best effort).
             adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
-            cd packages/example
             flutter test integration_test/

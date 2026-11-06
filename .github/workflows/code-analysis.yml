@@ -20,15 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
-      - name: Extract Flutter version from pubspec.yaml
-        id: flutter-version
-        run: |
-          FLUTTER_VER=$(awk '/environment:/{flag=1; next} flag && /flutter:/{print $2; flag=0}' packages/example/pubspec.yaml | tr -d "'\"=><")
-          echo "version=$FLUTTER_VER" >> $GITHUB_OUTPUT
-
       - uses: ./.github/actions/flutter-setup
-        with:
-          flutter-version: ${{ steps.flutter-version.outputs.version }}
 
       - name: Install dependencies for all packages
         run: |
