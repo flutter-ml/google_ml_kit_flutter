@@ -13,11 +13,15 @@ let package = Package(
             targets: ["google_mlkit_subject_segmentation"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
 
     ],
     targets: [
         .target(
             name: "google_mlkit_subject_segmentation",
+            dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
             path: "Sources/google_mlkit_subject_segmentation"
         )
     ]

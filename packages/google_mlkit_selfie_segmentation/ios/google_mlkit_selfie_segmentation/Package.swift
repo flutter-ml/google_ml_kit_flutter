@@ -13,6 +13,7 @@ let package = Package(
             targets: ["google_mlkit_selfie_segmentation"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             exact: "9.0.2"
@@ -22,6 +23,7 @@ let package = Package(
         .target(
             name: "google_mlkit_selfie_segmentation",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "MLKitSegmentationSelfie", package: "google-mlkit-swiftpm")
             ],
             path: "Sources/google_mlkit_selfie_segmentation"
