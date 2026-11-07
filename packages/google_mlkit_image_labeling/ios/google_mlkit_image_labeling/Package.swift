@@ -13,6 +13,7 @@ let package = Package(
             targets: ["google_mlkit_image_labeling"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             exact: "9.0.2"
@@ -22,6 +23,7 @@ let package = Package(
         .target(
             name: "google_mlkit_image_labeling",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "MLKitImageLabeling", package: "google-mlkit-swiftpm"),
                 .product(name: "MLKitImageLabelingCustom", package: "google-mlkit-swiftpm")
             ],

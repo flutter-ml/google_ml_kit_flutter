@@ -13,6 +13,7 @@ let package = Package(
             targets: ["google_mlkit_pose_detection"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             exact: "9.0.2"
@@ -22,6 +23,7 @@ let package = Package(
         .target(
             name: "google_mlkit_pose_detection",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "MLKitPoseDetection", package: "google-mlkit-swiftpm"),
                 .product(name: "MLKitPoseDetectionAccurate", package: "google-mlkit-swiftpm")
             ],
