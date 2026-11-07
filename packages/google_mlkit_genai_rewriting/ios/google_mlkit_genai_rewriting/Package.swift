@@ -13,11 +13,15 @@ let package = Package(
             targets: ["google_mlkit_genai_rewriting"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
 
     ],
     targets: [
         .target(
             name: "google_mlkit_genai_rewriting",
+            dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
             path: "Sources/google_mlkit_genai_rewriting"
         )
     ]
