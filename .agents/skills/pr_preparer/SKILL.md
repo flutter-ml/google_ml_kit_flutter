@@ -115,17 +115,16 @@ Generate output with clear separation between titles and description, using form
 
 ## 🧪 Verification & Testing
 
-- [x] Ran unit tests: `uv run python manage.py test --settings=besties_backend.test_settings_sqlite`
-- [x] Ran linters/pre-commit: `uv run pre-commit run --all-files`
-- [x] Manual verification steps performed.
+- [x] Ran linters & static analysis: `./scripts/analyze.sh`
+- [x] Ran unit tests across packages (`flutter test`)
+- [x] Manual / example app verification steps performed (if applicable).
 
 ---
 
 ## ⚠️ Notes & Risk Assessment
 
-- **Breaking Changes:** None / <List breaking changes if any>
-- **Migration Required:** No / Yes (`python manage.py migrate`)
-- **Environment Variables:** No new env vars required / <List new env vars>
+- **Breaking API Changes:** None / <List public Dart or platform channel breaking changes if any>
+- **Native Dependencies (Android / iOS SwiftPM):** Unchanged / <List ML Kit SDK or `Package.swift` / Gradle updates>
 ```
 ````
 
