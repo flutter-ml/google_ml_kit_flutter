@@ -12,8 +12,11 @@ excluded:
   - "**/.swiftpm"
 
 
+opt_in_rules:
+  - vertical_whitespace_closing_braces
+
 function_body_length:
-  warning: 90
+  warning: 100
   error: 120
 function_parameter_count:
   warning: 6

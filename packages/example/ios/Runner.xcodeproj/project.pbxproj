@@ -294,7 +294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif ! command -v swiftlint &>/dev/null; then\n    echo \"warning: swiftlint not found. Install with: brew install swiftlint\"\n    exit 0\nfi\nREPO_ROOT=\"${SRCROOT}/../../..\"\ncd \"$REPO_ROOT\" && swiftlint lint --fix && swiftlint lint --config \"$REPO_ROOT/.swiftlint.yml\"\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif ! command -v swiftlint &>/dev/null; then\n    echo \"warning: swiftlint not found. Install with: brew install swiftlint\"\n    exit 0\nfi\nREPO_ROOT=\"${SRCROOT}/../../..\"\ncd \"$REPO_ROOT\" && swiftlint lint --fix && swiftlint lint --strict --config \"$REPO_ROOT/.swiftlint.yml\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
