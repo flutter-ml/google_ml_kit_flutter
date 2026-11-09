@@ -100,13 +100,17 @@ For each unresolved comment/thread:
 
 Before outputting replies, verify all code edits locally:
 
-1. Run pre-commit checks:
+1. Run formatting and static analysis checks (Dart, Kotlin, Swift):
    ```bash
-   uv run pre-commit run --all-files
+   ./scripts/analyze.sh
    ```
-2. Run unit tests:
+2. Run unit tests for affected packages:
    ```bash
-   uv run python manage.py test --settings=besties_backend.test_settings_sqlite
+   for d in packages/*/; do
+     if [ -d "$d/test" ]; then
+       (cd "$d" && flutter test) || exit 1
+     fi
+   done
    ```
 
 ---
