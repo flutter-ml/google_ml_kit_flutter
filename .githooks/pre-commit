@@ -37,7 +37,7 @@ fi
 # ------------------------------------------------------------------------------
 echo "🧹 Check 2/5: Checking git hygiene and conflict markers..."
 if [ -n "$STAGED_ADDED_LINES" ]; then
-  if echo "$STAGED_ADDED_LINES" | grep -q -E -e '^\+(<<<<<<< |=======$|>>>>>>> )'; then
+  if echo "$STAGED_ADDED_LINES" | grep -q -E -e '^\+<<<<<<<|^\+=======|^\+>>>>>>>'; then
     echo "❌ Error: Unresolved merge conflict markers (<<<<<<< / ======= / >>>>>>>) detected in staged files!"
     exit 1
   fi
@@ -93,15 +93,19 @@ done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(kt|kts)$
 if [ "${#STAGED_KOTLIN_FILES[@]}" -gt 0 ]; then
   echo "🟣 Check 4/5: Running ktlint on ${#STAGED_KOTLIN_FILES[@]} Kotlin file(s)..."
   if ! command -v ktlint &>/dev/null; then
-    echo "❌ Error: ktlint is not installed. Install it with:"
-    echo "  brew install ktlint"
-    exit 1
-  fi
-
-  if ! ktlint "${STAGED_KOTLIN_FILES[@]}"; then
-    echo ""
-    echo "❌ Error: ktlint violations found. Run 'ktlint --format' (or './scripts/analyze.sh') and re-stage."
-    exit 1
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      echo "❌ Error: ktlint is not installed. Install it with:"
+      echo "  brew install ktlint"
+      exit 1
+    else
+      echo "⚠️  Warning: ktlint is not installed on $(uname -s); skipping local Kotlin check (CI will verify)."
+    fi
+  else
+    if ! ktlint "${STAGED_KOTLIN_FILES[@]}"; then
+      echo ""
+      echo "❌ Error: ktlint violations found. Run 'ktlint --format' (or './scripts/analyze.sh') and re-stage."
+      exit 1
+    fi
   fi
 else
   echo "⏭️  Check 4/5: No staged Kotlin files; skipping ktlint."

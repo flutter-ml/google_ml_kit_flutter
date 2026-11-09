@@ -129,10 +129,12 @@ In case of trivial fixes open a [pull request](https://github.com/flutter-ml/goo
 
 CI enforces formatting and static analysis for Dart (`dart format` / `flutter analyze`), Kotlin (`ktlint`), and Swift (`swiftlint --strict`). Before opening a pull request:
 
-1. Install native linters (macOS / Homebrew):
-   ```sh
-   brew install ktlint swiftlint
-   ```
+1. Install native linters:
+   - **macOS (Homebrew):**
+     ```sh
+     brew install ktlint swiftlint
+     ```
+   - **Linux / Windows:** Follow the official installation guides for [`ktlint`](https://pinterest.github.io/ktlint/latest/install/cli/) (e.g., `snap install ktlint` on Linux or `winget install Pinterest.ktlint` on Windows) and [`SwiftLint`](https://github.com/realm/SwiftLint#installation). On non-macOS platforms, if `ktlint` or `swiftlint` is not installed locally, the pre-commit hook will warn and skip those checks while CI still enforces them.
 2. Enable the repository's Git pre-commit hook so staged changes are checked automatically on `git commit`:
    ```sh
    git config core.hooksPath .githooks
