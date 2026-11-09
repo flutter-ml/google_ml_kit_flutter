@@ -13,7 +13,6 @@ let package = Package(
             targets: ["google_mlkit_document_scanner"])
     ],
     dependencies: [
-
     ],
     targets: [
         .target(

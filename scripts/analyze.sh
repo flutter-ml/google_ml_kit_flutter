@@ -13,6 +13,7 @@ if ! command -v ktlint &>/dev/null; then
     exit 1
 else
     ktlint --format
+    ktlint
 fi
 
 # Lint Swift code (iOS plugins) with SwiftLint (https://github.com/realm/SwiftLint)
@@ -26,10 +27,6 @@ if ! command -v swiftlint &>/dev/null; then
     exit 1
 fi
 swiftlint lint --fix
-SWIFTLINT_OUTPUT=$(swiftlint lint 2>&1) || true
-echo "$SWIFTLINT_OUTPUT"
-if echo "$SWIFTLINT_OUTPUT" | grep -qE "Found [1-9][0-9]* violations?"; then
-    exit 1
-fi
+swiftlint lint --strict
 
 printf '\033[34m%s\033[0m\n' "All checks passed: formatting and linting successful."

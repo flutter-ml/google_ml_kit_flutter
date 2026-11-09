@@ -13,7 +13,6 @@ let package = Package(
             targets: ["google_mlkit_genai_image_description"])
     ],
     dependencies: [
-
     ],
     targets: [
         .target(

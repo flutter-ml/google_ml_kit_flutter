@@ -61,4 +61,4 @@ jobs:
       - name: Install SwiftLint
         run: brew install swiftlint
       - name: Run SwiftLint on Swift code
-        run: swiftlint lint
+        run: swiftlint lint --strict
