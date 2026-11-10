@@ -11,11 +11,7 @@ on:
     branches:
       - master
       - develop
-  # The integration-test job is heavy (emulator + ML Kit models), so it only
-  # runs on manual dispatch and the nightly schedule, not on every PR.
   workflow_dispatch:
-  schedule:
-    - cron: '0 3 * * *' # nightly at 03:00 UTC
 
 jobs:
   unit:
@@ -50,18 +46,7 @@ jobs:
 
       - uses: ./.github/actions/flutter-setup
 
-      # Pre-install the NDK so Gradle doesn't download it mid-build;
-      # a failed CDN download then breaks this small step instead of the
-      # whole build. sdkmanager is not on the PATH, hence the full path.
-      # Keep the version in sync with flutter.ndkVersion.
-      - name: Install Android NDK
-        run: |
-          sdk_root="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
-          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" --install "ndk;28.2.13676358"
-
-      - name: Install dependencies
-        working-directory: packages/example
-        run: flutter pub get
+      - uses: ./.github/actions/android-setup
 
       # Compiles every plugin's Kotlin code through Gradle.
       - name: Build APK (debug)
@@ -100,51 +85,3 @@ jobs:
       - name: Build iOS app
         working-directory: packages/example
         run: flutter build ios --no-codesign
-
-  integration-tests:
-    name: Integration tests (Android emulator)
-    runs-on: ubuntu-latest
-    # Heavy job: only on manual runs and the nightly schedule.
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
-
-    steps:
-      - uses: actions/checkout@v7.0.1
-
-      - uses: ./.github/actions/flutter-setup
-
-      # Pre-install the NDK so Gradle doesn't download it mid-build;
-      # a failed CDN download then breaks this small step instead of the
-      # whole build. sdkmanager is not on the PATH, hence the full path.
-      # Keep the version in sync with flutter.ndkVersion.
-      - name: Install Android NDK
-        run: |
-          sdk_root="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
-          yes | "$sdk_root/cmdline-tools/latest/bin/sdkmanager" --install "ndk;28.2.13676358"
-
-      - name: Install dependencies
-        working-directory: packages/example
-        run: flutter pub get
-
-      - name: Run integration tests on Android emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          # ubuntu-latest is x86_64, so the emulator must be x86_64 as well.
-          arch: x86_64
-          profile: pixel_7
-          cores: 4
-          ram-size: 4096
-          heap-size: 2048
-          data-size: 8192
-          disk-size: 8192
-          # Emulated (test-pattern) cameras so the camera smoke test can run.
-          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -camera-back emulated -camera-front emulated
-          disable-animations: true
-          script: |
-            cd packages/example
-            # Install the app first so the permission grant below can target it.
-            flutter build apk --debug
-            adb install build/app/outputs/flutter-apk/app-debug.apk
-            # Let the camera smoke test in the suite run (best effort).
-            adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
-            flutter test integration_test/

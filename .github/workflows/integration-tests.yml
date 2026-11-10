@@ -1,0 +1,57 @@
+name: Integration Tests
+
+on:
+  # The integration-test job is heavy (emulator + ML Kit models), so it only
+  # runs on manual dispatch and the nightly schedule, not on every push or PR.
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *' # nightly at 03:00 UTC
+
+jobs:
+  integration-tests:
+    name: Integration tests (Android emulator)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: ./.github/actions/flutter-setup
+
+      - uses: ./.github/actions/android-setup
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      # Pre-build the APK before launching the emulator so Gradle and the
+      # emulator do not compete for runner CPU and RAM simultaneously.
+      - name: Build APK (debug)
+        working-directory: packages/example
+        run: flutter build apk --debug
+
+      - name: Run integration tests on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          # ubuntu-latest is x86_64, so the emulator must be x86_64 as well.
+          arch: x86_64
+          profile: pixel_7
+          cores: 2
+          ram-size: 3072M
+          heap-size: 1024M
+          disk-size: 6144M
+          emulator-boot-timeout: 1200
+          # Headless and lightweight boot options: disable audio and boot animations
+          # to avoid software rendering stalls during cold boot.
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -camera-back emulated -camera-front emulated
+          disable-animations: true
+          script: |
+            cd packages/example
+            # Install the pre-built app so the permission grant below can target it.
+            adb install build/app/outputs/flutter-apk/app-debug.apk
+            # Let the camera smoke test in the suite run (best effort).
+            adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
+            flutter test integration_test/
