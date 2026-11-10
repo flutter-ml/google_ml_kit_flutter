@@ -13,6 +13,7 @@ let package = Package(
             targets: ["google_mlkit_commons"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
             exact: "9.0.2"
@@ -22,6 +23,7 @@ let package = Package(
         .target(
             name: "google_mlkit_commons",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 // google-mlkit-swiftpm does not expose standalone MLKitVision or MLKitCommon
                 // library products.
                 .product(name: "MLKitBarcodeScanning", package: "google-mlkit-swiftpm")
