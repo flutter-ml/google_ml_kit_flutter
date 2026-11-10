@@ -3,6 +3,172 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-11-10
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v1.0.2`](#google_ml_kit---v102)
+- [`google_mlkit_commons` - `v1.0.2`](#google_mlkit_commons---v102)
+- [`google_mlkit_barcode_scanning` - `v1.0.2`](#google_mlkit_barcode_scanning---v102)
+- [`google_mlkit_digital_ink_recognition` - `v1.0.2`](#google_mlkit_digital_ink_recognition---v102)
+- [`google_mlkit_document_scanner` - `v0.7.2`](#google_mlkit_document_scanner---v072)
+- [`google_mlkit_entity_extraction` - `v1.0.2`](#google_mlkit_entity_extraction---v102)
+- [`google_mlkit_face_detection` - `v1.0.2`](#google_mlkit_face_detection---v102)
+- [`google_mlkit_face_mesh_detection` - `v0.7.2`](#google_mlkit_face_mesh_detection---v072)
+- [`google_mlkit_genai_image_description` - `v0.4.2`](#google_mlkit_genai_image_description---v042)
+- [`google_mlkit_genai_prompt` - `v0.4.2`](#google_mlkit_genai_prompt---v042)
+- [`google_mlkit_genai_proofreading` - `v0.4.2`](#google_mlkit_genai_proofreading---v042)
+- [`google_mlkit_genai_rewriting` - `v0.4.2`](#google_mlkit_genai_rewriting---v042)
+- [`google_mlkit_genai_speech_recognition` - `v0.4.2`](#google_mlkit_genai_speech_recognition---v042)
+- [`google_mlkit_genai_summarization` - `v0.4.2`](#google_mlkit_genai_summarization---v042)
+- [`google_mlkit_image_labeling` - `v1.0.2`](#google_mlkit_image_labeling---v102)
+- [`google_mlkit_language_id` - `v1.0.2`](#google_mlkit_language_id---v102)
+- [`google_mlkit_object_detection` - `v1.0.2`](#google_mlkit_object_detection---v102)
+- [`google_mlkit_pose_detection` - `v1.0.2`](#google_mlkit_pose_detection---v102)
+- [`google_mlkit_selfie_segmentation` - `v1.0.2`](#google_mlkit_selfie_segmentation---v102)
+- [`google_mlkit_smart_reply` - `v1.0.2`](#google_mlkit_smart_reply---v102)
+- [`google_mlkit_subject_segmentation` - `v0.3.2`](#google_mlkit_subject_segmentation---v032)
+- [`google_mlkit_text_recognition` - `v1.0.2`](#google_mlkit_text_recognition---v102)
+- [`google_mlkit_translation` - `v1.0.2`](#google_mlkit_translation---v102)
+
+---
+
+#### `google_ml_kit` - `v1.0.2`
+
+* Update all plugin dependencies to their latest versions
+
+#### `google_mlkit_commons` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+
+#### `google_mlkit_barcode_scanning` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_digital_ink_recognition` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_document_scanner` - `v0.7.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+
+#### `google_mlkit_entity_extraction` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_face_detection` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_face_mesh_detection` - `v0.7.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_image_description` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_prompt` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_proofreading` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_rewriting` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_speech_recognition` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_genai_summarization` - `v0.4.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_image_labeling` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_language_id` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+
+#### `google_mlkit_object_detection` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_pose_detection` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_selfie_segmentation` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_smart_reply` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+
+#### `google_mlkit_subject_segmentation` - `v0.3.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_text_recognition` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
+#### `google_mlkit_translation` - `v1.0.2`
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916)
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath
+* Update `google_mlkit_commons` dependency to `^1.0.2`
+
 ## 2026-11-06
 
 ### Changes

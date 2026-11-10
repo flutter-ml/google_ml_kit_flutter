@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916).
+* Bump Android Gradle Plugin (AGP) classpath to 9.1.0 to remove vulnerable transitive `netty` dependency from the build classpath.
+
 ## 1.0.1
 
 * Fix iOS build for apps installing the plugin from pub.dev: the Swift package manifest no longer references `google_mlkit_commons` via a relative path that does not exist in the published layout (issue #912).
