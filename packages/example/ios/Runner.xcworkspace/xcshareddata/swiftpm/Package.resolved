@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/d-date/google-mlkit-swiftpm",
       "state" : {
-        "revision" : "f9c5ccb28a372ad0d025e26df094c42771b5cd01",
-        "version" : "9.0.2"
+        "revision" : "cb7b38136df5348b13056cd82a4f424fbd84ae6d",
+        "version" : "9.0.3"
       }
     },
     {

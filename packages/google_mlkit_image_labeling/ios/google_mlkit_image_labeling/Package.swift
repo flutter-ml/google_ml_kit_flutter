@@ -16,7 +16,7 @@ let package = Package(
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/d-date/google-mlkit-swiftpm",
-            exact: "9.0.2"
+            exact: "9.0.3"
         )
     ],
     targets: [
