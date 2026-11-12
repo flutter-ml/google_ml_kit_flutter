@@ -28,11 +28,16 @@ import 'package:path_provider/path_provider.dart';
 /// The plugin's native side decodes from a file path, so the asset bytes are
 /// first copied to the app's temporary directory.
 Future<InputImage> inputImageFromAsset(String assetPath) async {
-  final data = await rootBundle.load(assetPath);
-  final bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
   final dir = await getTemporaryDirectory();
   final file = File('${dir.path}/${assetPath.split('/').last}');
-  await file.writeAsBytes(bytes, flush: true);
+  if (!file.existsSync()) {
+    final data = await rootBundle.load(assetPath);
+    final bytes = data.buffer.asUint8List(
+      data.offsetInBytes,
+      data.lengthInBytes,
+    );
+    await file.writeAsBytes(bytes, flush: true);
+  }
   return InputImage.fromFilePath(file.path);
 }
 

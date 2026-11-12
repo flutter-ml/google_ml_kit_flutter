@@ -58,9 +58,9 @@ if [ "${#STAGED_DART_FILES[@]}" -gt 0 ]; then
     exit 1
   fi
 
-  if ! dart format --output=none --set-exit-if-changed "${STAGED_DART_FILES[@]}"; then
+  if ! dart format --set-exit-if-changed "${STAGED_DART_FILES[@]}"; then
     echo ""
-    echo "❌ Error: Unformatted Dart code detected. Run 'dart format .' and re-stage."
+    echo "❌ Error: Unformatted Dart code was fixed. Please review and re-stage the changes."
     exit 1
   fi
 

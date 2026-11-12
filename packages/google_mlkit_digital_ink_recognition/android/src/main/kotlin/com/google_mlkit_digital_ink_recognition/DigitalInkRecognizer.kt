@@ -34,6 +34,7 @@ class DigitalInkRecognizer : MethodChannel.MethodCallHandler {
 
             CLOSE -> {
                 closeDetector(call)
+                result.success(null)
             }
 
             MANAGE -> {
