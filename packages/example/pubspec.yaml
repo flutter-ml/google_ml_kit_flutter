@@ -3,12 +3,12 @@ description: "Demonstrates how to use the google_ml_kit plugin."
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
   sdk: ^3.12.0
-  flutter: '>=3.44.0'
+  flutter: ">=3.44.0"
 
 dependencies:
   camera: ^0.12.2
@@ -41,7 +41,7 @@ dependencies:
     path: ../google_mlkit_pose_detection
   google_mlkit_selfie_segmentation:
     path: ../google_mlkit_selfie_segmentation
-  google_mlkit_subject_segmentation: 
+  google_mlkit_subject_segmentation:
     path: ../google_mlkit_subject_segmentation
   google_mlkit_text_recognition:
     path: ../google_mlkit_text_recognition

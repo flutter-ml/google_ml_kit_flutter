@@ -48,10 +48,10 @@ jobs:
           # to avoid software rendering stalls during cold boot.
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -no-audio -no-boot-anim -camera-back emulated -camera-front emulated
           disable-animations: true
+          working-directory: packages/example
           script: |
-            cd packages/example
             # Install the pre-built app so the permission grant below can target it.
-            adb install build/app/outputs/flutter-apk/app-debug.apk
+            adb install -r -d build/app/outputs/flutter-apk/app-debug.apk
             # Let the camera smoke test in the suite run (best effort).
             adb shell pm grant com.google.ml.kit.flutter.example android.permission.CAMERA || true
             flutter test integration_test/
