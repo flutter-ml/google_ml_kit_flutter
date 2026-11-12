@@ -29,42 +29,42 @@ packages:
     dependency: "direct main"
     description:
       name: camera
-      sha256: "558230d6ce6ccea856b32d390db7e7b557adf4d9320aa614481bd3f2f608953f"
+      sha256: "4a0863bc142f6fbfdca19161205574fd8a8f00d4753b48d214c4dfbdcc534c51"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0+2"
+    version: "0.12.2"
   camera_android:
     dependency: "direct main"
     description:
       name: camera_android
-      sha256: "8b3795d2f7f3c7e705821fe6cd82b7dd56c8a8e66f2df4ac6daf659876967dbf"
+      sha256: "77b6b64165bc118745875a34786d531aa1a84bfa9cf0f389f0b5206e3c0cec29"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.11"
+    version: "0.10.13"
   camera_android_camerax:
     dependency: transitive
     description:
       name: camera_android_camerax
-      sha256: "6d8dd23f8ad52c36ae3da7417a59b3c3faa3d1e1b83c983a04ca8383f001233c"
+      sha256: b5e0a2a8e63f2788139379926a9abc3a64eed5e309c1384e5db25b74f15b7307
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4+5"
+    version: "0.7.6+1"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: "866e9cd8370f8055d005c0413937a52dc1d7a472687f0ee3ce02392955aababa"
+      sha256: "971f7b4938ae761797dd667c078af92f1b6a1bb7760774c0cbcf9c9d4a14bdf1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.2"
+    version: "0.11.1"
   camera_platform_interface:
     dependency: transitive
     description:
       name: camera_platform_interface
-      sha256: "4524ca6eb4176b066864036ad4fe02c3e4863e63b77eadc21a5bf56824f43498"
+      sha256: b3083b183ef1daa408d5f0c98c8c7ac0325b490695fb4557ff4210fcf04c5984
       url: "https://pub.dev"
     source: hosted
-    version: "2.13.1"
+    version: "2.15.0"
   camera_web:
     dependency: transitive
     description:
@@ -408,10 +408,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: d8402284df184bc05f4a2210c6c23983b0720f4cd87cbd05c5390a78af602667
+      sha256: e71b1bd9e40124041128d60fc3034c7b1598e1bba4e570bba0c70301c817013a
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.4"
   image_picker_android:
     dependency: transitive
     description:
