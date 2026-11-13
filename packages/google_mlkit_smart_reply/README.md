@@ -38,13 +38,13 @@ A Flutter plugin to use [Google's ML Kit Smart Reply API](https://developers.goo
 
 #### Swift Package Manager Setup
 
-This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.2`), which also supports Apple Silicon iOS Simulators out of the box.
+This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.3`), which also supports Apple Silicon iOS Simulators out of the box.
 
 1. **Linker Flags**: In Xcode, go to **Runner > Build Settings > Linking - General > Other Linker Flags** (`OTHER_LDFLAGS`) and add:
    - `-ObjC`
    - `-all_load`
 
-2. **ML Kit Resource Bundles**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download `PredictOnDeviceResource.bundle` (and optionally `PredictOnDevice_resource.bundle`) from the [`d-date/google-mlkit-swiftpm` v9.0.2 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.2) and add it to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
+2. **ML Kit Resource Bundles**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download `PredictOnDeviceResource.bundle` (and optionally `PredictOnDevice_resource.bundle`) from the [`d-date/google-mlkit-swiftpm` v9.0.3 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.3) and add it to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
 
 ### Android
 

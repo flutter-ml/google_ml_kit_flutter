@@ -1,3 +1,9 @@
+## 1.0.3
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919).
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`.
+* Update `google_mlkit_commons` dependency to `^1.0.3`.
+
 ## 1.0.2
 
 * Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916).

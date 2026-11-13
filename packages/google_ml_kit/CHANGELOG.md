@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Update plugin dependencies to their latest versions.
+
 ## 1.0.2
 
 * Update all plugin dependencies to their latest versions.

@@ -1,3 +1,8 @@
+## 0.7.3
+
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`.
+* Update `google_mlkit_commons` dependency to `^1.0.3`.
+
 ## 0.7.2
 
 * Add `FlutterFramework` dependency to the Swift package manifest for Flutter Swift Package Manager compatibility (issue #916).

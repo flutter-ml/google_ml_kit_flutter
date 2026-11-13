@@ -40,13 +40,13 @@ A Flutter plugin to use [Google's ML Kit Selfie Segmentation API](https://develo
 
 #### Swift Package Manager Setup
 
-This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.2`), which also supports Apple Silicon iOS Simulators out of the box.
+This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.3`), which also supports Apple Silicon iOS Simulators out of the box.
 
 1. **Linker Flags**: In Xcode, go to **Runner > Build Settings > Linking - General > Other Linker Flags** (`OTHER_LDFLAGS`) and add:
    - `-ObjC`
    - `-all_load`
 
-2. **ML Kit Resource Bundles**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download `MLKitSegmentationSelfieResources.bundle`, `MLKitSegmentationCommonResources.bundle`, and `MLKitXenoResources.bundle` from the [`d-date/google-mlkit-swiftpm` v9.0.2 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.2) and add them to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
+2. **ML Kit Resource Bundles**: SwiftPM cannot bundle model files inside `.binaryTarget` frameworks into the main app bundle automatically. Download `MLKitSegmentationSelfieResources.bundle`, `MLKitSegmentationCommonResources.bundle`, and `MLKitXenoResources.bundle` from the [`d-date/google-mlkit-swiftpm` v9.0.3 release](https://github.com/d-date/google-mlkit-swiftpm/releases/tag/9.0.3) and add them to your Xcode `Runner` target (**Build Phases > Copy Bundle Resources**). See [`packages/example/ios/download_mlkit_bundles.sh`](https://github.com/flutter-ml/google_ml_kit_flutter/blob/master/packages/example/ios/download_mlkit_bundles.sh) for an example download script.
 
 > **Note:** While SwiftPM allows building and linking on Apple Silicon iOS Simulators, running Selfie Segmentation inference at runtime requires a physical iOS device because Google's underlying MediaPipe graph requires device GPU/Metal support.
 

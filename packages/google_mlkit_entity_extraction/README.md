@@ -40,7 +40,7 @@ A Flutter plugin to use [Google's ML Kit Entity Extraction API](https://develope
 
 #### Swift Package Manager Setup
 
-This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.2`), which also supports Apple Silicon iOS Simulators out of the box.
+This plugin uses **Swift Package Manager (SwiftPM)** via [`d-date/google-mlkit-swiftpm`](https://github.com/d-date/google-mlkit-swiftpm) (`9.0.3`), which also supports Apple Silicon iOS Simulators out of the box.
 
 1. **Linker Flags**: In Xcode, go to **Runner > Build Settings > Linking - General > Other Linker Flags** (`OTHER_LDFLAGS`) and add:
    - `-ObjC`

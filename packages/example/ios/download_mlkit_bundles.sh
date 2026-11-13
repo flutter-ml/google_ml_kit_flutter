@@ -9,14 +9,14 @@
 # once after cloning (and again if the ML Kit version changes):
 #
 #   cd packages/example/ios
-#   ./download_mlkit_bundles.sh [version]     # default: 9.0.2
+#   ./download_mlkit_bundles.sh [version]     # default: 9.0.3
 #
 # They come from the d-date/google-mlkit-swiftpm release, the same source the
 # frameworks come from.
 
 set -e
 
-VERSION="${1:-9.0.2}"
+VERSION="${1:-9.0.3}"
 BASE_URL="https://github.com/d-date/google-mlkit-swiftpm/releases/download/${VERSION}"
 DEST_DIR="$(cd "$(dirname "$0")" && pwd)/mlkit_bundles"
 

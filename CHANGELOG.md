@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2026-11-12
+
+### Changes
+
+---
+
+Packages with changes:
+
+- [`google_ml_kit` - `v1.0.3`](#google_ml_kit---v103)
+- [`google_mlkit_commons` - `v1.0.3`](#google_mlkit_commons---v103)
+- [`google_mlkit_barcode_scanning` - `v1.0.3`](#google_mlkit_barcode_scanning---v103)
+- [`google_mlkit_digital_ink_recognition` - `v1.0.3`](#google_mlkit_digital_ink_recognition---v103)
+- [`google_mlkit_entity_extraction` - `v1.0.3`](#google_mlkit_entity_extraction---v103)
+- [`google_mlkit_face_detection` - `v1.0.3`](#google_mlkit_face_detection---v103)
+- [`google_mlkit_face_mesh_detection` - `v0.7.3`](#google_mlkit_face_mesh_detection---v073)
+- [`google_mlkit_image_labeling` - `v1.0.3`](#google_mlkit_image_labeling---v103)
+- [`google_mlkit_language_id` - `v1.0.3`](#google_mlkit_language_id---v103)
+- [`google_mlkit_object_detection` - `v1.0.3`](#google_mlkit_object_detection---v103)
+- [`google_mlkit_pose_detection` - `v1.0.3`](#google_mlkit_pose_detection---v103)
+- [`google_mlkit_selfie_segmentation` - `v1.0.3`](#google_mlkit_selfie_segmentation---v103)
+- [`google_mlkit_smart_reply` - `v1.0.3`](#google_mlkit_smart_reply---v103)
+- [`google_mlkit_text_recognition` - `v1.0.3`](#google_mlkit_text_recognition---v103)
+- [`google_mlkit_translation` - `v1.0.3`](#google_mlkit_translation---v103)
+
+---
+
+#### `google_ml_kit` - `v1.0.3`
+
+* Update plugin dependencies to their latest versions
+
+#### `google_mlkit_commons` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`
+
+#### `google_mlkit_barcode_scanning` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_digital_ink_recognition` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_entity_extraction` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_face_detection` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_face_mesh_detection` - `v0.7.3`
+
+* Update `Package.resolved` to pin `d-date/google-mlkit-swiftpm` `9.0.3`
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_image_labeling` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_language_id` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+
+#### `google_mlkit_object_detection` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_pose_detection` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_selfie_segmentation` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_smart_reply` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+
+#### `google_mlkit_text_recognition` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
+#### `google_mlkit_translation` - `v1.0.3`
+
+* Bump `google-mlkit-swiftpm` to `9.0.3` to resolve dependency conflicts with `firebase-ios-sdk` 13 (issue #919)
+* Update `google_mlkit_commons` dependency to `^1.0.3`
+
 ## 2026-11-10
 
 ### Changes

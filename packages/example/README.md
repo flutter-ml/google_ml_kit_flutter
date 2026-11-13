@@ -32,7 +32,7 @@ Before building for iOS, download them once:
 
 ```bash
 cd ios
-./download_mlkit_bundles.sh        # defaults to ML Kit 9.0.2
+./download_mlkit_bundles.sh        # defaults to ML Kit 9.0.3
 ```
 
 Run it again after cloning a fresh copy or after the ML Kit version changes.
