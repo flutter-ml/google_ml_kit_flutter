@@ -43,9 +43,13 @@ android {
 
     defaultConfig {
         minSdk = 21
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     dependencies {
         implementation("com.google.mlkit:digital-ink-recognition:19.0.0")
+        // digital-ink-recognition 19.0.0 brings work-runtime 2.7.0, which crashes
+        // on launch under R8 full mode (default since AGP 9).
+        implementation("androidx.work:work-runtime:2.10.5")
     }
 }
